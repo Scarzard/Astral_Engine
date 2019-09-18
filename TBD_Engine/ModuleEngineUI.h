@@ -1,10 +1,14 @@
 #ifndef _ENGINEUI_H_
 #define _ENGINEUI_H_
 
-#include "ImGui/imgui.h"
+#include "Globals.h"
+#include "Module.h"
 
-#include "ImGui/examples/imgui_impl_opengl3.h"
-#include "ImGui/examples/imgui_impl_glfw.h"
+#include "ImGui/imgui.h"
+#include "ImGui/examples/imgui_impl_sdl.h"
+#include "ImGui/examples/imgui_impl_opengl2.h"
+#include "glut/glut.h"
+
 
 class ModuleEngineUI : public Module
 {
@@ -16,6 +20,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	ImGuiIO* input = nullptr;
+
 };
 #endif // !_ENGINEUI_H_
-
