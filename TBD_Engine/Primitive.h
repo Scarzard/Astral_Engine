@@ -1,6 +1,5 @@
-#ifndef _PRIMITIVE_H_
-#define _PRIMITIVE_H_
 
+#pragma once
 #include "glmath.h"
 #include "Color.h"
 
@@ -28,10 +27,10 @@ public:
 	PrimitiveTypes	GetType() const;
 
 public:
-
+	
 	Color color;
 	mat4x4 transform;
-	bool axis, wire;
+	bool axis,wire;
 
 protected:
 	PrimitiveTypes type;
@@ -40,7 +39,7 @@ protected:
 // ============================================
 class Cube : public Primitive
 {
-public:
+public :
 	Cube();
 	Cube(float sizeX, float sizeY, float sizeZ);
 	void InnerRender() const;
@@ -94,6 +93,3 @@ public:
 	vec3 normal;
 	float constant;
 };
-
-#endif // !_PRIMITIVE_H_
-

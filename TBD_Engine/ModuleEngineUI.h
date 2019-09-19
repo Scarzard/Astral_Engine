@@ -5,8 +5,12 @@
 #include "Module.h"
 
 #include "ImGui/imgui.h"
+#include "ImGui/glew.h"
+
 #include "ImGui/examples/imgui_impl_sdl.h"
-#include "ImGui/examples/imgui_impl_opengl2.h"
+#include "ImGui/examples/imgui_impl_opengl3.h"
+
+
 #include "glut/glut.h"
 
 
@@ -17,10 +21,14 @@ public:
 	~ModuleEngineUI();
 
 	bool Init();
+	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
 
-	ImGuiIO* input = nullptr;
+	ImGuiIO* io = nullptr;
+
+	bool show_demo_window = true;
+	bool show_another_window = false;
 
 };
 #endif // !_ENGINEUI_H_

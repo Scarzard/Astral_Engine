@@ -1,6 +1,4 @@
-#ifndef _CAMERA3D_H_
-#define _CAMERA3D_H_
-
+#pragma once
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
@@ -25,13 +23,10 @@ private:
 	void CalculateViewMatrix();
 
 public:
-
+	
 	vec3 X, Y, Z, Position, Reference;
 
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 };
-
-#endif // !_CAMERA3D_H_
-

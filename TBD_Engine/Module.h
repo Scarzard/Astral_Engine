@@ -2,25 +2,25 @@
 #define _MODULE_H_
 
 class Application;
-struct PhysBody3D;
 
 using namespace std;
+
 #include <iostream>
 #include <utility>
-#include <list> 
+#include <list>
 #include <iterator>
 #include <string>
 #include <vector>
 #include <queue>
 
+
 class Module
 {
 public:
 
-	bool enabled = false;
-	Application* App;
+	bool enabled;
 
-public:
+	Application* App;
 
 	Module(Application* parent, bool start_enabled = true) : App(parent)
 	{}
@@ -28,9 +28,9 @@ public:
 	virtual ~Module()
 	{}
 
-	virtual bool Init()
+	virtual bool Init() 
 	{
-		return true;
+		return true; 
 	}
 
 	virtual bool Start()
@@ -53,17 +53,13 @@ public:
 		return UPDATE_CONTINUE;
 	}
 
-	virtual bool CleanUp()
-	{
-		return true;
-	}
-
-	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+	virtual bool CleanUp() 
 	{ 
-
+		return true; 
 	}
+
+	/*virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+	{}*/
 };
 
-#endif // !_MODULE_H_
-
-
+#endif // _MODULE_H_

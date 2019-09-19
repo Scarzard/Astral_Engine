@@ -4,13 +4,12 @@ Application::Application()
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(this, true);
 	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	ui = new ModuleEngineUI(this);
-	//physics = new ModulePhysics3D(this);
-
+	engineUI = new ModuleEngineUI(this);
+	
+	
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -20,18 +19,15 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(audio);
-	AddModule(ui);
-	//AddModule(physics);
+	AddModule(engineUI);
+
 	
 	// Scenes
 	AddModule(scene_intro);
-
+	
 
 	// Renderer last!
 	AddModule(renderer3D);
-
-	
 }
 
 Application::~Application()
@@ -60,7 +56,7 @@ bool Application::Init()
 		{
 			ret = (*item)->Init();
 		}
-		
+
 		item++;
 	}
 
@@ -97,16 +93,16 @@ update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
-	
+
 	list<Module*> ::const_iterator item = module_list.begin();
-	
-	while(item != module_list.end() && ret == UPDATE_CONTINUE)
+
+	while (item != module_list.end() && ret == UPDATE_CONTINUE)
 	{
 		if ((*item)->enabled)
 		{
 			ret = (*item)->PreUpdate(dt);
 		}
-		
+
 		item++;
 	}
 
@@ -124,7 +120,7 @@ update_status Application::Update()
 
 	item = module_list.begin();
 
-	while(item != module_list.end() && ret == UPDATE_CONTINUE)
+	while (item != module_list.end() && ret == UPDATE_CONTINUE)
 	{
 		if ((*item)->enabled)
 		{

@@ -1,5 +1,5 @@
-#ifndef _WINDOW_H_
-#define _WINDOW_H_
+#ifndef __ModuleWindow_H__
+#define __ModuleWindow_H__
 
 #include "Module.h"
 #include "SDL/include/SDL.h"
@@ -28,4 +28,4 @@ public:
 	SDL_Surface* screen_surface;
 };
 
-#endif // !_WINDOW_H_
+#endif // __ModuleWindow_H__
