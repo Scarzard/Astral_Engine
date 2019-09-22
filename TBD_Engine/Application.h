@@ -1,35 +1,32 @@
 #pragma once
 
+#include <list>
+
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
-#include "ModuleEngineUI.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
-
-
+#include "ModuleEngineUI.h"
 
 class Application
 {
 public:
-	ModuleWindow* window;
-	ModuleInput* input;
-	ModuleSceneIntro* scene_intro;
-	ModuleRenderer3D* renderer3D;
-	ModuleCamera3D* camera;
-	ModuleEngineUI* engineUI;
-
-	
-	
+	ModuleWindow*			window;
+	ModuleInput*			input;
+	ModuleSceneIntro*		scene_intro;
+	ModuleRenderer3D*		renderer3D;
+	ModuleCamera3D*			camera;
+	ModuleEngineUI*			gui;
 
 private:
 
 	Timer	ms_timer;
 	float	dt;
-	list<Module*> module_list;
+	std::list<Module*> list_modules;
 
 public:
 

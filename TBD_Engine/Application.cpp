@@ -4,12 +4,11 @@ Application::Application()
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
+
 	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	engineUI = new ModuleEngineUI(this);
-	
-	
+	gui = new ModuleEngineUI(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -19,12 +18,10 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(engineUI);
+	AddModule(gui);
 
-	
 	// Scenes
 	AddModule(scene_intro);
-	
 
 	// Renderer last!
 	AddModule(renderer3D);
@@ -32,15 +29,13 @@ Application::Application()
 
 Application::~Application()
 {
-	list<Module*>::reverse_iterator item = module_list.rbegin();
+	std::list<Module*>::reverse_iterator item = list_modules.rbegin();
 
-	while (item != module_list.rend())
+	while(item != list_modules.rend())
 	{
-		delete (*item);
+		delete *item;
 		item++;
 	}
-
-	module_list.clear();
 }
 
 bool Application::Init()
@@ -48,31 +43,26 @@ bool Application::Init()
 	bool ret = true;
 
 	// Call Init() in all modules
-	list<Module*> ::iterator item = module_list.begin();
+	std::list<Module*>::const_iterator item = list_modules.begin();
 
-	while (item != module_list.end() && ret)
+	while(item != list_modules.end() && ret == true)
 	{
-		if ((*item)->enabled)
-		{
-			ret = (*item)->Init();
-		}
-
+		ret = (*item)->Init();
 		item++;
 	}
 
 	// After all Init calls we call Start() in all modules
 	LOG("Application Start --------------");
+	item = list_modules.begin();
 
-	while (item != module_list.end() && ret)
+	while(item != list_modules.end() && ret == true)
 	{
-		if ((*item)->enabled)
-		{
-			ret = (*item)->Start();
-		}
+		ret = (*item)->Start();
 		item++;
 	}
-
+	
 	ms_timer.Start();
+
 	return ret;
 }
 
@@ -93,65 +83,50 @@ update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
-
-	list<Module*> ::const_iterator item = module_list.begin();
-
-	while (item != module_list.end() && ret == UPDATE_CONTINUE)
+	
+	std::list<Module*>::const_iterator item = list_modules.begin();
+	
+	while(item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		if ((*item)->enabled)
-		{
-			ret = (*item)->PreUpdate(dt);
-		}
-
+		ret = (*item)->PreUpdate(dt);
 		item++;
 	}
 
-	item = module_list.begin();
+	item = list_modules.begin();
 
-	while (item != module_list.end() && ret == UPDATE_CONTINUE)
+	while(item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		if ((*item)->enabled)
-		{
-			ret = (*item)->Update(dt);
-		}
-
+		ret = (*item)->Update(dt);
 		item++;
 	}
 
-	item = module_list.begin();
+	item = list_modules.begin();
 
-	while (item != module_list.end() && ret == UPDATE_CONTINUE)
+	while(item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		if ((*item)->enabled)
-		{
-			ret = (*item)->PostUpdate(dt);
-		}
-
+		ret = (*item)->PostUpdate(dt);
 		item++;
 	}
 
 	FinishUpdate();
+
 	return ret;
 }
 
 bool Application::CleanUp()
 {
 	bool ret = true;
-	list<Module*>::reverse_iterator item = module_list.rbegin();
+	std::list<Module*>::reverse_iterator item = list_modules.rbegin();
 
-	while (item != module_list.rend() && ret == true)
+	while(item != list_modules.rend() && ret == true)
 	{
-		if ((*item)->enabled)
-		{
-			ret = (*item)->CleanUp();
-		}
+		ret = (*item)->CleanUp();
 		item++;
 	}
-
 	return ret;
 }
 
 void Application::AddModule(Module* mod)
 {
-	module_list.push_back(mod);
+	list_modules.push_back(mod);
 }

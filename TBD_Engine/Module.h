@@ -1,25 +1,14 @@
-#ifndef _MODULE_H_
-#define _MODULE_H_
+#pragma once
 
 class Application;
-
-using namespace std;
-
-#include <iostream>
-#include <utility>
-#include <list>
-#include <iterator>
-#include <string>
-#include <vector>
-#include <queue>
-
+struct PhysBody3D;
 
 class Module
 {
-public:
-
+private :
 	bool enabled;
 
+public:
 	Application* App;
 
 	Module(Application* parent, bool start_enabled = true) : App(parent)
@@ -58,8 +47,6 @@ public:
 		return true; 
 	}
 
-	/*virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-	{}*/
+	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+	{}
 };
-
-#endif // _MODULE_H_
