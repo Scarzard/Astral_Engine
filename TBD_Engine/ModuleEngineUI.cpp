@@ -3,6 +3,7 @@
 #include "ModuleEngineUI.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include <string.h>
 
 
 ModuleEngineUI::ModuleEngineUI(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -112,6 +113,28 @@ update_status ModuleEngineUI::Update(float dt)
 		if (ImGui::Button("Close Me"))
 			show_another_window = false;
 		ImGui::End();
+	}
+
+	if (test_rng_window)
+	{
+		ImGui::Begin("Random Number Generator Window", &test_rng_window);
+		ImGui::Separator();
+
+		if (ImGui::Button("Totally random"))
+			rn1 = ldexp(pcg32_random_r(&rng), -32);
+
+		ImGui::SameLine();
+		ImGui::Text("Randomized number = %d", rn1);
+
+		if (ImGui::Button("0-10"))
+			rn2 = pcg32_boundedrand_r(&rng_bounded, 10);
+		ImGui::SameLine();
+		ImGui::Text("Randomized number = %d", rn2);
+
+		ImGui::End();
+
+
+		
 	}
 
 	

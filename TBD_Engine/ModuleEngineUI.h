@@ -7,6 +7,10 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+//PCG includes
+#include "PCG/entropy.h"
+#include "PCG/pcg_variants.h"
+
 class ModuleEngineUI : public Module
 {
 public:
@@ -24,9 +28,20 @@ public:
 	//void Draw() const;
 
 	bool show_demo_window = true;
-	bool show_another_window = true;
+	bool show_another_window = false;
+	bool test_rng_window = true;
 
 	ImGuiIO* io = nullptr;
+
+	//RNG variables
+	double rn1 = 0;
+	uint32_t rn2 = 0;
+
+	pcg32_random_t rng; //typedef struct 64-b
+	pcg_state_setseq_64 rng_bounded; // struct 64-b
+	pcg_state_setseq_64 rng_bounded2;
+
+	
 
 };
 
