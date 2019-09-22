@@ -2,12 +2,12 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 
-#include "Source/glew/include/GL/glew.h"
-#include "Source/SDL/include/SDL_opengl.h"
+#include "glew/include/GL/glew.h"
+#include "SDL/include/SDL_opengl.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
-#pragma comment(lib, "Source/glew/libx86/glew32.lib")
+#pragma comment(lib, "glew/libx86/glew32.lib")
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {

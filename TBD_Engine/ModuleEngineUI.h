@@ -3,9 +3,9 @@
 
 #include "Module.h"
 
-#include "Source/ImGui/imgui.h"
-#include "Source/ImGui/imgui_impl_sdl.h"
-#include "Source/ImGui/imgui_impl_opengl3.h"
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl3.h"
 
 class ModuleEngineUI : public Module
 {
