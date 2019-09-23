@@ -27,9 +27,10 @@ public:
 
 	//void Draw() const;
 
-	bool show_demo_window = true;
+	bool main_window = true;
+	bool show_demo_window = false;
 	bool show_another_window = false;
-	bool test_rng_window = true;
+	bool test_rng_window = false;
 
 	ImGuiIO* io = nullptr;
 
