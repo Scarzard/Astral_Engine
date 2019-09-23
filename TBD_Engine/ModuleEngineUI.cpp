@@ -29,6 +29,8 @@ bool ModuleEngineUI::Start()
 {
 	bool ret = true;
 
+	min_ = max_= min = max = 0;
+
 	return ret;
 }
 
@@ -138,16 +140,39 @@ update_status ModuleEngineUI::Update(float dt)
 			rn1 = ldexp(pcg32_random_r(&rng), -32);
 		ImGui::SameLine();
 		ImGui::Text(std::to_string(rn1).c_str());
+		ImGui::Separator();
 
 		if (ImGui::Button("0-10"))
 			rn2 = pcg32_boundedrand_r(&rng_bounded, 10);
 		ImGui::SameLine();
 		ImGui::Text("Randomized number = %d", rn2);
+		ImGui::Separator();
 
 		if (ImGui::Button("Totally random"))
-			rn3 = pcg32_random_r(&rng_bounded2);
+			rn3 = pcg32_random_r(&rng_bounded);
 		ImGui::SameLine();
 		ImGui::Text("Randomized number = %d", rn3);
+		ImGui::Separator();
+
+		//Random number within the intervals that you set yourself
+		ImGui::InputInt("Minimum limit", &min_);
+		ImGui::InputInt("Maximum limit ", &max_);
+		
+
+		ImGui::SliderInt("min", &min, min_, max_);
+		ImGui::SameLine();
+		ImGui::Text(" = %d", min);
+
+		ImGui::SliderInt("max", &max, min_, max_);
+		ImGui::SameLine();
+		ImGui::Text(" = %d", max);
+
+		if (ImGui::Button("Random number between the set interval"))
+			interval_random = pcg32i_boundedrand_r(&rng_bounded2, (max - min) + 1);
+		
+			
+		ImGui::SameLine();
+		ImGui::Text("Randomized number = %d", (interval_random));
 
 
 		ImGui::End();

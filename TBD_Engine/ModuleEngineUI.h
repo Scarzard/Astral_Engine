@@ -35,14 +35,16 @@ public:
 	ImGuiIO* io = nullptr;
 
 	//RNG variables
+	int min_, max_, min, max;
+
 	float rn1 = 0.0f;
 	uint32_t rn2 = 0;
 	uint32_t rn3 = 0;
+	int interval_random = 0.0f;
 
 	pcg32_random_t rng; //typedef struct 64-b
-	pcg32_random_t rng1; //typedef struct 64-b
 	pcg_state_setseq_64 rng_bounded; // struct 64-b
-	pcg_state_setseq_64 rng_bounded2;
+	pcg_state_setseq_32 rng_bounded2; // struct 32-b
 };
 
 #endif
