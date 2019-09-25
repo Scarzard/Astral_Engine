@@ -7,6 +7,13 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+//MGL includes
+
+#include "MathGeoLib/include/MathGeoLib.h"
+#include "MathGeoLib/include/MathBuildConfig.h"
+#include "MathGeoLib/include/MathGeoLibFwd.h"
+
+
 //PCG includes
 #include "PCG/entropy.h"
 #include "PCG/pcg_variants.h"
@@ -29,7 +36,7 @@ public:
 
 	bool main_window = true;
 	bool show_demo_window = false;
-	bool show_another_window = false;
+	bool show_mgl_window = false;
 	bool test_rng_window = false;
 
 	ImGuiIO* io = nullptr;
@@ -45,6 +52,12 @@ public:
 	pcg32_random_t rng; //typedef struct 64-b
 	pcg_state_setseq_64 rng_bounded; // struct 64-b
 	pcg_state_setseq_32 rng_bounded2; // struct 32-b
+
+	//MGL
+	Sphere sphere_1;
+	Sphere sphere_2;
+	float x, y, z;
+	bool isTouching;
 };
 
 #endif

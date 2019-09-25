@@ -29,7 +29,16 @@ bool ModuleEngineUI::Start()
 {
 	bool ret = true;
 
-	min_ = max_= min = max = 0;
+	min_ = max_ = min = max = 0;
+	x = y = z = 0.0f;
+	isTouching = false;
+
+	sphere_1 = Sphere({ x, y, z }, 1.0f);
+	sphere_2 = Sphere({ 5.0f, 0.0f, 0.0f }, 1.0f);
+
+	
+
+	
 
 	return ret;
 }
@@ -90,7 +99,7 @@ update_status ModuleEngineUI::Update(float dt)
 			test_rng_window = true;*/
 		
 		ImGui::Checkbox("Toggle demo window 1", &show_demo_window);
-		ImGui::Checkbox("Toggle demo window 2", &show_another_window);
+		ImGui::Checkbox("Toggle MathGeoLib window", &show_mgl_window);
 		ImGui::Checkbox("Toggle number generator window", &test_rng_window);
 
 		ImGui::End();
@@ -107,7 +116,7 @@ update_status ModuleEngineUI::Update(float dt)
 
 		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
 		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-		ImGui::Checkbox("Another Window", &show_another_window);
+		ImGui::Checkbox("Another Window", &show_mgl_window);
 
 		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
 		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
@@ -122,12 +131,26 @@ update_status ModuleEngineUI::Update(float dt)
 	}
 
 	// 3. Show another simple window.
-	if (show_another_window)
+	if (show_mgl_window)
 	{
-		ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+		ImGui::Begin("Another Window", &show_mgl_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
 		ImGui::Text("Hello from another window!");
 		if (ImGui::Button("Close Me"))
-			show_another_window = false;
+			show_mgl_window = false;
+
+		float x_ = 0.0f;
+		// tests
+		ImGui::SliderFloat("Move X", &x_, -10.f, 10.0f);
+		sphere_1 = Sphere({ x_, y, z }, 1.0f);
+		if (sphere_1.Intersects(sphere_2))
+		{
+			isTouching = true;
+		}
+		else isTouching = false;
+		ImGui::Separator();
+		ImGui::Text("Is touching ? %d", isTouching);
+	
+
 		ImGui::End();
 	}
 
