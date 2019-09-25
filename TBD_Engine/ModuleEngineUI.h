@@ -56,8 +56,14 @@ public:
 	//MGL
 	Sphere sphere_1;
 	Sphere sphere_2;
-	float x, y, z;
-	bool isTouching;
+
+	AABB aabb_1;
+	AABB aabb_2;
+
+	Triangle triangle_1;
+	Triangle triangle_2;
+
+	bool spheresIntersecting, trianglesIntersecting, AABBIntersecting;
 };
 
 #endif

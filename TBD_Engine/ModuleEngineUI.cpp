@@ -30,15 +30,15 @@ bool ModuleEngineUI::Start()
 	bool ret = true;
 
 	min_ = max_ = min = max = 0;
-	x = y = z = 0.0f;
-	isTouching = false;
+	spheresIntersecting = trianglesIntersecting = OBBIntersecting = false;
 
-	sphere_1 = Sphere({ x, y, z }, 1.0f);
+	sphere_1 = Sphere({ 0.0f, 0.0f, 0.0f }, 1.0f);
 	sphere_2 = Sphere({ 5.0f, 0.0f, 0.0f }, 1.0f);
 
-	
+	triangle_1 = Triangle(float3(1.0f, 0.0f, 0.0f), float3(0.0f, 1.0f, 0.0f), float3(0.0f, 0.0f, 1.0f));
+	triangle_2 = Triangle(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 0.0f));
 
-	
+
 
 	return ret;
 }
@@ -139,16 +139,38 @@ update_status ModuleEngineUI::Update(float dt)
 			show_mgl_window = false;
 
 		float x_ = 0.0f;
+		float trianglePos = 1.0f;
 		// tests
-		ImGui::SliderFloat("Move X", &x_, -10.f, 10.0f);
-		sphere_1 = Sphere({ x_, y, z }, 1.0f);
+		ImGui::SliderFloat("Move sphere_1 x pos", &x_, -10.f, 10.0f);
+		sphere_1 = Sphere({ x_, 0.0f, 0.0f }, 1.0f);
+
+		ImGui::SliderFloat("Move triangle pos", &trianglePos, 0.0f, 3.0f);
+		triangle_2 = Triangle(float3(trianglePos, 0.0f, 0.0f), float3(0.0f, trianglePos, 0.0f), float3(0.0f, 0.0f, trianglePos));
+
 		if (sphere_1.Intersects(sphere_2))
 		{
-			isTouching = true;
+			spheresIntersecting = true;
 		}
-		else isTouching = false;
+		else spheresIntersecting = false;
+
+		if (triangle_2.Intersects(triangle_1))
+		{
+			trianglesIntersecting = true;
+		}
+		else trianglesIntersecting = false;
+		
+		if (aabb_1.Intersects(aabb_2))
+		{
+			AABBIntersecting = true;
+		}
+		else AABBIntersecting = false;
 		ImGui::Separator();
-		ImGui::Text("Is touching ? %d", isTouching);
+		ImGui::Text("Are spheres intersecting ? %d", spheresIntersecting);
+		ImGui::Separator();
+		ImGui::Text("Are triangles intersecting ? %d", trianglesIntersecting);
+		ImGui::Separator();
+		ImGui::Text("Are OBBs intersecting ? %d", AABBIntersecting);
+
 	
 
 		ImGui::End();
