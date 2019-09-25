@@ -30,15 +30,16 @@ bool ModuleEngineUI::Start()
 	bool ret = true;
 
 	min_ = max_ = min = max = 0;
-	spheresIntersecting = trianglesIntersecting = OBBIntersecting = false;
+	spheresIntersecting = trianglesIntersecting = AABBIntersecting = false;
 
 	sphere_1 = Sphere({ 0.0f, 0.0f, 0.0f }, 1.0f);
 	sphere_2 = Sphere({ 5.0f, 0.0f, 0.0f }, 1.0f);
 
-	triangle_1 = Triangle(float3(1.0f, 0.0f, 0.0f), float3(0.0f, 1.0f, 0.0f), float3(0.0f, 0.0f, 1.0f));
+	triangle_1 = Triangle(float3(7.0f, 0.0f, 0.0f), float3(0.0f, 7.0f, 0.0f), float3(0.0f, 0.0f, 7.0f));
 	triangle_2 = Triangle(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 0.0f));
 
-
+	aabb_1 = AABB(float3(-2.0f, -2.0f, -2.0f), float3(0.0f, 0.0f, 0.0f));
+	aabb_2 = AABB(float3(0.0f, 0.0f, 0.0f), float3(2.0f, 2.0f, 2.0f));
 
 	return ret;
 }
@@ -138,14 +139,19 @@ update_status ModuleEngineUI::Update(float dt)
 		if (ImGui::Button("Close Me"))
 			show_mgl_window = false;
 
-		float x_ = 0.0f;
-		float trianglePos = 1.0f;
-		// tests
+
+		// MGL testers
+		float x_ = 0.0f;		
 		ImGui::SliderFloat("Move sphere_1 x pos", &x_, -10.f, 10.0f);
 		sphere_1 = Sphere({ x_, 0.0f, 0.0f }, 1.0f);
 
-		ImGui::SliderFloat("Move triangle pos", &trianglePos, 0.0f, 3.0f);
-		triangle_2 = Triangle(float3(trianglePos, 0.0f, 0.0f), float3(0.0f, trianglePos, 0.0f), float3(0.0f, 0.0f, trianglePos));
+		int trianglePos = 0;
+		ImGui::SliderInt("Move triangle_2 pos", &trianglePos, -10, 10);
+		triangle_2 = Triangle(float3((float)trianglePos, 0.0f, 0.0f), float3(0.0f, (float)trianglePos, 0.0f), float3(0.0f, 0.0f, (float)trianglePos));
+
+		int AABBpos = 0;
+		ImGui::SliderInt("Move aabb_1 pos", &AABBpos, -3, 3);
+		aabb_1 = AABB(float3((float)AABBpos, (float)AABBpos, (float)AABBpos), float3((float)AABBpos, (float)AABBpos, (float)AABBpos));
 
 		if (sphere_1.Intersects(sphere_2))
 		{
@@ -169,7 +175,7 @@ update_status ModuleEngineUI::Update(float dt)
 		ImGui::Separator();
 		ImGui::Text("Are triangles intersecting ? %d", trianglesIntersecting);
 		ImGui::Separator();
-		ImGui::Text("Are OBBs intersecting ? %d", AABBIntersecting);
+		ImGui::Text("Are AABBs intersecting ? %d", AABBIntersecting);
 
 	
 
