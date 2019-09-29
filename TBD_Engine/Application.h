@@ -11,6 +11,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEngineUI.h"
+#include "ModuleEditor.h"
 
 class Application
 {
@@ -21,6 +22,7 @@ public:
 	ModuleRenderer3D*		renderer3D;
 	ModuleCamera3D*			camera;
 	ModuleEngineUI*			gui;
+	ModuleEditor*			editor;
 
 private:
 
@@ -44,6 +46,5 @@ private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
-
 
 };
