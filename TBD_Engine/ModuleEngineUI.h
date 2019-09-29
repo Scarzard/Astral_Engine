@@ -34,7 +34,7 @@ public:
 
 	//void Draw() const;
 
-	bool main_window = true;
+	//bool main_window = true;
 	bool show_demo_window = false;
 	bool show_mgl_window = false;
 	bool test_rng_window = false;

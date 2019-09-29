@@ -78,6 +78,11 @@ void Application::FinishUpdate()
 {
 }
 
+void Application::OpenLink(const char* link)
+{
+	ShellExecuteA(NULL, "open", link, NULL, NULL, SW_SHOWNORMAL);
+}
+
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {

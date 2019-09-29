@@ -37,9 +37,13 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	//Request browser
+	void OpenLink(const char* link);
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+
 };

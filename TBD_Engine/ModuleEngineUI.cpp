@@ -82,29 +82,37 @@ update_status ModuleEngineUI::Update(float dt)
 			ImGui::EndMenu();
 		}
 
-		if (ImGui::BeginMenu("Tools", true)) {
+		if (ImGui::BeginMenu("View"))
+		{
+			if (ImGui::MenuItem("Toggle demo window"))
+				show_demo_window = !show_demo_window;
 
+			if (ImGui::MenuItem("Toggle MathGeoLib window"))
+				show_mgl_window = !show_mgl_window;
+
+			if (ImGui::MenuItem("Toggle Number Generator Window"))
+				test_rng_window = !test_rng_window;
+
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Help")) 
+		{
+			if (ImGui::MenuItem("Documentation"))
+				App->OpenLink("https://github.com/Scarzard/Placeholder_Engine/wiki");
+
+			if (ImGui::MenuItem("Download latest version"))
+				App->OpenLink("https://github.com/Scarzard/Placeholder_Engine/releases");
+
+			if (ImGui::MenuItem("Report a bug"))
+				App->OpenLink("https://github.com/Scarzard/Placeholder_Engine/issues");
+
+		
 			ImGui::EndMenu();
 		}
 	}
 	ImGui::EndMainMenuBar();
 
-	if (main_window)
-	{
-		ImGui::Begin("Main window");
-		/*if (ImGui::Button("Open Demo window 1"))
-			show_demo_window = true;
-		if (ImGui::Button("Open Demo window 2"))
-			show_another_window = true;
-		if (ImGui::Button("Open RNG window"))
-			test_rng_window = true;*/
-		
-		ImGui::Checkbox("Toggle demo window 1", &show_demo_window);
-		ImGui::Checkbox("Toggle MathGeoLib window", &show_mgl_window);
-		ImGui::Checkbox("Toggle number generator window", &test_rng_window);
-
-		ImGui::End();
-	}
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	if (show_demo_window)
 	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
