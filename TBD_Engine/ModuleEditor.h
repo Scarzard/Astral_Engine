@@ -33,6 +33,7 @@ public:
 	bool show_demo_window = false;
 	bool show_mgl_window = false;
 	bool test_rng_window = false;
+	bool configuration_window = false;
 
 	
 

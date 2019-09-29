@@ -59,6 +59,9 @@ update_status ModuleEditor::Update(float dt)
 			if (ImGui::MenuItem("Toggle Number Generator Window"))
 				test_rng_window = !test_rng_window;
 
+			if (ImGui::MenuItem("Toggle Configuration window"))
+				configuration_window = !configuration_window;
+
 			ImGui::EndMenu();
 		}
 
@@ -202,6 +205,36 @@ update_status ModuleEditor::Update(float dt)
 
 		ImGui::End();
 
+	}
+
+	if (configuration_window)
+	{
+		ImGui::Begin("Application Configuration Window", &configuration_window);
+		ImGui::Separator();
+
+		if (ImGui::CollapsingHeader("Application"))
+		{
+			ImGui::InputText("Application name", TITLE, 20);
+			ImGui::InputText("Organization name", ORGANIZATION, 40);
+			//Framerate Histograms
+		}
+
+		if (ImGui::CollapsingHeader("Window"))
+		{
+
+		}
+
+		if (ImGui::CollapsingHeader("Input"))
+		{
+
+		}
+
+		if (ImGui::CollapsingHeader("Hardware"))
+		{
+
+		}
+
+		ImGui::End();
 	}
 
 	return UPDATE_CONTINUE;

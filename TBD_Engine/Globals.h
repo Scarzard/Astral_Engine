@@ -37,3 +37,4 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
 #define TITLE "TBD ENGINE"
+#define ORGANIZATION "CITM - UPC TECH TALENT CENTER"
