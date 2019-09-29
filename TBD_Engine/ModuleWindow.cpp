@@ -27,8 +27,6 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 2.1
@@ -87,8 +85,136 @@ bool ModuleWindow::CleanUp()
 	SDL_Quit();
 	return true;
 }
-
+//Setters
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
+}
+
+void ModuleWindow::SetBrightness(float brightness)
+{
+	SDL_SetWindowBrightness(window, brightness);
+}
+
+void ModuleWindow::SetWidth(uint width)
+{
+	SDL_SetWindowSize(window, width, height);
+	this->width = width;
+
+	if (!fullscreen)
+		App->renderer3D->OnResize(width, height);
+}
+
+
+void ModuleWindow::SetHeigth(uint height)
+{
+	SDL_SetWindowSize(window, width, height);
+	this->height = height;
+
+	if (!fullscreen)
+		App->renderer3D->OnResize(width, height);
+}
+
+void ModuleWindow::SetWindowSize(int w, int h)
+{
+	if (w > 0 && h > 0)
+	{
+		width = w;
+		height = h;
+		SDL_SetWindowSize(window, width, height);
+
+		if (!fullscreen)
+			App->renderer3D->OnResize(width, height);
+	}
+}
+
+
+void ModuleWindow::SetSize(uint size, int& w, int& h)
+{
+	w = screen_w * size;
+	h = screen_h * size;
+
+	this->size = size;
+
+	SDL_SetWindowSize(window, w, h);
+
+	if (!fullscreen)
+		App->renderer3D->OnResize(w, h);
+}
+
+void ModuleWindow::SetFullscreen(bool fullscreen_)
+{
+	this->fullscreen = fullscreen_;
+
+	if (fullscreen_)
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+	else
+		SDL_SetWindowFullscreen(window, 0);
+}
+
+void ModuleWindow::SetBorderless(bool borderless_)
+{
+	if (!(fullscreen && fullscreen_desktop))
+	{
+		this->borderless = borderless_;
+
+		if (borderless_)
+			SDL_SetWindowBordered(window, SDL_FALSE);
+		else
+			SDL_SetWindowBordered(window, SDL_TRUE);
+	}
+}
+
+void ModuleWindow::SetFullScreenDesktop(bool fd)
+{
+	this->fullscreen_desktop = fd;
+
+	if (fullscreen_desktop)
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	else 
+		SDL_SetWindowFullscreen(window, 0);
+
+}
+
+//Getters
+float ModuleWindow::GetBrightness() const
+{
+	return SDL_GetWindowBrightness(window);
+}
+
+uint ModuleWindow::GetSize() const
+{
+	return size;
+}
+
+void ModuleWindow::GetWindowSize(int & width, int & height)
+{
+	SDL_GetWindowSize(window, &width, &height);
+}
+
+uint ModuleWindow::GetWidth() const
+{
+	return width;
+}
+
+uint ModuleWindow::GetHeight() const
+{
+	return height;
+}
+
+
+bool ModuleWindow::GetFullscreenWindow() const
+{
+	return fullscreen;
+}
+
+bool ModuleWindow::GetBorderlessWindow() const
+{
+	return borderless;
+}
+
+
+bool ModuleWindow::GetFullDesktopWindow() const
+{
+	return fullscreen_desktop;
 }

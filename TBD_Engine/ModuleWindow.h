@@ -18,7 +18,43 @@ public:
 	bool Init();
 	bool CleanUp();
 
+public:
+	//Setters
 	void SetTitle(const char* title);
+
+	void SetBrightness(float brightness);
+	void SetWidth(uint width);
+	void SetHeigth(uint height);
+	void SetWindowSize(int width, int height);
+	void SetSize(uint size, int& w, int& h);
+	void SetFullscreen(bool full);
+	void SetBorderless(bool border);
+	void SetFullScreenDesktop(bool desktop);
+
+	//Getters
+	float GetBrightness() const;
+	uint GetWidth() const;
+	uint GetHeight() const;
+	void GetWindowSize(int &width, int &height);
+	uint GetSize() const;
+	bool GetFullscreenWindow() const;
+	bool GetFullDesktopWindow() const;
+	bool GetBorderlessWindow() const;
+
+
+public:
+	int screen_w = SCREEN_WIDTH;
+	int screen_h = SCREEN_HEIGHT;
+
+	uint size = SCREEN_SIZE;
+
+	int width = SCREEN_WIDTH * SCREEN_SIZE;
+	int height = SCREEN_HEIGHT * SCREEN_SIZE;
+
+	bool fullscreen = false;
+	bool resizable = false;
+	bool borderless = false;
+	bool fullscreen_desktop = false;
 
 public:
 	//The window we'll be rendering to
