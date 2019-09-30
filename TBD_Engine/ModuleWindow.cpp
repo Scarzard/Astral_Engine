@@ -105,7 +105,6 @@ void ModuleWindow::SetWidth(uint width)
 		App->renderer3D->OnResize(width, height);
 }
 
-
 void ModuleWindow::SetHeigth(uint height)
 {
 	SDL_SetWindowSize(window, width, height);
@@ -127,7 +126,6 @@ void ModuleWindow::SetWindowSize(int w, int h)
 			App->renderer3D->OnResize(width, height);
 	}
 }
-
 
 void ModuleWindow::SetSize(uint size, int& w, int& h)
 {

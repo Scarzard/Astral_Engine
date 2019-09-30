@@ -81,11 +81,37 @@ update_status ModuleEditor::Update(float dt)
 			if (ImGui::MenuItem("Report a bug"))
 				App->OpenLink("https://github.com/Scarzard/Placeholder_Engine/issues");
 
+			if (ImGui::MenuItem("About"))
+				about_window = !about_window;
 
 			ImGui::EndMenu();
 		}
 	}
 	ImGui::EndMainMenuBar();
+
+	if (about_window)
+	{
+		ImGui::Text("Placeholder Engine v0.1");
+		ImGui::Separator();
+		ImGui::Text("Best game engine in the world");
+		ImGui::Separator();
+		if(ImGui::Button("By Josep Lleal")) 
+			App->OpenLink("https://github.com/JosepLleal/");
+		ImGui::SameLine();
+		if(ImGui::Button("and Victor Chen"))
+			App->OpenLink("https://github.com/Scarzard/");
+		ImGui::Separator();
+		ImGui::Text("3rd party libraries used");
+		ImGui::BulletText("SDL version");
+		ImGui::BulletText("ImGui");
+		ImGui::BulletText("Glew");
+		ImGui::BulletText("PCG");
+		ImGui::BulletText("MathGeoLib");
+		ImGui::BulletText("OpenGL");
+		ImGui::Separator();
+		ImGui::TextWrapped("License\n\nMIT License\n\nCopyright(c) 2019 Josep Lleal and Victor Chen\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
+
+	}
 
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	if (show_demo_window)
@@ -120,7 +146,6 @@ update_status ModuleEditor::Update(float dt)
 		ImGui::Text("Hello from another window!");
 		if (ImGui::Button("Close Me"))
 			show_mgl_window = false;
-
 
 		// MGL testers
 		float x_ = 0.0f;
