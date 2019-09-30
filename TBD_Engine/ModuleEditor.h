@@ -27,9 +27,6 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	//void Draw() const;
-
-	//bool main_window = true;
 	bool show_demo_window = false;
 	bool show_mgl_window = false;
 	bool test_rng_window = false;
@@ -63,6 +60,10 @@ public:
 	Triangle triangle_2;
 
 	bool spheresIntersecting, trianglesIntersecting, AABBIntersecting;
+private:
+	int cache_size = 0;
+	int cpu_count = 0;
+	int ram = 0;
 
 };
 

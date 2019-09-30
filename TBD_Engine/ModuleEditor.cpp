@@ -28,6 +28,11 @@ bool ModuleEditor::Start()
 	aabb_1 = AABB(float3(-2.0f, -2.0f, -2.0f), float3(0.0f, 0.0f, 0.0f));
 	aabb_2 = AABB(float3(0.0f, 0.0f, 0.0f), float3(2.0f, 2.0f, 2.0f));
 
+	//Hardware
+	cpu_count = SDL_GetCPUCount();
+	cache_size = SDL_GetCPUCacheLineSize();
+	ram = SDL_GetSystemRAM();
+
 	return ret;
 }
 
@@ -244,8 +249,6 @@ update_status ModuleEditor::Update(float dt)
 			ImGui::Checkbox("Fullscreen Desktop", &App->window->fullscreen_desktop);
 			App->window->SetFullScreenDesktop(App->window->fullscreen_desktop);
 
-
-
 		}
 		if (ImGui::CollapsingHeader("Input"))
 		{
@@ -254,7 +257,11 @@ update_status ModuleEditor::Update(float dt)
 
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
-
+			//ImGui::Text("SDL version : %c", SDL_GetVersion());
+			ImGui::Separator();
+			ImGui::Text("CPUs : %d (Cache: %d bytes)", cpu_count, cache_size);
+			ImGui::Text("System RAM: %d MB", ram);
+			ImGui::Separator();
 		}
 
 		ImGui::End();
