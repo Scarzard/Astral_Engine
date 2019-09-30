@@ -30,6 +30,7 @@ public:
 	void SetFullscreen(bool full);
 	void SetBorderless(bool border);
 	void SetFullScreenDesktop(bool desktop);
+	void SetResizable(bool resize);
 
 	//Getters
 	float GetBrightness() const;

@@ -173,7 +173,16 @@ void ModuleWindow::SetFullScreenDesktop(bool fd)
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 	else 
 		SDL_SetWindowFullscreen(window, 0);
+}
 
+void ModuleWindow::SetResizable(bool resize)
+{
+	this->resizable = resize;
+
+	//if (resizable && !fullscreen)
+	//	SDL_SetWindowResizable(window, SDL_TRUE);
+	//else
+	//	SDL_SetWindowResizable(window, SDL_FALSE);
 }
 
 //Getters

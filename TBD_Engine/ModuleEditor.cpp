@@ -221,9 +221,32 @@ update_status ModuleEditor::Update(float dt)
 
 		if (ImGui::CollapsingHeader("Window"))
 		{
+			ImGui::SliderFloat("Brightness", &brightness_slider, 0.0f, 1.0f);
+			App->window->SetBrightness(brightness_slider);
+
+			ImGui::SliderInt("Width", &width_slider, 600, 1920);
+			App->window->SetWidth(width_slider);
+
+			ImGui::SliderInt("Height", &height_slider, 400, 1080);
+			App->window->SetHeigth(height_slider);
+
+
+			ImGui::Checkbox("Fullscreen", &App->window->fullscreen);
+			App->window->SetFullscreen(App->window->fullscreen);
+			ImGui::SameLine();
+		
+			ImGui::Checkbox("Resizable", &App->window->resizable);
+			App->window->SetResizable(App->window->resizable);
+
+			ImGui::Checkbox("Borderless", &App->window->borderless);
+			App->window->SetBorderless(App->window->borderless);
+			ImGui::SameLine();
+			ImGui::Checkbox("Fullscreen Desktop", &App->window->fullscreen_desktop);
+			App->window->SetFullScreenDesktop(App->window->fullscreen_desktop);
+
+
 
 		}
-
 		if (ImGui::CollapsingHeader("Input"))
 		{
 
