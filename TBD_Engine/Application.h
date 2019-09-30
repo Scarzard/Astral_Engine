@@ -26,8 +26,6 @@ public:
 
 private:
 
-	Timer	ms_timer;
-	float	dt;
 	std::list<Module*> list_modules;
 
 public:
@@ -41,10 +39,28 @@ public:
 
 	//Request browser
 	void OpenLink(const char* link);
+
+	//Framerate logs
+	std::vector<float>	ms_log;
+	std::vector<float>	fps_log;
+	int	MaxFPS = -1;
+
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+	//Framerate
+	uint	frame_count = 0;
+	Timer	time_since_start;
+	Timer	frame_time;
+	Timer	last_sec_frame_time;
+
+	Uint32	new_sec_FrameCount = 0;
+	Uint32	prev_sec_FrameCount = 0;
+	float	dt = 0.0f;
+	
+
 
 };

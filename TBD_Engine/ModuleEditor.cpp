@@ -246,7 +246,13 @@ update_status ModuleEditor::Update(float dt)
 		{
 			ImGui::InputText("Application name", TITLE, 20);
 			ImGui::InputText("Organization name", ORGANIZATION, 40);
+
 			//Framerate Histograms
+			char title[25];
+			sprintf_s(title, 25, "Framerate %.1f", App->fps_log[App->fps_log.size() - 1]);
+			ImGui::PlotHistogram("##framerate", &App->fps_log[0], App->fps_log.size(), 0, title, 0.0f, 140.0f, ImVec2(310, 100));
+			sprintf_s(title, 25, "Milliseconds %.1f", App->ms_log[App->ms_log.size() - 1]);
+			ImGui::PlotHistogram("##milliseconds", &App->ms_log[0], App->ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 		}
 
 		if (ImGui::CollapsingHeader("Window"))

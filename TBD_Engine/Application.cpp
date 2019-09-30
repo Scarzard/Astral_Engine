@@ -63,7 +63,7 @@ bool Application::Init()
 		item++;
 	}
 	
-	ms_timer.Start();
+	frame_time.Start();
 
 	return ret;
 }
@@ -71,13 +71,41 @@ bool Application::Init()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	dt = (float)ms_timer.Read() / 1000.0f;
-	ms_timer.Start();
+	frame_count++;
+	new_sec_FrameCount++;
+
+	dt = (float)frame_time.ReadSec();
+	frame_time.Start();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	if (last_sec_frame_time.Read() > 1000) {
+
+		last_sec_frame_time.Start();
+		prev_sec_FrameCount = new_sec_FrameCount;
+		new_sec_FrameCount = 0;
+	}
+
+	Uint32 last_frame_ms = frame_time.Read();
+	Uint32 frames_on_last_update = prev_sec_FrameCount;
+
+
+	// FPS LOG
+	fps_log.push_back(frames_on_last_update);
+	if (fps_log.size() > 100)
+	{
+		fps_log.erase(fps_log.begin());
+	}
+
+	// MS LOG
+	ms_log.push_back(last_frame_ms);
+	if (ms_log.size() > 100)
+	{
+		ms_log.erase(ms_log.begin());
+	}
+
 }
 
 void Application::OpenLink(const char* link)

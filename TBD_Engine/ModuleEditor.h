@@ -36,6 +36,8 @@ public:
 	float brightness_slider = 1.0f;
 	int width_slider = SCREEN_WIDTH;
 	int height_slider = SCREEN_HEIGHT;
+
+	
 	
 
 	//RNG variables
