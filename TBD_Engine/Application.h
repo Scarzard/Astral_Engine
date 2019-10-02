@@ -40,6 +40,7 @@ public:
 	//Request browser
 	void OpenLink(const char* link);
 
+
 	//Framerate logs
 	std::vector<float>	ms_log;
 	std::vector<float>	fps_log;

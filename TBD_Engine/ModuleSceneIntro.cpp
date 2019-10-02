@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
+#include "Primitive.h"
 
 #include "Math.h"
 
@@ -35,9 +36,9 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	/*Plane p(0, 1, 0, 0);
+	PlaneP p(0, 1, 0, 0);
 	p.axis = true;
-	p.Render();*/
+	p.Render();
 
 	return UPDATE_CONTINUE;
 }

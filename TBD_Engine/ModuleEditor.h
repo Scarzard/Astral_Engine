@@ -32,6 +32,7 @@ public:
 	bool test_rng_window = false;
 	bool configuration_window = false;
 	bool about_window = false;
+	bool show_console = true;
 
 	float brightness_slider = 1.0f;
 	int width_slider = SCREEN_WIDTH;

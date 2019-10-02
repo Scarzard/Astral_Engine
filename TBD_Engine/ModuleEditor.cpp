@@ -298,6 +298,17 @@ update_status ModuleEditor::Update(float dt)
 			ImGui::Separator();
 		}
 
+
+
+		ImGui::End();
+	}
+
+	//console
+	if (show_console)
+	{
+		ImGui::Begin("Console", &show_console);
+		ImGui::SetWindowSize(ImVec2(800, 400));
+
 		ImGui::End();
 	}
 
