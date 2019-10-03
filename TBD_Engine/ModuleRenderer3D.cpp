@@ -4,6 +4,8 @@
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -42,12 +44,20 @@ bool ModuleRenderer3D::Init()
 
 		// Initialize glew
 		GLenum error = glewInit();
+		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
 
 		if (error != GL_NO_ERROR)
 		{
 			LOG("Error initializing glew! %s\n"/*, glewGetErrorString(error)*/);
 			ret = false;
 		}
+
+
+		//To detect our current hardware and driver capabilities
+		LOG("Vendor: %s", glGetString(GL_VENDOR));
+		LOG("Renderer: %s", glGetString(GL_RENDERER));
+		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -102,11 +112,21 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
+		
+		lights[0].Active(true);
+	
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		glClearDepth(1.0f);
+		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
-		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
+
+
+		glViewport(0,0,App->window->width, App->window->height);
 	}
 
 	// Projection matrix for
@@ -118,6 +138,10 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+
+	Color c = App->camera->background;
+	glClearColor(c.r, c.g, c.b, c.a);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 

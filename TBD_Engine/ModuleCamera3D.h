@@ -26,6 +26,8 @@ public:
 	
 	vec3 X, Y, Z, Position, Reference;
 
+	Color background = Color(0, 0, 0, 255);
+
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
