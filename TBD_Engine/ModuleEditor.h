@@ -12,10 +12,12 @@
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLibFwd.h"
 
-
 //PCG includes
 #include "PCG/entropy.h"
 #include "PCG/pcg_variants.h"
+
+//Parson
+#include "parson/parson.h"
 
 class ModuleEditor : public Module
 {

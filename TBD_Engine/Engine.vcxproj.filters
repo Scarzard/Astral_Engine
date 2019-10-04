@@ -40,6 +40,9 @@
     <Filter Include="Sources\Tools\PCG">
       <UniqueIdentifier>{c609d461-f298-4468-91ac-a172497e371d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\Parson">
+      <UniqueIdentifier>{b85e8297-372e-4524-9c5c-8aafbf3057a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -312,6 +315,9 @@
     <ClInclude Include="Primitive.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="parson\parson.h">
+      <Filter>Sources\Tools\Parson</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -472,6 +478,9 @@
     </ClCompile>
     <ClCompile Include="Primitive.cpp">
       <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="parson\parson.c">
+      <Filter>Sources\Tools\Parson</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
