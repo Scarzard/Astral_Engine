@@ -19,6 +19,9 @@
 //Parson
 #include "parson/parson.h"
 
+//Console
+#include "Console.h"
+
 class ModuleEditor : public Module
 {
 public:
@@ -40,7 +43,8 @@ public:
 	int width_slider = SCREEN_WIDTH;
 	int height_slider = SCREEN_HEIGHT;
 
-	
+
+	AppConsole Console;
 	
 
 	//RNG variables
@@ -66,6 +70,7 @@ public:
 	Triangle triangle_2;
 
 	bool spheresIntersecting, trianglesIntersecting, AABBIntersecting;
+
 private:
 	int cache_size = 0;
 	int cpu_count = 0;

@@ -63,6 +63,9 @@ update_status ModuleEditor::Update(float dt)
 			
 			ImGui::MenuItem("Toggle Configuration window", NULL, &configuration_window);
 
+			ImGui::MenuItem("Cosnole", NULL, &show_console);
+
+
 			ImGui::EndMenu();
 		}
 
@@ -307,7 +310,9 @@ update_status ModuleEditor::Update(float dt)
 	if (show_console)
 	{
 		ImGui::Begin("Console", &show_console);
-		ImGui::SetWindowSize(ImVec2(800, 400));
+		//ImGui::SetWindowSize(ImVec2(800, 400));
+		for (int i = 0; i < App->Logs_Console.size(); ++i)
+			ImGui::Text(App->Logs_Console[i].data());
 
 		ImGui::End();
 	}

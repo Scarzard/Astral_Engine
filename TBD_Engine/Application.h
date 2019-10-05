@@ -40,6 +40,9 @@ public:
 	//Request browser
 	void OpenLink(const char* link);
 
+	void LogInConsole(const char* format, ...);
+	std::vector<std::string>	Logs_Console;
+
 
 	//Framerate logs
 	std::vector<float>	ms_log;

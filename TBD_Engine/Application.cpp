@@ -54,7 +54,7 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
+	LogInConsole("Application Start --------------");
 	item = list_modules.begin();
 
 	while(item != list_modules.end() && ret == true)
@@ -111,6 +111,28 @@ void Application::FinishUpdate()
 void Application::OpenLink(const char* link)
 {
 	ShellExecuteA(NULL, "open", link, NULL, NULL, SW_SHOWNORMAL);
+}
+
+
+void Application::LogInConsole(const char* format, ...)
+{
+	static char tmp_string[4096];
+	static char tmp_string2[4096];
+	static va_list  ap;
+
+	// Construct the string from variable arguments
+	va_start(ap, format);
+	vsprintf_s(tmp_string, 4096, format, ap);
+	va_end(ap);
+	sprintf_s(tmp_string2, 4096, "\n%s(%d) : %s", tmp_string);
+	OutputDebugString(tmp_string2);
+
+	//pass the string to the vector of strings to later print them in the console 
+	const char* string = tmp_string2;
+	Logs_Console.push_back(string);
+	editor->Console.AddLog(string);
+
+
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
