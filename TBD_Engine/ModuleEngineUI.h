@@ -2,6 +2,7 @@
 #define __MODULEENGINEUI_H__
 
 #include "Module.h"
+#include "ImGui/imgui.h"
 
 class ModuleEngineUI : public Module
 {
@@ -16,6 +17,9 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+private:
+	ImGuiIO* io = nullptr;
+	bool p_open = true;
 	
 };
 
