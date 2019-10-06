@@ -19,6 +19,8 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	void UI_Render();
+
 private:
 	ImGuiIO* io = nullptr;
 	bool p_open = true;

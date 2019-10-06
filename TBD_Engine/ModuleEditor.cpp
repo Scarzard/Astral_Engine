@@ -69,6 +69,13 @@ update_status ModuleEditor::Update(float dt)
 			ImGui::EndMenu();
 		}
 
+		if (ImGui::BeginMenu("Create"))
+		{
+			ImGui::MenuItem("Cube", NULL);
+
+			ImGui::EndMenu();
+		}
+
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("Documentation"))

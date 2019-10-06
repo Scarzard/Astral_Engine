@@ -312,9 +312,6 @@
     <ClInclude Include="ModuleEditor.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Primitive.h">
-      <Filter>Sources\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="parson\parson.h">
       <Filter>Sources\Tools\Parson</Filter>
     </ClInclude>
@@ -478,9 +475,6 @@
     </ClCompile>
     <ClCompile Include="ModuleEditor.cpp">
       <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Primitive.cpp">
-      <Filter>Sources\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="parson\parson.c">
       <Filter>Sources\Tools\Parson</Filter>

@@ -13,6 +13,7 @@ public:
 	~ModuleRenderer3D();
 
 	bool Init();
+	bool Start();
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
@@ -25,4 +26,14 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	//DRAW CUBE INFO
+	uint id_vertices = 0;
+	uint id_no_dup_vertices = 0;
+	uint id_indices = 0;
+
+	
+
+
+	
 };

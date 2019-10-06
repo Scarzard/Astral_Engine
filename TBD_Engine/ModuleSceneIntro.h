@@ -14,12 +14,6 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-private:
 
-	float vertices[300];
-	int indices[300];
-
-	int num_vertices = 0;
-	int num_indices = 0;
-
+	
 };

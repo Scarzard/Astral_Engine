@@ -99,9 +99,7 @@ update_status ModuleEngineUI::PostUpdate(float dt)
 	}
 	ImGui::End();
 
-	// Rendering
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -115,4 +113,11 @@ bool ModuleEngineUI::CleanUp()
 	ImGui::DestroyContext();
 
 	return ret;
+}
+
+void ModuleEngineUI::UI_Render()
+{
+	// Rendering function called in rednerer3D 
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
