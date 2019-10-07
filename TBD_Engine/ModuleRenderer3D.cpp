@@ -306,9 +306,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	//Debug Render
 
-	//UI Render
-	App->gui->UI_Render();
-
 	//LAST THING TO DO IN POSTUPDATE
 	SDL_GL_SwapWindow(App->window->window);
 
