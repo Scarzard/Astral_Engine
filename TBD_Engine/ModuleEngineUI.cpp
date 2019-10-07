@@ -1,10 +1,7 @@
 #include "Application.h"
 #include "ModuleEngineUI.h"
 #include "ModuleRenderer3D.h"
-
-#include "ImGui/imgui.h"
-#include "ImGui/imgui_impl_sdl.h"
-#include "ImGui/imgui_impl_opengl3.h"
+#include "SceneGame.h"
 
 
 ModuleEngineUI::ModuleEngineUI(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -27,10 +24,11 @@ bool ModuleEngineUI::Init()
 	ImGui::StyleColorsDark();
 	ImGui_ImplOpenGL3_Init();
 	
-
+	windows.push_back(new SceneGame(App));
 	
 	return true;
 }
+
 
 update_status ModuleEngineUI::PreUpdate(float dt)
 {  
@@ -45,15 +43,12 @@ update_status ModuleEngineUI::PreUpdate(float dt)
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
+	CreateMainMenuToolbar();
 
-	return UPDATE_CONTINUE;
-}
-
-update_status ModuleEngineUI::Update(float dt)
-{
-	menu();
 	if (show_demo_window)
 	{
+		ImGui::ShowDemoWindow();
+
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		static float f = 0.0f;
 		static int counter = 0;
@@ -70,6 +65,14 @@ update_status ModuleEngineUI::Update(float dt)
 		ImGui::End();
 		ImGui::PopStyleVar();
 	}
+
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleEngineUI::Update(float dt)
+{
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -100,7 +103,7 @@ bool ModuleEngineUI::CleanUp()
 	return ret;
 }
 
-void ModuleEngineUI::menu()
+void ModuleEngineUI::CreateMainMenuToolbar()
 {
 
 	bool opt_fullscreen = true;

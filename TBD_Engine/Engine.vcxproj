@@ -164,6 +164,7 @@
     <ClInclude Include="PCG\include\pcg_extras.hpp" />
     <ClInclude Include="PCG\include\pcg_random.hpp" />
     <ClInclude Include="PCG\include\pcg_uint128.hpp" />
+    <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +220,7 @@
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="parson\parson.c" />
+    <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -125,8 +125,6 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
 
-
-		glViewport(0,0,App->window->width, App->window->height);
 	}
 
 	// Projection matrix for
@@ -305,6 +303,9 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//--------------------------------------------------------------
 
 	//Debug Render
+
+	//UI Render
+	//App->gui->UI_Render();
 
 	//LAST THING TO DO IN POSTUPDATE
 	SDL_GL_SwapWindow(App->window->window);
