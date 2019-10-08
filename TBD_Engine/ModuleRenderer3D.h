@@ -27,13 +27,5 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	//DRAW CUBE INFO
-	uint id_vertices = 0;
-	uint id_no_dup_vertices = 0;
-	uint id_indices = 0;
-
-	
-
-
-	
+		
 };
