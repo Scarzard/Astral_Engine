@@ -14,9 +14,12 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	void DrawCube_36v(float x, float y, float z, float size, uint red, uint green, uint blue);
+	void DrawCube_8v(float x, float y, float z, float size, uint red, uint green, uint blue);
+
 
 	//DRAW CUBE INFO
 	uint id_vertices = 0;
-	uint id_no_dup_vertices = 0;
-	uint id_indices = 0;
+	uint id_no_dup_vertices = 1;
+	uint id_indices = 2;
 };
