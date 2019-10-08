@@ -1,24 +1,21 @@
-#ifndef _FRAMEBUFFFEROBJECT_H_
-#define _FRAMEBUFFFEROBJECT_H_
-#include "Application.h"
-#include "Module.h"
+#ifndef _FRAMEBUFFEROBJECT_H_
+#define _FRAMEBUFFEROBJECT_H_
 
-class FrameBuffferObject : public Module
+class FrameBufferObject
 {
 public:
-	FrameBuffferObject(Application* app, bool start_enabled = true);
-	~FrameBuffferObject();
-	bool Init();
-	bool Start();
+	FrameBufferObject();
+	~FrameBufferObject();
+	bool Start(ImVec2 size);
 	update_status PreUpdate();
 	update_status PostUpdate();
 	bool CleanUp();
 
 private:
-	uint fbo;
-	uint texture;
+	unsigned int fbo;
+	unsigned int texture;
 
 };
 
-#endif // !_FRAMEBUFFFEROBJECT_H_
+#endif // !_FRAMEBUFFEROBJECT_H_
 

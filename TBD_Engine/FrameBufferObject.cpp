@@ -2,66 +2,77 @@
 #include "FrameBufferObject.h"
 #include "glew/include/GL/glew.h"
 
-FrameBuffferObject::FrameBuffferObject(Application * app, bool start_enabled) : Module(app, start_enabled)
+FrameBufferObject::FrameBufferObject()
 {
 
 }
 
-FrameBuffferObject::~FrameBuffferObject()
+FrameBufferObject::~FrameBufferObject()
 {
 }
 
-bool FrameBuffferObject::Init()
+bool FrameBufferObject::Start(ImVec2 size)
 {
 	bool ret = false;
-
 	//Generate the FBO and bind it, continue if FBO is complete
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-	{
-		ret = true;
-	}
-	else 
-		return false;
+	//	App->LogInConsole("Frame buffer object creation is successful");
+	//else
+	//	App->LogInConsole("Frame buffer object creation wasn't successful");
 
-	return ret;
-}
-
-bool FrameBuffferObject::Start()
-{
+	//Generate the texture used to render our scene
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, size.x, size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
 
+	//Generate RenderBufferObject
+	unsigned int rbo;
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, size.x, size.y);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
-	glTexImage2D(
-		GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, 800, 600, 0,
-		GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL
-	);
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	//	App->LogInConsole("Frame buffer object creation is successful");
+	//else
+	//	App->LogInConsole("Frame buffer object creation wasn't successful");
 
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, texture, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	return true;
 }
 
-update_status FrameBuffferObject::PreUpdate()
+update_status FrameBufferObject::PreUpdate()
 {
+	// first pass
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // we're not using the stencil buffer now
+	glEnable(GL_DEPTH_TEST);
+
 	return UPDATE_CONTINUE;
 }
 
-update_status FrameBuffferObject::PostUpdate()
+update_status FrameBufferObject::PostUpdate()
 {
+	// second pass
+	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	return UPDATE_CONTINUE;
 }
 
-bool FrameBuffferObject::CleanUp()
+bool FrameBufferObject::CleanUp()
 {
 	glDeleteFramebuffers(1, &fbo);
 

@@ -70,13 +70,6 @@ update_status ModuleEngineUI::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleEngineUI::Update(float dt)
-{
-	
-
-	return UPDATE_CONTINUE;
-}
-
 update_status ModuleEngineUI::PostUpdate(float dt)
 {
 

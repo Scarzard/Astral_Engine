@@ -16,15 +16,21 @@ SceneGame::~SceneGame()
 bool SceneGame::Start()
 {
 	current_size = { 1024, 768 };
+	fbo = new FrameBufferObject();
+	fbo->Start(current_size);
 
 	return true;
 }
 
 update_status SceneGame::PreUpdate(float dt) 
 {
+	fbo->PreUpdate();
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+
 	ImGui::Begin("Game");
 	ImGui::SetWindowSize(current_size);
-	glViewport(0, 0, current_size.x, current_size.y);
+
 
 	//1. Create aFrame Buffer Object
 	//2. Texture obtained from step 1
@@ -32,17 +38,20 @@ update_status SceneGame::PreUpdate(float dt)
 	//ImGui::Image(texture, size);
 
 	ImGui::End();
+	ImGui::PopStyleVar();
 
 	return UPDATE_CONTINUE;
 }
 
 update_status SceneGame::PostUpdate(float dt)
 {
+	fbo->PostUpdate();
 	return UPDATE_CONTINUE;
 }
 
 bool SceneGame::Cleanup()
 {
-	
+	fbo->CleanUp();
+
 	return true;
 }

@@ -1,6 +1,7 @@
 #ifndef _SCENEGAME_H_
 #include "Module.h"
 #include "Application.h"
+#include "FrameBufferObject.h"
 
 class SceneGame : public Module
 {
@@ -15,7 +16,8 @@ public:
 
 public:
 	ImVec2 current_size, new_size;
-
+private:
+	FrameBufferObject* fbo = nullptr;
 };
 
 #endif // !_SCENEGAME_H_
