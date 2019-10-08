@@ -43,6 +43,9 @@
     <Filter Include="Sources\Tools\Parson">
       <UniqueIdentifier>{b85e8297-372e-4524-9c5c-8aafbf3057a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\GUI">
+      <UniqueIdentifier>{feb3e2ef-ccaf-46a2-80a5-ec1b32d88a75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -83,9 +86,6 @@
     </ClInclude>
     <ClInclude Include="Math.h">
       <Filter>Sources\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleEngineUI.h">
-      <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="MathGeoLib\include\MathBuildConfig.h">
       <Filter>Sources\Tools\MathGeoLib</Filter>
@@ -319,7 +319,13 @@
       <Filter>Sources\Tools</Filter>
     </ClInclude>
     <ClInclude Include="SceneGame.h">
-      <Filter>Sources\Modules</Filter>
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEngineUI.h">
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameBufferObject.h">
+      <Filter>Sources\Modules\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -357,9 +363,6 @@
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="ModuleSceneIntro.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleEngineUI.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="MathGeoLib\include\Algorithm\Random\LCG.cpp">
@@ -483,7 +486,13 @@
       <Filter>Sources\Tools\Parson</Filter>
     </ClCompile>
     <ClCompile Include="SceneGame.cpp">
-      <Filter>Sources\Modules</Filter>
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEngineUI.cpp">
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameBufferObject.cpp">
+      <Filter>Sources\Modules\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

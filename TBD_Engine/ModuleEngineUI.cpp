@@ -48,7 +48,7 @@ update_status ModuleEngineUI::PreUpdate(float dt)
 	if (show_demo_window)
 	{
 		ImGui::ShowDemoWindow();
-
+		ImGui::SetNextWindowBgAlpha(1.0f);
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		static float f = 0.0f;
 		static int counter = 0;
