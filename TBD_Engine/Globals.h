@@ -36,5 +36,5 @@ enum update_status
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
-#define TITLE "TBD ENGINE"
+#define TITLE "ASTRAL ENGINE"
 #define ORGANIZATION "CITM - UPC TECH TALENT CENTER"
