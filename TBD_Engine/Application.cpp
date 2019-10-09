@@ -10,6 +10,7 @@ Application::Application()
 	camera = new ModuleCamera3D(this);
 	gui = new ModuleEngineUI(this);
 	editor = new ModuleEditor(this);
+	geom_loader = new GeometryLoader(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -20,9 +21,12 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(editor);
+	AddModule(geom_loader);
 
 	// Scenes
 	AddModule(scene_intro);
+
+	//UI
 	AddModule(gui);
 
 	// Renderer last!

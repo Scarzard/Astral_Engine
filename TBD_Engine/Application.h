@@ -12,6 +12,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleEngineUI.h"
 #include "ModuleEditor.h"
+#include "GeometryLoader.h"
 
 class Application
 {
@@ -23,6 +24,7 @@ public:
 	ModuleCamera3D*			camera;
 	ModuleEngineUI*			gui;
 	ModuleEditor*			editor;
+	GeometryLoader*			geom_loader;
 
 private:
 

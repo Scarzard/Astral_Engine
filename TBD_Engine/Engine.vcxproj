@@ -78,6 +78,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="FrameBufferObject.h" />
+    <ClInclude Include="GeometryLoader.h" />
     <ClInclude Include="glew\include\GL\eglew.h" />
     <ClInclude Include="glew\include\GL\glew.h" />
     <ClInclude Include="glew\include\GL\glxew.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="parson\parson.h" />
+    <ClInclude Include="par\par_shapes.h" />
     <ClInclude Include="PCG\include\pcg_extras.hpp" />
     <ClInclude Include="PCG\include\pcg_random.hpp" />
     <ClInclude Include="PCG\include\pcg_uint128.hpp" />
@@ -175,6 +177,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="FrameBufferObject.cpp" />
+    <ClCompile Include="GeometryLoader.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
     <ClCompile Include="ImGui\imgui_demo.cpp" />
