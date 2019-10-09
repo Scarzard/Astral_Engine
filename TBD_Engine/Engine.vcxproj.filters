@@ -318,13 +318,22 @@
     <ClInclude Include="Console.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="SceneGame.h">
-      <Filter>Sources\Modules\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleEngineUI.h">
       <Filter>Sources\Modules\GUI</Filter>
     </ClInclude>
     <ClInclude Include="FrameBufferObject.h">
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="W_Game.h">
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="W_Hierarchy.h">
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="W_Console.h">
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="W_Inspector.h">
       <Filter>Sources\Modules\GUI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -485,13 +494,22 @@
     <ClCompile Include="parson\parson.c">
       <Filter>Sources\Tools\Parson</Filter>
     </ClCompile>
-    <ClCompile Include="SceneGame.cpp">
-      <Filter>Sources\Modules\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleEngineUI.cpp">
       <Filter>Sources\Modules\GUI</Filter>
     </ClCompile>
     <ClCompile Include="FrameBufferObject.cpp">
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="W_Game.cpp">
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="W_Hierarchy.cpp">
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="W_Console.cpp">
+      <Filter>Sources\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="W_Inspector.cpp">
       <Filter>Sources\Modules\GUI</Filter>
     </ClCompile>
   </ItemGroup>

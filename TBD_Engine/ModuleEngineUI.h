@@ -24,7 +24,7 @@ public:
 	void CreateMainMenuToolbar();
 	
 private:
-	bool show_demo_window = true;
+	//bool show_demo_window = true;
 	ImGuiIO* io = nullptr;
 	bool p_open = true;
 

@@ -1,7 +1,10 @@
 #include "Application.h"
 #include "ModuleEngineUI.h"
 #include "ModuleRenderer3D.h"
-#include "SceneGame.h"
+#include "W_Game.h"
+#include "W_Hierarchy.h"
+#include "W_Console.h"
+#include "W_Inspector.h"
 
 
 ModuleEngineUI::ModuleEngineUI(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -24,7 +27,10 @@ bool ModuleEngineUI::Init()
 	ImGui::StyleColorsDark();
 	ImGui_ImplOpenGL3_Init();
 	
-	windows.push_back(new SceneGame(App));
+	windows.push_back(new W_Game(App));
+	windows.push_back(new W_Hierarchy(App));
+	windows.push_back(new W_Console(App));
+	windows.push_back(new W_Inspector(App));
 	
 	return true;
 }
@@ -64,26 +70,26 @@ bool ModuleEngineUI::Draw()
 		tmp++;
 	}
 	
-	if (show_demo_window)
-	{
-		ImGui::ShowDemoWindow();
-		ImGui::SetNextWindowBgAlpha(1.0f);
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-		static float f = 0.0f;
-		static int counter = 0;
+	//if (show_demo_window)
+	//{
+	//	ImGui::ShowDemoWindow();
+	//	ImGui::SetNextWindowBgAlpha(1.0f);
+	//	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	//	static float f = 0.0f;
+	//	static int counter = 0;
 
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+	//	ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 
 
-		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-			counter++;
-		ImGui::SameLine();
-		ImGui::Text("counter = %d", counter);
+	//	if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+	//		counter++;
+	//	ImGui::SameLine();
+	//	ImGui::Text("counter = %d", counter);
 
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::End();
-		ImGui::PopStyleVar();
-	}
+	//	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	//	ImGui::End();
+	//	ImGui::PopStyleVar();
+	//}
 
 	//render
 
@@ -186,7 +192,7 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 
 		if (ImGui::BeginMenu("View"))
 		{
-			ImGui::MenuItem("Toggle demo window", NULL, &show_demo_window);
+			//ImGui::MenuItem("Toggle demo window", NULL, &show_demo_window);
 			/*ImGui::MenuItem("Toggle demo window", NULL, &show_demo_window);
 
 			ImGui::MenuItem("Toggle MathGeoLib window", NULL, &show_mgl_window);

@@ -1,19 +1,18 @@
 #include "Application.h"
-#include "SceneGame.h"
+#include "W_Game.h"
 #include "ModuleRenderer3D.h"
 #include "glew/include/GL/glew.h"
 
 
-SceneGame::SceneGame(Application* app, bool start_enabled) : Module(app, start_enabled)
+W_Game::W_Game(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
 
-SceneGame::~SceneGame()
+W_Game::~W_Game()
 {
 }
 
-
-bool SceneGame::Start()
+bool W_Game::Start()
 {
 	current_size = { 1024, 768 };
 	fbo = new FrameBufferObject();
@@ -22,7 +21,7 @@ bool SceneGame::Start()
 	return true;
 }
 
-bool SceneGame::Draw()
+bool W_Game::Draw()
 {
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
@@ -42,19 +41,19 @@ bool SceneGame::Draw()
 	return true;
 }
 
-update_status SceneGame::PreUpdate(float dt) 
+update_status W_Game::PreUpdate(float dt) 
 {
 	fbo->PreUpdate();
 	return UPDATE_CONTINUE;
 }
 
-update_status SceneGame::PostUpdate(float dt)
+update_status W_Game::PostUpdate(float dt)
 {
 	fbo->PostUpdate();
 	return UPDATE_CONTINUE;
 }
 
-bool SceneGame::Cleanup()
+bool W_Game::Cleanup()
 {
 	fbo->CleanUp();
 	return true;

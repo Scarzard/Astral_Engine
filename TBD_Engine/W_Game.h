@@ -1,13 +1,14 @@
-#ifndef _SCENEGAME_H_
+#ifndef _W_GAME_H_
+#define _W_GAME_H_
 #include "Module.h"
 #include "Application.h"
 #include "FrameBufferObject.h"
 
-class SceneGame : public Module
+class W_Game : public Module
 {
 public:
-	SceneGame(Application* app, bool start_enabled = true);
-	~SceneGame();
+	W_Game(Application* app, bool start_enabled = true);
+	~W_Game();
 
 	bool Start();
 	bool Draw();
@@ -21,5 +22,5 @@ private:
 	FrameBufferObject* fbo = nullptr;
 };
 
-#endif // !_SCENEGAME_H_
+#endif // !_W_GAME_H_
 

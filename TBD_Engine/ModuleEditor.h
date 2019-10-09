@@ -53,7 +53,7 @@ public:
 	float rn1 = 0.0f;
 	uint32_t rn2 = 0;
 	uint32_t rn3 = 0;
-	int interval_random = 0.0f;
+	int interval_random = 0;
 
 	pcg32_random_t rng; //typedef struct 64-b
 	pcg_state_setseq_64 rng_bounded; // struct 64-b

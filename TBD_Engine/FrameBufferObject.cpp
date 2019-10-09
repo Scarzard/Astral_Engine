@@ -55,7 +55,7 @@ update_status FrameBufferObject::PreUpdate()
 {
 	// first pass
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // we're not using the stencil buffer now
 	glEnable(GL_DEPTH_TEST);
 
@@ -66,7 +66,7 @@ update_status FrameBufferObject::PostUpdate()
 {
 	// second pass
 	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	return UPDATE_CONTINUE;
