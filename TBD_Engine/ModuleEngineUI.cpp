@@ -29,9 +29,8 @@ bool ModuleEngineUI::Init()
 	return true;
 }
 
-
-update_status ModuleEngineUI::PreUpdate(float dt)
-{  
+bool ModuleEngineUI::Draw()
+{
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
@@ -66,20 +65,25 @@ update_status ModuleEngineUI::PreUpdate(float dt)
 		ImGui::PopStyleVar();
 	}
 
+	//render
+
+	// Rendering function called in rednerer3D 
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	return true;
+}
+
+
+update_status ModuleEngineUI::PreUpdate(float dt)
+{  
+	
 
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleEngineUI::PostUpdate(float dt)
 {
-
-
-	//render
-	
-	// Rendering function called in rednerer3D 
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 
 
 	return UPDATE_CONTINUE;
