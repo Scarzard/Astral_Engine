@@ -165,12 +165,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	//Draw UI
 	App->gui->Draw();
-
-	//Debug Render
-
-	//UI Render
-	//App->gui->UI_Render();
 
 	//LAST THING TO DO IN POSTUPDATE
 	SDL_GL_SwapWindow(App->window->window);

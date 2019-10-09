@@ -29,8 +29,21 @@ bool ModuleEngineUI::Init()
 	return true;
 }
 
+bool ModuleEngineUI::Start()
+{
+	bool ret = true;
+	std::list<Module*>::const_iterator tmp = windows.begin();
+	while (tmp != windows.end())
+	{
+		ret = (*tmp)->Start();
+		tmp++;
+	}
+	return ret;
+}
+
 bool ModuleEngineUI::Draw()
 {
+	bool ret = true;
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
@@ -44,6 +57,13 @@ bool ModuleEngineUI::Draw()
 
 	CreateMainMenuToolbar();
 
+	std::list<Module*>::const_iterator tmp = windows.begin();
+	while (tmp != windows.end())
+	{
+		ret = (*tmp)->Draw();
+		tmp++;
+	}
+	
 	if (show_demo_window)
 	{
 		ImGui::ShowDemoWindow();
@@ -71,22 +91,34 @@ bool ModuleEngineUI::Draw()
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-	return true;
+	return ret;
 }
 
 
 update_status ModuleEngineUI::PreUpdate(float dt)
 {  
-	
+	update_status ret = UPDATE_CONTINUE;
 
-	return UPDATE_CONTINUE;
+	std::list<Module*>::const_iterator tmp = windows.begin();
+	while (tmp != windows.end())
+	{
+		ret = (*tmp)->PreUpdate(dt);
+		tmp++;
+	}
+	return ret;
 }
 
 update_status ModuleEngineUI::PostUpdate(float dt)
 {
+	update_status ret = UPDATE_CONTINUE;
 
-
-	return UPDATE_CONTINUE;
+	std::list<Module*>::const_iterator tmp = windows.begin();
+	while (tmp != windows.end())
+	{
+		ret = (*tmp)->PostUpdate(dt);
+		tmp++;
+	}
+	return ret;
 }
 
 bool ModuleEngineUI::CleanUp()

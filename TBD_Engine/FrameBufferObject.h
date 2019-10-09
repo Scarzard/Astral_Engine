@@ -11,7 +11,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-private:
+public:
 	unsigned int fbo;
 	unsigned int texture;
 

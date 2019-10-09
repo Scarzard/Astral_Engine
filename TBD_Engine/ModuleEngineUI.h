@@ -16,18 +16,19 @@ public:
 	~ModuleEngineUI();
 
 	bool Init();
+	bool Start();
 	bool Draw();
 	update_status PreUpdate(float dt);
-	//update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 	void CreateMainMenuToolbar();
-	bool show_demo_window = false;
-
+	
 private:
+	bool show_demo_window = true;
 	ImGuiIO* io = nullptr;
 	bool p_open = true;
 
+	//Store the windows here and iterate them in Start, Draw, Pre/Post Update 
 	std::list<Module*> windows;
 
 };
