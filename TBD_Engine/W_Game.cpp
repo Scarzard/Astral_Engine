@@ -33,12 +33,7 @@ bool W_Game::Draw()
 	//ImGui::Image(texture, size);
 
 	new_size = ImGui::GetContentRegionAvail();
-	if (current_size.x != new_size.x || current_size.y != new_size.y)
-	{
-		current_size = new_size;
-		App->renderer3D->OnResize(current_size.x, current_size.y);
-	}
-	
+
 	ImGui::Image((ImTextureID)fbo->texture, ImVec2(current_size.x, current_size.y), ImVec2(0, 1), ImVec2(1, 0));
 
 	ImGui::End();
@@ -49,6 +44,12 @@ bool W_Game::Draw()
 
 update_status W_Game::PreUpdate(float dt) 
 {
+	if (current_size.x != new_size.x || current_size.y != new_size.y)
+	{
+		current_size = new_size;
+		fbo->Start(current_size);
+		App->renderer3D->OnResize(current_size.x, current_size.y);
+	}
 	fbo->PreUpdate();
 	return UPDATE_CONTINUE;
 }

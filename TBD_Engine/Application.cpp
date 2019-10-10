@@ -9,7 +9,6 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	gui = new ModuleEngineUI(this);
-	editor = new ModuleEditor(this);
 	geom_loader = new GeometryLoader(this);
 
 	// The order of calls is very important!
@@ -20,7 +19,6 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(editor);
 	AddModule(geom_loader);
 
 	// Scenes
@@ -95,7 +93,6 @@ void Application::FinishUpdate()
 	Uint32 last_frame_ms = frame_time.Read();
 	Uint32 frames_on_last_update = prev_sec_FrameCount;
 
-
 	// FPS LOG
 	fps_log.push_back(frames_on_last_update);
 	if (fps_log.size() > 100)
@@ -134,7 +131,6 @@ void Application::LogInConsole(const char* format, ...)
 	//pass the string to the vector of strings to later print them in the console 
 	const char* string = tmp_string2;
 	Logs_Console.push_back(string);
-	editor->Console.AddLog(string);
 
 
 }

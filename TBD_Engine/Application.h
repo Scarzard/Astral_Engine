@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <vector>
 
 #include "Globals.h"
 #include "Timer.h"
@@ -11,7 +12,6 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEngineUI.h"
-#include "ModuleEditor.h"
 #include "GeometryLoader.h"
 
 class Application
@@ -23,7 +23,6 @@ public:
 	ModuleRenderer3D*		renderer3D;
 	ModuleCamera3D*			camera;
 	ModuleEngineUI*			gui;
-	ModuleEditor*			editor;
 	GeometryLoader*			geom_loader;
 
 private:
@@ -67,6 +66,5 @@ private:
 	Uint32	prev_sec_FrameCount = 0;
 	float	dt = 0.0f;
 	
-
 
 };

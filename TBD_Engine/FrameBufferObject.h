@@ -14,6 +14,7 @@ public:
 public:
 	unsigned int fbo;
 	unsigned int texture;
+	ImVec2 size;
 
 };
 

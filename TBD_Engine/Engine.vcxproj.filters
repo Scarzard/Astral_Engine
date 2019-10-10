@@ -312,9 +312,6 @@
     <ClInclude Include="PCG\include\pcg_uint128.hpp">
       <Filter>Sources\Tools\PCG</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleEditor.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="parson\parson.h">
       <Filter>Sources\Tools\Parson</Filter>
     </ClInclude>
@@ -499,9 +496,6 @@
     </ClCompile>
     <ClCompile Include="ImGui\imgui_widgets.cpp">
       <Filter>Sources\Tools\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleEditor.cpp">
-      <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="parson\parson.c">
       <Filter>Sources\Tools\Parson</Filter>
