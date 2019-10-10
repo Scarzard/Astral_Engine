@@ -9,6 +9,10 @@
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
+#include "mmgr/mmgr.h"
+
+
+
 GeometryLoader::GeometryLoader(Application* app,  bool start_enabled) : Module(app, start_enabled)
 {
 }

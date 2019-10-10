@@ -8,6 +8,10 @@
 #include "W_Inspector.h"
 #include "W_Configuration.h"
 
+#include "mmgr/mmgr.h"
+
+
+
 
 ModuleEngineUI::ModuleEngineUI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -28,7 +32,7 @@ bool ModuleEngineUI::Init()
 
 	ImGui::StyleColorsDark();
 	ImGui_ImplOpenGL3_Init();
-	
+	//MEMORY LEAK HERE
 	windows.push_back(new W_Game(App));
 	windows.push_back(new W_Hierarchy(App));
 	windows.push_back(new W_Console(App));

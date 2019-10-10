@@ -132,7 +132,6 @@ void Application::LogInConsole(const char* format, ...)
 	const char* string = tmp_string2;
 	Logs_Console.push_back(string);
 
-
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

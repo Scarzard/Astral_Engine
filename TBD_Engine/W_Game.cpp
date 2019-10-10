@@ -3,6 +3,10 @@
 #include "ModuleRenderer3D.h"
 #include "glew/include/GL/glew.h"
 
+#include "mmgr/mmgr.h"
+
+
+
 
 W_Game::W_Game(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -15,6 +19,7 @@ W_Game::~W_Game()
 bool W_Game::Start()
 {
 	current_size = { 1024, 768 };
+	//MEMORY LEAK HERE
 	fbo = new FrameBufferObject();
 	fbo->Start(current_size);
 

@@ -49,6 +49,9 @@
     <Filter Include="Sources\Tools\par shapes">
       <UniqueIdentifier>{5f4ab6db-29d7-4470-bded-afe3e4f6a1d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\mmgr">
+      <UniqueIdentifier>{b7476eba-9489-4cb7-a1d6-23cc4e480b1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -345,6 +348,12 @@
     <ClInclude Include="W_Configuration.h">
       <Filter>Sources\Modules\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="mmgr\mmgr.h">
+      <Filter>Sources\Tools\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="mmgr\nommgr.h">
+      <Filter>Sources\Tools\mmgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -526,6 +535,9 @@
     </ClCompile>
     <ClCompile Include="W_Configuration.cpp">
       <Filter>Sources\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="mmgr\mmgr.cpp">
+      <Filter>Sources\Tools\mmgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
