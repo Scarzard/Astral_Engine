@@ -7,6 +7,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#include "par/par_shapes.h"
+
 #include "Math.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -100,12 +102,52 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//--------------------------------------------------------
 
 	//Rendering cube with 8 vertices -----------------
-	DrawCube_8v(1, 1, -3, 1, 255, 0, 0);
-	DrawCube_8v(0, 1, -3, 1, 255, 255, 0);
-	DrawCube_8v(-1, 1, -3, 1, 255, 0, 0);
+	DrawCube_8v(1, 1, -10, 1, 255, 0, 0);
+	DrawCube_8v(0, 1, -10, 1, 0, 0, 255);
+	DrawCube_8v(-1, 1, -10, 1, 255, 0, 0);
 
-	DrawCube_8v(5,5,5,50,255,255,255);
+	//DrawCube_8v(5,5,5,50,255,255,255);
 	//--------------------------------------------------------------
+
+	glLineWidth(2.0f);
+
+	glBegin(GL_TRIANGLES);
+
+	glColor3ub(255, 255, 255);
+
+	glVertex3f(1.f, 1.f, 0.f);
+	glVertex3f(0.f, 1.f, 0.f);
+	glVertex3f(0.f, 0.f, 0.f);
+
+	glVertex3f(0.f, 0.f, 0.f);
+	glVertex3f(1.f, 0.f, 0.f);
+	glVertex3f(1.f, 1.f, 0.f);
+
+	glVertex3f(1.f, 1.f, 0.f);
+	glVertex3f(1.f, 0.f, 0.f);
+	glVertex3f(1.f, 0.f, -1.f);
+
+	glVertex3f(1.f, 0.f, -1.f);
+	glVertex3f(1.f, 1.f, -1.f);
+	glVertex3f(1.f, 1.f, 0.f);
+
+	glVertex3f(0.f, 0.f, 0.f);
+	glVertex3f(0.f, 1.f, 0.f);
+	glVertex3f(0.f, 0.f, -1.f);
+
+	glVertex3f(0.f, 1.f, -1.f);
+	glVertex3f(0.f, 0.f, -1.f);
+	glVertex3f(0.f, 1.f, 0.f);
+
+	glVertex3f(0.f, 1.f, -1.f);
+	glVertex3f(1.f, 1.f, -1.f);
+	glVertex3f(0.f, 0.f, -1.f);
+
+	glVertex3f(1.f, 0.f, -1.f);
+	glVertex3f(0.f, 0.f, -1.f);
+	glVertex3f(1.f, 1.f, -1.f);
+
+	glEnd();
 
 	return UPDATE_CONTINUE;
 }
@@ -115,14 +157,14 @@ void ModuleSceneIntro::DrawCube_8v(float x, float y, float z, float size, uint r
 
 	float No_dup_vertices[]
 	{			
-		x + size,	y + size,	z + 0.f,
-		x + 0.f,	y + size,	z + 0.f,
-		x + 0.f,	y + 0.f,	z + 0.f,
-		x + size,	y + 0.f,	z + 0.f,
-		x + size,	y + 0.f,	z + size,
-		x + size,	y + size,	z + size,
-		x + 0.f,	y + size,	z + size,
-		x + 0.f,	y + 0.f,	z + size,		
+		x + size,	y + size,	z + 0.f,	//0
+		x + 0.f,	y + size,	z + 0.f,	//1
+		x + 0.f,	y + 0.f,	z + 0.f,	//2
+		x + size,	y + 0.f,	z + 0.f,	//3
+		x + size,	y + 0.f,	z + size,	//4
+		x + size,	y + size,	z + size,	//5
+		x + 0.f,	y + size,	z + size,	//6
+		x + 0.f,	y + 0.f,	z + size,	//7	
 	};
 
 	GLuint indices[] = { 0,1,2, 2,3,0,   // 36 of indices
@@ -210,6 +252,28 @@ void ModuleSceneIntro::DrawCube_36v(float x, float y, float z, float size, uint 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	
+}
+
+void ModuleSceneIntro::DrawCylinder(int slices, int stacks)
+{
+	//par_shapes_mesh* cylinder;
+
+	//cylinder = par_shapes_create_cylinder(slices, stacks);
+
+	//glGenBuffers(1, (GLuint*) &(id_cylinder));
+	//glBindBuffer(GL_ARRAY_BUFFER, id_cylinder);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(cylinder->triangles), cylinder->triangles, GL_STATIC_DRAW);
+
+	//glColor3ub(255, 255, 255);
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glBindBuffer(GL_ARRAY_BUFFER, id_cylinder);
+	//glVertexPointer(3, GL_UNSIGNED_SHORT, 0, NULL);
+
+	//// … draw other buffers
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glDisableClientState(GL_VERTEX_ARRAY);
+
+
 }
 
 

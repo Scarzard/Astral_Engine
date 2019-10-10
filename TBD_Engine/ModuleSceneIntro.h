@@ -17,9 +17,13 @@ public:
 	void DrawCube_36v(float x, float y, float z, float size, uint red, uint green, uint blue);
 	void DrawCube_8v(float x, float y, float z, float size, uint red, uint green, uint blue);
 
+	void DrawCylinder(int slices, int stacks);
+
 
 	//DRAW CUBE INFO
 	uint id_vertices = 0;
 	uint id_no_dup_vertices = 1;
 	uint id_indices = 2;
+
+	uint id_cylinder = 3;
 };

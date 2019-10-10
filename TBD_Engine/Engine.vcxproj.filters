@@ -524,6 +524,9 @@
     <ClCompile Include="GeometryLoader.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="par_shapes.cpp">
+      <Filter>Sources\Tools\par shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl">
