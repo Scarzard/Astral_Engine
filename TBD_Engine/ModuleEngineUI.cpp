@@ -203,6 +203,9 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 
 		if (ImGui::BeginMenu("View"))
 		{
+			ImGui::MenuItem("Toggle demo window", NULL, &demo_cpp);
+
+			
 			/*ImGui::MenuItem("Toggle demo window", NULL, &show_demo_window);
 
 			ImGui::MenuItem("Toggle MathGeoLib window", NULL, &show_mgl_window);
@@ -275,6 +278,9 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 		}
 	}
 	ImGui::EndMainMenuBar();
+
+	if (demo_cpp)
+		ImGui::ShowDemoWindow();
 }
 
 

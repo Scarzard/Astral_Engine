@@ -12,6 +12,10 @@ W_Configuration::~W_Configuration()
 
 bool W_Configuration::Start()
 {
+	cpu_count = SDL_GetCPUCount();
+	cache_size = SDL_GetCPUCacheLineSize();
+	ram = SDL_GetSystemRAM();
+
 	return true;
 }
 

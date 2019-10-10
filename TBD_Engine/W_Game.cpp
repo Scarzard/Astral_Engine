@@ -26,16 +26,20 @@ bool W_Game::Draw()
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
 	ImGui::Begin("Game");
-	ImGui::SetWindowSize(current_size);
 
 	//1. Create aFrame Buffer Object
 	//2. Texture obtained from step 1
 	//3. We need to put the image in ImGui::Image
 	//ImGui::Image(texture, size);
 
-	App->renderer3D->OnResize(current_size.x, current_size.y);
+	new_size = ImGui::GetContentRegionAvail();
+	if (current_size.x != new_size.x || current_size.y != new_size.y)
+	{
+		current_size = new_size;
+		App->renderer3D->OnResize(current_size.x, current_size.y);
+	}
+	
 	ImGui::Image((ImTextureID)fbo->texture, ImVec2(current_size.x, current_size.y), ImVec2(0, 1), ImVec2(1, 0));
-
 
 	ImGui::End();
 	ImGui::PopStyleVar();
