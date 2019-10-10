@@ -171,12 +171,21 @@ void ModuleWindow::SetBorderless(bool borderless_)
 
 void ModuleWindow::SetFullScreenDesktop(bool fd)
 {
-	this->fullscreen_desktop = fd;
-
-	if (fullscreen_desktop)
-		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-	else 
-		SDL_SetWindowFullscreen(window, 0);
+	if (fd != fullscreen_desktop)
+	{
+		fullscreen_desktop = fd;
+		if (fullscreen_desktop == true)
+		{
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+				//LOG("Could not switch to fullscreen desktop: %s\n", SDL_GetError());
+			fullscreen = false;
+		}
+		else
+		{
+			SDL_SetWindowFullscreen(window, 0);
+				//LOG("Could not switch to windowed: %s\n", SDL_GetError());
+		}
+	}
 }
 
 void ModuleWindow::SetResizable(bool resize)

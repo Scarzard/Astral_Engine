@@ -5,6 +5,7 @@
 #include "W_Hierarchy.h"
 #include "W_Console.h"
 #include "W_Inspector.h"
+#include "W_Configuration.h"
 
 
 ModuleEngineUI::ModuleEngineUI(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -31,6 +32,7 @@ bool ModuleEngineUI::Init()
 	windows.push_back(new W_Hierarchy(App));
 	windows.push_back(new W_Console(App));
 	windows.push_back(new W_Inspector(App));
+	windows.push_back(new W_Configuration(App));
 	
 	return true;
 }

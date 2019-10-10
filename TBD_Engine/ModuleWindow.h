@@ -55,7 +55,7 @@ public:
 	bool fullscreen = false;
 	bool resizable = false;
 	bool borderless = false;
-	bool fullscreen_desktop = false;
+	bool fullscreen_desktop = true;
 
 public:
 	//The window we'll be rendering to
