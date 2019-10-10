@@ -1,7 +1,9 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "Shapes.h"
 
+class Shapes;
 
 class ModuleSceneIntro : public Module
 {
@@ -17,15 +19,13 @@ public:
 	void DrawCube_36v(float x, float y, float z, float size, uint red, uint green, uint blue);
 	void DrawCube_8v(float x, float y, float z, float size, uint red, uint green, uint blue);
 
-	void DrawCylinder(int slices, int stacks);
-
 
 	//DRAW CUBE INFO
 	uint id_vertices = 0;
 	uint id_no_dup_vertices = 1;
 	uint id_indices = 2;
 
-	uint id_cylinder = 3;
+	Shapes* object = nullptr;
 
 	update_status want_to_quit = UPDATE_CONTINUE;
 };

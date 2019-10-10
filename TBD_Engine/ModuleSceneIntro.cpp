@@ -30,6 +30,10 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	object = new Shapes();
+	object->CreateTrefoil(1, 1, -5, 10, 10, 1);
+	object->CreateBuffer();
+
 	return ret;
 }
 
@@ -96,6 +100,8 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glVertex3f(0.f, 0.001f, 0.f);
 	glVertex3f(0.f, 0.001f, 1.f);
 	glEnd();
+
+	
 	//---------------------------------
 
 	//Render
@@ -105,14 +111,17 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//--------------------------------------------------------
 
 	//Rendering cube with 8 vertices -----------------
-	DrawCube_8v(1, 1, -10, 1, 255, 0, 0);
+	/*DrawCube_8v(1, 1, -10, 1, 255, 0, 0);
 	DrawCube_8v(0, 1, -10, 1, 0, 0, 255);
-	DrawCube_8v(-1, 1, -10, 1, 255, 0, 0);
+	DrawCube_8v(-1, 1, -10, 1, 255, 0, 0);*/
 
 	//DrawCube_8v(5,5,5,50,255,255,255);
 	//--------------------------------------------------------------
 
-	glLineWidth(2.0f);
+	glColor3ub(255, 255, 255);
+	object->RenderShape();
+
+	/*glLineWidth(2.0f);
 
 	glBegin(GL_TRIANGLES);
 
@@ -150,7 +159,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glVertex3f(0.f, 0.f, -1.f);
 	glVertex3f(1.f, 1.f, -1.f);
 
-	glEnd();
+	glEnd();*/
 
 	return UPDATE_CONTINUE;
 }
@@ -255,28 +264,6 @@ void ModuleSceneIntro::DrawCube_36v(float x, float y, float z, float size, uint 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	
-}
-
-void ModuleSceneIntro::DrawCylinder(int slices, int stacks)
-{
-	//par_shapes_mesh* cylinder;
-
-	//cylinder = par_shapes_create_cylinder(slices, stacks);
-
-	//glGenBuffers(1, (GLuint*) &(id_cylinder));
-	//glBindBuffer(GL_ARRAY_BUFFER, id_cylinder);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(cylinder->triangles), cylinder->triangles, GL_STATIC_DRAW);
-
-	//glColor3ub(255, 255, 255);
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glBindBuffer(GL_ARRAY_BUFFER, id_cylinder);
-	//glVertexPointer(3, GL_UNSIGNED_SHORT, 0, NULL);
-
-	//// … draw other buffers
-	//glDrawArrays(GL_TRIANGLES, 0, 36);
-	//glDisableClientState(GL_VERTEX_ARRAY);
-
-
 }
 
 
