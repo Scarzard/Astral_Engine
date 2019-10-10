@@ -37,29 +37,36 @@ bool W_Configuration::Draw()
 		ImGui::PlotHistogram("##milliseconds", &App->ms_log[0], App->ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 	}
 
-	if (ImGui::CollapsingHeader("Window1"))
+	if (ImGui::CollapsingHeader("Window"))
 	{
+		bool fullscreen = App->window->GetFullscreenWindow();
+		bool resizable = false;
+		bool borderless = App->window->GetBorderlessWindow();
+		bool full_desktop = App->window->GetFullDesktopWindow();
+		//Sliders
 		ImGui::SliderFloat("Brightness", &brightness_slider, 0.0f, 1.0f);
 		App->window->SetBrightness(brightness_slider);
+		//When this is active, game window resizes automatically when Window header is toggled
+		//ImGui::SliderInt("Width", &width_slider, 600, 1920);
+		//App->window->SetWidth(width_slider);
 
-		ImGui::SliderInt("Width", &width_slider, 600, 1920);
-		App->window->SetWidth(width_slider);
+		//ImGui::SliderInt("Height", &height_slider, 400, 1080);
+		//App->window->SetHeigth(height_slider);
 
-		ImGui::SliderInt("Height", &height_slider, 400, 1080);
-		App->window->SetHeigth(height_slider);
-
-		ImGui::Checkbox("Fullscreen", &App->window->fullscreen);
-		App->window->SetFullscreen(App->window->fullscreen);
+		if (ImGui::Checkbox("Fullscreen", &fullscreen))
+			App->window->SetFullscreen(fullscreen);
 		ImGui::SameLine();
-	
-		ImGui::Checkbox("Resizable", &App->window->resizable);
-		App->window->SetResizable(App->window->resizable);
+		if (ImGui::Checkbox("Resizable", &resizable))
+			App->window->SetResizable(resizable);
+			if (ImGui::IsItemHovered())
+				/*ImGui::SetTooltip("Restart to apply");*/
+				ImGui::SetTooltip("Doesn't work for now");
 
-		ImGui::Checkbox("Borderless", &App->window->borderless);
-		App->window->SetBorderless(App->window->borderless);
+		if (ImGui::Checkbox("Borderless", &borderless))
+			App->window->SetBorderless(borderless);
 		ImGui::SameLine();
-		ImGui::Checkbox("Fullscreen Desktop", &App->window->fullscreen_desktop);
-		App->window->SetFullScreenDesktop(App->window->fullscreen_desktop);
+		if (ImGui::Checkbox("Full Desktop", &full_desktop))
+			App->window->SetFullScreenDesktop(full_desktop);
 
 	}
 	if (ImGui::CollapsingHeader("Input"))
@@ -84,7 +91,6 @@ bool W_Configuration::Draw()
 		//ImGui::Text("Keys release:");   for (int i = 0; i < IM_ARRAYSIZE(io.KeysDown); i++) if (ImGui::IsKeyReleased(i)) { ImGui::SameLine(); ImGui::Text("%d (0x%X)", i, i); }
 		//ImGui::Text("Keys mods: %s%s%s%s", io.KeyCtrl ? "CTRL " : "", io.KeyShift ? "SHIFT " : "", io.KeyAlt ? "ALT " : "", io.KeySuper ? "SUPER " : "");
 		//ImGui::Text("Chars queue:"); for (int i = 0; i < io.InputQueueCharacters.Size; i++) { ImWchar c = io.InputQueueCharacters[i]; ImGui::SameLine(); ImGui::Text("\'%c\' (0x%04X)", (c > ' ' && c <= 255) ? (char)c : '?', c); } // FIXME: We should convert 'c' to UTF-8 here but the functions are not public.
-
 
 	}
 

@@ -219,13 +219,13 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("Documentation"))
-				App->OpenLink("https://github.com/Scarzard/Placeholder_Engine/wiki");
+				App->OpenLink("https://github.com/Scarzard/Astral_Engine");
 
 			if (ImGui::MenuItem("Download latest version"))
-				App->OpenLink("https://github.com/Scarzard/Placeholder_Engine/releases");
+				App->OpenLink("https://github.com/Scarzard/Astral_Engine/releases");
 
 			if (ImGui::MenuItem("Report a bug"))
-				App->OpenLink("https://github.com/Scarzard/Placeholder_Engine/issues");
+				App->OpenLink("https://github.com/Scarzard/Astral_Engine/issues");
 
 			//ImGui::MenuItem("About", NULL, &about_window);
 
@@ -234,3 +234,5 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 	}
 	ImGui::EndMainMenuBar();
 }
+
+

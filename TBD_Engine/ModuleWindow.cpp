@@ -148,24 +148,30 @@ void ModuleWindow::SetSize(uint size, int& w, int& h)
 
 void ModuleWindow::SetFullscreen(bool fullscreen_)
 {
-	this->fullscreen = fullscreen_;
-
-	if (fullscreen_)
-		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-	else
-		SDL_SetWindowFullscreen(window, 0);
+	if (fullscreen_ != fullscreen)
+	{
+		fullscreen = fullscreen_;
+		if (fullscreen == true)
+		{
+			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0)
+				LOG("Could not switch to fullscreen: %s\n", SDL_GetError());
+			fullscreen_desktop = false;
+			SDL_Log("this is a test");
+		}
+		else
+		{
+			if (SDL_SetWindowFullscreen(window, 0) != 0)
+				LOG("Could not switch to windowed: %s\n", SDL_GetError());
+		}
+	}
 }
 
 void ModuleWindow::SetBorderless(bool borderless_)
 {
-	if (!(fullscreen && fullscreen_desktop))
+	if(borderless_ != borderless && fullscreen == false && fullscreen_desktop == false)
 	{
-		this->borderless = borderless_;
-
-		if (borderless_)
-			SDL_SetWindowBordered(window, SDL_FALSE);
-		else
-			SDL_SetWindowBordered(window, SDL_TRUE);
+		borderless = borderless_;
+		SDL_SetWindowBordered(window, (SDL_bool)!borderless);
 	}
 }
 
@@ -176,14 +182,14 @@ void ModuleWindow::SetFullScreenDesktop(bool fd)
 		fullscreen_desktop = fd;
 		if (fullscreen_desktop == true)
 		{
-			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-				//LOG("Could not switch to fullscreen desktop: %s\n", SDL_GetError());
+			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) != 0)
+				LOG("Could not switch to fullscreen desktop: %s\n", SDL_GetError());
 			fullscreen = false;
 		}
 		else
 		{
-			SDL_SetWindowFullscreen(window, 0);
-				//LOG("Could not switch to windowed: %s\n", SDL_GetError());
+			if (SDL_SetWindowFullscreen(window, 0) != 0)
+				LOG("Could not switch to windowed: %s\n", SDL_GetError());
 		}
 	}
 }
@@ -234,7 +240,6 @@ bool ModuleWindow::GetBorderlessWindow() const
 {
 	return borderless;
 }
-
 
 bool ModuleWindow::GetFullDesktopWindow() const
 {
