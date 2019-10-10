@@ -96,11 +96,15 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//Render
 
 	//Rendering cube with 36 vertices (not optimal)----------
-	DrawCube_36v(-5, 0, -5, 2, 255, 255, 0);
+	//DrawCube_36v(-5, 0, -5, 2, 255, 255, 0);
 	//--------------------------------------------------------
 
 	//Rendering cube with 8 vertices -----------------
-	DrawCube_8v(0, 0, -3, 1, 0, 255, 0);
+	DrawCube_8v(1, 1, -3, 1, 255, 0, 0);
+	DrawCube_8v(0, 1, -3, 1, 255, 255, 0);
+	DrawCube_8v(-1, 1, -3, 1, 255, 0, 0);
+
+	DrawCube_8v(5,5,5,50,255,255,255);
 	//--------------------------------------------------------------
 
 	return UPDATE_CONTINUE;

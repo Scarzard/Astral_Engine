@@ -33,7 +33,9 @@ bool W_Game::Draw()
 	//3. We need to put the image in ImGui::Image
 	//ImGui::Image(texture, size);
 
+	App->renderer3D->OnResize(current_size.x, current_size.y);
 	ImGui::Image((ImTextureID)fbo->texture, ImVec2(current_size.x, current_size.y), ImVec2(0, 1), ImVec2(1, 0));
+
 
 	ImGui::End();
 	ImGui::PopStyleVar();
