@@ -43,7 +43,7 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	
 
-	return UPDATE_CONTINUE;
+	return want_to_quit;
 }
 
 update_status ModuleSceneIntro::PostUpdate(float dt)

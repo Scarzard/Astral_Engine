@@ -26,4 +26,6 @@ public:
 	uint id_indices = 2;
 
 	uint id_cylinder = 3;
+
+	update_status want_to_quit = UPDATE_CONTINUE;
 };

@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleEngineUI.h"
+#include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
 #include "W_Game.h"
 #include "W_Hierarchy.h"
@@ -71,31 +72,8 @@ bool ModuleEngineUI::Draw()
 		ret = (*tmp)->Draw();
 		tmp++;
 	}
-	
-	//if (show_demo_window)
-	//{
-	//	ImGui::ShowDemoWindow();
-	//	ImGui::SetNextWindowBgAlpha(1.0f);
-	//	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-	//	static float f = 0.0f;
-	//	static int counter = 0;
 
-	//	ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-
-	//	if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-	//		counter++;
-	//	ImGui::SameLine();
-	//	ImGui::Text("counter = %d", counter);
-
-	//	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	//	ImGui::End();
-	//	ImGui::PopStyleVar();
-	//}
-
-	//render
-
-	// Rendering function called in rednerer3D 
+	//Render
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -132,7 +110,6 @@ update_status ModuleEngineUI::PostUpdate(float dt)
 bool ModuleEngineUI::CleanUp()
 {
 	bool ret = true;
-
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
@@ -163,7 +140,7 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 	window_flags |= ImGuiWindowFlags_NoBackground;
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin("DockSpace Demo", &p_open, window_flags);
+	ImGui::Begin("DockSpace_Demo", &p_open, window_flags);
 	ImGui::PopStyleVar();
 
 	if (opt_fullscreen)
@@ -173,28 +150,59 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 	ImGuiIO& io = ImGui::GetIO();
 	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 	{
-		ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+		ImGuiID dockspace_id = ImGui::GetID("My_Dock_Space");
 		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 	}
 
 	ImGui::End();
 
 	//Main toolbar
-	if (ImGui::BeginMainMenuBar()) {
+	if (ImGui::BeginMainMenuBar())
+	{
 
-		if (ImGui::BeginMenu("File", true)) {
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::MenuItem("New"))
+			{
 
-			if (ImGui::MenuItem("Exit", "(Esc)", false, true)) {
-
-			/*	return update_status::UPDATE_STOP;*/
 			}
+			if (ImGui::MenuItem("Open", "Ctrl+O")) 
+			{
 
+			}
+			if (ImGui::BeginMenu("Open Recent"))
+			{
+				ImGui::MenuItem("A");
+				ImGui::MenuItem("B");
+				ImGui::MenuItem("C");
+				if (ImGui::BeginMenu("More.."))
+				{
+					ImGui::MenuItem("Hello");
+
+					ImGui::EndMenu();
+				}
+				ImGui::EndMenu();
+			}
+			if (ImGui::MenuItem("Quit", "(Esc)"))
+			{
+				App->scene_intro->want_to_quit = UPDATE_STOP;
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Edit"))
+		{
+			if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+			if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+			ImGui::Separator();
+			if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+			if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+			if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+			
 			ImGui::EndMenu();
 		}
 
 		if (ImGui::BeginMenu("View"))
 		{
-			//ImGui::MenuItem("Toggle demo window", NULL, &show_demo_window);
 			/*ImGui::MenuItem("Toggle demo window", NULL, &show_demo_window);
 
 			ImGui::MenuItem("Toggle MathGeoLib window", NULL, &show_mgl_window);
@@ -204,7 +212,6 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 			ImGui::MenuItem("Toggle Configuration window", NULL, &configuration_window);
 
 			ImGui::MenuItem("Cosnole", NULL, &show_console);*/
-
 
 			ImGui::EndMenu();
 		}
@@ -227,9 +234,44 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 			if (ImGui::MenuItem("Report a bug"))
 				App->OpenLink("https://github.com/Scarzard/Astral_Engine/issues");
 
-			//ImGui::MenuItem("About", NULL, &about_window);
+			ImGui::MenuItem("About", NULL, &about_window);
 
 			ImGui::EndMenu();
+
+		}
+		if (about_window)
+		{
+			ImGui::OpenPopup("About");
+			if (ImGui::BeginPopupModal("About"))
+				ImGui::SetWindowSize(ImVec2(700, 510));
+			{
+				ImGui::Text("Placeholder Engine v0.1");
+				ImGui::Separator();
+				ImGui::Text("Best game engine in the world");
+				ImGui::Separator();
+				if (ImGui::Button("By Josep Lleal"))
+					App->OpenLink("https://github.com/JosepLleal/");
+				ImGui::SameLine();
+				if (ImGui::Button("and Victor Chen"))
+					App->OpenLink("https://github.com/Scarzard/");
+				ImGui::Separator();
+				//These have to redirect you into their respective websites
+				ImGui::Text("3rd party libraries used");
+				ImGui::BulletText("SDL");
+				ImGui::BulletText("OpenGL");
+				ImGui::BulletText("ImGui");
+				ImGui::BulletText("Glew");
+				ImGui::BulletText("PCG");
+				ImGui::BulletText("MathGeoLib");
+				ImGui::BulletText("Assimp");
+				ImGui::BulletText("DevIL");
+				
+				ImGui::Separator();
+				ImGui::TextWrapped("License\n\nMIT License\n\nCopyright(c) 2019 Josep Lleal and Victor Chen\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
+				if (ImGui::Button("Close"))
+					about_window = false;
+				ImGui::EndPopup();
+			}
 		}
 	}
 	ImGui::EndMainMenuBar();

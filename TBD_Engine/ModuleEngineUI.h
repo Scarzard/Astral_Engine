@@ -27,6 +27,7 @@ private:
 	//bool show_demo_window = true;
 	ImGuiIO* io = nullptr;
 	bool p_open = true;
+	bool about_window = false;
 
 	//Store the windows here and iterate them in Start, Draw, Pre/Post Update 
 	std::list<Module*> windows;
