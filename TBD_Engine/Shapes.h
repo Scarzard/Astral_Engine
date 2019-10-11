@@ -22,7 +22,6 @@ public:
 	void RenderShape();
 
 	void CreateCube(float x, float y, float z, float size = 1);
-	void CreateCylinder(float x, float y, float z, int slices, int stacks);
 	void CreateSphere(float x, float y, float z, int slices, int stacks); 
 	void CreateTrefoil(float x, float y, float z, int slices, int stacks, int rad);
 	void CreateIcosahedron(float x, float y, float z);

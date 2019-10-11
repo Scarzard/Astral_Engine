@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
+#include "GeometryLoader.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -31,7 +32,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	object = new Shapes();
-	object->CreateTrefoil(1, 1, -5, 10, 10, 1);
+	object->CreateIcosahedron(1, 1, -5);
 	object->CreateBuffer();
 
 	return ret;

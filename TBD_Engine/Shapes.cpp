@@ -48,18 +48,6 @@ void Shapes::RenderShape()
 
 // CREATE SHAPES FUNCTIONS //
 
-void Shapes::CreateCylinder(float x, float y, float z, int slices, int stacks)
-{
-	//There has to be at least 3 slices and at least 1 stack, otherwise it won't create the cylinder :(
-	
-	obj = par_shapes_create_cylinder(slices, stacks);
-	position.x = x;
-	position.y = y;
-	position.z = z;
-
-	par_shapes_translate(obj, position.x, position.y, position.z);
-}
-
 void Shapes::CreateSphere(float x, float y, float z, int slices, int stacks)
 {
 	//There has to be at least 3 slices and at least 3 stacks, otherwise it won't create the sphere :(

@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
+#include "GeometryLoader.h"
 
 #define MAX_LIGHTS 8
 
@@ -19,6 +20,11 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
+
+	void NewVertexBuffer(float* vertex, uint &size, uint &id_vertex);
+	void NewIndexBuffer(uint* index, uint &size, uint &id_index);
+	void Draw(const MeshInfo* m);
+
 
 public:
 
