@@ -72,13 +72,13 @@ void MeshLoader::LoadFile(const char* full_path)
 			aiMesh* new_mesh = scene->mMeshes[i];
 
 			m->num_vertex = new_mesh->mNumVertices;
-			m->vertex = new float[new_mesh->mNumVertices];
+			m->vertex = new float3[m->num_vertex];
 
 			for (uint i = 0; i < new_mesh->mNumVertices; ++i)
 			{
-				m->vertex[i] = new_mesh->mVertices[i].x;
-				m->vertex[i + 1] = new_mesh->mVertices[i].y;
-				m->vertex[i] = new_mesh->mVertices[i].z;
+				m->vertex[i].x = new_mesh->mVertices[i].x;
+				m->vertex[i].y = new_mesh->mVertices[i].y;
+				m->vertex[i].z = new_mesh->mVertices[i].z;
 			}
 
 			// copy faces
@@ -88,13 +88,10 @@ void MeshLoader::LoadFile(const char* full_path)
 				m->index = new uint[m->num_index]; // assume each face is a triangle
 				for (uint i = 0; i < new_mesh->mNumFaces; ++i)
 				{
-					const aiFace& face = new_mesh->mFaces[i];
-
-					assert(face.mNumIndices == 3);
-
-					m->index[i * 3] = face.mIndices[0];
-					m->index[i * 3 + 1] = face.mIndices[1];
-					m->index[i * 3 + 2] = face.mIndices[2];
+					if (new_mesh->mFaces[i].mNumIndices != 3)
+						App->LogInConsole("WARNING, geometry face with != 3 indices!");
+					else
+						memcpy(&m->index[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
 			}
 
