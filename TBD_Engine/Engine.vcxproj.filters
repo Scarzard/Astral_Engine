@@ -52,6 +52,9 @@
     <Filter Include="Sources\Tools\mmgr">
       <UniqueIdentifier>{b7476eba-9489-4cb7-a1d6-23cc4e480b1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\gpudetect">
+      <UniqueIdentifier>{69f7ce4c-0d90-4a34-a502-1136d0effb2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -363,6 +366,12 @@
     <ClInclude Include="Window.h">
       <Filter>Sources\Modules\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="gpudetect\DeviceId.h">
+      <Filter>Sources\Tools\gpudetect</Filter>
+    </ClInclude>
+    <ClInclude Include="gpudetect\dxgi1_4.h">
+      <Filter>Sources\Tools\gpudetect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -556,6 +565,9 @@
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Sources\Modules\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="gpudetect\DeviceId.cpp">
+      <Filter>Sources\Tools\gpudetect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

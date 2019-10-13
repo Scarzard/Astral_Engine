@@ -2,6 +2,8 @@
 #include "W_Configuration.h"
 #include "ModuleWindow.h"
 #include "ModuleEngineUI.h"
+//GPU detection 
+#include "gpudetect/DeviceId.h"
 
 W_Configuration::W_Configuration() : Window()
 {
@@ -13,9 +15,26 @@ W_Configuration::~W_Configuration()
 
 bool W_Configuration::Start()
 {
-	cpu_count = SDL_GetCPUCount();
-	cache_size = SDL_GetCPUCacheLineSize();
-	ram = SDL_GetSystemRAM();
+	info.cpu_count = SDL_GetCPUCount();
+	info.cache_size = SDL_GetCPUCacheLineSize();
+	info.ram = SDL_GetSystemRAM();
+
+	uint vendor, device_id;
+	std::wstring brand;
+	unsigned __int64 video_mem_budget;
+	unsigned __int64 video_mem_usage;
+	unsigned __int64 video_mem_available;
+	unsigned __int64 video_mem_reserved;
+	if (getGraphicsDeviceInfo(&vendor, &device_id, &brand, &video_mem_budget, &video_mem_usage, &video_mem_available, &video_mem_reserved))
+	{
+		//info.gpu_vendor = vendor;
+		//info.gpu_device = device_id;
+		sprintf_s(info.gpu_brand, 250, "%S", brand.c_str());
+		info.vram_budget = float(video_mem_budget) / 1073741824.0f;
+		info.vram_usage = float(video_mem_usage) / (1024.f * 1024.f * 1024.f);
+		info.vram_available = float(video_mem_available) / (1024.f * 1024.f * 1024.f);
+		info.vram_reserved = float(video_mem_reserved) / (1024.f * 1024.f * 1024.f);
+	}
 
 	return true;
 }
@@ -104,9 +123,15 @@ bool W_Configuration::Draw()
 	{
 		//ImGui::Text("SDL version : %c", SDL_GetVersion());
 		ImGui::Separator();
-		ImGui::Text("CPUs : %d (Cache: %d bytes)", cpu_count, cache_size);
-		ImGui::Text("System RAM: %d MB", ram);
+		ImGui::BulletText("CPUs : %d (Cache: %d bytes)", info.cpu_count, info.cache_size);
+		ImGui::BulletText("System RAM: %d MB", info.ram);
 		ImGui::Separator();
+		//ImGui::BulletText("GPU: vendor %d device %d", info.gpu_vendor, info.gpu_device);
+		ImGui::BulletText("Brand: %s", info.gpu_brand);
+		ImGui::BulletText("GPU RAM Budget: %.1f MB", info.vram_budget);
+		ImGui::BulletText("GPU RAM Usage: %.1f MB", info.vram_usage);
+		ImGui::BulletText("GPU RAM Available: %.1f MB", info.vram_available);
+		ImGui::BulletText("GPU RAM Reserved: %.1f MB", info.vram_reserved);
 	}
 
 
