@@ -65,5 +65,7 @@ update_status W_Game::PostUpdate(float dt)
 bool W_Game::Cleanup()
 {
 	fbo->CleanUp();
+	delete fbo;
+
 	return true;
 }

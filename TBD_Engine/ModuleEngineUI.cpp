@@ -2,16 +2,8 @@
 #include "ModuleEngineUI.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
-#include "W_Game.h"
-#include "W_Hierarchy.h"
-#include "W_Console.h"
-#include "W_Inspector.h"
-#include "W_Configuration.h"
 
 #include "mmgr/mmgr.h"
-
-
-
 
 ModuleEngineUI::ModuleEngineUI( bool start_enabled) : Module(start_enabled)
 {
@@ -32,13 +24,19 @@ bool ModuleEngineUI::Init()
 
 	ImGui::StyleColorsDark();
 	ImGui_ImplOpenGL3_Init();
-	//MEMORY LEAK HERE
-	windows.push_back(new W_Game());
-	windows.push_back(new W_Hierarchy());
-	windows.push_back(new W_Console());
-	windows.push_back(new W_Inspector());
-	windows.push_back(new W_Configuration());
-	
+
+	W_Game* game_window				= new W_Game();
+	W_Inspector* ins_window			= new W_Inspector();
+	W_Console* console_window		= new W_Console();
+	W_Hierarchy* h_window			= new W_Hierarchy();
+	W_Configuration* conf_window	= new W_Configuration();
+
+	windows.push_back(game_window);
+	windows.push_back(ins_window);
+	windows.push_back(console_window);
+	windows.push_back(h_window);
+	windows.push_back(conf_window);
+
 	return true;
 }
 
@@ -114,6 +112,14 @@ update_status ModuleEngineUI::PostUpdate(float dt)
 bool ModuleEngineUI::CleanUp()
 {
 	bool ret = true;
+
+	std::list<Window*>::const_iterator tmp = windows.begin();
+	while (tmp != windows.end())
+	{
+		delete *tmp;
+		tmp++;
+	}
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
