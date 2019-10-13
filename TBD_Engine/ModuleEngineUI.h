@@ -9,6 +9,12 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+#include "W_Game.h"
+#include "W_Hierarchy.h"
+#include "W_Console.h"
+#include "W_Inspector.h"
+#include "W_Configuration.h"
+
 class ModuleEngineUI : public Module
 {
 public:
@@ -25,6 +31,13 @@ public:
 	void CreateMainMenuToolbar();
 	
 private:
+
+	W_Game* game_window = nullptr;
+	W_Inspector* ins_window = nullptr;
+	W_Console* console_window = nullptr;
+	W_Hierarchy* h_window = nullptr;
+	W_Configuration* conf_window = nullptr;
+
 	//bool show_demo_window = true;
 	ImGuiIO* io = nullptr;
 	bool p_open = true;
