@@ -21,7 +21,7 @@ public:
 
 	void OnResize(int width, int height);
 
-	void NewVertexBuffer(float* vertex, uint &size, uint &id_vertex);
+	void NewVertexBuffer(float3* vertex, uint &size, uint &id_vertex);
 	void NewIndexBuffer(uint* index, uint &size, uint &id_index);
 	void Draw(const MeshInfo* m);
 

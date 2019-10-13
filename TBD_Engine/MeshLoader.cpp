@@ -25,16 +25,17 @@ MeshLoader::~MeshLoader()
 bool MeshLoader::Init()
 {
 
+	// Stream log messages to Debug window 
+	struct aiLogStream stream;
+	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
+	aiAttachLogStream(&stream);
 
 	return true;
 }
 
 bool MeshLoader::Start()
 {
-	// Stream log messages to Debug window 
-	struct aiLogStream stream;
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);
+
 	return true;
 }
 
@@ -52,7 +53,7 @@ bool MeshLoader::CleanUp()
 	// detach log stream 
 	aiDetachAllLogStreams();
 
-	LoadedMeshes.clear();
+
 
 	return true;
 }
@@ -71,9 +72,14 @@ void MeshLoader::LoadFile(const char* full_path)
 			aiMesh* new_mesh = scene->mMeshes[i];
 
 			m->num_vertex = new_mesh->mNumVertices;
-			m->vertex = new float[m->num_vertex * 3];
-			memcpy(m->vertex, new_mesh->mVertices, sizeof(float) * m->num_vertex * 3);
-			App->LogInConsole("New mesh with %d vertices", m->num_vertex);
+			m->vertex = new float[new_mesh->mNumVertices];
+
+			for (uint i = 0; i < new_mesh->mNumVertices; ++i)
+			{
+				m->vertex[i] = new_mesh->mVertices[i].x;
+				m->vertex[i + 1] = new_mesh->mVertices[i].y;
+				m->vertex[i] = new_mesh->mVertices[i].z;
+			}
 
 			// copy faces
 			if (new_mesh->HasFaces())
@@ -82,10 +88,13 @@ void MeshLoader::LoadFile(const char* full_path)
 				m->index = new uint[m->num_index]; // assume each face is a triangle
 				for (uint i = 0; i < new_mesh->mNumFaces; ++i)
 				{
-					if (new_mesh->mFaces[i].mNumIndices != 3)
-						App->LogInConsole("WARNING, geometry face with != 3 indices!");
-					else
-						memcpy(&m->index[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
+					const aiFace& face = new_mesh->mFaces[i];
+
+					assert(face.mNumIndices == 3);
+
+					m->index[i * 3] = face.mIndices[0];
+					m->index[i * 3 + 1] = face.mIndices[1];
+					m->index[i * 3 + 2] = face.mIndices[2];
 				}
 			}
 

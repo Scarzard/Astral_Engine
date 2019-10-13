@@ -4,6 +4,9 @@
 #include "Globals.h"
 #include "Module.h"
 
+#include "MathGeoLib/include/MathBuildConfig.h"
+#include "MathGeoLib/include/MathGeoLib.h"
+
 
 struct MeshInfo 
 {
@@ -13,7 +16,7 @@ struct MeshInfo
 
 	uint id_vertex = 0; // unique vertex in VRAM
 	uint num_vertex = 0;
-	float* vertex = nullptr;
+	float3* vertex = nullptr;
 };
 
 class MeshLoader : public Module
