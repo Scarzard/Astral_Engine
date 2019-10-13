@@ -1,8 +1,9 @@
 #include "Application.h"
 #include "W_Configuration.h"
 #include "ModuleWindow.h"
+#include "ModuleEngineUI.h"
 
-W_Configuration::W_Configuration(Application* app, bool start_enabled) : Module(app, start_enabled)
+W_Configuration::W_Configuration() : Window()
 {
 }
 
@@ -33,6 +34,7 @@ bool W_Configuration::Draw()
 		ImGui::InputText("Application name", TITLE, 20);
 		ImGui::InputText("Organization name", ORGANIZATION, 40);
 
+		
 		//Framerate Histograms
 		char title[25];
 		sprintf_s(title, 25, "Framerate %.1f", App->fps_log[App->fps_log.size() - 1]);

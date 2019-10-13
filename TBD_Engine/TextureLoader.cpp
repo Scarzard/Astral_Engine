@@ -16,7 +16,7 @@
 #define CHECKERS_HEIGHT  16
 #define CHECKERS_WIDTH 16
 
-TextureLoader::TextureLoader(Application* app, bool start_enabled) : Module(app, start_enabled)
+TextureLoader::TextureLoader(bool start_enabled) : Module(start_enabled)
 {
 }
 

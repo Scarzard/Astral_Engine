@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "W_Inspector.h"
 
-W_Inspector::W_Inspector(Application* app, bool start_enabled) : Module(app, start_enabled)
+W_Inspector::W_Inspector() : Window()
 {
 }
 

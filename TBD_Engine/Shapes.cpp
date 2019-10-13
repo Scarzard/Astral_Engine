@@ -1,4 +1,7 @@
 #include "Shapes.h"
+#include "Application.h"
+#include "Module.h"
+
 #include "par/par_shapes.h"
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -18,15 +21,23 @@ void Shapes::CreateBuffer()
 {
 	if (obj != nullptr)
 	{
+		//vertex
 		glGenBuffers(1, (GLuint*) &(id_vertex));
 		glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * obj->npoints * 3, obj->points, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+		//indices
 		glGenBuffers(1, (GLuint*) &(id_indices));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_indices);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PAR_SHAPES_T) * obj->ntriangles * 3, obj->triangles, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+		//texture
+		glGenBuffers(1, (GLuint*)&(id_texture)); // 
+		glBindBuffer(GL_ARRAY_BUFFER, id_texture);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * obj->npoints*6, obj->tcoords, GL_STATIC_DRAW); 
+		glBindBuffer(GL_ARRAY_BUFFER, 0); 
 	}
 }
 
@@ -58,6 +69,10 @@ void Shapes::CreateSphere(float x, float y, float z, int slices, int stacks)
 	position.z = z;
 
 	par_shapes_translate(obj, position.x, position.y, position.z);
+
+	//Texture = App
+
+	CreateBuffer();
 }
 
 void Shapes::CreateTrefoil(float x, float y, float z, int slices, int stacks, int rad)
@@ -70,6 +85,8 @@ void Shapes::CreateTrefoil(float x, float y, float z, int slices, int stacks, in
 	position.z = z;
 
 	par_shapes_translate(obj, position.x, position.y, position.z);
+
+	CreateBuffer();
 }
 
 void Shapes::CreateIcosahedron(float x, float y, float z)
@@ -81,7 +98,7 @@ void Shapes::CreateIcosahedron(float x, float y, float z)
 
 	par_shapes_translate(obj, position.x, position.y, position.z);
 
-	
+	CreateBuffer();
 }
 
 void Shapes::CreateCube(float x, float y, float z, float size)
@@ -94,5 +111,5 @@ void Shapes::CreateCube(float x, float y, float z, float size)
 	par_shapes_scale(obj, size, size, size);
 	par_shapes_translate(obj, position.x, position.y, position.z);
 
-
+	CreateBuffer();
 }

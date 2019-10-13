@@ -3,11 +3,12 @@
 
 #include "Module.h"
 #include "Application.h"
+#include "Window.h"
 
-class W_Inspector : public Module
+class W_Inspector : public Window
 {
 public:
-	W_Inspector(Application* app, bool start_enabled = true);
+	W_Inspector();
 	~W_Inspector();
 
 	bool Start();

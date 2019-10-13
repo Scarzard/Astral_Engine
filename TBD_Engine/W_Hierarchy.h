@@ -3,11 +3,12 @@
 
 #include "Module.h"
 #include "Application.h"
+#include "Window.h"
 
-class W_Hierarchy : public Module
+class W_Hierarchy : public Window
 {
 public:
-	W_Hierarchy(Application* app, bool start_enabled = true);
+	W_Hierarchy();
 	~W_Hierarchy();
 
 	bool Start();

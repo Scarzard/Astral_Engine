@@ -14,7 +14,7 @@
 
 
 
-ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleSceneIntro::ModuleSceneIntro(bool start_enabled) : Module(start_enabled)
 {
 }
 
@@ -31,8 +31,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	object = new Shapes();
-	object->CreateIcosahedron(1, 1, -5);
-	object->CreateBuffer();
+	object->CreateCube(1, 1, -5);
 
 	return ret;
 }

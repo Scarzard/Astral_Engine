@@ -3,11 +3,12 @@
 #include "Module.h"
 #include "Application.h"
 #include "FrameBufferObject.h"
+#include "Window.h"
 
-class W_Game : public Module
+class W_Game : public Window
 {
 public:
-	W_Game(Application* app, bool start_enabled = true);
+	W_Game();
 	~W_Game();
 
 	bool Start();

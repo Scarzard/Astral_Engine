@@ -10,7 +10,7 @@ class TextureLoader : public Module
 {
 public:
 
-	TextureLoader(Application* app, bool start_enabled = true);
+	TextureLoader (bool start_enabled = true);
 	~TextureLoader();
 
 	bool Init();

@@ -13,7 +13,7 @@
 
 
 
-ModuleEngineUI::ModuleEngineUI(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleEngineUI::ModuleEngineUI( bool start_enabled) : Module(start_enabled)
 {
 }
 
@@ -33,11 +33,11 @@ bool ModuleEngineUI::Init()
 	ImGui::StyleColorsDark();
 	ImGui_ImplOpenGL3_Init();
 	//MEMORY LEAK HERE
-	windows.push_back(new W_Game(App));
-	windows.push_back(new W_Hierarchy(App));
-	windows.push_back(new W_Console(App));
-	windows.push_back(new W_Inspector(App));
-	windows.push_back(new W_Configuration(App));
+	windows.push_back(new W_Game());
+	windows.push_back(new W_Hierarchy());
+	windows.push_back(new W_Console());
+	windows.push_back(new W_Inspector());
+	windows.push_back(new W_Configuration());
 	
 	return true;
 }
@@ -45,7 +45,7 @@ bool ModuleEngineUI::Init()
 bool ModuleEngineUI::Start()
 {
 	bool ret = true;
-	std::list<Module*>::const_iterator tmp = windows.begin();
+	std::list<Window*>::const_iterator tmp = windows.begin();
 	while (tmp != windows.end())
 	{
 		ret = (*tmp)->Start();
@@ -70,7 +70,7 @@ bool ModuleEngineUI::Draw()
 
 	CreateMainMenuToolbar();
 
-	std::list<Module*>::const_iterator tmp = windows.begin();
+	std::list<Window*>::const_iterator tmp = windows.begin();
 	while (tmp != windows.end())
 	{
 		ret = (*tmp)->Draw();
@@ -89,7 +89,7 @@ update_status ModuleEngineUI::PreUpdate(float dt)
 {  
 	update_status ret = UPDATE_CONTINUE;
 
-	std::list<Module*>::const_iterator tmp = windows.begin();
+	std::list<Window*>::const_iterator tmp = windows.begin();
 	while (tmp != windows.end())
 	{
 		ret = (*tmp)->PreUpdate(dt);
@@ -102,7 +102,7 @@ update_status ModuleEngineUI::PostUpdate(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
 
-	std::list<Module*>::const_iterator tmp = windows.begin();
+	std::list<Window*>::const_iterator tmp = windows.begin();
 	while (tmp != windows.end())
 	{
 		ret = (*tmp)->PostUpdate(dt);

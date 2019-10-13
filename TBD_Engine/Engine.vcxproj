@@ -170,6 +170,7 @@
     <ClInclude Include="PCG\include\pcg_uint128.hpp" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="Window.h" />
     <ClInclude Include="W_Configuration.h" />
     <ClInclude Include="W_Console.h" />
     <ClInclude Include="W_Game.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="par_shapes.cpp" />
     <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
+    <ClCompile Include="Window.cpp" />
     <ClCompile Include="W_Configuration.cpp" />
     <ClCompile Include="W_Console.cpp" />
     <ClCompile Include="W_Game.cpp" />

@@ -2,6 +2,7 @@
 #define __MODULEENGINEUI_H__
 
 #include "Module.h"
+#include "Window.h"
 #include "ImGui/imgui.h"
 
 #include "ImGui/imgui.h"
@@ -12,7 +13,7 @@ class ModuleEngineUI : public Module
 {
 public:
 
-	ModuleEngineUI(Application* app, bool start_enabled = true);
+	ModuleEngineUI(bool start_enabled = true);
 	~ModuleEngineUI();
 
 	bool Init();
@@ -31,7 +32,7 @@ private:
 	bool about_window = false;
 
 	//Store the windows here and iterate them in Start, Draw, Pre/Post Update 
-	std::list<Module*> windows;
+	std::list<Window*> windows;
 
 };
 

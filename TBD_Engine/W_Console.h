@@ -3,11 +3,12 @@
 
 #include "Module.h"
 #include "Application.h"
+#include "Window.h"
 
-class W_Console : public Module
+class W_Console : public Window
 {
 public:
-	W_Console(Application* app, bool start_enabled = true);
+	W_Console();
 	~W_Console();
 
 	bool Start();

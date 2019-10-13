@@ -19,7 +19,7 @@ struct MeshInfo
 class MeshLoader : public Module
 {
 public:
-	MeshLoader(Application* app, bool start_enabled = true);
+	MeshLoader(bool start_enabled = true);
 	~MeshLoader();
 
 	bool Init();

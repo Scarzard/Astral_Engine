@@ -5,10 +5,7 @@
 
 #include "mmgr/mmgr.h"
 
-
-
-
-W_Game::W_Game(Application* app, bool start_enabled) : Module(app, start_enabled)
+W_Game::W_Game() : Window()
 {
 }
 

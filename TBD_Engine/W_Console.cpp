@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "W_Console.h"
 
-W_Console::W_Console(Application* app, bool start_enabled) : Module(app, start_enabled)
+W_Console::W_Console() : Window()
 {
 }
 

@@ -29,8 +29,12 @@ public:
 public: 
 
 	par_shapes_mesh_s* obj = nullptr;
+
 	uint id_vertex = 0;
 	uint id_indices = 0;
+	uint id_texture = 0;
+
+	uint Texture = 0;
 
 	Position position;
 };

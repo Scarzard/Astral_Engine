@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "W_Hierarchy.h"
 
-W_Hierarchy::W_Hierarchy(Application* app, bool start_enabled) : Module(app, start_enabled)
+W_Hierarchy::W_Hierarchy() : Window()
 {
 }
 

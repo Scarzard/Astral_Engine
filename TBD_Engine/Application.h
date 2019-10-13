@@ -17,14 +17,14 @@
 class Application
 {
 public:
-	ModuleWindow*			window;
-	ModuleInput*			input;
-	ModuleSceneIntro*		scene_intro;
-	ModuleRenderer3D*		renderer3D;
-	ModuleCamera3D*			camera;
-	ModuleEngineUI*			gui;
-	MeshLoader*				mesh_loader;
-	TextureLoader*			tex_loader;
+	ModuleWindow*			window = nullptr;
+	ModuleInput*			input = nullptr;
+	ModuleSceneIntro*		scene_intro = nullptr;
+	ModuleRenderer3D*		renderer3D = nullptr;
+	ModuleCamera3D*			camera = nullptr;
+	ModuleEngineUI*			gui = nullptr;
+	MeshLoader*				mesh_loader = nullptr;
+	TextureLoader*			tex_loader = nullptr;
 
 private:
 
@@ -66,6 +66,7 @@ private:
 	Uint32	new_sec_FrameCount = 0;
 	Uint32	prev_sec_FrameCount = 0;
 	float	dt = 0.0f;
-	
 
 };
+
+extern Application* App;
