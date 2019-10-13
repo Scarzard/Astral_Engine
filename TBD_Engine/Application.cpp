@@ -10,6 +10,7 @@ Application::Application()
 	camera = new ModuleCamera3D(this);
 	gui = new ModuleEngineUI(this);
 	mesh_loader = new MeshLoader(this);
+	tex_loader = new TextureLoader(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -20,6 +21,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(mesh_loader);
+	AddModule(tex_loader);
 
 	// Scenes
 	AddModule(scene_intro);

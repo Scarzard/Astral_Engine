@@ -12,6 +12,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleEngineUI.h"
 #include "MeshLoader.h"
+#include "TextureLoader.h"
 
 class Application
 {
@@ -22,7 +23,8 @@ public:
 	ModuleRenderer3D*		renderer3D;
 	ModuleCamera3D*			camera;
 	ModuleEngineUI*			gui;
-	MeshLoader*			mesh_loader;
+	MeshLoader*				mesh_loader;
+	TextureLoader*			tex_loader;
 
 private:
 

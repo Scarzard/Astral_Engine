@@ -24,16 +24,17 @@ MeshLoader::~MeshLoader()
 
 bool MeshLoader::Init()
 {
-	// Stream log messages to Debug window 
-	struct aiLogStream stream;
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);
+
 
 	return true;
 }
 
 bool MeshLoader::Start()
 {
+	// Stream log messages to Debug window 
+	struct aiLogStream stream;
+	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
+	aiAttachLogStream(&stream);
 	return true;
 }
 

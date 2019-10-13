@@ -22,13 +22,14 @@ public:
 	MeshLoader(Application* app, bool start_enabled = true);
 	~MeshLoader();
 
-public:
 	bool Init();
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
 
 	void LoadFile(const char* path);
+
+public:
 
 	std::vector<MeshInfo*> LoadedMeshes;
 };
