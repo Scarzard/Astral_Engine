@@ -1,5 +1,5 @@
-#ifndef __GEOMETRYLOADER_H__
-#define __GEOMETRYLOADER_H__
+#ifndef __MESHLOADER_H__
+#define __MESHLOADER_H__
 
 #include "Globals.h"
 #include "Module.h"
@@ -16,11 +16,11 @@ struct MeshInfo
 	float* vertex = nullptr;
 };
 
-class GeometryLoader : public Module
+class MeshLoader : public Module
 {
 public:
-	GeometryLoader(Application* app, bool start_enabled = true);
-	~GeometryLoader();
+	MeshLoader(Application* app, bool start_enabled = true);
+	~MeshLoader();
 
 public:
 	bool Init();
@@ -34,4 +34,4 @@ public:
 };
 
 
-#endif //__GEOMETRYLOADER_H__ 
+#endif //__MESHLOADER_H__ 

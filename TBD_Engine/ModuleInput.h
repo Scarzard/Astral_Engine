@@ -69,4 +69,5 @@ private:
 	//int mouse_z_motion;
 
 	char* DroppedFile;
+
 };

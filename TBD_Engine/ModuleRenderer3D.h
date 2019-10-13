@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
-#include "GeometryLoader.h"
+#include "MeshLoader.h"
 
 #define MAX_LIGHTS 8
 

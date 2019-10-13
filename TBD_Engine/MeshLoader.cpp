@@ -1,4 +1,4 @@
-#include "GeometryLoader.h"
+#include "MeshLoader.h"
 #include "Application.h"
 
 
@@ -13,16 +13,16 @@
 
 
 
-GeometryLoader::GeometryLoader(Application* app,  bool start_enabled) : Module(app, start_enabled)
+MeshLoader::MeshLoader(Application* app,  bool start_enabled) : Module(app, start_enabled)
 {
 }
 
-GeometryLoader::~GeometryLoader()
+MeshLoader::~MeshLoader()
 {}
 
 
 
-bool GeometryLoader::Init()
+bool MeshLoader::Init()
 {
 	// Stream log messages to Debug window 
 	struct aiLogStream stream;
@@ -32,21 +32,21 @@ bool GeometryLoader::Init()
 	return true;
 }
 
-bool GeometryLoader::Start()
+bool MeshLoader::Start()
 {
 	return true;
 }
 
-update_status GeometryLoader::Update(float dt)
+update_status MeshLoader::Update(float dt)
 {
-
+	//Draw meshes
 	for (int i = 0; i < LoadedMeshes.size(); ++i)
 		App->renderer3D->Draw(LoadedMeshes[i]);
 
 	return UPDATE_CONTINUE;
 }
 
-bool GeometryLoader::CleanUp()
+bool MeshLoader::CleanUp()
 {
 	// detach log stream 
 	aiDetachAllLogStreams();
@@ -56,7 +56,7 @@ bool GeometryLoader::CleanUp()
 	return true;
 }
 
-void GeometryLoader::LoadFile(const char* full_path)
+void MeshLoader::LoadFile(const char* full_path)
 {
 	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
 	

@@ -108,9 +108,10 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_DROPFILE:     
+
 				DroppedFile = e.drop.file;
-				App->geom_loader->LoadFile(DroppedFile);
-				App->LogInConsole("File dropped: %s", DroppedFile);
+				App->mesh_loader->LoadFile(DroppedFile);
+				App->LogInConsole("File dropped with root: %s", DroppedFile);
 
 				SDL_free(DroppedFile);
 				break;
