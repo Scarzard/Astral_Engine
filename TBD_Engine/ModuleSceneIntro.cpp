@@ -31,7 +31,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	object = new Shapes();
-	object->CreateCube(1, 1, -5);
+	object->CreateSphere(1, 1, -5, 50, 20);
 
 	return ret;
 }

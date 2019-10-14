@@ -18,10 +18,8 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	uint LoadCheckImage() const;
-	uint CreateTextureFromFile(const char* path) const;
 	uint CreateCheckersTexture(uint width, uint height) const;
-	uint GetCheckerTextureID() const;
+	
 
 
 public:

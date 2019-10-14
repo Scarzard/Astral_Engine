@@ -13,8 +13,8 @@
 
 #include "mmgr/mmgr.h"
 
-#define CHECKERS_HEIGHT  16
-#define CHECKERS_WIDTH 16
+#define CHECKERS_HEIGHT  128
+#define CHECKERS_WIDTH 128
 
 TextureLoader::TextureLoader(bool start_enabled) : Module(start_enabled)
 {

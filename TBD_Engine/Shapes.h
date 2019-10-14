@@ -11,6 +11,12 @@ struct Position
 	float x, y, z;
 };
 
+enum Type
+{
+	NONE = -1,
+	SPHERE,
+};
+
 class Shapes{
 
 public:
@@ -29,6 +35,8 @@ public:
 public: 
 
 	par_shapes_mesh_s* obj = nullptr;
+
+	Type type = NONE;
 
 	uint id_vertex = 0;
 	uint id_indices = 0;

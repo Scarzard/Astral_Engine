@@ -44,16 +44,34 @@ void Shapes::CreateBuffer()
 void Shapes::RenderShape()
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
+	if (type == SPHERE)
+	{
+		//texture
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, Texture);
+		glBindBuffer(GL_ARRAY_BUFFER, id_texture);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	}
+	
 
+	//vertex
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+	//index
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_indices);
 	glDrawElements(GL_TRIANGLES, obj->ntriangles * 3, GL_UNSIGNED_SHORT, nullptr);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+	if (type == SPHERE)
+	{
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
@@ -64,13 +82,16 @@ void Shapes::CreateSphere(float x, float y, float z, int slices, int stacks)
 	//There has to be at least 3 slices and at least 3 stacks, otherwise it won't create the sphere :(
 
 	obj = par_shapes_create_parametric_sphere(slices, stacks);
+
+	type = SPHERE;
+
 	position.x = x;
 	position.y = y;
 	position.z = z;
 
 	par_shapes_translate(obj, position.x, position.y, position.z);
 
-	//Texture = App
+	Texture = App->tex_loader->id_checkersTexture;
 
 	CreateBuffer();
 }
