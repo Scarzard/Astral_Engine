@@ -29,6 +29,9 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 	void CreateMainMenuToolbar();
+
+public:
+	bool is_game_focused = false;
 	
 private:
 

@@ -28,7 +28,9 @@ bool W_Game::Draw()
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
 	ImGui::Begin("Game");
-
+	//
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		App->gui->is_game_focused = ImGui::IsWindowHovered();
 	//1. Create aFrame Buffer Object
 	//2. Texture obtained from step 1
 	//3. We need to put the image in ImGui::Image
@@ -52,6 +54,9 @@ update_status W_Game::PreUpdate(float dt)
 		fbo->Start(current_size);
 		App->renderer3D->OnResize(current_size.x, current_size.y);
 	}
+
+
+
 	fbo->PreUpdate();
 	return UPDATE_CONTINUE;
 }
