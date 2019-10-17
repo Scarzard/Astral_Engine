@@ -19,6 +19,9 @@ public:
 	bool CleanUp();
 
 	uint CreateCheckersTexture(uint width, uint height) const;
+	uint LoadTextureFromPath(const char* path) const;
+	uint CreateTexture(const void* img, uint width, uint height, int internalFormat, uint format) const;
+
 	
 
 

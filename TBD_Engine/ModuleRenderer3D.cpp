@@ -137,7 +137,7 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	
+	HouseTexture = App->tex_loader->LoadTextureFromPath("Assets/Baker_house.png");
 
 	return true;
 }
@@ -220,6 +220,10 @@ void ModuleRenderer3D::Draw(const MeshInfo* m)
 {
 
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glBindTexture(GL_TEXTURE_2D, HouseTexture);
+	glActiveTexture(GL_TEXTURE0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m->id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -229,6 +233,7 @@ void ModuleRenderer3D::Draw(const MeshInfo* m)
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
