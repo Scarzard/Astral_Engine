@@ -41,10 +41,7 @@ bool MeshLoader::Start()
 
 update_status MeshLoader::Update(float dt)
 {
-	//Draw meshes
-	for (int i = 0; i < LoadedMeshes.size(); ++i)
-		App->renderer3D->Draw(LoadedMeshes[i]);
-
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -110,15 +107,17 @@ void MeshLoader::LoadFile(const char* full_path)
 			//Generate the buffers 
 			App->renderer3D->NewVertexBuffer(m->vertex, m->num_vertex, m->id_vertex);
 			App->renderer3D->NewIndexBuffer(m->index, m->num_index, m->id_index);
-			//Generate the buffer for the tex_coordinates
+			//Generate the buffer for texture coords
 			App->renderer3D->NewTexBuffer(m->tex_coords, m->num_tex_coords, m->id_tex_coords);
 
 
-			//Add Loaded mesh to the array f meshes
+			//Add the loaded mesh to the array of meshes
 			LoadedMeshes.push_back(m);
+
+			
 		}
 		aiReleaseImport(scene);
-
+		App->LogInConsole("Succesfully loaded mesh with path: %s", full_path);
 
 	}
 	else

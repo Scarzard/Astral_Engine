@@ -16,9 +16,6 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	void DrawCube_36v(float x, float y, float z, float size, uint red, uint green, uint blue);
-	void DrawCube_8v(float x, float y, float z, float size, uint red, uint green, uint blue);
-
 
 	//DRAW CUBE INFO
 	uint id_vertices = 0;

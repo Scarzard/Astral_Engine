@@ -21,6 +21,8 @@ struct MeshInfo
 	uint id_tex_coords = 0; 
 	uint num_tex_coords = 0;
 	float* tex_coords = nullptr;
+
+	uint Texture = 0;
 };
 
 class MeshLoader : public Module

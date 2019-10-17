@@ -137,7 +137,6 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	HouseTexture = App->tex_loader->LoadTextureFromPath("Assets/Baker_house.png");
 
 	return true;
 }
@@ -167,6 +166,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+
+	App->scene_intro->Draw();
+
 	//Draw UI
 	App->gui->Draw();
 
@@ -233,7 +235,7 @@ void ModuleRenderer3D::Draw(const MeshInfo* m)
 	glBindBuffer(GL_ARRAY_BUFFER, m->id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	glBindTexture(GL_TEXTURE_2D, HouseTexture);
+	glBindTexture(GL_TEXTURE_2D, m->Texture);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m->id_tex_coords);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
