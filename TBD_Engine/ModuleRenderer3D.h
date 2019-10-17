@@ -23,6 +23,7 @@ public:
 
 	void NewVertexBuffer(float3* vertex, uint &size, uint &id_vertex);
 	void NewIndexBuffer(uint* index, uint &size, uint &id_index);
+	void NewTexBuffer(float* tex_coords, uint &num_tex_coords, uint &id_tex_coords);
 	void Draw(const MeshInfo* m);
 
 

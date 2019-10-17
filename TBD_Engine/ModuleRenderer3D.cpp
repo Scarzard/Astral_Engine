@@ -216,24 +216,35 @@ void ModuleRenderer3D::NewIndexBuffer(uint *index, uint &size, uint &id_index)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+void ModuleRenderer3D::NewTexBuffer(float * tex_coords, uint & num_tex_coords, uint & id_tex_coords)
+{
+	glGenBuffers(1, (GLuint*) &(id_tex_coords)); 
+	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coords); 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_tex_coords*2, tex_coords, GL_STATIC_DRAW); 
+	glBindBuffer(GL_ARRAY_BUFFER, 0); 
+}
+
 void ModuleRenderer3D::Draw(const MeshInfo* m)
 {
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glBindTexture(GL_TEXTURE_2D, HouseTexture);
-	glActiveTexture(GL_TEXTURE0);
-
 	glBindBuffer(GL_ARRAY_BUFFER, m->id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+	glBindTexture(GL_TEXTURE_2D, HouseTexture);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m->id_tex_coords);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->id_index);
 	glDrawElements(GL_TRIANGLES, m->num_index, GL_UNSIGNED_INT, nullptr);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+
 }

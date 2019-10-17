@@ -17,6 +17,10 @@ struct MeshInfo
 	uint id_vertex = 0; // unique vertex in VRAM
 	uint num_vertex = 0;
 	float3* vertex = nullptr;
+
+	uint id_tex_coords = 0; 
+	uint num_tex_coords = 0;
+	float* tex_coords = nullptr;
 };
 
 class MeshLoader : public Module

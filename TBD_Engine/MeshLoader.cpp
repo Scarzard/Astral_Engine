@@ -95,9 +95,24 @@ void MeshLoader::LoadFile(const char* full_path)
 				}
 			}
 
+			if (new_mesh->HasTextureCoords(0))
+			{
+				m->num_tex_coords = m->num_vertex;
+				m->tex_coords = new float[m->num_tex_coords * 2];
+
+				for (int i = 0; i < m->num_tex_coords; ++i)
+				{
+					m->tex_coords[i * 2] = new_mesh->mTextureCoords[0][i].x;
+					m->tex_coords[(i * 2) + 1] = new_mesh->mTextureCoords[0][i].y;
+				}
+			}
+
 			//Generate the buffers 
 			App->renderer3D->NewVertexBuffer(m->vertex, m->num_vertex, m->id_vertex);
 			App->renderer3D->NewIndexBuffer(m->index, m->num_index, m->id_index);
+			//Generate the buffer for the tex_coordinates
+			App->renderer3D->NewTexBuffer(m->tex_coords, m->num_tex_coords, m->id_tex_coords);
+
 
 			//Add Loaded mesh to the array f meshes
 			LoadedMeshes.push_back(m);
