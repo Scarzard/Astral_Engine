@@ -25,24 +25,27 @@ bool W_Game::Start()
 
 bool W_Game::Draw()
 {
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	if (App->gui->game)
+	{
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
-	ImGui::Begin("Game");
-	//
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
-		App->gui->is_game_focused = ImGui::IsWindowHovered();
-	//1. Create aFrame Buffer Object
-	//2. Texture obtained from step 1
-	//3. We need to put the image in ImGui::Image
-	//ImGui::Image(texture, size);
+		ImGui::Begin("Game");
+		//
+		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
+			App->gui->is_game_focused = ImGui::IsWindowHovered();
+		//1. Create aFrame Buffer Object
+		//2. Texture obtained from step 1
+		//3. We need to put the image in ImGui::Image
+		//ImGui::Image(texture, size);
 
-	new_size = ImGui::GetContentRegionAvail();
+		new_size = ImGui::GetContentRegionAvail();
 
-	ImGui::Image((ImTextureID)fbo->texture, ImVec2(current_size.x, current_size.y), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)fbo->texture, ImVec2(current_size.x, current_size.y), ImVec2(0, 1), ImVec2(1, 0));
 
-	ImGui::End();
-	ImGui::PopStyleVar();
-
+		ImGui::End();
+		ImGui::PopStyleVar();
+	}
+	
 	return true;
 }
 

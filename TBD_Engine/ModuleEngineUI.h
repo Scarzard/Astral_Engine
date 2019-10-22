@@ -32,6 +32,12 @@ public:
 
 public:
 	bool is_game_focused = false;
+
+	bool console = true;
+	bool config = true;
+	bool hierarchy = true;
+	bool game = true;
+	bool inspector = true;
 	
 private:
 

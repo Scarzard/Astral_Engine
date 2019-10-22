@@ -214,6 +214,12 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 		if (ImGui::BeginMenu("View"))
 		{
 			ImGui::MenuItem("Toggle demo window", NULL, &demo_cpp);
+			ImGui::MenuItem("Toggle Hierarchy window", NULL, &hierarchy);
+			ImGui::MenuItem("Toggle Inspector window", NULL, &inspector);
+			ImGui::MenuItem("Toggle Configuration window", NULL, &config);
+			ImGui::MenuItem("Toggle Console window", NULL, &console);
+			ImGui::MenuItem("Toggle Game window", NULL, &game);
+
 
 			
 			/*ImGui::MenuItem("Toggle demo window", NULL, &show_demo_window);
