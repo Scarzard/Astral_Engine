@@ -111,11 +111,6 @@ void MeshLoader::LoadFile(const char* full_path)
 			App->renderer3D->NewIndexBuffer(obj->GetComponentMesh()->index, obj->GetComponentMesh()->num_index, obj->GetComponentMesh()->id_index);
 			//Generate the buffer for texture coords
 			App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->tex_coords, obj->GetComponentMesh()->num_tex_coords, obj->GetComponentMesh()->id_tex_coords);
-
-
-			//Add the loaded mesh to the array of meshes
-			//LoadedMeshes.push_back(m);
-
 			
 		}
 		aiReleaseImport(scene);
@@ -125,3 +120,4 @@ void MeshLoader::LoadFile(const char* full_path)
 	else
 		App->LogInConsole("Error loading scene %s", full_path);
 }
+

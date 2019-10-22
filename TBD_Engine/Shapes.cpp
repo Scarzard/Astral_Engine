@@ -17,62 +17,50 @@ Shapes::Shapes() {}
 
 Shapes::~Shapes() {}
 
-void Shapes::CreateBuffer()
+void Shapes::LoadPrimitiveMesh(const par_shapes_mesh_s* m)
 {
-	if (obj != nullptr)
-	{
-		//vertex
-		glGenBuffers(1, (GLuint*) &(id_vertex));
-		glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * obj->npoints * 3, obj->points, GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	GameObject* obj = App->scene_intro->CreateGameObject();
 
-		//indices
-		glGenBuffers(1, (GLuint*) &(id_indices));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_indices);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PAR_SHAPES_T) * obj->ntriangles * 3, obj->triangles, GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-		//texture
-		glGenBuffers(1, (GLuint*)&(id_texture)); // 
-		glBindBuffer(GL_ARRAY_BUFFER, id_texture);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * obj->npoints*6, obj->tcoords, GL_STATIC_DRAW); 
-		glBindBuffer(GL_ARRAY_BUFFER, 0); 
-	}
-}
-
-void Shapes::RenderShape()
-{
-	glEnableClientState(GL_VERTEX_ARRAY);
-	if (type == SPHERE)
-	{
-		//texture
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, Texture);
-		glBindBuffer(GL_ARRAY_BUFFER, id_texture);
-		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-	}
+	// VERTEX ----------------
+	obj->GetComponentMesh()->num_vertex = m->npoints;
+	obj->GetComponentMesh()->vertex = new float3[obj->GetComponentMesh()->num_vertex];
 	
-
-	//vertex
-	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-	//index
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_indices);
-	glDrawElements(GL_TRIANGLES, obj->ntriangles * 3, GL_UNSIGNED_SHORT, nullptr);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	if (type == SPHERE)
+	for (int i = 0; i < obj->GetComponentMesh()->num_vertex; i++)
 	{
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		int j = i * 3;
+		obj->GetComponentMesh()->vertex[i].x = m->points[j];
+		obj->GetComponentMesh()->vertex[i].y = m->points[j + 1];
+		obj->GetComponentMesh()->vertex[i].z = m->points[j + 2];
 	}
-	
-	glDisableClientState(GL_VERTEX_ARRAY);
+
+	// INDEX ------------
+	obj->GetComponentMesh()->num_index = m->ntriangles * 3;
+	obj->GetComponentMesh()->index = new uint[obj->GetComponentMesh()->num_index];
+
+	for (int i = 0; i < obj->GetComponentMesh()->num_index; i++)
+	{
+		obj->GetComponentMesh()->index[i] = (uint)m->triangles[i];
+	}
+
+	// TEXTURE ----------------
+	obj->GetComponentMesh()->num_tex_coords = m->npoints;
+	obj->GetComponentMesh()->tex_coords = new float[obj->GetComponentMesh()->num_tex_coords * 2];
+
+	//Copy the par_shapes texture coordinates
+	for (int i = 0; i < obj->GetComponentMesh()->num_tex_coords * 2; ++i)
+		obj->GetComponentMesh()->tex_coords[i] = m->tcoords[i];
+
+	//Checkers texture to primitive
+	obj->GetComponentMesh()->Texture = App->tex_loader->id_checkersTexture;
+
+	//Generate the buffers 
+	App->renderer3D->NewVertexBuffer(obj->GetComponentMesh()->vertex, obj->GetComponentMesh()->num_vertex, obj->GetComponentMesh()->id_vertex);
+	App->renderer3D->NewIndexBuffer(obj->GetComponentMesh()->index, obj->GetComponentMesh()->num_index, obj->GetComponentMesh()->id_index);
+	//Generate the buffer for texture coords
+	App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->tex_coords, obj->GetComponentMesh()->num_tex_coords, obj->GetComponentMesh()->id_tex_coords);
+
+	App->LogInConsole("Created Primitive with %d vertices and %d indices.", obj->GetComponentMesh()->num_vertex, obj->GetComponentMesh()->num_index);
+
 }
 
 // CREATE SHAPES FUNCTIONS //
@@ -83,17 +71,14 @@ void Shapes::CreateSphere(float x, float y, float z, int slices, int stacks)
 
 	obj = par_shapes_create_parametric_sphere(slices, stacks);
 
-	type = SPHERE;
-
 	position.x = x;
 	position.y = y;
 	position.z = z;
 
 	par_shapes_translate(obj, position.x, position.y, position.z);
 
-	Texture = App->tex_loader->id_checkersTexture;
+	LoadPrimitiveMesh(obj);
 
-	CreateBuffer();
 }
 
 void Shapes::CreateTrefoil(float x, float y, float z, int slices, int stacks, int rad)
@@ -107,19 +92,19 @@ void Shapes::CreateTrefoil(float x, float y, float z, int slices, int stacks, in
 
 	par_shapes_translate(obj, position.x, position.y, position.z);
 
-	CreateBuffer();
+	LoadPrimitiveMesh(obj);
 }
 
-void Shapes::CreateIcosahedron(float x, float y, float z)
+void Shapes::CreateTorus(float x, float y, float z, int slices, int stacks, int rad)
 {
-	obj = par_shapes_create_icosahedron();
+	obj = par_shapes_create_torus(slices, stacks, rad);
 	position.x = x;
 	position.y = y;
 	position.z = z;
 
 	par_shapes_translate(obj, position.x, position.y, position.z);
 
-	CreateBuffer();
+	LoadPrimitiveMesh(obj);
 }
 
 void Shapes::CreateCube(float x, float y, float z, float size)
@@ -132,5 +117,6 @@ void Shapes::CreateCube(float x, float y, float z, float size)
 	par_shapes_scale(obj, size, size, size);
 	par_shapes_translate(obj, position.x, position.y, position.z);
 
-	CreateBuffer();
+	// may not work cause no UV's ?¿
+	LoadPrimitiveMesh(obj);
 }

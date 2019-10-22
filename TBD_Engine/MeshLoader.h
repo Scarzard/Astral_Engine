@@ -8,23 +8,6 @@
 #include "MathGeoLib/include/MathGeoLib.h"
 
 
-struct MeshInfo 
-{
-	uint id_index = 0; // index in VRAM
-	uint num_index = 0;
-	uint* index = nullptr;
-
-	uint id_vertex = 0; // unique vertex in VRAM
-	uint num_vertex = 0;
-	float3* vertex = nullptr;
-
-	uint id_tex_coords = 0; 
-	uint num_tex_coords = 0;
-	float* tex_coords = nullptr;
-
-	uint Texture = 0;
-};
-
 class MeshLoader : public Module
 {
 public:
@@ -38,9 +21,6 @@ public:
 
 	void LoadFile(const char* path);
 
-public:
-
-	std::vector<MeshInfo*> LoadedMeshes;
 };
 
 

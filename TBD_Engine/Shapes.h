@@ -11,12 +11,6 @@ struct Position
 	float x, y, z;
 };
 
-enum Type
-{
-	NONE = -1,
-	SPHERE,
-};
-
 class Shapes{
 
 public:
@@ -24,25 +18,16 @@ public:
 	Shapes();
 	~Shapes();
 
-	void CreateBuffer();
-	void RenderShape();
+	void LoadPrimitiveMesh(const par_shapes_mesh_s* m);
 
 	void CreateCube(float x, float y, float z, float size = 1);
 	void CreateSphere(float x, float y, float z, int slices, int stacks); 
 	void CreateTrefoil(float x, float y, float z, int slices, int stacks, int rad);
-	void CreateIcosahedron(float x, float y, float z);
+	void CreateTorus(float x, float y, float z, int slices, int stacks, int rad);
 	
 public: 
 
 	par_shapes_mesh_s* obj = nullptr;
-
-	Type type = NONE;
-
-	uint id_vertex = 0;
-	uint id_indices = 0;
-	uint id_texture = 0;
-
-	uint Texture = 0;
 
 	Position position;
 };

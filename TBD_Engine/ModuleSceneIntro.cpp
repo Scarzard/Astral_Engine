@@ -30,8 +30,6 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	object = new Shapes();
-	object->CreateSphere(1, 1, -5, 50, 20);
 
 	uint HouseTexture = App->tex_loader->LoadTextureFromPath("Assets/Baker_house.png");
 	App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
@@ -41,7 +39,13 @@ bool ModuleSceneIntro::Start()
 		(*iterator)->GetComponentMesh()->Texture = HouseTexture; //just to test
 	}
 	
+	Shapes* object = new Shapes();
+	Shapes* object2 = new Shapes();
+	Shapes* object3 = new Shapes();
 
+	object->CreateSphere(1, 1, -5, 50, 20);
+	object2->CreateTrefoil(1,5,-5,50,50, 1);
+	object3->CreateTorus(5, 1, -5, 50, 50, 1);
 
 	return ret;
 }
@@ -50,7 +54,7 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	App->LogInConsole("Unloading Intro scene");
-	delete object;
+	
 
 	return true;
 }
@@ -131,8 +135,6 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	{
 		App->renderer3D->Draw((*iterator)->GetComponentMesh());
 	}
-
-	object->RenderShape();
 
 	return UPDATE_CONTINUE;
 }

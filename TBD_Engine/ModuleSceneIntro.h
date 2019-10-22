@@ -23,8 +23,6 @@ public:
 	uint id_no_dup_vertices = 1;
 	uint id_indices = 2;
 
-	Shapes* object = nullptr;
-
 	update_status want_to_quit = UPDATE_CONTINUE;
 
 	GameObject* CreateGameObject();
