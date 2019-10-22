@@ -3,18 +3,21 @@
 
 #include "Globals.h"
 #include "Component.h"
+#include "Component_Mesh.h"
 
-class Component;
 
 class GameObject
 {
 public:
-	GameObject(char* name);
+	GameObject(std::string name);
 	virtual ~GameObject();
 
 	void Update();
 
 	Component* CreateComponent(Component::ComponentType type);
+
+	ComponentMesh* GetComponentMesh();
+
 
 public:
 

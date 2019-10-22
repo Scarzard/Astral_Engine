@@ -35,8 +35,12 @@ bool ModuleSceneIntro::Start()
 
 	uint HouseTexture = App->tex_loader->LoadTextureFromPath("Assets/Baker_house.png");
 	App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
-	App->mesh_loader->LoadedMeshes.at(0)->Texture = HouseTexture;
-	App->mesh_loader->LoadedMeshes.at(1)->Texture = HouseTexture;
+
+	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
+	{
+		(*iterator)->GetComponentMesh()->Texture = HouseTexture; //just to test
+	}
+	
 
 
 	return ret;
@@ -49,6 +53,18 @@ bool ModuleSceneIntro::CleanUp()
 	delete object;
 
 	return true;
+}
+
+GameObject* ModuleSceneIntro::CreateGameObject()
+{
+	std::string Name = "GameObject ";
+	Name.append(std::to_string(GO_list.size()));
+
+	
+	GameObject* GO = new GameObject(Name.data());
+	GO_list.push_back(GO);
+
+	return GO;
 }
 
 // Update
@@ -111,8 +127,10 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 
 	//Draw meshes
-	for (int i = 0; i < App->mesh_loader->LoadedMeshes.size(); ++i)
-		App->renderer3D->Draw(App->mesh_loader->LoadedMeshes[i]);
+	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
+	{
+		App->renderer3D->Draw((*iterator)->GetComponentMesh());
+	}
 
 	object->RenderShape();
 

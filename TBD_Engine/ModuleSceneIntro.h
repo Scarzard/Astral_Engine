@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Shapes.h"
+#include "GameObject.h"
 
 class Shapes;
 
@@ -25,4 +26,8 @@ public:
 	Shapes* object = nullptr;
 
 	update_status want_to_quit = UPDATE_CONTINUE;
+
+	GameObject* CreateGameObject();
+
+	std::vector<GameObject*> GO_list;
 };

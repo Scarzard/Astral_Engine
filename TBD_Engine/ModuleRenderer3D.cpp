@@ -226,7 +226,7 @@ void ModuleRenderer3D::NewTexBuffer(float * tex_coords, uint & num_tex_coords, u
 	glBindBuffer(GL_ARRAY_BUFFER, 0); 
 }
 
-void ModuleRenderer3D::Draw(const MeshInfo* m)
+void ModuleRenderer3D::Draw(const ComponentMesh* m)
 {
 
 	glEnableClientState(GL_VERTEX_ARRAY);

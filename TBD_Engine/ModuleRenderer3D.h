@@ -3,7 +3,6 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
-#include "MeshLoader.h"
 
 #define MAX_LIGHTS 8
 
@@ -24,7 +23,7 @@ public:
 	void NewVertexBuffer(float3* vertex, uint &size, uint &id_vertex);
 	void NewIndexBuffer(uint* index, uint &size, uint &id_index);
 	void NewTexBuffer(float* tex_coords, uint &num_tex_coords, uint &id_tex_coords);
-	void Draw(const MeshInfo* m);
+	void Draw(const ComponentMesh* m);
 
 
 public:

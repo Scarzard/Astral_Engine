@@ -4,9 +4,10 @@
 
 #include "mmgr/mmgr.h"
 
-GameObject::GameObject(char* name)
+GameObject::GameObject(std::string name)
 {
 	this->name = name;
+	CreateComponent(Component::ComponentType::Mesh);
 }
 
 GameObject::~GameObject(){}
@@ -28,6 +29,20 @@ Component* GameObject::CreateComponent(Component::ComponentType type)
 		components.push_back(component);
 
 	return component;
+}
+
+ComponentMesh* GameObject::GetComponentMesh()
+{
+	Component* mesh = nullptr;
+	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
+	{
+		if ((*iterator)->type == Component::ComponentType::Mesh)
+		{
+			return (ComponentMesh*)*iterator;
+		}
+	}
+
+	return (ComponentMesh*)mesh;
 }
 
 void GameObject::Update()

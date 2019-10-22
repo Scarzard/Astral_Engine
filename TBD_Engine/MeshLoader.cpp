@@ -1,6 +1,8 @@
 #include "MeshLoader.h"
 #include "Application.h"
 
+#include "GameObject.h"
+#include "ModuleSceneIntro.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -64,55 +66,55 @@ void MeshLoader::LoadFile(const char* full_path)
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
-			MeshInfo* m = new MeshInfo;
+			GameObject* obj = App->scene_intro->CreateGameObject();
 
 			aiMesh* new_mesh = scene->mMeshes[i];
 
-			m->num_vertex = new_mesh->mNumVertices;
-			m->vertex = new float3[m->num_vertex];
+			obj->GetComponentMesh()->num_vertex = new_mesh->mNumVertices;
+			obj->GetComponentMesh()->vertex = new float3[obj->GetComponentMesh()->num_vertex];
 
 			for (uint i = 0; i < new_mesh->mNumVertices; ++i)
 			{
-				m->vertex[i].x = new_mesh->mVertices[i].x;
-				m->vertex[i].y = new_mesh->mVertices[i].y;
-				m->vertex[i].z = new_mesh->mVertices[i].z;
+				obj->GetComponentMesh()->vertex[i].x = new_mesh->mVertices[i].x;
+				obj->GetComponentMesh()->vertex[i].y = new_mesh->mVertices[i].y;
+				obj->GetComponentMesh()->vertex[i].z = new_mesh->mVertices[i].z;
 			}
 
 			// copy faces
 			if (new_mesh->HasFaces())
 			{
-				m->num_index = new_mesh->mNumFaces * 3;
-				m->index = new uint[m->num_index]; // assume each face is a triangle
+				obj->GetComponentMesh()->num_index = new_mesh->mNumFaces * 3;
+				obj->GetComponentMesh()->index = new uint[obj->GetComponentMesh()->num_index]; // assume each face is a triangle
 				for (uint i = 0; i < new_mesh->mNumFaces; ++i)
 				{
 					if (new_mesh->mFaces[i].mNumIndices != 3)
 						App->LogInConsole("WARNING, geometry face with != 3 indices!");
 					else
-						memcpy(&m->index[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
+						memcpy(&obj->GetComponentMesh()->index[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
 			}
 
 			if (new_mesh->HasTextureCoords(0))
 			{
-				m->num_tex_coords = m->num_vertex;
-				m->tex_coords = new float[m->num_tex_coords * 2];
+				obj->GetComponentMesh()->num_tex_coords = obj->GetComponentMesh()->num_vertex;
+				obj->GetComponentMesh()->tex_coords = new float[obj->GetComponentMesh()->num_tex_coords * 2];
 
-				for (int i = 0; i < m->num_tex_coords; ++i)
+				for (int i = 0; i < obj->GetComponentMesh()->num_tex_coords; ++i)
 				{
-					m->tex_coords[i * 2] = new_mesh->mTextureCoords[0][i].x;
-					m->tex_coords[(i * 2) + 1] = new_mesh->mTextureCoords[0][i].y;
+					obj->GetComponentMesh()->tex_coords[i * 2] = new_mesh->mTextureCoords[0][i].x;
+					obj->GetComponentMesh()->tex_coords[(i * 2) + 1] = new_mesh->mTextureCoords[0][i].y;
 				}
 			}
 
 			//Generate the buffers 
-			App->renderer3D->NewVertexBuffer(m->vertex, m->num_vertex, m->id_vertex);
-			App->renderer3D->NewIndexBuffer(m->index, m->num_index, m->id_index);
+			App->renderer3D->NewVertexBuffer(obj->GetComponentMesh()->vertex, obj->GetComponentMesh()->num_vertex, obj->GetComponentMesh()->id_vertex);
+			App->renderer3D->NewIndexBuffer(obj->GetComponentMesh()->index, obj->GetComponentMesh()->num_index, obj->GetComponentMesh()->id_index);
 			//Generate the buffer for texture coords
-			App->renderer3D->NewTexBuffer(m->tex_coords, m->num_tex_coords, m->id_tex_coords);
+			App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->tex_coords, obj->GetComponentMesh()->num_tex_coords, obj->GetComponentMesh()->id_tex_coords);
 
 
 			//Add the loaded mesh to the array of meshes
-			LoadedMeshes.push_back(m);
+			//LoadedMeshes.push_back(m);
 
 			
 		}
