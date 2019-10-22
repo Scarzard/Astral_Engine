@@ -2,7 +2,8 @@
 #define __COMPONENT_H__
 
 #include "Globals.h"
-#include "GameObject.h"
+
+class GameObject;
 
 class Component
 {

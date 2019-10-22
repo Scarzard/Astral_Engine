@@ -11,7 +11,7 @@ GameObject::GameObject(char* name)
 
 GameObject::~GameObject(){}
 
-Component * GameObject::CreateComponent(Component::ComponentType type)
+Component* GameObject::CreateComponent(Component::ComponentType type)
 {
 	
 	Component* component = nullptr;
@@ -28,4 +28,9 @@ Component * GameObject::CreateComponent(Component::ComponentType type)
 		components.push_back(component);
 
 	return component;
+}
+
+void GameObject::Update()
+{
+
 }
