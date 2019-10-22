@@ -76,8 +76,11 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Component_Mesh.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="FrameBufferObject.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="gpudetect\DeviceId.h" />
     <ClInclude Include="gpudetect\dxgi1_4.h" />
     <ClInclude Include="MeshLoader.h" />
@@ -183,7 +186,10 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentMesh.cpp" />
     <ClCompile Include="FrameBufferObject.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="gpudetect\DeviceId.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="glmath.cpp" />

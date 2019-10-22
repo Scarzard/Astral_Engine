@@ -55,6 +55,9 @@
     <Filter Include="Sources\Tools\gpudetect">
       <UniqueIdentifier>{69f7ce4c-0d90-4a34-a502-1136d0effb2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\Components">
+      <UniqueIdentifier>{6c162245-4d8a-4b22-8831-8cc5d58332b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -372,6 +375,15 @@
     <ClInclude Include="gpudetect\dxgi1_4.h">
       <Filter>Sources\Tools\gpudetect</Filter>
     </ClInclude>
+    <ClInclude Include="Component_Mesh.h">
+      <Filter>Sources\Modules\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Sources\Modules\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -568,6 +580,15 @@
     </ClCompile>
     <ClCompile Include="gpudetect\DeviceId.cpp">
       <Filter>Sources\Tools\gpudetect</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Sources\Modules\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
+      <Filter>Sources\Modules\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
