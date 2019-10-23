@@ -39,13 +39,13 @@ bool ModuleSceneIntro::Start()
 		(*iterator)->GetComponentMesh()->Texture = HouseTexture; //just to test
 	}
 	
-	Shapes* object = new Shapes();
+	/*Shapes* object = new Shapes();
 	Shapes* object2 = new Shapes();
 	Shapes* object3 = new Shapes();
 
 	object->CreateSphere(1, 1, -5, 50, 20);
 	object2->CreateTrefoil(1,5,-5,50,50, 1);
-	object3->CreateTorus(5, 1, -5, 50, 50, 1);
+	object3->CreateTorus(5, 1, -5, 50, 50, 1);*/
 
 	return ret;
 }
@@ -61,7 +61,7 @@ bool ModuleSceneIntro::CleanUp()
 
 GameObject* ModuleSceneIntro::CreateGameObject()
 {
-	std::string Name = "GameObject ";
+	std::string Name = "GameObject";
 	Name.append(std::to_string(GO_list.size()));
 
 	

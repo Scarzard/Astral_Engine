@@ -237,7 +237,23 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 
 		if (ImGui::BeginMenu("Create"))
 		{
-			ImGui::MenuItem("Cube", NULL);
+			if (ImGui::MenuItem("Sphere", NULL))
+			{
+				Shapes* object = new Shapes();
+				object->CreateSphere(1, 1, -5, 50, 20);
+			}
+
+			if (ImGui::MenuItem("Trefoil", NULL))
+			{
+				Shapes* object = new Shapes();
+				object->CreateTrefoil(1, 5, -5, 50, 50, 1);
+			}
+
+			if (ImGui::MenuItem("Torus", NULL))
+			{
+				Shapes* object = new Shapes();
+				object->CreateTorus(5, 1, -5, 20, 20, 1);
+			}
 
 			ImGui::EndMenu();
 		}
