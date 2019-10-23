@@ -23,7 +23,9 @@ public:
 public:
 
 	bool active = true;
+
 	std::string name;
+	uint id = -1;
 
 	std::vector<Component*> components;
 };

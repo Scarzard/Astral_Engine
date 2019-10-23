@@ -22,6 +22,20 @@ bool W_Hierarchy::Draw()
 
 		ImGui::Begin("Hierarchy");
 		//Draw Hierarchy stuff
+		for (std::vector<GameObject*>::iterator iterator = App->scene_intro->GO_list.begin(); iterator != App->scene_intro->GO_list.end(); iterator++)
+		{
+			
+			ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+		
+			node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+	
+			if ((*iterator)->active = false)
+				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+
+
+			ImGui::TreeNodeEx((void*)(intptr_t)(*iterator)->id, node_flags, (*iterator)->name.c_str());
+			
+		}
 
 
 		ImGui::End();
