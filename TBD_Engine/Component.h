@@ -3,6 +3,8 @@
 
 #include "Globals.h"
 
+#include "ImGui/imgui.h"
+
 class GameObject;
 
 class Component

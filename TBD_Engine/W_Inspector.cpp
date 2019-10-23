@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "W_Inspector.h"
+#include "Component_Transform.h"
 
 W_Inspector::W_Inspector() : Window()
 {
@@ -53,6 +54,8 @@ bool W_Inspector::Draw()
 		{
 
 		}
+
+		
 
 
 		ImGui::End();

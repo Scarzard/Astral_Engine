@@ -18,6 +18,7 @@ public:
 	Component* CreateComponent(Component::ComponentType type);
 
 	ComponentMesh* GetComponentMesh();
+	ComponentTransform* GetComponentTransform();
 
 
 public:

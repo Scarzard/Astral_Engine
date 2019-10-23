@@ -1,6 +1,6 @@
 #include "GameObject.h"
 #include "Component_Mesh.h"
-#
+#include "Component_Transform.h"
 
 #include "mmgr/mmgr.h"
 
@@ -21,10 +21,13 @@ Component* GameObject::CreateComponent(Component::ComponentType type)
 
 	switch (type)
 	{
+	case Component::ComponentType::Transform:
+		component = new ComponentTransform(this);
+		break;
 	case Component::ComponentType::Mesh:
 		component = new ComponentMesh(this);
 		break;
-	
+
 	}
 
 	if (component)
@@ -45,6 +48,20 @@ ComponentMesh* GameObject::GetComponentMesh()
 	}
 
 	return (ComponentMesh*)mesh;
+}
+
+ComponentTransform* GameObject::GetComponentTransform()
+{
+	Component* transform = nullptr;
+	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
+	{
+		if ((*iterator)->type == Component::ComponentType::Transform)
+		{
+			return (ComponentTransform*)*iterator;
+		}
+	}
+
+	return (ComponentTransform*)transform;
 }
 
 void GameObject::Update()

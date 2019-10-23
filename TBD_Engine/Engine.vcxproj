@@ -78,6 +78,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Component_Mesh.h" />
+    <ClInclude Include="Component_Transform.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="FrameBufferObject.h" />
     <ClInclude Include="GameObject.h" />
@@ -186,7 +187,8 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="ComponentMesh.cpp" />
+    <ClCompile Include="Component_Mesh.cpp" />
+    <ClCompile Include="Component_Transform.cpp" />
     <ClCompile Include="FrameBufferObject.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="gpudetect\DeviceId.cpp" />
