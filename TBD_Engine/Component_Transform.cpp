@@ -62,8 +62,8 @@ void ComponentTransform::SetQuaternionRotation(Quat& rotation)
 
 void ComponentTransform::SetEulerRotation(float3 rot)
 {
-	float3 delta = (rot - rotation_euler) * DEGTORAD;
-	Quat quaternion_rotation = Quat::FromEulerXYZ(delta.x, delta.y, delta.z);
+	float3 tmp = (rot - rotation_euler) * DEGTORAD;
+	Quat quaternion_rotation = Quat::FromEulerXYZ(tmp.x, tmp.y, tmp.z);
 	rotation_quat = rotation_quat * quaternion_rotation;
 	rotation_euler = rot;
 }

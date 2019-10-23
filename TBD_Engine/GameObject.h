@@ -4,6 +4,8 @@
 #include "Globals.h"
 #include "Component.h"
 #include "Component_Mesh.h"
+#include "Component_Transform.h"
+
 
 
 class GameObject

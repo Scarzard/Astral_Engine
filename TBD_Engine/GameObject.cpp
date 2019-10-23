@@ -1,12 +1,11 @@
 #include "GameObject.h"
-#include "Component_Mesh.h"
-#include "Component_Transform.h"
 
 #include "mmgr/mmgr.h"
 
 GameObject::GameObject(std::string name)
 {
 	this->name = name;
+	CreateComponent(Component::ComponentType::Transform);
 	CreateComponent(Component::ComponentType::Mesh);
 }
 
@@ -72,6 +71,7 @@ void GameObject::Update()
 void GameObject::CleanUp()
 {
 	this->GetComponentMesh()->CleanUp();
+	this->GetComponentTransform()->CleanUp();
 
 	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
 	{

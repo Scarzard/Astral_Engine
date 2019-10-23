@@ -21,7 +21,7 @@ bool FrameBufferObject::Start(ImVec2 size)
 	//Generate the FBO and bind it, continue if FBO is complete
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
+	
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
 	//	App->LogInConsole("Frame buffer object creation is successful");
 	//else
