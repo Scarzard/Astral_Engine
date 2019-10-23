@@ -13,6 +13,7 @@ public:
 	virtual ~GameObject();
 
 	void Update();
+	void CleanUp();
 
 	Component* CreateComponent(Component::ComponentType type);
 

@@ -14,6 +14,8 @@ public:
 	ComponentMesh(GameObject* GO);
 	virtual ~ComponentMesh();
 
+	void CleanUp();
+
 public:
 	uint id_index = 0; // index in VRAM
 	uint num_index = 0;

@@ -75,5 +75,7 @@ bool W_Game::Cleanup()
 	fbo->CleanUp();
 	delete fbo;
 
+	fbo = nullptr;
+
 	return true;
 }

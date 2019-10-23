@@ -13,6 +13,11 @@ ComponentMesh::ComponentMesh(GameObject* GO) : Component(Component::ComponentTyp
 
 ComponentMesh::~ComponentMesh()
 {
+
+}
+
+void ComponentMesh::CleanUp()
+{
 	glDeleteBuffers(1, (GLuint*)&id_index);
 	glDeleteBuffers(1, (GLuint*)&id_vertex);
 	glDeleteBuffers(1, (GLuint*)&id_tex_coords);
@@ -28,11 +33,10 @@ ComponentMesh::~ComponentMesh()
 		delete[] vertex;
 		vertex = nullptr;
 	}
-	
+
 	if (tex_coords)
 	{
 		delete[] tex_coords;
 		tex_coords = nullptr;
 	}
-
 }

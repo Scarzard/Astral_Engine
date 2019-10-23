@@ -1,10 +1,9 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "Shapes.h"
 #include "GameObject.h"
 
-class Shapes;
+class par_shapes_mesh_s;
 
 class ModuleSceneIntro : public Module
 {
@@ -17,15 +16,20 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-
-	//DRAW CUBE INFO
-	uint id_vertices = 0;
-	uint id_no_dup_vertices = 1;
-	uint id_indices = 2;
-
-	update_status want_to_quit = UPDATE_CONTINUE;
+public:
 
 	GameObject* CreateGameObject();
+
+	void LoadPrimitiveMesh(const par_shapes_mesh_s* m);
+
+	void CreateCube(float x, float y, float z, float size = 1);
+	void CreateSphere(float x, float y, float z, int slices, int stacks);
+	void CreateTrefoil(float x, float y, float z, int slices, int stacks, int rad);
+	void CreateTorus(float x, float y, float z, int slices, int stacks, int rad);
+
+public:	
+
+	update_status want_to_quit = UPDATE_CONTINUE;
 
 	std::vector<GameObject*> GO_list;
 };

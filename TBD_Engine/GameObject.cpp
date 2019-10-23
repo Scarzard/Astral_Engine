@@ -10,7 +10,9 @@ GameObject::GameObject(std::string name)
 	CreateComponent(Component::ComponentType::Mesh);
 }
 
-GameObject::~GameObject(){}
+GameObject::~GameObject()
+{
+}
 
 Component* GameObject::CreateComponent(Component::ComponentType type)
 {
@@ -47,5 +49,18 @@ ComponentMesh* GameObject::GetComponentMesh()
 
 void GameObject::Update()
 {
+
+}
+
+void GameObject::CleanUp()
+{
+	this->GetComponentMesh()->CleanUp();
+
+	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
+	{
+		delete (*iterator);
+	}
+
+	components.clear();
 
 }
