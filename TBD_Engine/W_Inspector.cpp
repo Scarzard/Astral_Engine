@@ -25,24 +25,29 @@ bool W_Inspector::Draw()
 		ImGui::Begin("Inspector");
 		//Draw Inspector stuff
 
-		float x, y, z;
-
 		if (ImGui::CollapsingHeader("Transform"))
 		{
+
+			float3 pos = float3::zero;
+			float3 rot = float3::zero;
+			float3 scale = float3::one;
+
+			ImGui::Text("");
+
 			ImGui::Text("Position:");
-			ImGui::SameLine(); ImGui::PushItemWidth(70); ImGui::DragFloat("X", &x, 0.005f);
-			ImGui::SameLine(); ImGui::PushItemWidth(70); ImGui::DragFloat("Y", &y, 0.005f);
-			ImGui::SameLine(); ImGui::PushItemWidth(70); ImGui::DragFloat("Z", &z, 0.005f);
-
-			ImGui::Text("Rotation:");
-			ImGui::SameLine(); ImGui::PushItemWidth(70); ImGui::DragFloat("X", &x, 0.005f);
-			ImGui::SameLine(); ImGui::PushItemWidth(70); ImGui::DragFloat("Y", &y, 0.005f);
-			ImGui::SameLine(); ImGui::PushItemWidth(70); ImGui::DragFloat("Z", &z, 0.005f);
-
-			ImGui::Text("Scale:   ");
-			ImGui::SameLine(); ImGui::PushItemWidth(70); ImGui::DragFloat("X", &x, 0.005f);
-			ImGui::SameLine(); ImGui::PushItemWidth(70); ImGui::DragFloat("Y", &y, 0.005f);
-			ImGui::SameLine(); ImGui::PushItemWidth(70); ImGui::DragFloat("Z", &z, 0.005f);
+			ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("X1", &pos.x, 0.05f);
+			ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Y1", &pos.y, 0.05f);
+			ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Z1", &pos.z, 0.05f);
+													
+			ImGui::Text("Rotation:");				
+			ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("X2", &rot.x, 0.05f);
+			ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Y2", &rot.y, 0.05f);
+			ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Z2", &rot.z, 0.05f);
+													
+			ImGui::Text("Scale:   ");				
+			ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("X3", &scale.x, 0.05f);
+			ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Y3", &scale.y, 0.05f);
+			ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Z3", &scale.z, 0.05f);
 		}
 
 		if (ImGui::CollapsingHeader("Mesh"))

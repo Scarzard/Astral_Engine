@@ -16,6 +16,8 @@ public:
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
+
+private:
 };
 
 #endif // !_W_INSPECTOR_H_
