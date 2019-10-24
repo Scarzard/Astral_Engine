@@ -26,7 +26,6 @@ public:
 	void SetWidth(uint width);
 	void SetHeigth(uint height);
 	void SetWindowSize(int width, int height);
-	void SetSize(uint size, int& w, int& h);
 	void SetFullscreen(bool full);
 	void SetBorderless(bool border);
 	void SetFullScreenDesktop(bool desktop);
@@ -37,20 +36,14 @@ public:
 	uint GetWidth() const;
 	uint GetHeight() const;
 	void GetWindowSize(int &width, int &height);
-	uint GetSize() const;
 	bool GetFullscreenWindow() const;
 	bool GetFullDesktopWindow() const;
 	bool GetBorderlessWindow() const;
 
 
 public:
-	int screen_w = SCREEN_WIDTH;
-	int screen_h = SCREEN_HEIGHT;
-
-	uint size = SCREEN_SIZE;
-
-	int width = SCREEN_WIDTH * SCREEN_SIZE;
-	int height = SCREEN_HEIGHT * SCREEN_SIZE;
+	int width = SCREEN_WIDTH;
+	int height = SCREEN_HEIGHT;
 
 	bool fullscreen = false;
 	bool resizable = false;

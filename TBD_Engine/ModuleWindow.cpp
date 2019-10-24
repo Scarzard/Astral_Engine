@@ -131,22 +131,7 @@ void ModuleWindow::SetWindowSize(int w, int h)
 		height = h;
 		SDL_SetWindowSize(window, width, height);
 
-		if (!fullscreen)
-			App->renderer3D->OnResize(width, height);
 	}
-}
-
-void ModuleWindow::SetSize(uint size, int& w, int& h)
-{
-	w = screen_w * size;
-	h = screen_h * size;
-
-	this->size = size;
-
-	SDL_SetWindowSize(window, w, h);
-
-	if (!fullscreen)
-		App->renderer3D->OnResize(w, h);
 }
 
 void ModuleWindow::SetFullscreen(bool fullscreen_)
@@ -211,11 +196,6 @@ void ModuleWindow::SetResizable(bool resize)
 float ModuleWindow::GetBrightness() const
 {
 	return SDL_GetWindowBrightness(window);
-}
-
-uint ModuleWindow::GetSize() const
-{
-	return size;
 }
 
 void ModuleWindow::GetWindowSize(int & width, int & height)

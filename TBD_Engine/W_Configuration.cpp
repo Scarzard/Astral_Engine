@@ -74,11 +74,11 @@ bool W_Configuration::Draw()
 			ImGui::SliderFloat("Brightness", &brightness_slider, 0.0f, 1.0f);
 			App->window->SetBrightness(brightness_slider);
 			//When this is active, game window resizes automatically when Window header is toggled
-			//ImGui::SliderInt("Width", &width_slider, 600, 1920);
-			//App->window->SetWidth(width_slider);
+			ImGui::DragInt("Width", &width_slider, 1, 600, 1920);
+			App->window->SetWindowSize(width_slider, height_slider);
 
-			//ImGui::SliderInt("Height", &height_slider, 400, 1080);
-			//App->window->SetHeigth(height_slider);
+			ImGui::DragInt("Height", &height_slider, 1, 400, 1080);
+			App->window->SetWindowSize(width_slider, height_slider);
 
 			if (ImGui::Checkbox("Fullscreen", &fullscreen))
 				App->window->SetFullscreen(fullscreen);
@@ -135,7 +135,6 @@ bool W_Configuration::Draw()
 			ImGui::BulletText("GPU RAM Available: %.1f MB", info.vram_available);
 			ImGui::BulletText("GPU RAM Reserved: %.1f MB", info.vram_reserved);
 		}
-
 
 		ImGui::End();
 		ImGui::PopStyleVar();
