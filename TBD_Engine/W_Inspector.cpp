@@ -3,6 +3,7 @@
 
 W_Inspector::W_Inspector() : Window()
 {
+	App->LogInConsole("Created Inspector Window");
 }
 
 W_Inspector::~W_Inspector()

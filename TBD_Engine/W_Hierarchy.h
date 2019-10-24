@@ -16,6 +16,10 @@ public:
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
+
+public:
+
+	uint TreeNode_Clicked = -1;
 };
 
 #endif // !_W_HIERARCHY_H_

@@ -7,6 +7,7 @@ W_Console::W_Console() : Window()
 
 W_Console::~W_Console()
 {
+	App->LogInConsole("Created Console Window");
 }
 
 bool W_Console::Start()

@@ -25,11 +25,11 @@ bool ModuleEngineUI::Init()
 	ImGui::StyleColorsDark();
 	ImGui_ImplOpenGL3_Init();
 
-	W_Game* game_window				= new W_Game();
-	W_Inspector* ins_window			= new W_Inspector();
-	W_Console* console_window		= new W_Console();
-	W_Hierarchy* h_window			= new W_Hierarchy();
-	W_Configuration* conf_window	= new W_Configuration();
+	game_window			= new W_Game();
+	ins_window			= new W_Inspector();
+	console_window		= new W_Console();
+	h_window			= new W_Hierarchy();
+	conf_window			= new W_Configuration();
 
 	windows.push_back(game_window);
 	windows.push_back(ins_window);
