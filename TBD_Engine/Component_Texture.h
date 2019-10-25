@@ -3,7 +3,6 @@
 
 #include "Globals.h"
 #include "Component.h"
-#include "TextureLoader.h"
 
 
 
@@ -19,8 +18,9 @@ public:
 
 public:
 	
-	Texture texture;
-	bool Checker_active = false;
+	uint Texture = 0;
+	std::string texture_path = "none";
+	bool Checers_texture = false;
 };
 
 #endif
