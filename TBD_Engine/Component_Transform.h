@@ -37,7 +37,7 @@ public:
 	float3 position = float3::zero;
 	Quat rotation_quat = Quat::identity;
 	float3 rotation_euler = float3::zero;
-	float3 scale = float3::zero;
+	float3 scale = float3::one;
 };
 
 #endif //__COMPONENT_TRANSF_H__

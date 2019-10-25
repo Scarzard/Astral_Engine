@@ -140,9 +140,13 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m)
+void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m, float x, float y, float z)
 {
 	GameObject* obj = App->scene_intro->CreateGameObject();
+
+	obj->GetComponentTransform()->position.x = x;
+	obj->GetComponentTransform()->position.y = y;
+	obj->GetComponentTransform()->position.z = z;
 
 	// VERTEX ----------------
 	obj->GetComponentMesh()->num_vertex = m->npoints;
@@ -196,7 +200,7 @@ void ModuleSceneIntro::CreateSphere(float x, float y, float z, int slices, int s
 
 	par_shapes_translate(obj, x, y, z);
 
-	LoadPrimitiveMesh(obj);
+	LoadPrimitiveMesh(obj, x,y,z);
 
 }
 
@@ -208,7 +212,7 @@ void ModuleSceneIntro::CreateTrefoil(float x, float y, float z, int slices, int 
 
 	par_shapes_translate(obj, x, y, z);
 
-	LoadPrimitiveMesh(obj);
+	LoadPrimitiveMesh(obj,x,y,z);
 }
 
 void ModuleSceneIntro::CreateTorus(float x, float y, float z, int slices, int stacks, int rad)
@@ -217,7 +221,7 @@ void ModuleSceneIntro::CreateTorus(float x, float y, float z, int slices, int st
 
 	par_shapes_translate(obj, x, y, z);
 
-	LoadPrimitiveMesh(obj);
+	LoadPrimitiveMesh(obj,x,y,z);
 }
 
 void ModuleSceneIntro::CreateCube(float x, float y, float z, float size)
@@ -228,7 +232,7 @@ void ModuleSceneIntro::CreateCube(float x, float y, float z, float size)
 	par_shapes_translate(obj, x, y, z);
 
 	// may not work cause no UV's ?¿
-	LoadPrimitiveMesh(obj);
+	LoadPrimitiveMesh(obj,x,y,z);
 }
 
 

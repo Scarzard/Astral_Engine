@@ -8,7 +8,7 @@
 
 ComponentTransform::ComponentTransform(GameObject* GO, float3 position, Quat rotation, float3 scale) : Component(Component::ComponentType::Transform, GO)
 {
-	transform = float4x4::FromTRS(position, rotation, scale);
+	//transform = float4x4::FromTRS(position, rotation, scale);
 }
 
 ComponentTransform::~ComponentTransform()
