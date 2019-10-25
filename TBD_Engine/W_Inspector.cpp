@@ -21,7 +21,7 @@ bool W_Inspector::Draw()
 {
 	if (App->gui->inspector)
 	{
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(10, 0));
 
 		ImGui::Begin("Inspector");
 		//Draw Inspector stuff
@@ -57,7 +57,27 @@ bool W_Inspector::Draw()
 
 		if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
 		{
-			ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checers_texture);
+			ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checker_active);
+
+			if (selected_GO->GetComponentTexture()->texture.id != 0)
+			{
+				
+				ImGui::Text("");
+				ImGui::Text("Texture path: %s", selected_GO->GetComponentTexture()->texture.path.c_str());
+				ImGui::Text("");
+				ImGui::Text("Texture Width: %u", selected_GO->GetComponentTexture()->texture.width);
+				ImGui::Text("");
+				ImGui::Text("Texture Height: %u", selected_GO->GetComponentTexture()->texture.height);
+				ImGui::Text("");
+				ImGui::Text("Texture preview:");
+				ImGui::Image((ImTextureID*)selected_GO->GetComponentTexture()->texture.id, ImVec2(200, 200), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 0.5f));
+			}
+			else
+			{
+				ImGui::Text("");
+				ImGui::Text("No texture applied");
+			}
+			
 		}
 
 		

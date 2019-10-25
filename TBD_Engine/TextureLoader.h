@@ -5,6 +5,12 @@
 #include "Globals.h"
 #include "Module.h"
 
+struct Texture 
+{
+	uint id = 0;
+	std::string path = "NONE";
+	uint width, height = 0;
+};
 
 class TextureLoader : public Module
 {
@@ -18,8 +24,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	uint CreateCheckersTexture() const;
-	uint LoadTextureFromPath(const char* path) const;
+	Texture CreateCheckersTexture() const;
+	Texture CreateDefaultTex() const;
+	Texture LoadTextureFromPath(const char* path) const;
 	uint CreateTexture(const void* img, uint width, uint height, int internalFormat, uint format) const;
 
 	
@@ -27,7 +34,7 @@ public:
 
 public:
 
-	uint id_checkersTexture = 0;
+	Texture checkersTexture;
 };
 
 #endif //!__TEXTURE_LOADER_H__

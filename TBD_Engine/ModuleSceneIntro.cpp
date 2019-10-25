@@ -31,12 +31,12 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 
-	uint HouseTexture = App->tex_loader->LoadTextureFromPath("Assets/Baker_house.png");
+	Texture HouseTexture = App->tex_loader->LoadTextureFromPath("Assets/Baker_house.png");
 	App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
 
 	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
 	{
-		(*iterator)->GetComponentTexture()->Texture = HouseTexture; //just to test
+		(*iterator)->GetComponentTexture()->texture = HouseTexture; //just to test
 	}
 	
 
@@ -178,7 +178,8 @@ void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m, float x, fl
 		obj->GetComponentMesh()->tex_coords[i] = m->tcoords[i];
 
 	//Checkers texture to primitive
-	obj->GetComponentTexture()->Texture = App->tex_loader->id_checkersTexture;
+	obj->GetComponentTexture()->texture = App->tex_loader->CreateDefaultTex();
+
 
 	//Generate the buffers 
 	App->renderer3D->NewVertexBuffer(obj->GetComponentMesh()->vertex, obj->GetComponentMesh()->num_vertex, obj->GetComponentMesh()->id_vertex);

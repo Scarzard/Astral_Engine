@@ -50,7 +50,7 @@ bool TextureLoader::Init()
 
 bool TextureLoader::Start()
 {
-	id_checkersTexture = CreateCheckersTexture();
+	checkersTexture = CreateCheckersTexture();
 
 	return true;
 }
@@ -64,12 +64,12 @@ update_status TextureLoader::Update(float dt)
 bool TextureLoader::CleanUp()
 {
 
-	glDeleteTextures(1, (GLuint*)&id_checkersTexture);
+	glDeleteTextures(1, (GLuint*)&checkersTexture.id);
 
 	return true;
 }
 
-uint TextureLoader::CreateCheckersTexture() const
+Texture TextureLoader::CreateCheckersTexture() const
 {
 
 	// creating procedurally a checkered texture
@@ -83,12 +83,14 @@ uint TextureLoader::CreateCheckersTexture() const
 			checkImage[i][j][3] = (GLubyte)255;
 		}
 	}
-
-	GLuint ImageName = 0;
+	Texture tex ;
+	tex.height = CHECKERS_HEIGHT;
+	tex.width = CHECKERS_WIDTH;
+	tex.path = "NONE";
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &ImageName);
-	glBindTexture(GL_TEXTURE_2D, ImageName);
+	glGenTextures(1, &tex.id);
+	glBindTexture(GL_TEXTURE_2D, tex.id);
 	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -103,7 +105,19 @@ uint TextureLoader::CreateCheckersTexture() const
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 
-	return ImageName;
+	return tex;
+}
+
+Texture TextureLoader::CreateDefaultTex() const
+{
+	Texture tex;
+
+	tex.id = 0;
+	tex.width = 0;
+	tex.height = 0;
+	tex.path = "No path";
+
+	return tex;
 }
 
 uint TextureLoader::CreateTexture(const void* img, uint width, uint height, int internalFormat, uint format) const
@@ -139,9 +153,9 @@ uint TextureLoader::CreateTexture(const void* img, uint width, uint height, int 
 	return id_texture;
 }
 
-uint TextureLoader::LoadTextureFromPath(const char* path) const
+Texture TextureLoader::LoadTextureFromPath(const char* path) const
 {
-	uint id_texture = 0;
+	Texture tex;
 	uint id_img = 0;
 
 	if (path != nullptr)
@@ -164,7 +178,10 @@ uint TextureLoader::LoadTextureFromPath(const char* path) const
 			if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 			{
 				//Create TExture
-				id_texture = CreateTexture(ilGetData(), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_FORMAT));
+				tex.height = ilGetInteger(IL_IMAGE_HEIGHT);
+				tex.width = ilGetInteger(IL_IMAGE_WIDTH);
+				tex.id = CreateTexture(ilGetData(), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_FORMAT));
+				tex.path = path;
 			}
 			else
 				App->LogInConsole("Failed converting image: %s", iluErrorString(ilGetError()));
@@ -180,5 +197,5 @@ uint TextureLoader::LoadTextureFromPath(const char* path) const
 		App->LogInConsole("Could not load image from path! Path %s was nullptr", path);
 	}
 
-	return id_texture;
+	return tex;
 }
