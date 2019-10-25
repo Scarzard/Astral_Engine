@@ -572,9 +572,6 @@
     <ClCompile Include="TextureLoader.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Sources\Modules\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="gpudetect\DeviceId.cpp">
       <Filter>Sources\Tools\gpudetect</Filter>
     </ClCompile>

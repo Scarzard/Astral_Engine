@@ -27,9 +27,6 @@ public:
 
 	bool Start();
 	bool Draw();
-	update_status PreUpdate(float dt);
-	update_status PostUpdate(float dt);
-	bool CleanUp();
 
 private:
 	float brightness_slider = 1.0f;

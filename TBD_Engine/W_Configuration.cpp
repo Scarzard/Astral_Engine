@@ -44,7 +44,7 @@ bool W_Configuration::Draw()
 {
 	if (App->gui->config)
 	{
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5, 0));
 
 		ImGui::Begin("Configuration");
 		//Draw Hierarchy stuff
@@ -142,23 +142,6 @@ bool W_Configuration::Draw()
 	}
 	
 
-	return true;
-}
-
-update_status W_Configuration::PreUpdate(float dt)
-{
-
-	return UPDATE_CONTINUE;
-}
-
-update_status W_Configuration::PostUpdate(float dt)
-{
-
-	return UPDATE_CONTINUE;
-}
-
-bool W_Configuration::CleanUp()
-{
 	return true;
 }
 

@@ -14,6 +14,7 @@ W_Inspector::~W_Inspector()
 
 bool W_Inspector::Start()
 {
+	//selected_GO = selected_GO.
 	return true;
 }
 
@@ -21,7 +22,7 @@ bool W_Inspector::Draw()
 {
 	if (App->gui->inspector)
 	{
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(7, 3));
 
 		ImGui::Begin("Inspector");
 		//Draw Inspector stuff
@@ -55,7 +56,10 @@ bool W_Inspector::Draw()
 
 		if (ImGui::CollapsingHeader("Mesh") && selected_GO != nullptr)
 		{
-
+			ImGui::Text("Vertex:");
+			ImGui::SameLine(); ImGui::Text("%d", selected_GO->GetComponentMesh()->num_vertex);
+			ImGui::Text("Faces:");
+			ImGui::SameLine(); ImGui::Text("%d", (selected_GO->GetComponentMesh()->num_vertex / 3) );
 		}
 
 		if (ImGui::CollapsingHeader("Texture") && selected_GO != nullptr)
@@ -71,23 +75,6 @@ bool W_Inspector::Draw()
 
 	}
 	
-	return true;
-}
-
-update_status W_Inspector::PreUpdate(float dt)
-{
-
-	return UPDATE_CONTINUE;
-}
-
-update_status W_Inspector::PostUpdate(float dt)
-{
-
-	return UPDATE_CONTINUE;
-}
-
-bool W_Inspector::CleanUp()
-{
 	return true;
 }
 

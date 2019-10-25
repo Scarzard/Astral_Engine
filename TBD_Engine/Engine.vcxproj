@@ -245,7 +245,6 @@
     <ClCompile Include="parson\parson.c" />
     <ClCompile Include="par_shapes.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
-    <ClCompile Include="Window.cpp" />
     <ClCompile Include="W_Configuration.cpp" />
     <ClCompile Include="W_Console.cpp" />
     <ClCompile Include="W_Game.cpp" />

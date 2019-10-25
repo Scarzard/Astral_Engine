@@ -7,15 +7,15 @@ class Window
 {
 public:
 
-	Window();
-	virtual ~Window();
+	Window(){}
+	virtual ~Window(){}
 
-	virtual bool Start();
-	virtual bool Draw();
-	virtual update_status PreUpdate(float dt);
-	virtual update_status Update(float dt);
-	virtual update_status PostUpdate(float dt);
-	virtual bool CleanUp();
+	virtual bool Start()							{ return true; }
+	virtual bool Draw()								{  return true; }
+	virtual update_status PreUpdate(float dt)		{ return UPDATE_CONTINUE; }
+	virtual update_status Update(float dt)			{ return UPDATE_CONTINUE; }
+	virtual update_status PostUpdate(float dt)		{ return UPDATE_CONTINUE; }
+	virtual bool CleanUp()							{ return true; }
 };
 
 #endif
