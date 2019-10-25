@@ -33,6 +33,12 @@ private:
 	int width_slider = SCREEN_WIDTH;
 	int height_slider = SCREEN_HEIGHT;
 
+	bool depth = false;
+	bool light = false;
+	bool wireframe = false;
+	bool cullface = false;
+	bool vertex = false;
+
 	Hardware_Info info;
 
 };

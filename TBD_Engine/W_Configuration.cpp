@@ -2,6 +2,12 @@
 #include "W_Configuration.h"
 #include "ModuleWindow.h"
 #include "ModuleEngineUI.h"
+
+#include "glew/include/GL/glew.h"
+#include "SDL/include/SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
 //GPU detection 
 #include "gpudetect/DeviceId.h"
 
@@ -74,7 +80,7 @@ bool W_Configuration::Draw()
 			//Sliders
 			ImGui::SliderFloat("Brightness", &brightness_slider, 0.0f, 1.0f);
 			App->window->SetBrightness(brightness_slider);
-			//When this is active, game window resizes automatically when Window header is toggled
+	
 			ImGui::DragInt("Width", &width_slider, 1, 600, 1920);
 			App->window->SetWindowSize(width_slider, height_slider);
 
@@ -97,6 +103,49 @@ bool W_Configuration::Draw()
 				App->window->SetFullScreenDesktop(full_desktop);
 
 		}
+		if (ImGui::CollapsingHeader("Renderer"))
+		{
+			if (ImGui::Checkbox("Depth test", &depth)) 
+			{
+				if (depth)
+					glEnable(GL_DEPTH_TEST);
+				else
+					glDisable(GL_DEPTH_TEST);
+			}
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Lighting", &light))
+			{
+				if (light)
+					glDisable(GL_LIGHTING);
+				else 
+					glEnable(GL_LIGHTING);
+			}
+		
+			if (ImGui::Checkbox("Wireframe", &wireframe))
+			{
+				if (wireframe)
+					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);			
+				else 
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Cull face", &cullface))
+			{
+				if (cullface)
+					glEnable(GL_CULL_FACE);
+				else
+					glDisable(GL_CULL_FACE);
+			}
+
+			if (ImGui::Checkbox("Vertex", &vertex))
+			{
+				if (vertex)
+					glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+				else
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
+		}
+
 		if (ImGui::CollapsingHeader("Input"))
 		{
 			ImGuiIO& io = ImGui::GetIO();
