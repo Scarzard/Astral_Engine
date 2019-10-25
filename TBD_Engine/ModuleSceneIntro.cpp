@@ -36,7 +36,7 @@ bool ModuleSceneIntro::Start()
 
 	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
 	{
-		(*iterator)->GetComponentMesh()->Texture = HouseTexture; //just to test
+		(*iterator)->GetComponentTexture()->Texture = HouseTexture; //just to test
 	}
 	
 
@@ -134,7 +134,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//Draw meshes
 	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
 	{
-		App->renderer3D->Draw((*iterator)->GetComponentMesh());
+		App->renderer3D->Draw((*iterator));
 	}
 
 	return UPDATE_CONTINUE;
@@ -178,7 +178,7 @@ void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m, float x, fl
 		obj->GetComponentMesh()->tex_coords[i] = m->tcoords[i];
 
 	//Checkers texture to primitive
-	obj->GetComponentMesh()->Texture = App->tex_loader->id_checkersTexture;
+	obj->GetComponentTexture()->Texture = App->tex_loader->id_checkersTexture;
 
 	//Generate the buffers 
 	App->renderer3D->NewVertexBuffer(obj->GetComponentMesh()->vertex, obj->GetComponentMesh()->num_vertex, obj->GetComponentMesh()->id_vertex);

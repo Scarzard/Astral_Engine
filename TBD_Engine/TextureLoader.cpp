@@ -50,7 +50,7 @@ bool TextureLoader::Init()
 
 bool TextureLoader::Start()
 {
-	id_checkersTexture = CreateCheckersTexture(CHECKERS_WIDTH, CHECKERS_HEIGHT);
+	id_checkersTexture = CreateCheckersTexture();
 
 	return true;
 }
@@ -69,7 +69,7 @@ bool TextureLoader::CleanUp()
 	return true;
 }
 
-uint TextureLoader::CreateCheckersTexture(uint width, uint height) const
+uint TextureLoader::CreateCheckersTexture() const
 {
 
 	// creating procedurally a checkered texture
@@ -95,7 +95,7 @@ uint TextureLoader::CreateCheckersTexture(uint width, uint height) const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
 
 
@@ -167,11 +167,11 @@ uint TextureLoader::LoadTextureFromPath(const char* path) const
 				id_texture = CreateTexture(ilGetData(), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_FORMAT));
 			}
 			else
-				App->LogInConsole("|[error]: Failed converting image: %s", iluErrorString(ilGetError()));
+				App->LogInConsole("Failed converting image: %s", iluErrorString(ilGetError()));
 		}
 		else
 		{
-			App->LogInConsole("[Error]: Failed loading image: %s", iluErrorString(ilGetError()));
+			App->LogInConsole("Failed loading image: %s", iluErrorString(ilGetError()));
 		}
 		
 	}

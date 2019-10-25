@@ -226,22 +226,22 @@ void ModuleRenderer3D::NewTexBuffer(float * tex_coords, uint & num_tex_coords, u
 	glBindBuffer(GL_ARRAY_BUFFER, 0); 
 }
 
-void ModuleRenderer3D::Draw(const ComponentMesh* m)
+void ModuleRenderer3D::Draw(GameObject* m) const
 {
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m->id_vertex);
+	glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	glBindTexture(GL_TEXTURE_2D, m->Texture);
+	glBindTexture(GL_TEXTURE_2D, m->GetComponentTexture()->Texture);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m->id_tex_coords);
+	glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->id_tex_coords);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->id_index);
-	glDrawElements(GL_TRIANGLES, m->num_index, GL_UNSIGNED_INT, nullptr);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->GetComponentMesh()->id_index);
+	glDrawElements(GL_TRIANGLES, m->GetComponentMesh()->num_index, GL_UNSIGNED_INT, nullptr);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

@@ -384,6 +384,9 @@
     <ClInclude Include="Component_Transform.h">
       <Filter>Sources\Modules\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Component_Texture.h">
+      <Filter>Sources\Modules\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -588,6 +591,9 @@
       <Filter>Sources\Modules\Components</Filter>
     </ClCompile>
     <ClCompile Include="Component_Transform.cpp">
+      <Filter>Sources\Modules\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Component_Texture.cpp">
       <Filter>Sources\Modules\Components</Filter>
     </ClCompile>
   </ItemGroup>

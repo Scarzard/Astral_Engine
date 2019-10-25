@@ -5,6 +5,7 @@
 #include "Component.h"
 #include "Component_Mesh.h"
 #include "Component_Transform.h"
+#include "Component_Texture.h"
 
 
 
@@ -21,6 +22,7 @@ public:
 
 	ComponentMesh* GetComponentMesh();
 	ComponentTransform* GetComponentTransform();
+	ComponentTexture* GetComponentTexture();
 
 
 public:

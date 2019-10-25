@@ -30,7 +30,7 @@ bool W_Hierarchy::Draw()
 		for (std::vector<GameObject*>::iterator iterator = App->scene_intro->GO_list.begin(); iterator != App->scene_intro->GO_list.end(); iterator++)
 		{
 
-			ImGuiTreeNodeFlags flag = ((selection_mask & (1 << (*iterator)->id)) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+			ImGuiTreeNodeFlags flag = ((selection_mask & (1 << (*iterator)->id)) ? ImGuiTreeNodeFlags_Selected : 0);
 		
 			flag |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 	
