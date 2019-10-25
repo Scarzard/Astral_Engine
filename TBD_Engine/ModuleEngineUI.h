@@ -38,14 +38,14 @@ public:
 	bool hierarchy = true;
 	bool game = true;
 	bool inspector = true;
-	
-private:
 
 	W_Game* game_window = nullptr;
 	W_Inspector* ins_window = nullptr;
 	W_Console* console_window = nullptr;
 	W_Hierarchy* h_window = nullptr;
 	W_Configuration* conf_window = nullptr;
+	
+private:
 
 	//bool show_demo_window = true;
 	ImGuiIO* io = nullptr;

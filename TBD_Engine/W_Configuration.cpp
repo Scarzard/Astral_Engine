@@ -7,6 +7,7 @@
 
 W_Configuration::W_Configuration() : Window()
 {
+	App->LogInConsole("Created Configuration Window");
 }
 
 W_Configuration::~W_Configuration()

@@ -7,6 +7,7 @@
 
 W_Game::W_Game() : Window()
 {
+	App->LogInConsole("Created Game Window");
 }
 
 W_Game::~W_Game()

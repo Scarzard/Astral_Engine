@@ -17,7 +17,8 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-private:
+public:
+	GameObject* selected_GO = nullptr;
 };
 
 #endif // !_W_INSPECTOR_H_
