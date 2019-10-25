@@ -13,13 +13,13 @@ public:
 	ComponentTexture(GameObject* GO);
 	virtual ~ComponentTexture();
 
+
 	void CleanUp();
 
 public:
 	
 	uint Texture = 0;
 	std::string texture_path = "none";
-
 	bool Checers_texture = false;
 };
 

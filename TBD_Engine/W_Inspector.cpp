@@ -25,14 +25,11 @@ bool W_Inspector::Draw()
 
 		ImGui::Begin("Inspector");
 		//Draw Inspector stuff
+		if(selected_GO != nullptr)
+			ImGui::InputText("Name", (char*)selected_GO->name.c_str(), 20, ImGuiInputTextFlags_EnterReturnsTrue);
 
-		if (ImGui::CollapsingHeader("Transform") && selected_GO != nullptr)
+		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
 		{
-
-			float3 pos = float3::zero;
-			float3 rot = float3::zero;
-			float3 scale = float3::one;
-
 			ImGui::Text("");
 
 			ImGui::Text("Position:");
@@ -53,14 +50,14 @@ bool W_Inspector::Draw()
 			ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z3 %.3f   ", selected_GO->GetComponentTransform()->GetScale().z);
 		}
 
-		if (ImGui::CollapsingHeader("Mesh") && selected_GO != nullptr)
+		if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
 		{
-
+			
 		}
 
-		if (ImGui::CollapsingHeader("Texture") && selected_GO != nullptr)
+		if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
 		{
-
+			ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checers_texture);
 		}
 
 		

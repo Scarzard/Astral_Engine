@@ -64,8 +64,8 @@ GameObject* ModuleSceneIntro::CreateGameObject()
 	std::string Name = "GameObject ";
 	Name.append(std::to_string(GO_list.size()));
 
-	
-	GameObject* GO = new GameObject(Name.data());
+		
+	GameObject* GO = new GameObject(Name);
 	GO->id = GO_list.size();
 	GO_list.push_back(GO);
 
