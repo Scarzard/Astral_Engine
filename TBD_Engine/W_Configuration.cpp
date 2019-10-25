@@ -3,6 +3,10 @@
 #include "ModuleWindow.h"
 #include "ModuleEngineUI.h"
 
+#include "Assimp/include/version.h"
+
+#include "DevIL/include/il.h"
+
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
@@ -22,6 +26,10 @@ W_Configuration::~W_Configuration()
 
 bool W_Configuration::Start()
 {
+
+	SDL_GetVersion(&linked);
+
+
 	info.cpu_count = SDL_GetCPUCount();
 	info.cache_size = SDL_GetCPUCacheLineSize();
 	info.ram = SDL_GetSystemRAM();
@@ -184,6 +192,17 @@ bool W_Configuration::Draw()
 			ImGui::BulletText("GPU RAM Usage: %.1f MB", info.vram_usage);
 			ImGui::BulletText("GPU RAM Available: %.1f MB", info.vram_available);
 			ImGui::BulletText("GPU RAM Reserved: %.1f MB", info.vram_reserved);
+		}
+
+		if (ImGui::CollapsingHeader("Software"))
+		{
+			ImGui::BulletText("SDL: %d.%d.%d", linked.major, linked.minor, linked.patch);
+			ImGui::BulletText("OpenGL %s", (const char*)glGetString(GL_VERSION));
+			ImGui::BulletText("ImGui: %s", ImGui::GetVersion());
+			ImGui::BulletText("Glew: %s", (const char*)glewGetString(GLEW_VERSION));
+			ImGui::BulletText("Assimp: %d.%d.%d", aiGetVersionMajor(), aiGetVersionMinor(), aiGetVersionRevision());
+			ImGui::BulletText("DevIL: %d", IL_VERSION);
+
 		}
 
 		ImGui::End();

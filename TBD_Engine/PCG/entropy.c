@@ -35,7 +35,7 @@
 #include <stdbool.h>
 #include <time.h>
 
-#include "../include/pcg_variants.h"
+#include "pcg_variants.h"
 #include "pcg_spinlock.h"
 
 #include "entropy.h"

@@ -27,6 +27,9 @@ bool W_Console::Draw()
 		for (int i = 0; i < App->Logs_Console.size(); ++i)
 			ImGui::Text(App->Logs_Console[i].data());
 
+		if (ScrollToBottom || (ImGui::GetScrollY() >= ImGui::GetScrollMaxY()))
+			ImGui::SetScrollHereY(1.0f);
+
 		ImGui::Separator();
 
 		ImGui::End();

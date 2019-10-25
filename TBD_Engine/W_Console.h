@@ -13,6 +13,9 @@ public:
 
 	bool Start();
 	bool Draw();
+
+private:
+	bool ScrollToBottom = true;
 };
 
 #endif // !_W_CONSOLE_H_
