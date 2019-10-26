@@ -111,7 +111,7 @@ update_status ModuleInput::PreUpdate(float dt)
 
 				DroppedFile = e.drop.file;
 
-				if (GetFileExtension(DroppedFile) == "FBX")
+				if (GetFileExtension(DroppedFile) == "FBX" || GetFileExtension(DroppedFile) == "fbx")
 				{
 					App->mesh_loader->LoadFile(DroppedFile);
 					App->LogInConsole("FBX dropped with root: %s", DroppedFile);

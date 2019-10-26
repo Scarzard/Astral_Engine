@@ -21,6 +21,8 @@ public:
 
 	void LoadFile(const char* path);
 
+	std::string GetDirectoryFromPath(std::string path);
+
 };
 
 

@@ -30,15 +30,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-
-	Texture HouseTexture = App->tex_loader->LoadTextureFromPath("Assets/Baker_house.png");
-	App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
-
-	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
-	{
-		(*iterator)->GetComponentTexture()->texture = HouseTexture; //just to test
-	}
-	
+	//App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
 
 	return ret;
 }

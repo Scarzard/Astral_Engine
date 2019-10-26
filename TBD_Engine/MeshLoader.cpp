@@ -67,8 +67,30 @@ void MeshLoader::LoadFile(const char* full_path)
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
 			GameObject* obj = App->scene_intro->CreateGameObject();
+			
 
 			aiMesh* new_mesh = scene->mMeshes[i];
+
+			aiMaterial* material = scene->mMaterials[new_mesh->mMaterialIndex];
+			uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
+		
+			aiString path;
+			material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
+			
+			if (path.C_Str() != nullptr)
+			{
+				std::string directory = GetDirectoryFromPath(full_path);
+				directory.append("/");
+				directory.append(path.C_Str());
+
+				obj->GetComponentTexture()->texture = App->tex_loader->LoadTextureFromPath(directory.c_str());
+			}
+			else
+			{
+				obj->GetComponentTexture()->texture = App->tex_loader->DefaultTexture;
+			}
+			
+
 
 			obj->GetComponentMesh()->num_vertex = new_mesh->mNumVertices;
 			obj->GetComponentMesh()->vertex = new float3[obj->GetComponentMesh()->num_vertex];
@@ -112,7 +134,7 @@ void MeshLoader::LoadFile(const char* full_path)
 			//Generate the buffer for texture coords
 			App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->tex_coords, obj->GetComponentMesh()->num_tex_coords, obj->GetComponentMesh()->id_tex_coords);
 			
-			obj->GetComponentTexture()->texture = App->tex_loader->DefaultTexture;
+			
 		}
 		aiReleaseImport(scene);
 		App->LogInConsole("Succesfully loaded mesh with path: %s", full_path);
@@ -120,5 +142,14 @@ void MeshLoader::LoadFile(const char* full_path)
 	}
 	else
 		App->LogInConsole("Error loading scene %s", full_path);
+}
+
+std::string MeshLoader::GetDirectoryFromPath(std::string path)
+{
+	std::string directory;
+	size_t found = path.find_last_of("/\\");
+	directory = path.substr(0, found);
+
+	return directory;
 }
 
