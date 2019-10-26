@@ -11,8 +11,11 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	void DeleteBuffers();
+
 public:
 	unsigned int fbo;
+	unsigned int rbo;
 	unsigned int texture;
 	ImVec2 size;
 

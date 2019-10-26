@@ -17,16 +17,11 @@ FrameBufferObject::~FrameBufferObject()
 
 bool FrameBufferObject::Start(ImVec2 size)
 {
-	bool ret = false;
+	DeleteBuffers();
 	//Generate the FBO and bind it, continue if FBO is complete
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-	//	App->LogInConsole("Frame buffer object creation is successful");
-	//else
-	//	App->LogInConsole("Frame buffer object creation wasn't successful");
-
 	//Generate the texture used to render our scene
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -38,17 +33,11 @@ bool FrameBufferObject::Start(ImVec2 size)
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
 
 	//Generate RenderBufferObject
-	unsigned int rbo;
 	glGenRenderbuffers(1, &rbo);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, size.x, size.y);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	//	App->LogInConsole("Frame buffer object creation is successful");
-	//else
-	//	App->LogInConsole("Frame buffer object creation wasn't successful");
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -78,7 +67,14 @@ update_status FrameBufferObject::PostUpdate()
 
 bool FrameBufferObject::CleanUp()
 {
+	return true;
+}
+
+void FrameBufferObject::DeleteBuffers()
+{
 	glDeleteFramebuffers(1, &fbo);
 
-	return true;
+	glDeleteRenderbuffers(1, &rbo);
+
+	glDeleteTextures(1, &texture);
 }
