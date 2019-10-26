@@ -312,15 +312,6 @@
     <ClInclude Include="glew\include\GL\wglew.h">
       <Filter>Sources\Tools\glew</Filter>
     </ClInclude>
-    <ClInclude Include="PCG\include\pcg_extras.hpp">
-      <Filter>Sources\Tools\PCG</Filter>
-    </ClInclude>
-    <ClInclude Include="PCG\include\pcg_random.hpp">
-      <Filter>Sources\Tools\PCG</Filter>
-    </ClInclude>
-    <ClInclude Include="PCG\include\pcg_uint128.hpp">
-      <Filter>Sources\Tools\PCG</Filter>
-    </ClInclude>
     <ClInclude Include="parson\parson.h">
       <Filter>Sources\Tools\Parson</Filter>
     </ClInclude>
@@ -384,8 +375,14 @@
     <ClInclude Include="Component_Transform.h">
       <Filter>Sources\Modules\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Component_Texture.h">
-      <Filter>Sources\Modules\Components</Filter>
+    <ClInclude Include="PCG\entropy.h">
+      <Filter>Sources\Tools\PCG</Filter>
+    </ClInclude>
+    <ClInclude Include="PCG\pcg_spinlock.h">
+      <Filter>Sources\Tools\PCG</Filter>
+    </ClInclude>
+    <ClInclude Include="PCG\pcg_variants.h">
+      <Filter>Sources\Tools\PCG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -574,9 +571,6 @@
     </ClCompile>
     <ClCompile Include="TextureLoader.cpp">
       <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Sources\Modules\GUI</Filter>
     </ClCompile>
     <ClCompile Include="gpudetect\DeviceId.cpp">
       <Filter>Sources\Tools\gpudetect</Filter>

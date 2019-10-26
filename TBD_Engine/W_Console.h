@@ -13,9 +13,9 @@ public:
 
 	bool Start();
 	bool Draw();
-	update_status PreUpdate(float dt);
-	update_status PostUpdate(float dt);
-	bool CleanUp();
+
+private:
+	bool ScrollToBottom = true;
 };
 
 #endif // !_W_CONSOLE_H_

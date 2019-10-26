@@ -2,6 +2,16 @@
 #include "W_Configuration.h"
 #include "ModuleWindow.h"
 #include "ModuleEngineUI.h"
+
+#include "Assimp/include/version.h"
+
+#include "DevIL/include/il.h"
+
+#include "glew/include/GL/glew.h"
+#include "SDL/include/SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
 //GPU detection 
 #include "gpudetect/DeviceId.h"
 
@@ -16,6 +26,10 @@ W_Configuration::~W_Configuration()
 
 bool W_Configuration::Start()
 {
+
+	SDL_GetVersion(&linked);
+
+
 	info.cpu_count = SDL_GetCPUCount();
 	info.cache_size = SDL_GetCPUCacheLineSize();
 	info.ram = SDL_GetSystemRAM();
@@ -44,7 +58,7 @@ bool W_Configuration::Draw()
 {
 	if (App->gui->config)
 	{
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5, 0));
 
 		ImGui::Begin("Configuration");
 		//Draw Hierarchy stuff
@@ -74,7 +88,7 @@ bool W_Configuration::Draw()
 			//Sliders
 			ImGui::SliderFloat("Brightness", &brightness_slider, 0.0f, 1.0f);
 			App->window->SetBrightness(brightness_slider);
-			//When this is active, game window resizes automatically when Window header is toggled
+	
 			ImGui::DragInt("Width", &width_slider, 1, 600, 1920);
 			App->window->SetWindowSize(width_slider, height_slider);
 
@@ -97,6 +111,49 @@ bool W_Configuration::Draw()
 				App->window->SetFullScreenDesktop(full_desktop);
 
 		}
+		if (ImGui::CollapsingHeader("Renderer"))
+		{
+			if (ImGui::Checkbox("Depth test", &depth)) 
+			{
+				if (depth)
+					glEnable(GL_DEPTH_TEST);
+				else
+					glDisable(GL_DEPTH_TEST);
+			}
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Lighting", &light))
+			{
+				if (light)
+					glDisable(GL_LIGHTING);
+				else 
+					glEnable(GL_LIGHTING);
+			}
+		
+			if (ImGui::Checkbox("Wireframe", &wireframe))
+			{
+				if (wireframe)
+					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);			
+				else 
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Cull face", &cullface))
+			{
+				if (cullface)
+					glEnable(GL_CULL_FACE);
+				else
+					glDisable(GL_CULL_FACE);
+			}
+
+			if (ImGui::Checkbox("Vertex", &vertex))
+			{
+				if (vertex)
+					glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+				else
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
+		}
+
 		if (ImGui::CollapsingHeader("Input"))
 		{
 			ImGuiIO& io = ImGui::GetIO();
@@ -137,28 +194,22 @@ bool W_Configuration::Draw()
 			ImGui::BulletText("GPU RAM Reserved: %.1f MB", info.vram_reserved);
 		}
 
+		if (ImGui::CollapsingHeader("Software"))
+		{
+			ImGui::BulletText("SDL: %d.%d.%d", linked.major, linked.minor, linked.patch);
+			ImGui::BulletText("OpenGL %s", (const char*)glGetString(GL_VERSION));
+			ImGui::BulletText("ImGui: %s", ImGui::GetVersion());
+			ImGui::BulletText("Glew: %s", (const char*)glewGetString(GLEW_VERSION));
+			ImGui::BulletText("Assimp: %d.%d.%d", aiGetVersionMajor(), aiGetVersionMinor(), aiGetVersionRevision());
+			ImGui::BulletText("DevIL: %d", IL_VERSION);
+
+		}
+
 		ImGui::End();
 		ImGui::PopStyleVar();
 	}
 	
 
-	return true;
-}
-
-update_status W_Configuration::PreUpdate(float dt)
-{
-
-	return UPDATE_CONTINUE;
-}
-
-update_status W_Configuration::PostUpdate(float dt)
-{
-
-	return UPDATE_CONTINUE;
-}
-
-bool W_Configuration::CleanUp()
-{
 	return true;
 }
 

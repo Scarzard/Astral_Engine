@@ -172,9 +172,9 @@
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="parson\parson.h" />
     <ClInclude Include="par\par_shapes.h" />
-    <ClInclude Include="PCG\include\pcg_extras.hpp" />
-    <ClInclude Include="PCG\include\pcg_random.hpp" />
-    <ClInclude Include="PCG\include\pcg_uint128.hpp" />
+    <ClInclude Include="PCG\entropy.h" />
+    <ClInclude Include="PCG\pcg_spinlock.h" />
+    <ClInclude Include="PCG\pcg_variants.h" />
     <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="W_Configuration.h" />
@@ -246,8 +246,8 @@
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="parson\parson.c" />
     <ClCompile Include="par_shapes.cpp" />
+    <ClCompile Include="PCG\entropy.c" />
     <ClCompile Include="TextureLoader.cpp" />
-    <ClCompile Include="Window.cpp" />
     <ClCompile Include="W_Configuration.cpp" />
     <ClCompile Include="W_Console.cpp" />
     <ClCompile Include="W_Game.cpp" />

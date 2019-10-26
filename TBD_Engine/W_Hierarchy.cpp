@@ -67,22 +67,4 @@ bool W_Hierarchy::Draw()
 	return true;
 }
 
-update_status W_Hierarchy::PreUpdate(float dt)
-{
-	
-	return UPDATE_CONTINUE;
-}
-
-update_status W_Hierarchy::PostUpdate(float dt)
-{
-	
-	return UPDATE_CONTINUE;
-}
-
-bool W_Hierarchy::CleanUp()
-{
-	return true;
-}
-
-
 
