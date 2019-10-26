@@ -67,8 +67,8 @@ bool W_Configuration::Draw()
 
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			ImGui::InputText("Application name", TITLE, 20);
-			ImGui::InputText("Organization name", ORGANIZATION, 40);
+			ImGui::Text("Application name: %s", TITLE);
+			ImGui::Text("Organization name: %s", ORGANIZATION);
 
 
 			//Framerate Histograms
