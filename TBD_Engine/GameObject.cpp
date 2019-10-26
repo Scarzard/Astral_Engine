@@ -7,6 +7,7 @@ GameObject::GameObject(std::string name)
 	this->name = name;
 	CreateComponent(Component::ComponentType::Transform);
 	CreateComponent(Component::ComponentType::Mesh);
+	CreateComponent(Component::ComponentType::Texture);
 }
 
 GameObject::~GameObject()
@@ -25,6 +26,9 @@ Component* GameObject::CreateComponent(Component::ComponentType type)
 		break;
 	case Component::ComponentType::Mesh:
 		component = new ComponentMesh(this);
+		break;
+	case Component::ComponentType::Texture:
+		component = new ComponentTexture(this);
 		break;
 
 	}
@@ -61,6 +65,20 @@ ComponentTransform* GameObject::GetComponentTransform()
 	}
 
 	return (ComponentTransform*)transform;
+}
+
+ComponentTexture* GameObject::GetComponentTexture()
+{
+	Component* transform = nullptr;
+	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
+	{
+		if ((*iterator)->type == Component::ComponentType::Transform)
+		{
+			return (ComponentTexture*)*iterator;
+		}
+	}
+
+	return (ComponentTexture*)transform;
 }
 
 void GameObject::Update()

@@ -16,6 +16,7 @@ public:
 
 public:
 	GameObject* selected_GO = nullptr;
+	ImGuiTreeNodeFlags flag = ImGuiTreeNodeFlags_None;
 };
 
 #endif // !_W_INSPECTOR_H_

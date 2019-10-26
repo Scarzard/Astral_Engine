@@ -19,6 +19,8 @@ bool W_Hierarchy::Draw()
 {
 	static int selection_mask = 0x02;
 
+	TreeNode_Clicked = -1;
+
 	if (App->gui->hierarchy)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
@@ -28,7 +30,7 @@ bool W_Hierarchy::Draw()
 		for (std::vector<GameObject*>::iterator iterator = App->scene_intro->GO_list.begin(); iterator != App->scene_intro->GO_list.end(); iterator++)
 		{
 
-			ImGuiTreeNodeFlags flag = ((selection_mask & (1 << (*iterator)->id)) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+			ImGuiTreeNodeFlags flag = ((selection_mask & (1 << (*iterator)->id)) ? ImGuiTreeNodeFlags_Selected : 0);
 		
 			flag |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 	
@@ -48,7 +50,14 @@ bool W_Hierarchy::Draw()
 		}
 
 		if (TreeNode_Clicked != -1) // show selected node
+		{
 			selection_mask = (1 << TreeNode_Clicked);
+		}
+		else if (TreeNode_Clicked == -1 && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && ImGui::IsWindowHovered(ImGuiHoveredFlags_RootWindow)) 
+		{
+			App->gui->ins_window->selected_GO = nullptr; 
+			selection_mask = (1 << -1);
+		}
 
 		ImGui::End();
 		ImGui::PopStyleVar();

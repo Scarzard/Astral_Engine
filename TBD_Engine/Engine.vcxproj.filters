@@ -587,8 +587,8 @@
     <ClCompile Include="Component_Transform.cpp">
       <Filter>Sources\Modules\Components</Filter>
     </ClCompile>
-    <ClCompile Include="PCG\entropy.c">
-      <Filter>Sources\Tools\PCG</Filter>
+    <ClCompile Include="Component_Texture.cpp">
+      <Filter>Sources\Modules\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
