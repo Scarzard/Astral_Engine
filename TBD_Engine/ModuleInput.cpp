@@ -110,10 +110,34 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_DROPFILE:     
 
 				DroppedFile = e.drop.file;
-				App->mesh_loader->LoadFile(DroppedFile);
-				App->LogInConsole("File dropped with root: %s", DroppedFile);
 
-				SDL_free(DroppedFile);
+				if (GetFileExtension(DroppedFile) == "FBX")
+				{
+					App->mesh_loader->LoadFile(DroppedFile);
+					App->LogInConsole("FBX dropped with root: %s", DroppedFile);
+				}
+				else if (GetFileExtension(DroppedFile) == "png" || GetFileExtension(DroppedFile) == "dds")
+				{
+					if (App->gui->ins_window->selected_GO != nullptr)
+					{
+						App->gui->ins_window->selected_GO->GetComponentTexture()->texture = App->tex_loader->LoadTextureFromPath(DroppedFile);
+						App->LogInConsole("Texture dropped with root: %s", DroppedFile);
+					}
+					else
+					{
+						App->LogInConsole("ERROR: Select a GameObject before dropping texture");
+					}
+					
+				}
+				else
+				{
+					App->LogInConsole("File dropped extension not supported! Supported extensions: .fbx, .png, .dds");
+				}
+				
+				
+				
+
+				SDL_free((char*)DroppedFile);
 				break;
 
 			case SDL_QUIT:
@@ -142,4 +166,12 @@ bool ModuleInput::CleanUp()
 	App->LogInConsole("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+const std::string ModuleInput::GetFileExtension(const std::string FileName)
+{
+	if (FileName.find_last_of(".") != std::string::npos)
+		return (FileName.substr(FileName.find_last_of(".") + 1));
+	else
+		return "";
 }

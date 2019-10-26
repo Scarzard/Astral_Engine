@@ -112,6 +112,7 @@ void MeshLoader::LoadFile(const char* full_path)
 			//Generate the buffer for texture coords
 			App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->tex_coords, obj->GetComponentMesh()->num_tex_coords, obj->GetComponentMesh()->id_tex_coords);
 			
+			obj->GetComponentTexture()->texture = App->tex_loader->DefaultTexture;
 		}
 		aiReleaseImport(scene);
 		App->LogInConsole("Succesfully loaded mesh with path: %s", full_path);
