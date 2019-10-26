@@ -253,4 +253,36 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
+	
+	if (m->GetComponentMesh()->draw_normals)
+	{
+		glBegin(GL_LINES);
+		glColor3f(1, 0, 0);
+
+		float3 face_A;
+		float3 face_B;
+		float3 face_C;
+		float3 face_center;
+		float3 face_normal;
+
+		for (uint j = 0; j < m->GetComponentMesh()->num_index / 3; ++j)
+		{
+			face_A = m->GetComponentMesh()->vertex[m->GetComponentMesh()->index[j * 3]];
+			face_B = m->GetComponentMesh()->vertex[m->GetComponentMesh()->index[(j * 3) + 1]];
+			face_C = m->GetComponentMesh()->vertex[m->GetComponentMesh()->index[(j * 3) + 2]];
+
+			face_center = (face_A + face_B + face_C) / 3;
+
+			face_normal = Cross(face_B - face_A, face_C - face_B);
+
+			face_normal.Normalize();
+
+			glVertex3f(face_center.x, face_center.y, face_center.z);
+			glVertex3f(face_center.x + face_normal.x*0.15, face_center.y + face_normal.y*0.15, face_center.z + face_normal.z*0.15);
+		}
+
+		glColor3f(1, 1, 1);
+		glEnd();
+	}	
+
 }

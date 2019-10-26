@@ -62,6 +62,7 @@ bool W_Inspector::Draw()
 					ImGui::SameLine(); ImGui::Text("%d", selected_GO->GetComponentMesh()->num_vertex);
 					ImGui::Text("Faces:");
 					ImGui::SameLine(); ImGui::Text("%d", (selected_GO->GetComponentMesh()->num_vertex / 3));
+					ImGui::Checkbox("Show normals", &selected_GO->GetComponentMesh()->draw_normals);
 				}
 
 				if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)

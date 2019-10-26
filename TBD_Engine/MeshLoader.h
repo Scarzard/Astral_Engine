@@ -7,6 +7,8 @@
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 
+class GameObject;
+class aiMesh;
 
 class MeshLoader : public Module
 {
