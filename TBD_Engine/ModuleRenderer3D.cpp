@@ -235,10 +235,11 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 	glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	if(!m->GetComponentTexture()->Checers_texture)
-		glBindTexture(GL_TEXTURE_2D, m->GetComponentTexture()->Texture);
+	if (m->GetComponentTexture()->Checers_texture == true)
+		glBindTexture(GL_TEXTURE_2D, App->tex_loader->CheckersTexture.id);
 	else
-		glBindTexture(GL_TEXTURE_2D, App->tex_loader->id_checkersTexture);
+		glBindTexture(GL_TEXTURE_2D, m->GetComponentTexture()->texture.id);
+	
 
 	glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->id_tex_coords);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
