@@ -73,11 +73,11 @@ update_status ModuleCamera3D::Update(float dt)
 
 		if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
 		{
-			if (-App->input->GetMouseXMotion() > 0) newPos -= X * speed * 2;
-			if (-App->input->GetMouseXMotion() < 0) newPos += X * speed * 2;
+			if (-App->input->GetMouseXMotion() > 0) newPos += X * speed * 2;
+			if (-App->input->GetMouseXMotion() < 0) newPos -= X * speed * 2;
 				
-			if (-App->input->GetMouseYMotion() > 0) newPos.y += speed * 2;
-			if (-App->input->GetMouseYMotion() < 0) newPos.y -= speed * 2;
+			if (-App->input->GetMouseYMotion() > 0) newPos.y -= speed * 2;
+			if (-App->input->GetMouseYMotion() < 0) newPos.y += speed * 2;
 		}
 	
 		Position += newPos;
