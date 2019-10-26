@@ -67,7 +67,10 @@ GameObject* ModuleSceneIntro::CreateGameObject()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	
+	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
+	{
+		(*iterator)->Update();
+	}
 
 	return want_to_quit;
 }
@@ -126,7 +129,8 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//Draw meshes
 	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
 	{
-		App->renderer3D->Draw((*iterator));
+		if((*iterator)->active)
+			App->renderer3D->Draw((*iterator));
 	}
 
 	return UPDATE_CONTINUE;

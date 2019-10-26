@@ -66,6 +66,7 @@ bool TextureLoader::CleanUp()
 {
 
 	glDeleteTextures(1, (GLuint*)&CheckersTexture.id);
+	glDeleteTextures(1, (GLuint*)&DefaultTexture.id);
 
 	return true;
 }

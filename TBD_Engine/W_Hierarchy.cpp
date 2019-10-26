@@ -34,11 +34,10 @@ bool W_Hierarchy::Draw()
 		
 			flag |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 	
-			if ((*iterator)->active = false)
-				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
-
-
-			ImGui::TreeNodeEx((void*)(intptr_t)(*iterator)->id, flag, (*iterator)->name.c_str());
+			if((*iterator)->active == true)
+				ImGui::TreeNodeEx((void*)(intptr_t)(*iterator)->id, flag, (*iterator)->name.c_str());
+			else
+				ImGui::TreeNodeEx((void*)(intptr_t)(*iterator)->id, flag, (*iterator)->unactive_name.c_str());
 
 
 			if (ImGui::IsItemClicked())

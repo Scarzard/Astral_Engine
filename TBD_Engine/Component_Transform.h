@@ -12,7 +12,7 @@ class ComponentTransform : public Component
 public:
 
 	ComponentTransform(GameObject* GO, float3 position = float3::zero, Quat rotation = Quat::identity, float3 scale = float3::one);
-	~ComponentTransform();
+	virtual ~ComponentTransform();
 
 	void CleanUp();
 

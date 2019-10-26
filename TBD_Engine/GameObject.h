@@ -30,6 +30,8 @@ public:
 	bool active = true;
 
 	std::string name;
+	std::string unactive_name;
+
 	uint id = -1;
 
 	std::vector<Component*> components;

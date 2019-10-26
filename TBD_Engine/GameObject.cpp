@@ -5,6 +5,8 @@
 GameObject::GameObject(std::string name)
 {
 	this->name = name;
+	unactive_name = name + " (not active)";
+	this->active = true;
 	CreateComponent(Component::ComponentType::Transform);
 	CreateComponent(Component::ComponentType::Mesh);
 	CreateComponent(Component::ComponentType::Texture);
@@ -83,13 +85,16 @@ ComponentTexture* GameObject::GetComponentTexture()
 
 void GameObject::Update()
 {
-
+	std::string str = this->name + " (not active)";
+	if(unactive_name.compare(str) != 0)
+		unactive_name = name + " (not active)";
 }
 
 void GameObject::CleanUp()
 {
 	this->GetComponentMesh()->CleanUp();
 	this->GetComponentTransform()->CleanUp();
+	this->GetComponentTexture()->CleanUp();
 
 	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
 	{

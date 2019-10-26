@@ -7,8 +7,7 @@
 
 ComponentTexture::ComponentTexture(GameObject* GO) : Component(Component::ComponentType::Mesh, GO)
 {
-	this->texture = App->tex_loader->DefaultTexture;
-	this->Checers_texture = false;
+	
 }
 
 ComponentTexture::~ComponentTexture()
