@@ -13,6 +13,7 @@
 #include "ModuleEngineUI.h"
 #include "MeshLoader.h"
 #include "TextureLoader.h"
+#include "ModuleFileSystem.h"
 
 class Application
 {
@@ -25,6 +26,7 @@ public:
 	ModuleEngineUI*			gui = nullptr;
 	MeshLoader*				mesh_loader = nullptr;
 	TextureLoader*			tex_loader = nullptr;
+	ModuleFileSystem*		file_system = nullptr;
 
 private:
 

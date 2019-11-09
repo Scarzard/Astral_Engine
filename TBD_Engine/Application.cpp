@@ -11,6 +11,7 @@ Application::Application()
 	gui = new ModuleEngineUI(this);
 	mesh_loader = new MeshLoader(this);
 	tex_loader = new TextureLoader(this);
+	file_system = new ModuleFileSystem(true, ASSETS_FOLDER);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -22,7 +23,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(mesh_loader);
 	AddModule(tex_loader);
-
+	AddModule(file_system);
 	// Scenes
 	AddModule(scene_intro);
 

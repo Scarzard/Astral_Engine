@@ -387,6 +387,9 @@
     <ClInclude Include="Component_Texture.h">
       <Filter>Sources\Modules\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -594,6 +597,9 @@
       <Filter>Sources\Modules\Components</Filter>
     </ClCompile>
     <ClCompile Include="PCG\entropy.c" />
+    <ClCompile Include="ModuleFileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl">

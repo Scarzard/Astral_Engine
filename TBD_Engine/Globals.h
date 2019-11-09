@@ -66,3 +66,6 @@ enum update_status
 #define VSYNC true
 #define TITLE "ASTRAL ENGINE"
 #define ORGANIZATION "CITM - UPC TECH TALENT CENTER"
+
+
+#define ASSETS_FOLDER "/Assets/"
