@@ -21,6 +21,17 @@ ModuleSceneIntro::ModuleSceneIntro(bool start_enabled) : Module(start_enabled)
 ModuleSceneIntro::~ModuleSceneIntro()
 {}
 
+bool ModuleSceneIntro::Init()
+{
+	bool ret = true;
+
+	// needs to be created before Init so other modules can use it
+	root = CreateGameObject();
+	root->name = "root";
+
+	return ret;
+}
+
 // Load assets
 bool ModuleSceneIntro::Start()
 {
@@ -54,12 +65,11 @@ bool ModuleSceneIntro::CleanUp()
 GameObject* ModuleSceneIntro::CreateGameObject()
 {
 	std::string Name = "GameObject ";
-	Name.append(std::to_string(GO_list.size()));
-
+	Name.append(std::to_string(numGO));
 		
 	GameObject* GO = new GameObject(Name);
-	GO->id = GO_list.size();
-	GO_list.push_back(GO);
+	GO->id = numGO;
+	numGO++;
 
 	return GO;
 }
@@ -69,7 +79,7 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
 	{
-		(*iterator)->Update();
+		(*iterator)->Update(dt);
 	}
 
 	return want_to_quit;
@@ -126,19 +136,32 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glColor3ub(255, 255, 255);
 
 
-	//Draw meshes
-	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
-	{
-		if((*iterator)->active)
-			App->renderer3D->Draw((*iterator));
-	}
+	//Draw GameObjects Recursively
+	DrawRecursively(root);
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneIntro::DrawRecursively(GameObject* GO)
+{
+	if (GO->id != 0)// Not the root
+	{
+		App->renderer3D->Draw(GO);
+	}
+
+	if (GO->children.size() > 0)
+	{
+		for (std::vector<GameObject*>::iterator it = GO->children.begin(); it != GO->children.end(); ++it)
+		{
+			DrawRecursively(*it);
+		}
+	}
 }
 
 void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m, float x, float y, float z)
 {
 	GameObject* obj = App->scene_intro->CreateGameObject();
+	root->SetChild(obj);
 
 	obj->GetComponentTransform()->position.x = x;
 	obj->GetComponentTransform()->position.y = y;

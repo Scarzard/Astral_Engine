@@ -83,11 +83,40 @@ ComponentTexture* GameObject::GetComponentTexture()
 	return (ComponentTexture*)transform;
 }
 
-void GameObject::Update()
+void GameObject::Update(float dt)
 {
+	//update component transform
+
 	std::string str = this->name + " (not active)";
 	if(unactive_name.compare(str) != 0)
 		unactive_name = name + " (not active)";
+
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
+	{
+		(*it)->Update(dt);
+	}
+}
+
+void GameObject::SetChild(GameObject* GO)
+{
+	if (GO->parent != nullptr)
+		RemoveChild(GO);
+
+	GO->parent = this;
+	children.push_back(GO);
+
+}
+
+void GameObject::RemoveChild(GameObject* GO)
+{
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		if ((*it)->id == GO->id)
+		{
+			children.erase(it);
+			break;
+		}
+	}
 }
 
 void GameObject::CleanUp()

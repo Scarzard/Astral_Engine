@@ -15,7 +15,7 @@ public:
 	GameObject(std::string name);
 	virtual ~GameObject();
 
-	void Update();
+	void Update(float dt);
 	void CleanUp();
 
 	Component* CreateComponent(Component::ComponentType type);
@@ -23,6 +23,9 @@ public:
 	ComponentMesh* GetComponentMesh();
 	ComponentTransform* GetComponentTransform();
 	ComponentTexture* GetComponentTexture();
+
+	void SetChild(GameObject* GO);
+	void RemoveChild(GameObject* GO);
 
 
 public:
@@ -35,6 +38,9 @@ public:
 	uint id = -1;
 
 	std::vector<Component*> components;
+
+	GameObject* parent = nullptr;
+	std::vector<GameObject*> children;
 };
 
 #endif

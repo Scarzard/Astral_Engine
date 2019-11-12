@@ -34,7 +34,7 @@ bool W_Inspector::Draw()
 
 			if (selected_GO->active)
 			{
-				if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
+				if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentTransform() != nullptr)
 				{
 					ImGui::Text("");
 
@@ -56,7 +56,7 @@ bool W_Inspector::Draw()
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z3 %.3f   ", selected_GO->GetComponentTransform()->GetScale().z);
 				}
 
-				if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
+				if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentMesh() != nullptr)
 				{
 					ImGui::Text("Vertex:");
 					ImGui::SameLine(); ImGui::Text("%d", selected_GO->GetComponentMesh()->num_vertex);
@@ -65,7 +65,7 @@ bool W_Inspector::Draw()
 					ImGui::Checkbox("Show normals", &selected_GO->GetComponentMesh()->draw_normals);
 				}
 
-				if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
+				if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentTexture() != nullptr)
 				{
 					ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checers_texture);
 

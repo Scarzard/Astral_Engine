@@ -61,13 +61,20 @@ void MeshLoader::LoadFile(const char* full_path)
 {
 	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
 	
+	GameObject* Empty = App->scene_intro->CreateGameObject();
+	Empty->name = GetNameFromPath(full_path);
+
+	//Child of root node
+	App->scene_intro->root->SetChild(Empty);
+
 	if (scene != nullptr && scene->HasMeshes()) //Load sucesful
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
 			GameObject* obj = App->scene_intro->CreateGameObject();
-			
+			obj->name = scene->mRootNode[i].mName.C_Str();
+			Empty->SetChild(obj);
 
 			aiMesh* new_mesh = scene->mMeshes[i];
 
@@ -151,5 +158,15 @@ std::string MeshLoader::GetDirectoryFromPath(std::string path)
 	directory = path.substr(0, found);
 
 	return directory;
+}
+
+std::string MeshLoader::GetNameFromPath(std::string path)
+{
+	std::string name = path;
+
+	uint num = name.find_last_of("/");
+	name = name.substr(num + 1, name.size());
+
+	return name;
 }
 
