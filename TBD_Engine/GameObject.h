@@ -18,6 +18,9 @@ public:
 	void Update(float dt);
 	void CleanUp();
 
+	void Enable();
+	void Disable();
+
 	Component* CreateComponent(Component::ComponentType type);
 
 	ComponentMesh* GetComponentMesh();

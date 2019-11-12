@@ -87,6 +87,7 @@ void GameObject::Update(float dt)
 {
 	//update component transform
 
+	//update name when GO change state
 	std::string str = this->name + " (not active)";
 	if(unactive_name.compare(str) != 0)
 		unactive_name = name + " (not active)";
@@ -94,6 +95,28 @@ void GameObject::Update(float dt)
 	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
 	{
 		(*it)->Update(dt);
+	}
+}
+
+void GameObject::Enable()
+{
+	if(this->active == false)
+		this->active = true;
+
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
+	{
+		(*it)->Enable();
+	}
+}
+
+void GameObject::Disable()
+{
+	if (this->active == true)
+		this->active = false;
+
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
+	{
+		(*it)->Disable();
 	}
 }
 

@@ -77,10 +77,7 @@ GameObject* ModuleSceneIntro::CreateGameObject()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
-	{
-		(*iterator)->Update(dt);
-	}
+	root->Update(dt);
 
 	return want_to_quit;
 }
@@ -144,7 +141,8 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 void ModuleSceneIntro::DrawRecursively(GameObject* GO)
 {
-	if (GO->id != 0)// Not the root
+	// Not the root and GO is active
+	if (GO->id != 0 && GO->active == true)
 	{
 		App->renderer3D->Draw(GO);
 	}

@@ -73,7 +73,6 @@ void MeshLoader::LoadFile(const char* full_path)
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
 			GameObject* obj = App->scene_intro->CreateGameObject();
-			obj->name = scene->mRootNode[i].mName.C_Str();
 			Empty->SetChild(obj);
 
 			aiMesh* new_mesh = scene->mMeshes[i];
@@ -166,6 +165,9 @@ std::string MeshLoader::GetNameFromPath(std::string path)
 
 	uint num = name.find_last_of("/");
 	name = name.substr(num + 1, name.size());
+
+	uint dot = name.find_last_of(".");
+	name = name.substr(0, dot);
 
 	return name;
 }
