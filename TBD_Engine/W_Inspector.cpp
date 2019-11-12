@@ -37,12 +37,14 @@ bool W_Inspector::Draw()
 				if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
 				{
 					ImGui::Text("");
-
+					
 					ImGui::Text("Position:");
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().x);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Y1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().y);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().z);
 					ImGui::Text("");
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat3("X1test", &pos.x, 0.005f, -INFINITY, INFINITY);
+					selected_GO->GetComponentTransform()->SetPosition(pos);
 
 					ImGui::Text("Rotation:");
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X2 %.3f   ", selected_GO->GetComponentTransform()->GetQuaternionRotation().x);

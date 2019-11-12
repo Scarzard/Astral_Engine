@@ -3,6 +3,7 @@
 #include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include "Application.h"
 
 #include "mmgr/mmgr.h"
 
@@ -16,11 +17,32 @@ ComponentTransform::~ComponentTransform()
 
 }
 
+bool ComponentTransform::Update()
+{
+	//Update transf
+	UpdateTranformations();
+	return true;
+}
+
 void ComponentTransform::CleanUp()
 {
 
 }
 
+void ComponentTransform::UpdateTranformations()
+{
+	GameObject* go = App->gui->ins_window->selected_GO;
+	if (has_transformed)
+	{
+		transform = float4x4::FromTRS(position, rotation_quat, scale);
+
+		if (go != nullptr)
+			global_transform = go->GetComponentTransform()->GetGlobalTransform * transform;
+
+		has_transformed = false;
+	}
+}
+// ------------SETTERS--------------
 float4x4 ComponentTransform::GetTransform() const
 {
 	return transform;
@@ -49,15 +71,23 @@ float3 ComponentTransform::GetScale() const
 	return scale;
 }
 
+float4x4 ComponentTransform::GetGlobalTransform() const
+{
+	return global_transform;
+}
+
+// ------------SETTERS--------------
 void ComponentTransform::SetPosition(float3& position)
 {
 	this->position = position;
+	has_transformed = true;
 }
 
 void ComponentTransform::SetQuaternionRotation(Quat& rotation)
 {
 	this->rotation_quat = rotation;
 	this->rotation_euler = rotation_quat.ToEulerXYZ() * RADTODEG;
+	has_transformed = true;
 }
 
 void ComponentTransform::SetEulerRotation(float3 rot)
@@ -66,11 +96,13 @@ void ComponentTransform::SetEulerRotation(float3 rot)
 	Quat quaternion_rotation = Quat::FromEulerXYZ(tmp.x, tmp.y, tmp.z);
 	rotation_quat = rotation_quat * quaternion_rotation;
 	rotation_euler = rot;
+	has_transformed = true;
 }
 
 void ComponentTransform::SetScale(float3& scale)
 {
 	this->scale = scale;
+	has_transformed = true;
 }
 
 void ComponentTransform::SetComponent(float3& position, float3& scale, Quat& rotation)
