@@ -120,6 +120,23 @@ void GameObject::Disable()
 	}
 }
 
+void GameObject::DeleteGO(GameObject* GO)
+{
+	//first delete its childrens (if it has)
+	if (GO->children.size() > 0)
+	{
+		for (std::vector<GameObject*>::iterator it = GO->children.begin(); it != GO->children.end(); ++it)
+		{
+			DeleteGO(*it);
+		}
+
+		GO->children.clear();
+	}
+
+	delete GO;
+	GO = nullptr;
+}
+
 void GameObject::SetChild(GameObject* GO)
 {
 	if (GO->parent != nullptr)
@@ -154,5 +171,10 @@ void GameObject::CleanUp()
 	}
 
 	components.clear();
+
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->CleanUp();
+	}
 
 }

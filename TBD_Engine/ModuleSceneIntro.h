@@ -32,8 +32,6 @@ public:
 public:	
 
 	update_status want_to_quit = UPDATE_CONTINUE;
-
-	std::vector<GameObject*> GO_list;
 	uint numGO = 0;
 	GameObject* root = nullptr;
 };

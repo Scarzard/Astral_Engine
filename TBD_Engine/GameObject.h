@@ -27,6 +27,7 @@ public:
 	ComponentTransform* GetComponentTransform();
 	ComponentTexture* GetComponentTexture();
 
+	void DeleteGO(GameObject* GO);
 	void SetChild(GameObject* GO);
 	void RemoveChild(GameObject* GO);
 

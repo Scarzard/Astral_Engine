@@ -51,13 +51,8 @@ bool ModuleSceneIntro::CleanUp()
 {
 	App->LogInConsole("Unloading Intro scene");
 	
-	for (std::vector<GameObject*>::iterator iterator = GO_list.begin(); iterator != GO_list.end(); iterator++)
-	{
-		(*iterator)->CleanUp();
-		delete (*iterator);
-	}
-
-	GO_list.clear();
+	root->CleanUp();
+	root->DeleteGO(root);
 
 	return true;
 }
