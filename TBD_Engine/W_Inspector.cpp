@@ -36,40 +36,49 @@ bool W_Inspector::Draw()
 			{
 				if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
 				{
-					ImGui::Text("");
+					ComponentTransform* transform = selected_GO->GetComponentTransform();
 
+					float3 position = transform->GetPosition();
 					ImGui::Text("Position:");
 					/*ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().x);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Y1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().y);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().z);*/
 
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("X1", &pos.x, 0.05f, -INFINITY, INFINITY);
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Y1", &pos.y, 0.05f, -INFINITY, INFINITY);
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Z1", &pos.z, 0.05f, -INFINITY, INFINITY);
-					selected_GO->GetComponentTransform()->SetPosition(pos);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##X1", &position.x, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Y1", &position.y, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Z1", &position.z, 0.05f, -INFINITY, INFINITY);
 
 					ImGui::Text("");
 
+					float3 rotation = transform->GetEulerRotation();
 					ImGui::Text("Rotation:");
 					/*ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X2 %.3f   ", selected_GO->GetComponentTransform()->GetQuaternionRotation().x);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Y2 %.3f   ", selected_GO->GetComponentTransform()->GetQuaternionRotation().y);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z2 %.3f   ", selected_GO->GetComponentTransform()->GetQuaternionRotation().z);*/
-
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("X2", &rot.x, 0.05f, -INFINITY, INFINITY);
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Y2", &rot.y, 0.05f, -INFINITY, INFINITY);
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Z2", &rot.z, 0.05f, -INFINITY, INFINITY);
-					selected_GO->GetComponentTransform()->SetQuaternionRotation(rot);
+																				   
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##X2", &rotation.x, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Y2", &rotation.y, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Z2", &rotation.z, 0.05f, -INFINITY, INFINITY);
+					//selected_GO->GetComponentTransform()->SetQuaternionRotation(rot);
 					ImGui::Text("");
 
+					float3 sc = transform->GetScale();
 					ImGui::Text("Scale:   ");
 					/*ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X3 %.3f   ", selected_GO->GetComponentTransform()->GetScale().x);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Y3 %.3f   ", selected_GO->GetComponentTransform()->GetScale().y);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z3 %.3f   ", selected_GO->GetComponentTransform()->GetScale().z);*/
 
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("X3", &sc.x, 0.05f, -INFINITY, INFINITY);
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Y3", &sc.y, 0.05f, -INFINITY, INFINITY);
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Z3", &sc.z, 0.05f, -INFINITY, INFINITY);
-					selected_GO->GetComponentTransform()->SetQuaternionRotation(rot);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##X3", &sc.x, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Y3", &sc.y, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Z3", &sc.z, 0.05f, -INFINITY, INFINITY);
+
+					// --- Transform Set ---
+					if (!transform->GetPosition().Equals(position))
+						transform->SetPosition(position);
+					if (!transform->GetScale().Equals(sc))
+						transform->SetScale(sc);
+					/*if (!transform->GetRotation().Equals(rotation))
+						transform->SetRotation(rotation);*/
 				}
 
 				if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)

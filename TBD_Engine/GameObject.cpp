@@ -91,14 +91,17 @@ void GameObject::Update()
 
 	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
 	{
-		(*iterator)->Update();
+		if((*iterator)->active)
+			(*iterator)->Update();
 	}
+
+	//if (GetComponentTransform()->has_transformed)
+	//	TransformGlobal(this);
 }
 
 void GameObject::CleanUp()
 {
 	this->GetComponentMesh()->CleanUp();
-	this->GetComponentTransform()->CleanUp();
 	this->GetComponentTexture()->CleanUp();
 
 	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
@@ -107,5 +110,13 @@ void GameObject::CleanUp()
 	}
 
 	components.clear();
+
+}
+
+
+void GameObject::TransformGlobal(GameObject* GO)
+{
+	/*ComponentTransform* transform = GO->GetComponentTransform();
+	transform->TransformGlobalMat(transform->GetGlobalTransform());*/
 
 }

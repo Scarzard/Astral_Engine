@@ -24,6 +24,8 @@ public:
 	ComponentTransform* GetComponentTransform();
 	ComponentTexture* GetComponentTexture();
 
+	void TransformGlobal(GameObject* GO);
+
 
 public:
 

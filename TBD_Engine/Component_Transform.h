@@ -11,28 +11,27 @@ class ComponentTransform : public Component
 {
 public:
 
-	ComponentTransform(GameObject* GO, float3 position = float3::zero, Quat rotation = Quat::identity, float3 scale = float3::one);
+	ComponentTransform(GameObject* GO);
 	virtual ~ComponentTransform();
 
-	bool Update();
-	void CleanUp();
-
-	void UpdateTranformations();
-
 	//Transform getters
-	float4x4 GetTransform() const;
 	float3 GetPosition() const;
 	Quat GetQuaternionRotation() const;
 	float3 GetEulerRotation() const;
 	float3 GetScale() const;
+	float4x4 GetTransform() const;
 	float4x4 GetGlobalTransform() const;
+
 	//Transform setters
 	void SetPosition(float3& position);
-	void SetQuaternionRotation(Quat& rotation);
 	void SetEulerRotation(float3 rot);
 	void SetScale(float3& scale);
+	void SetGlobalTransform(float4x4 transform);
+	void TransformGlobalMat(const float4x4& global);
 
-	void SetComponent(float3& position,  float3& scale,  Quat& rotation);
+private:
+	void UpdateLocalTransform();
+	void UpdateTRS();
 
 public:
 	float4x4 transform_mat = float4x4::zero;
