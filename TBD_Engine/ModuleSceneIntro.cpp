@@ -66,6 +66,9 @@ GameObject* ModuleSceneIntro::CreateGameObject()
 	GO->id = numGO;
 	numGO++;
 
+	if(GO->id != 0)
+		root->SetChild(GO);
+
 	return GO;
 }
 

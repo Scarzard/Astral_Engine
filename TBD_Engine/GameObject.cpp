@@ -140,7 +140,7 @@ void GameObject::DeleteGO(GameObject* GO)
 void GameObject::SetChild(GameObject* GO)
 {
 	if (GO->parent != nullptr)
-		RemoveChild(GO);
+		GO->parent->RemoveChild(GO);
 
 	GO->parent = this;
 	children.push_back(GO);

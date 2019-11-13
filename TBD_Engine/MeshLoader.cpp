@@ -163,7 +163,7 @@ std::string MeshLoader::GetNameFromPath(std::string path)
 {
 	std::string name = path;
 
-	uint num = name.find_last_of("/");
+	uint num = name.find_last_of("/\\");
 	name = name.substr(num + 1, name.size());
 
 	uint dot = name.find_last_of(".");
