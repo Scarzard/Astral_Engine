@@ -39,21 +39,37 @@ bool W_Inspector::Draw()
 					ImGui::Text("");
 
 					ImGui::Text("Position:");
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().x);
+					/*ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().x);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Y1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().y);
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().z);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z1 %.3f   ", selected_GO->GetComponentTransform()->GetPosition().z);*/
+
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("X1", &pos.x, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Y1", &pos.y, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Z1", &pos.z, 0.05f, -INFINITY, INFINITY);
+					selected_GO->GetComponentTransform()->SetPosition(pos);
+
 					ImGui::Text("");
 
 					ImGui::Text("Rotation:");
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X2 %.3f   ", selected_GO->GetComponentTransform()->GetQuaternionRotation().x);
+					/*ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X2 %.3f   ", selected_GO->GetComponentTransform()->GetQuaternionRotation().x);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Y2 %.3f   ", selected_GO->GetComponentTransform()->GetQuaternionRotation().y);
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z2 %.3f   ", selected_GO->GetComponentTransform()->GetQuaternionRotation().z);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z2 %.3f   ", selected_GO->GetComponentTransform()->GetQuaternionRotation().z);*/
+
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("X2", &rot.x, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Y2", &rot.y, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Z2", &rot.z, 0.05f, -INFINITY, INFINITY);
+					selected_GO->GetComponentTransform()->SetQuaternionRotation(rot);
 					ImGui::Text("");
 
 					ImGui::Text("Scale:   ");
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X3 %.3f   ", selected_GO->GetComponentTransform()->GetScale().x);
+					/*ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("X3 %.3f   ", selected_GO->GetComponentTransform()->GetScale().x);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Y3 %.3f   ", selected_GO->GetComponentTransform()->GetScale().y);
-					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z3 %.3f   ", selected_GO->GetComponentTransform()->GetScale().z);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::Text("Z3 %.3f   ", selected_GO->GetComponentTransform()->GetScale().z);*/
+
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("X3", &sc.x, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Y3", &sc.y, 0.05f, -INFINITY, INFINITY);
+					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("Z3", &sc.z, 0.05f, -INFINITY, INFINITY);
+					selected_GO->GetComponentTransform()->SetQuaternionRotation(rot);
 				}
 
 				if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)

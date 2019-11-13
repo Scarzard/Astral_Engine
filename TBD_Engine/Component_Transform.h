@@ -14,7 +14,10 @@ public:
 	ComponentTransform(GameObject* GO, float3 position = float3::zero, Quat rotation = Quat::identity, float3 scale = float3::one);
 	virtual ~ComponentTransform();
 
+	bool Update();
 	void CleanUp();
+
+	void UpdateTranformations();
 
 	//Transform getters
 	float4x4 GetTransform() const;
@@ -22,7 +25,7 @@ public:
 	Quat GetQuaternionRotation() const;
 	float3 GetEulerRotation() const;
 	float3 GetScale() const;
-
+	float4x4 GetGlobalTransform() const;
 	//Transform setters
 	void SetPosition(float3& position);
 	void SetQuaternionRotation(Quat& rotation);
@@ -32,12 +35,15 @@ public:
 	void SetComponent(float3& position,  float3& scale,  Quat& rotation);
 
 public:
-	float4x4 transform = float4x4::zero;
-	
+	float4x4 transform_mat = float4x4::zero;
+	float4x4 global_transform_mat = float4x4::identity;
+
 	float3 position = float3::zero;
 	Quat rotation_quat = Quat::identity;
 	float3 rotation_euler = float3::zero;
 	float3 scale = float3::one;
+
+	bool has_transformed = false;
 };
 
 #endif //__COMPONENT_TRANSF_H__

@@ -88,6 +88,11 @@ void GameObject::Update()
 	std::string str = this->name + " (not active)";
 	if(unactive_name.compare(str) != 0)
 		unactive_name = name + " (not active)";
+
+	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
+	{
+		(*iterator)->Update();
+	}
 }
 
 void GameObject::CleanUp()

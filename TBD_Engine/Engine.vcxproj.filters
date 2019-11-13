@@ -596,9 +596,11 @@
     <ClCompile Include="Component_Texture.cpp">
       <Filter>Sources\Modules\Components</Filter>
     </ClCompile>
-    <ClCompile Include="PCG\entropy.c" />
     <ClCompile Include="ModuleFileSystem.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="PCG\entropy.c">
+      <Filter>Sources\Tools\PCG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
