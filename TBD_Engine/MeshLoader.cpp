@@ -60,9 +60,25 @@ bool MeshLoader::CleanUp()
 void MeshLoader::LoadFile(const char* full_path)
 {
 	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
-	
+	aiNode* root_node = scene->mRootNode;
+
 	GameObject* Empty = App->scene_intro->CreateGameObject();
 	Empty->name = GetNameFromPath(full_path);
+
+	aiVector3D translation, scaling;
+	aiQuaternion rotation;
+
+	root_node->mTransformation.Decompose(scaling, rotation, translation);
+
+	float3 pos(translation.x, translation.y, translation.z);
+	float3 s(scaling.x, scaling.y, scaling.z);
+	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
+
+	Empty->GetComponentTransform()->position = pos;
+	Empty->GetComponentTransform()->scale = s;
+	Empty->GetComponentTransform()->rotation_quat = rot;
+
+	Empty->GetComponentTransform()->UpdateLocalTransform();
 
 	//Child of root node
 	App->scene_intro->root->SetChild(Empty);
@@ -74,6 +90,22 @@ void MeshLoader::LoadFile(const char* full_path)
 		{
 			GameObject* obj = App->scene_intro->CreateGameObject();
 			Empty->SetChild(obj);
+
+			aiNode* node = root_node->mChildren[i];
+			aiVector3D translation, scaling;
+			aiQuaternion rotation;
+
+			node->mTransformation.Decompose(scaling, rotation, translation);
+
+			float3 pos2(translation.x, translation.y, translation.z);
+			float3 s2(scaling.x, scaling.y, scaling.z);
+			Quat rot2(rotation.x, rotation.y, rotation.z, rotation.w);
+
+			obj->GetComponentTransform()->position = pos2;
+			obj->GetComponentTransform()->scale = s2;
+			obj->GetComponentTransform()->rotation_quat = rot2;
+			
+			obj->GetComponentTransform()->UpdateLocalTransform();
 
 			aiMesh* new_mesh = scene->mMeshes[i];
 

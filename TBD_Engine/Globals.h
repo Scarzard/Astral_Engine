@@ -19,6 +19,10 @@ void log(const char file[], int line, const char* format, ...);
 #define RADTODEG 57.295779513082320876f
 #define HAVE_M_PI
 
+#define ALIGN_CLASS_TO_16 \
+    void* operator new(size_t i) { return _aligned_malloc(i,16); }\
+    void operator delete(void* p) { _aligned_free(p); }
+
 #ifdef NULL
 #undef NULL
 #endif

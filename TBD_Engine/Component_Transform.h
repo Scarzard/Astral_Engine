@@ -10,6 +10,7 @@
 class ComponentTransform : public Component
 {
 public:
+	ALIGN_CLASS_TO_16
 
 	ComponentTransform(GameObject* GO);
 	virtual ~ComponentTransform();
@@ -29,13 +30,12 @@ public:
 	void SetGlobalTransform(float4x4 transform);
 	void TransformGlobalMat(const float4x4& global);
 
-private:
 	void UpdateLocalTransform();
 	void UpdateTRS();
 
 public:
-	float4x4 transform_mat = float4x4::zero;
-	float4x4 global_transform_mat = float4x4::identity;
+	float4x4 local_transform = float4x4::zero;
+	float4x4 global_transform = float4x4::zero;
 
 	float3 position = float3::zero;
 	Quat rotation_quat = Quat::identity;

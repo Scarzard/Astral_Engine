@@ -1,10 +1,11 @@
 #include "Component_Transform.h"
-
 #include "mmgr/mmgr.h"
 
 ComponentTransform::ComponentTransform(GameObject* GO) : Component(Component::ComponentType::Transform, GO)
 {
 	//transform = float4x4::FromTRS(position, rotation, scale);
+	
+	//transform_mat = float4x4(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
 }
 
 ComponentTransform::~ComponentTransform()
@@ -16,7 +17,7 @@ ComponentTransform::~ComponentTransform()
 
 float4x4 ComponentTransform::GetTransform() const
 {
-	return transform_mat;
+	return local_transform;
 }
 
 float3 ComponentTransform::GetPosition() const
@@ -44,7 +45,7 @@ float3 ComponentTransform::GetScale() const
 
 float4x4 ComponentTransform::GetGlobalTransform() const
 {
-	return global_transform_mat;
+	return global_transform;
 }
 
 // ------------SETTERS--------------
@@ -71,15 +72,15 @@ void ComponentTransform::SetScale(float3& scale)
 
 void ComponentTransform::SetGlobalTransform(float4x4 transform)
 {
-	transform_mat = transform.Inverted() * global_transform_mat;
-	global_transform_mat = transform;
+	local_transform = transform.Inverted() * global_transform;
+	global_transform = transform;
 
-	TransformGlobalMat(global_transform_mat);
+	TransformGlobalMat(global_transform);
 }
 
 void ComponentTransform::TransformGlobalMat(const float4x4 & global)
 {
-	global_transform_mat = global * transform_mat;
+	global_transform = global * local_transform;
 	UpdateTRS();
 
 	has_transformed = false;
@@ -87,12 +88,12 @@ void ComponentTransform::TransformGlobalMat(const float4x4 & global)
 
 void ComponentTransform::UpdateLocalTransform()
 {
-	transform_mat = float4x4::FromTRS(position, rotation_quat, scale);
+	local_transform = math::float4x4::FromTRS(position, rotation_quat, scale);
 	has_transformed = true;
 }
 
 void ComponentTransform::UpdateTRS()
 {
-	transform_mat.Decompose(position, rotation_quat, scale);
+	local_transform.Decompose(position, rotation_quat, scale);
 	rotation_euler = rotation_quat.ToEulerXYZ() * RADTODEG;
 }

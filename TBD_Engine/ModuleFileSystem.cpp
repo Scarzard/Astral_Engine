@@ -9,7 +9,6 @@
 
 #include "mmgr/mmgr.h"
 
-using namespace std;
 
 ModuleFileSystem::ModuleFileSystem(bool start_enabled, const char* game_path) : Module(start_enabled)
 {
@@ -111,12 +110,12 @@ void ModuleFileSystem::CreateDirectory(const char* directory)
 	PHYSFS_mkdir(directory);
 }
 
-void ModuleFileSystem::DiscoverFiles(const char* directory, vector<string> & file_list, vector<string> & dir_list) const
+void ModuleFileSystem::DiscoverFiles(const char* directory, std::vector<std::string> & file_list, std::vector<std::string> & dir_list) const
 {
 	char **rc = PHYSFS_enumerateFiles(directory);
 	char **i;
 
-	string dir(directory);
+	std::string dir(directory);
 
 	for (i = rc; *i != nullptr; i++)
 	{
@@ -189,7 +188,7 @@ void ModuleFileSystem::SplitFilePath(const char * full_path, std::string * path,
 {
 	if (full_path != nullptr)
 	{
-		string full(full_path);
+		std::string full(full_path);
 		NormalizePath(full);
 		size_t pos_separator = full.find_last_of("\\/");
 		size_t pos_dot = full.find_last_of(".");
@@ -242,7 +241,7 @@ void ModuleFileSystem::NormalizePath(char * full_path) const
 
 void ModuleFileSystem::NormalizePath(std::string & full_path) const
 {
-	for (string::iterator it = full_path.begin(); it != full_path.end(); ++it)
+	for (std::string::iterator it = full_path.begin(); it != full_path.end(); ++it)
 	{
 		if (*it == '\\')
 			*it = '/';
@@ -253,7 +252,7 @@ void ModuleFileSystem::NormalizePath(std::string & full_path) const
 
 unsigned int ModuleFileSystem::Load(const char * path, const char * file, char ** buffer) const
 {
-	string full_path(path);
+	std::string full_path(path);
 	full_path += file;
 	return Load(full_path.c_str(), buffer);
 }
