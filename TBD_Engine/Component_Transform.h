@@ -13,6 +13,7 @@ public:
 	ALIGN_CLASS_TO_16
 
 	ComponentTransform(GameObject* GO);
+
 	virtual ~ComponentTransform();
 
 	//Transform getters
@@ -33,10 +34,12 @@ public:
 	void UpdateLocalTransform();
 	void UpdateTRS();
 
-public:
-	float4x4 local_transform = float4x4::zero;
-	float4x4 global_transform = float4x4::zero;
 
+public:
+
+	float4x4 local_matrix = float4x4::identity;
+	float4x4 global_matrix = float4x4::identity;
+	
 	float3 position = float3::zero;
 	Quat rotation_quat = Quat::identity;
 	float3 rotation_euler = float3::zero;

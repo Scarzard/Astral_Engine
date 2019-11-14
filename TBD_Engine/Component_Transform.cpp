@@ -1,4 +1,5 @@
 #include "Component_Transform.h"
+#include "GameObject.h"
 #include "mmgr/mmgr.h"
 
 ComponentTransform::ComponentTransform(GameObject* GO) : Component(Component::ComponentType::Transform, GO)
@@ -17,7 +18,8 @@ ComponentTransform::~ComponentTransform()
 
 float4x4 ComponentTransform::GetTransform() const
 {
-	return local_transform;
+
+	return local_matrix;
 }
 
 float3 ComponentTransform::GetPosition() const
@@ -45,7 +47,7 @@ float3 ComponentTransform::GetScale() const
 
 float4x4 ComponentTransform::GetGlobalTransform() const
 {
-	return global_transform;
+	return global_matrix;
 }
 
 // ------------SETTERS--------------
@@ -58,29 +60,31 @@ void ComponentTransform::SetPosition(float3& position)
 
 void ComponentTransform::SetEulerRotation(float3 rot)
 {
-	/*float3 tmp = (rot - rotation_euler) * DEGTORAD;
+	float3 tmp = (rot - rotation_euler) * DEGTORAD;
 	Quat quaternion_rotation = Quat::FromEulerXYZ(tmp.x, tmp.y, tmp.z);
 	rotation_quat = rotation_quat * quaternion_rotation;
-	rotation_euler = rot;*/
+	rotation_euler = rot;
 }
 
 void ComponentTransform::SetScale(float3& scale)
 {
-	this->scale = scale;
+	if (scale.x > 0.0f && scale.y > 0.0f && scale.z > 0.0f)
+		this->scale = scale;
+
 	UpdateLocalTransform();
 }
 
 void ComponentTransform::SetGlobalTransform(float4x4 transform)
 {
-	local_transform = transform.Inverted() * global_transform;
-	global_transform = transform;
+	local_matrix = transform.Inverted() * global_matrix;
+	global_matrix = transform;
 
-	TransformGlobalMat(global_transform);
+	TransformGlobalMat(global_matrix);
 }
 
 void ComponentTransform::TransformGlobalMat(const float4x4 & global)
 {
-	global_transform = global * local_transform;
+	global_matrix = global * local_matrix;
 	UpdateTRS();
 
 	has_transformed = false;
@@ -88,12 +92,13 @@ void ComponentTransform::TransformGlobalMat(const float4x4 & global)
 
 void ComponentTransform::UpdateLocalTransform()
 {
-	local_transform = math::float4x4::FromTRS(position, rotation_quat, scale);
+	local_matrix = math::float4x4::FromTRS(position, rotation_quat, scale);
 	has_transformed = true;
 }
 
 void ComponentTransform::UpdateTRS()
 {
-	local_transform.Decompose(position, rotation_quat, scale);
+	local_matrix.Decompose(position, rotation_quat, scale);
 	rotation_euler = rotation_quat.ToEulerXYZ() * RADTODEG;
 }
+

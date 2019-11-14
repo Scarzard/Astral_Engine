@@ -71,7 +71,7 @@ void MeshLoader::LoadFile(const char* full_path)
 	root_node->mTransformation.Decompose(scaling, rotation, translation);
 
 	float3 pos(translation.x, translation.y, translation.z);
-	float3 s(scaling.x, scaling.y, scaling.z);
+	float3 s(1, 1, 1);
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
 
 	Empty->GetComponentTransform()->position = pos;
@@ -98,13 +98,15 @@ void MeshLoader::LoadFile(const char* full_path)
 			node->mTransformation.Decompose(scaling, rotation, translation);
 
 			float3 pos2(translation.x, translation.y, translation.z);
-			float3 s2(scaling.x, scaling.y, scaling.z);
-			Quat rot2(rotation.x, rotation.y, rotation.z, rotation.w);
+			//float3 pos2(0, 0, 0);
+			//float3 s2(scaling.x, scaling.y, scaling.z);
+			float3 s2(1, 1, 1);
+			Quat rot2(0, rotation.y, rotation.z, rotation.w);
 
 			obj->GetComponentTransform()->position = pos2;
 			obj->GetComponentTransform()->scale = s2;
 			obj->GetComponentTransform()->rotation_quat = rot2;
-			
+
 			obj->GetComponentTransform()->UpdateLocalTransform();
 
 			aiMesh* new_mesh = scene->mMeshes[i];

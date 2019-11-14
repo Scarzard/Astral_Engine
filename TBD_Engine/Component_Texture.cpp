@@ -5,7 +5,7 @@
 
 #include "mmgr/mmgr.h"
 
-ComponentTexture::ComponentTexture(GameObject* GO) : Component(Component::ComponentType::Mesh, GO)
+ComponentTexture::ComponentTexture(GameObject* GO) : Component(Component::ComponentType::Texture, GO)
 {
 	
 }

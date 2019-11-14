@@ -26,7 +26,7 @@ bool W_Inspector::Draw()
 
 		ImGui::Begin("Inspector");
 		//Draw Inspector stuff
-		if (selected_GO != nullptr)
+		if (selected_GO != nullptr && selected_GO->id != 0)
 		{
 			ImGui::InputText("Name", (char*)selected_GO->name.c_str(), 20, ImGuiInputTextFlags_EnterReturnsTrue);
 			ImGui::Text("");
@@ -57,8 +57,8 @@ bool W_Inspector::Draw()
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##X1", &position.x, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Y1", &position.y, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Z1", &position.z, 0.05f, -INFINITY, INFINITY);
-					/*if (!transform->GetPosition().Equals(position))
-						transform->SetPosition(position);*/
+					if (!transform->GetPosition().Equals(position))
+						transform->SetPosition(position);
 
 					ImGui::Text("");
 
@@ -71,8 +71,8 @@ bool W_Inspector::Draw()
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##X2", &rotation.x, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Y2", &rotation.y, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Z2", &rotation.z, 0.05f, -INFINITY, INFINITY);
-					/*if (!transform->GetRotation().Equals(rotation))
-						transform->SetRotation(rotation);*/
+					if (!transform->GetEulerRotation().Equals(rotation))
+						transform->SetEulerRotation(rotation);
 					ImGui::Text("");
 
 					float3 sc = transform->GetScale();
@@ -84,8 +84,8 @@ bool W_Inspector::Draw()
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##X3", &sc.x, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Y3", &sc.y, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Z3", &sc.z, 0.05f, -INFINITY, INFINITY);
-					//if (!transform->GetScale().Equals(sc)) {}
-						//transform->SetScale(sc);
+					if (!transform->GetScale().Equals(sc))
+						transform->SetScale(sc);
 					
 				}
 

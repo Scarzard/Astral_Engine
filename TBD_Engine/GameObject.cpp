@@ -7,9 +7,13 @@ GameObject::GameObject(std::string name)
 	this->name = name;
 	unactive_name = name + " (not active)";
 	this->active = true;
-	CreateComponent(Component::ComponentType::Transform);
-	CreateComponent(Component::ComponentType::Mesh);
-	CreateComponent(Component::ComponentType::Texture);
+
+	if(id!=0)
+	{
+		CreateComponent(Component::ComponentType::Transform);
+		CreateComponent(Component::ComponentType::Mesh);
+		CreateComponent(Component::ComponentType::Texture);
+	}
 }
 
 GameObject::~GameObject()
@@ -71,33 +75,29 @@ ComponentTransform* GameObject::GetComponentTransform()
 
 ComponentTexture* GameObject::GetComponentTexture()
 {
-	Component* transform = nullptr;
+	Component* texture = nullptr;
 	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
 	{
-		if ((*iterator)->type == Component::ComponentType::Transform)
+		if ((*iterator)->type == Component::ComponentType::Texture)
 		{
 			return (ComponentTexture*)*iterator;
 		}
 	}
 
-	return (ComponentTexture*)transform;
+	return (ComponentTexture*)texture;
 }
 
 void GameObject::Update(float dt)
 {
-	//update component transform
+
 
 	//update name when GO change state
 	std::string str = this->name + " (not active)";
 	if(unactive_name.compare(str) != 0)
 		unactive_name = name + " (not active)";
 
-	/*for (std::vector<GameObject*>::iterator tmp = children.begin() - 1; tmp != children.end(); ++tmp)
-	{
-		TransformGlobal(*tmp);
-	}*/
-	//if(this->GetComponentTransform()->has_transformed)
-
+	if (this->GetComponentTransform()->has_transformed)
+		TransformGlobal(this);
 
 	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
 	{
@@ -189,14 +189,12 @@ void GameObject::CleanUp()
 
 void GameObject::TransformGlobal(GameObject* GO)
 {
-	//ComponentTransform* transform = GO->GetComponentTransform();
-	//transform->TransformGlobalMat(GO->parent->GetComponentTransform()->GetGlobalTransform());
+	ComponentTransform* transform = GO->GetComponentTransform();
+	transform->TransformGlobalMat(GO->parent->GetComponentTransform()->GetGlobalTransform());
 
-	//if (GO->active)
-	//{
-	//	for (std::vector<GameObject*>::iterator tmp = GO->children.begin(); tmp != GO->children.end(); ++tmp)
-	//	{
-	//		TransformGlobal(*tmp);
-	//	}
-	//}
+	for (std::vector<GameObject*>::iterator tmp = GO->children.begin(); tmp != GO->children.end(); ++tmp)
+	{
+		TransformGlobal(*tmp);
+	}
+	
 }

@@ -149,7 +149,10 @@ void ModuleSceneIntro::DrawRecursively(GameObject* GO)
 	// Not the root and GO is active
 	if (GO->id != 0 && GO->active == true)
 	{
+		glPushMatrix();
+		glMultMatrixf(GO->GetComponentTransform()->GetGlobalTransform().Transposed().ptr());
 		App->renderer3D->Draw(GO);
+		glPopMatrix();
 	}
 
 	if (GO->children.size() > 0)
