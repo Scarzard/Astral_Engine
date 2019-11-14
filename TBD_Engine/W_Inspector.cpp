@@ -30,6 +30,7 @@ bool W_Inspector::Draw()
 		{
 			ImGui::InputText("Name", (char*)selected_GO->name.c_str(), 20, ImGuiInputTextFlags_EnterReturnsTrue);
 			ImGui::Text("");
+			active_bool = selected_GO->active;
 			ImGui::Checkbox("Active", &active_bool);
 
 			if (active_bool)
