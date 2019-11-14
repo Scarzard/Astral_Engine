@@ -18,10 +18,7 @@ public:
 	GameObject* selected_GO = nullptr;
 	ImGuiTreeNodeFlags flag = ImGuiTreeNodeFlags_None;
 
-private:
-	/*float3 pos = float3::zero;
-	Quat rot = Quat::identity;
-	float3 sc = float3::zero;*/
+	bool active_bool = true;
 };
 
 #endif // !_W_INSPECTOR_H_

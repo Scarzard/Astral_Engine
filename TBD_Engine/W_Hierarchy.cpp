@@ -10,6 +10,7 @@ W_Hierarchy::~W_Hierarchy()
 {
 }
 
+
 bool W_Hierarchy::Start()
 {
 	return true;
@@ -17,46 +18,14 @@ bool W_Hierarchy::Start()
 
 bool W_Hierarchy::Draw()
 {
-	static int selection_mask = 0x02;
-
-	TreeNode_Clicked = -1;
 
 	if (App->gui->hierarchy)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
 		ImGui::Begin("Hierarchy");
-		//Draw Hierarchy stuff
-		for (std::vector<GameObject*>::iterator iterator = App->scene_intro->GO_list.begin(); iterator != App->scene_intro->GO_list.end(); iterator++)
-		{
 
-			ImGuiTreeNodeFlags flag = ((selection_mask & (1 << (*iterator)->id)) ? ImGuiTreeNodeFlags_Selected : 0);
-		
-			flag |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-	
-			if((*iterator)->active == true)
-				ImGui::TreeNodeEx((void*)(intptr_t)(*iterator)->id, flag, (*iterator)->name.c_str());
-			else
-				ImGui::TreeNodeEx((void*)(intptr_t)(*iterator)->id, flag, (*iterator)->unactive_name.c_str());
-
-
-			if (ImGui::IsItemClicked())
-			{
-				TreeNode_Clicked = (*iterator)->id;
-				App->gui->ins_window->selected_GO = (*iterator);
-			}
-			
-		}
-
-		if (TreeNode_Clicked != -1) // show selected node
-		{
-			selection_mask = (1 << TreeNode_Clicked);
-		}
-		else if (TreeNode_Clicked == -1 && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && ImGui::IsWindowHovered(ImGuiHoveredFlags_RootWindow)) 
-		{
-			App->gui->ins_window->selected_GO = nullptr; 
-			selection_mask = (1 << -1);
-		}
+		DrawRecursively(App->scene_intro->root);
 
 		ImGui::End();
 		ImGui::PopStyleVar();
@@ -66,4 +35,41 @@ bool W_Hierarchy::Draw()
 	return true;
 }
 
+void W_Hierarchy::DrawRecursively(GameObject* GO)
+{
+	
+	static ImGuiTreeNodeFlags flag = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow;
+	ImGuiTreeNodeFlags node_falg = flag;
 
+	if(GO == App->gui->ins_window->selected_GO)
+		node_falg |= ImGuiTreeNodeFlags_Selected;
+
+	bool node_open = false;
+
+	if (GO->active == true)
+		node_open = ImGui::TreeNodeEx((void*)(intptr_t)GO->id, node_falg, GO->name.c_str());
+	else
+		node_open = ImGui::TreeNodeEx((void*)(intptr_t)GO->id, node_falg, GO->unactive_name.c_str());
+
+
+	// when node is clicked
+	if (ImGui::IsItemClicked())
+	{
+		App->gui->ins_window->selected_GO = GO;
+	}
+
+	//if node is opened draw his childs
+	if (node_open) 
+	{
+		// only if it has childs 
+		if (GO->children.size() > 0)
+		{
+			for (std::vector<GameObject*>::iterator iterator = GO->children.begin(); iterator != GO->children.end(); iterator++)
+			{
+				DrawRecursively(*iterator);
+			}
+		}
+
+		ImGui::TreePop();
+	}
+}

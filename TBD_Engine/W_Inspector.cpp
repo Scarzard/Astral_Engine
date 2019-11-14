@@ -30,11 +30,21 @@ bool W_Inspector::Draw()
 		{
 			ImGui::InputText("Name", (char*)selected_GO->name.c_str(), 20, ImGuiInputTextFlags_EnterReturnsTrue);
 			ImGui::Text("");
-			ImGui::Checkbox("Active", &selected_GO->active);
+			active_bool = selected_GO->active;
+			ImGui::Checkbox("Active", &active_bool);
+
+			if (active_bool)
+			{
+				selected_GO->Enable();
+			}
+			else
+			{
+				selected_GO->Disable();
+			}
 
 			if (selected_GO->active)
 			{
-				if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
+				if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentTransform() != nullptr)
 				{
 					ComponentTransform* transform = selected_GO->GetComponentTransform();
 
@@ -81,7 +91,7 @@ bool W_Inspector::Draw()
 						transform->SetRotation(rotation);*/
 				}
 
-				if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
+				if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentMesh() != nullptr)
 				{
 					ImGui::Text("Vertex:");
 					ImGui::SameLine(); ImGui::Text("%d", selected_GO->GetComponentMesh()->num_vertex);
@@ -90,7 +100,7 @@ bool W_Inspector::Draw()
 					ImGui::Checkbox("Show normals", &selected_GO->GetComponentMesh()->draw_normals);
 				}
 
-				if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO != nullptr)
+				if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentTexture() != nullptr)
 				{
 					ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checers_texture);
 

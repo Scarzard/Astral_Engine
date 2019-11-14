@@ -232,6 +232,11 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 
 		if (ImGui::BeginMenu("Create"))
 		{
+			if (ImGui::MenuItem("Empty GameObject", NULL))
+			{
+				App->scene_intro->CreateGameObject();
+			}
+
 			if (ImGui::MenuItem("Sphere", NULL))
 			{
 				App->scene_intro->CreateSphere(1, 1, -5, 10, 10);

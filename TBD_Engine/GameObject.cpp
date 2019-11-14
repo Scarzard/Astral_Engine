@@ -83,20 +83,80 @@ ComponentTexture* GameObject::GetComponentTexture()
 	return (ComponentTexture*)transform;
 }
 
-void GameObject::Update()
+void GameObject::Update(float dt)
 {
+	//update component transform
+
+	//update name when GO change state
 	std::string str = this->name + " (not active)";
 	if(unactive_name.compare(str) != 0)
 		unactive_name = name + " (not active)";
 
-	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
 	{
-		if((*iterator)->active)
-			(*iterator)->Update();
+		(*it)->Update(dt);
+	}
+}
+
+void GameObject::Enable()
+{
+	if(this->active == false)
+		this->active = true;
+
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
+	{
+		(*it)->Enable();
+	}
+}
+
+void GameObject::Disable()
+{
+	if (this->active == true)
+		this->active = false;
+
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
+	{
+		(*it)->Disable();
+	}
+}
+
+void GameObject::DeleteGO(GameObject* GO)
+{
+	//first delete its childrens (if it has)
+	if (GO->children.size() > 0)
+	{
+		for (std::vector<GameObject*>::iterator it = GO->children.begin(); it != GO->children.end(); ++it)
+		{
+			DeleteGO(*it);
+		}
+
+		GO->children.clear();
 	}
 
-	//if (GetComponentTransform()->has_transformed)
-	//	TransformGlobal(this);
+	delete GO;
+	GO = nullptr;
+}
+
+void GameObject::SetChild(GameObject* GO)
+{
+	if (GO->parent != nullptr)
+		GO->parent->RemoveChild(GO);
+
+	GO->parent = this;
+	children.push_back(GO);
+
+}
+
+void GameObject::RemoveChild(GameObject* GO)
+{
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		if ((*it)->id == GO->id)
+		{
+			children.erase(it);
+			break;
+		}
+	}
 }
 
 void GameObject::CleanUp()
@@ -109,6 +169,11 @@ void GameObject::CleanUp()
 		delete (*iterator);
 	}
 
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->CleanUp();
+	}
+
 	components.clear();
 
 }
@@ -118,5 +183,4 @@ void GameObject::TransformGlobal(GameObject* GO)
 {
 	/*ComponentTransform* transform = GO->GetComponentTransform();
 	transform->TransformGlobalMat(transform->GetGlobalTransform());*/
-
 }

@@ -13,10 +13,8 @@ public:
 
 	bool Start();
 	bool Draw();
+	void DrawRecursively(GameObject* GO);
 
-public:
-
-	uint TreeNode_Clicked = -1;
 };
 
 #endif // !_W_HIERARCHY_H_

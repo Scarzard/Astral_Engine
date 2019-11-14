@@ -11,6 +11,7 @@ public:
 	ModuleSceneIntro(bool start_enabled = true);
 	~ModuleSceneIntro();
 
+	bool Init();
 	bool Start();
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
@@ -19,6 +20,7 @@ public:
 public:
 
 	GameObject* CreateGameObject();
+	void DrawRecursively(GameObject* GO);
 
 	void LoadPrimitiveMesh(const par_shapes_mesh_s* m, float x, float y, float z);
 
@@ -30,6 +32,6 @@ public:
 public:	
 
 	update_status want_to_quit = UPDATE_CONTINUE;
-
-	std::vector<GameObject*> GO_list;
+	uint numGO = 0;
+	GameObject* root = nullptr;
 };
