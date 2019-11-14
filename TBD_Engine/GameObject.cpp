@@ -92,6 +92,13 @@ void GameObject::Update(float dt)
 	if(unactive_name.compare(str) != 0)
 		unactive_name = name + " (not active)";
 
+	/*for (std::vector<GameObject*>::iterator tmp = children.begin() - 1; tmp != children.end(); ++tmp)
+	{
+		TransformGlobal(*tmp);
+	}*/
+	//if(this->GetComponentTransform()->has_transformed)
+
+
 	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
 	{
 		(*it)->Update(dt);
@@ -145,6 +152,8 @@ void GameObject::SetChild(GameObject* GO)
 	GO->parent = this;
 	children.push_back(GO);
 
+	//ComponentTransform* transform = GO->GetComponentTransform();
+	//transform->SetGlobalTransform(GO->GetComponentTransform()->GetGlobalTransform());
 }
 
 void GameObject::RemoveChild(GameObject* GO)
@@ -178,9 +187,16 @@ void GameObject::CleanUp()
 
 }
 
-
 void GameObject::TransformGlobal(GameObject* GO)
 {
-	/*ComponentTransform* transform = GO->GetComponentTransform();
-	transform->TransformGlobalMat(transform->GetGlobalTransform());*/
+	//ComponentTransform* transform = GO->GetComponentTransform();
+	//transform->TransformGlobalMat(GO->parent->GetComponentTransform()->GetGlobalTransform());
+
+	//if (GO->active)
+	//{
+	//	for (std::vector<GameObject*>::iterator tmp = GO->children.begin(); tmp != GO->children.end(); ++tmp)
+	//	{
+	//		TransformGlobal(*tmp);
+	//	}
+	//}
 }

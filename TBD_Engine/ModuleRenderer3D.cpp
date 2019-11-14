@@ -228,6 +228,9 @@ void ModuleRenderer3D::NewTexBuffer(float * tex_coords, uint & num_tex_coords, u
 
 void ModuleRenderer3D::Draw(GameObject* m) const
 {
+	ComponentTransform* tmp = m->GetComponentTransform();
+	glPushMatrix();
+	glMultMatrixf((float*)&tmp->GetTransform());
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -253,7 +256,6 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
-	
 	if (m->GetComponentMesh()->draw_normals)
 	{
 		glBegin(GL_LINES);
@@ -282,6 +284,7 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 		}
 
 		glColor3f(1, 1, 1);
+		glPopMatrix();
 		glEnd();
 	}	
 
