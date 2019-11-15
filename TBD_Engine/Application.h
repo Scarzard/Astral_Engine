@@ -48,6 +48,10 @@ public:
 	std::vector<std::string>	Logs_Console;
 
 
+	std::string GetNameFromPath(std::string path);
+	std::string GetDirectoryFromPath(std::string path);
+
+
 	//Framerate logs
 	std::vector<float>	ms_log;
 	std::vector<float>	fps_log;

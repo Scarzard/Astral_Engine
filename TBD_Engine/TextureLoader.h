@@ -28,7 +28,7 @@ public:
 	Texture CreateDefaultTexture() const;
 	uint CreateTexture(const void* img, uint width, uint height, int internalFormat, uint format) const;
 
-	
+	bool CreateFileDDS(const char* path) const;
 
 
 public:

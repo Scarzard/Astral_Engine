@@ -63,7 +63,7 @@ void MeshLoader::LoadFile(const char* full_path)
 	aiNode* root_node = scene->mRootNode;
 
 	GameObject* Empty = App->scene_intro->CreateGameObject();
-	Empty->name = GetNameFromPath(full_path);
+	Empty->name = App->GetNameFromPath(full_path);
 
 	aiVector3D translation, scaling;
 	aiQuaternion rotation;
@@ -119,7 +119,7 @@ void MeshLoader::LoadFile(const char* full_path)
 			
 			if (path.C_Str() != nullptr)
 			{
-				std::string directory = GetDirectoryFromPath(full_path);
+				std::string directory = App->GetDirectoryFromPath(full_path);
 				directory.append("/");
 				directory.append(path.C_Str());
 
@@ -184,25 +184,7 @@ void MeshLoader::LoadFile(const char* full_path)
 		App->LogInConsole("Error loading scene %s", full_path);
 }
 
-std::string MeshLoader::GetDirectoryFromPath(std::string path)
-{
-	std::string directory;
-	size_t found = path.find_last_of("/\\");
-	directory = path.substr(0, found);
 
-	return directory;
-}
 
-std::string MeshLoader::GetNameFromPath(std::string path)
-{
-	std::string name = path;
 
-	uint num = name.find_last_of("/\\");
-	name = name.substr(num + 1, name.size());
-
-	uint dot = name.find_last_of(".");
-	name = name.substr(0, dot);
-
-	return name;
-}
 

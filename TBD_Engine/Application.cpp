@@ -189,3 +189,25 @@ void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
 }
+
+std::string Application::GetNameFromPath(std::string path)
+{
+	std::string name = path;
+
+	uint num = name.find_last_of("/\\");
+	name = name.substr(num + 1, name.size());
+
+	uint dot = name.find_last_of(".");
+	name = name.substr(0, dot);
+
+	return name;
+}
+
+std::string Application::GetDirectoryFromPath(std::string path)
+{
+	std::string directory;
+	size_t found = path.find_last_of("/\\");
+	directory = path.substr(0, found);
+
+	return directory;
+}
