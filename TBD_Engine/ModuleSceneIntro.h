@@ -22,7 +22,7 @@ public:
 	GameObject* CreateGameObject();
 	void DrawRecursively(GameObject* GO);
 
-	void LoadPrimitiveMesh(const par_shapes_mesh_s* m, float x, float y, float z);
+	void LoadPrimitiveMesh(const par_shapes_mesh_s* m);
 
 	void CreateCube(float x, float y, float z, float size = 1);
 	void CreateSphere(float x, float y, float z, int slices, int stacks);

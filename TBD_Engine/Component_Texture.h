@@ -5,8 +5,6 @@
 #include "Component.h"
 #include "TextureLoader.h"
 
-
-
 class ComponentTexture : public Component
 {
 public:

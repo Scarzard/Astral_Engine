@@ -239,17 +239,17 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 
 			if (ImGui::MenuItem("Sphere", NULL))
 			{
-				App->scene_intro->CreateSphere(1, 1, -5, 10, 10);
+				App->scene_intro->CreateSphere(0, 0, 0, 10, 10);
 			}
 
 			if (ImGui::MenuItem("Trefoil", NULL))
 			{
-				App->scene_intro->CreateTrefoil(1, 5, -5, 10, 10, 1);
+				App->scene_intro->CreateTrefoil(0, 0, 0, 10, 10, 1);
 			}
 
 			if (ImGui::MenuItem("Torus", NULL))
 			{
-				App->scene_intro->CreateTorus(5, 1, -5, 10, 10, 1);
+				App->scene_intro->CreateTorus(0, 0, 0, 10, 10, 1);
 			}
 
 			ImGui::EndMenu();

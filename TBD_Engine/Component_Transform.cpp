@@ -4,9 +4,7 @@
 
 ComponentTransform::ComponentTransform(GameObject* GO) : Component(Component::ComponentType::Transform, GO)
 {
-	//transform = float4x4::FromTRS(position, rotation, scale);
-	
-	//transform_mat = float4x4(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
+	local_matrix = float4x4::FromTRS(position, rotation_quat, scale);
 }
 
 ComponentTransform::~ComponentTransform()

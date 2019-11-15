@@ -13,16 +13,12 @@
 
 #include "mmgr/mmgr.h"
 
-
-
 MeshLoader::MeshLoader(bool start_enabled) : Module(start_enabled)
 {
 }
 
 MeshLoader::~MeshLoader()
 {}
-
-
 
 bool MeshLoader::Init()
 {
@@ -37,13 +33,11 @@ bool MeshLoader::Init()
 
 bool MeshLoader::Start()
 {
-
 	return true;
 }
 
 update_status MeshLoader::Update(float dt)
 {
-	
 	return UPDATE_CONTINUE;
 }
 
@@ -51,8 +45,6 @@ bool MeshLoader::CleanUp()
 {
 	// detach log stream 
 	aiDetachAllLogStreams();
-
-
 
 	return true;
 }
@@ -77,8 +69,6 @@ void MeshLoader::LoadFile(const char* full_path)
 	Empty->GetComponentTransform()->position = pos;
 	Empty->GetComponentTransform()->scale = s;
 	Empty->GetComponentTransform()->rotation_quat = rot;
-
-	Empty->GetComponentTransform()->UpdateLocalTransform();
 
 	//Child of root node
 	App->scene_intro->root->SetChild(Empty);
@@ -107,8 +97,6 @@ void MeshLoader::LoadFile(const char* full_path)
 			obj->GetComponentTransform()->scale = s2;
 			obj->GetComponentTransform()->rotation_quat = rot2;
 
-			obj->GetComponentTransform()->UpdateLocalTransform();
-
 			aiMesh* new_mesh = scene->mMeshes[i];
 
 			aiMaterial* material = scene->mMaterials[new_mesh->mMaterialIndex];
@@ -130,8 +118,6 @@ void MeshLoader::LoadFile(const char* full_path)
 				obj->GetComponentTexture()->texture = App->tex_loader->DefaultTexture;
 			}
 			
-
-
 			obj->GetComponentMesh()->num_vertex = new_mesh->mNumVertices;
 			obj->GetComponentMesh()->vertex = new float3[obj->GetComponentMesh()->num_vertex];
 
@@ -173,7 +159,6 @@ void MeshLoader::LoadFile(const char* full_path)
 			App->renderer3D->NewIndexBuffer(obj->GetComponentMesh()->index, obj->GetComponentMesh()->num_index, obj->GetComponentMesh()->id_index);
 			//Generate the buffer for texture coords
 			App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->tex_coords, obj->GetComponentMesh()->num_tex_coords, obj->GetComponentMesh()->id_tex_coords);
-			
 			
 		}
 		aiReleaseImport(scene);
