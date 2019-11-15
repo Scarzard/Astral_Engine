@@ -48,6 +48,9 @@ bool W_Inspector::Draw()
 				{
 					ComponentTransform* transform = selected_GO->GetComponentTransform();
 
+					if (ImGui::Button("Reset transform"))
+						transform->ResetPosition();
+				
 					float3 position = transform->GetPosition();
 					ImGui::Text("Position:");
 
@@ -131,9 +134,6 @@ bool W_Inspector::Draw()
 				}
 			}
 		}
-			
-		
-		
 
 		ImGui::End();
 		ImGui::PopStyleVar();

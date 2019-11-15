@@ -89,6 +89,29 @@ void ComponentTransform::TransformGlobalMat(const float4x4 & global)
 	has_transformed = false;
 }
 
+void ComponentTransform::ResetTransform()
+{
+	local_matrix = math::float4x4::FromTRS(position, rotation_quat, scale);
+	rotation_euler = rotation_quat.ToEulerXYZ() * RADTODEG;
+
+	has_transformed = true;
+}
+
+void ComponentTransform::ResetPosition()
+{
+	float3 a, b;
+	Quat c;
+	a = float3::zero;
+	b = float3::one;
+	c = Quat::identity;
+
+	this->position = a;
+	this->scale = b;
+	this->rotation_quat = c;
+	
+	ResetTransform();
+}
+
 void ComponentTransform::UpdateLocalTransform()
 {
 	local_matrix = math::float4x4::FromTRS(position, rotation_quat, scale);

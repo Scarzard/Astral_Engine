@@ -30,6 +30,8 @@ public:
 	void SetScale(float3& scale);
 	void SetGlobalTransform(float4x4 transform);
 	void TransformGlobalMat(const float4x4& global);
+	void ResetTransform();
+	void ResetPosition();
 
 private:
 	void UpdateLocalTransform();
