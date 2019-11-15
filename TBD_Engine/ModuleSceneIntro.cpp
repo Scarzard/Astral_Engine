@@ -150,7 +150,7 @@ void ModuleSceneIntro::DrawRecursively(GameObject* GO)
 	if (GO->id != 0 && GO->active == true)
 	{
 		glPushMatrix();
-		glMultMatrixf(GO->GetComponentTransform()->GetGlobalTransform().Transposed().ptr());
+		glMultMatrixf((GLfloat*)&GO->GetComponentTransform()->GetGlobalTransform().Transposed());
 		App->renderer3D->Draw(GO);
 		glPopMatrix();
 	}

@@ -64,6 +64,7 @@ void ComponentTransform::SetEulerRotation(float3 rot)
 	Quat quaternion_rotation = Quat::FromEulerXYZ(tmp.x, tmp.y, tmp.z);
 	rotation_quat = rotation_quat * quaternion_rotation;
 	rotation_euler = rot;
+	UpdateLocalTransform();
 }
 
 void ComponentTransform::SetScale(float3& scale)
