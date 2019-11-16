@@ -29,6 +29,10 @@ public:
 	uint num_tex_coords = 0;
 	float* tex_coords = nullptr;
 
+	uint num_normals = 0;
+	float3* face_center = nullptr;
+	float3* face_normal = nullptr;
+
 	bool draw_normals = false;
 
 };

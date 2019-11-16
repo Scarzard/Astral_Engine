@@ -50,6 +50,7 @@ public:
 
 	std::string GetNameFromPath(std::string path);
 	std::string GetDirectoryFromPath(std::string path);
+	void eraseSubStr(std::string & mainStr, const std::string & toErase);
 
 
 	//Framerate logs

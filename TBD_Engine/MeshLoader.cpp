@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "ModuleSceneIntro.h"
+#include "Importer.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -89,9 +90,14 @@ void MeshLoader::LoadFile(const char* full_path)
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
 			GameObject* obj = App->scene_intro->CreateGameObject();
+			
 			Empty->SetChild(obj);
 
 			aiNode* node = root_node->mChildren[i];
+			obj->name = node->mName.C_Str();
+			App->eraseSubStr(obj->name, "_$AssimpFbx$_Translation");
+			
+
 			aiVector3D translation, scaling;
 			aiQuaternion rotation;
 
@@ -156,6 +162,32 @@ void MeshLoader::LoadFile(const char* full_path)
 				}
 			}
 
+			//normals
+
+			obj->GetComponentMesh()->face_center = new float3[obj->GetComponentMesh()->num_index];
+			obj->GetComponentMesh()->face_normal = new float3[obj->GetComponentMesh()->num_index];
+			obj->GetComponentMesh()->num_normals = obj->GetComponentMesh()->num_index / 3;
+			for (uint j = 0; j < obj->GetComponentMesh()->num_index / 3; ++j)
+			{
+				float3 face_A, face_B, face_C;
+
+				face_A = obj->GetComponentMesh()->vertex[obj->GetComponentMesh()->index[j * 3]];
+				face_B = obj->GetComponentMesh()->vertex[obj->GetComponentMesh()->index[(j * 3) + 1]];
+				face_C = obj->GetComponentMesh()->vertex[obj->GetComponentMesh()->index[(j * 3) + 2]];
+
+
+				obj->GetComponentMesh()->face_center[j] = (face_A + face_B + face_C) / 3;
+
+
+				float3 edge1 = face_B - face_A;
+				float3 edge2 = face_C - face_A;
+
+				obj->GetComponentMesh()->face_normal[j] = Cross(edge1, edge2);
+				obj->GetComponentMesh()->face_normal[j].Normalize();
+			}
+
+			
+
 			if (new_mesh->HasTextureCoords(0))
 			{
 				obj->GetComponentMesh()->num_tex_coords = obj->GetComponentMesh()->num_vertex;
@@ -174,7 +206,10 @@ void MeshLoader::LoadFile(const char* full_path)
 			//Generate the buffer for texture coords
 			App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->tex_coords, obj->GetComponentMesh()->num_tex_coords, obj->GetComponentMesh()->id_tex_coords);
 			
-			
+			Importer ex;
+			std::string output_file;
+			const char* name = obj->name.c_str();
+			ex.Export(name, output_file, obj->GetComponentMesh());
 		}
 		aiReleaseImport(scene);
 		App->LogInConsole("Succesfully loaded mesh with path: %s", full_path);
