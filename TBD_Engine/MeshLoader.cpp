@@ -190,6 +190,7 @@ void MeshLoader::LoadFile(const char* full_path)
 
 				obj->GetComponentMesh()->face_normal[j] = Cross(edge1, edge2);
 				obj->GetComponentMesh()->face_normal[j].Normalize();
+				obj->GetComponentMesh()->face_normal[j] *= 0.15f;
 			}
 
 			

@@ -48,8 +48,9 @@ public:
 	std::vector<std::string>	Logs_Console;
 
 
-	std::string GetNameFromPath(std::string path);
-	std::string GetDirectoryFromPath(std::string path);
+	const std::string GetNameFromPath(std::string path);
+	const std::string GetDirectoryFromPath(std::string path);
+	const std::string GetFileExtension(const std::string FileName);
 	void eraseSubStr(std::string & mainStr, const std::string & toErase);
 
 

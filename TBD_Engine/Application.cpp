@@ -190,7 +190,7 @@ void Application::AddModule(Module* mod)
 	list_modules.push_back(mod);
 }
 
-std::string Application::GetNameFromPath(std::string path)
+const std::string Application::GetNameFromPath(std::string path)
 {
 	std::string name = path;
 
@@ -203,13 +203,21 @@ std::string Application::GetNameFromPath(std::string path)
 	return name;
 }
 
-std::string Application::GetDirectoryFromPath(std::string path)
+const std::string Application::GetDirectoryFromPath(std::string path)
 {
 	std::string directory;
 	size_t found = path.find_last_of("/\\");
 	directory = path.substr(0, found);
 
 	return directory;
+}
+
+const std::string Application::GetFileExtension(const std::string FileName)
+{
+	if (FileName.find_last_of(".") != std::string::npos)
+		return (FileName.substr(FileName.find_last_of(".") + 1));
+	else
+		return "";
 }
 
 void Application::eraseSubStr(std::string & mainStr, const std::string & toErase)

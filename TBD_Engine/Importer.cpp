@@ -100,3 +100,50 @@ bool Importer::Export(const char * name, std::string & output_file, ComponentTra
 
 	return ret;
 }
+
+bool Importer::Load(const char * full_path, ComponentMesh * mesh)
+{
+	bool ret = false;
+
+	char* buffer = nullptr;
+	App->file_system->Load(full_path, &buffer); //put data file in buffer
+
+	char* cursor = buffer;
+
+	// amount of indices / vertices / normals / texture_coords
+	uint ranges[5];
+	uint bytes = sizeof(ranges);
+	memcpy(ranges, cursor, bytes);
+
+	mesh->num_index = ranges[0];
+	mesh->num_vertex = ranges[1];
+	mesh->num_normals = ranges[2];
+	mesh->num_tex_coords = ranges[3];
+
+	cursor += bytes; // Load indices
+	bytes = sizeof(uint) * mesh->num_index;
+	mesh->index = new uint[mesh->num_index];
+	memcpy(mesh->index, cursor, bytes);
+
+	cursor += bytes; // Load vertex
+	bytes = sizeof(float) * mesh->num_vertex * 3;
+	mesh->vertex = new float3[mesh->num_vertex];
+	memcpy(mesh->vertex, cursor, bytes);
+
+	cursor += bytes; // Load Normals Starting Point
+	bytes = sizeof(float) * mesh->num_normals * 3;
+	mesh->face_center = new float3[mesh->num_normals];
+	memcpy(mesh->face_center, cursor, bytes);
+
+	cursor += bytes; // Load Normals Vector
+	bytes = sizeof(float) * mesh->num_normals * 3;
+	mesh->face_normal = new float3[mesh->num_normals];
+	memcpy(mesh->face_normal, cursor, bytes);
+
+	cursor += bytes; // Load Texture Coordinates
+	bytes = sizeof(float) * mesh->num_tex_coords * 2;
+	mesh->tex_coords = new float[mesh->num_tex_coords * 2];
+	memcpy(mesh->tex_coords, cursor, bytes);
+
+	return ret;
+}
