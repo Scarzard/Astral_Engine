@@ -231,20 +231,46 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->id_vertex);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	if (m->GetComponentTexture() != nullptr)
+	{
+		if (m->GetComponentTexture()->Checers_texture == true)
+			glBindTexture(GL_TEXTURE_2D, App->tex_loader->CheckersTexture.id);
+		else
+			glBindTexture(GL_TEXTURE_2D, m->GetComponentTexture()->texture.id);
 
-	if (m->GetComponentTexture()->Checers_texture == true)
-		glBindTexture(GL_TEXTURE_2D, App->tex_loader->CheckersTexture.id);
-	else
-		glBindTexture(GL_TEXTURE_2D, m->GetComponentTexture()->texture.id);
+
+	}
+
+	if (m->GetComponentMesh() != nullptr)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->id_vertex);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+		glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->id_tex_coords);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->GetComponentMesh()->id_index);
+		glDrawElements(GL_TRIANGLES, m->GetComponentMesh()->num_index, GL_UNSIGNED_INT, nullptr);
+
+		if (m->GetComponentMesh()->draw_normals)
+		{
+			glBegin(GL_LINES);
+			glColor3f(1, 0, 0);
+
+			for (uint j = 0; j < m->GetComponentMesh()->num_index / 3; ++j)
+			{
+				glVertex3f(m->GetComponentMesh()->face_center[j].x, m->GetComponentMesh()->face_center[j].y, m->GetComponentMesh()->face_center[j].z);
+				glVertex3f(m->GetComponentMesh()->face_center[j].x + m->GetComponentMesh()->face_normal[j].x*0.15, m->GetComponentMesh()->face_center[j].y + m->GetComponentMesh()->face_normal[j].y*0.15,
+					m->GetComponentMesh()->face_center[j].z + m->GetComponentMesh()->face_normal[j].z*0.15);
+			}
+
+			glColor3f(1, 1, 1);
+			glEnd();
+		}
+
+	}
 	
-
-	glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->id_tex_coords);
-	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->GetComponentMesh()->id_index);
-	glDrawElements(GL_TRIANGLES, m->GetComponentMesh()->num_index, GL_UNSIGNED_INT, nullptr);
+	
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -252,20 +278,5 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
-	if (m->GetComponentMesh()->draw_normals)
-	{
-		glBegin(GL_LINES);
-		glColor3f(1, 0, 0);
 		
-		for (uint j = 0; j < m->GetComponentMesh()->num_index / 3; ++j)
-		{
-			glVertex3f(m->GetComponentMesh()->face_center[j].x, m->GetComponentMesh()->face_center[j].y, m->GetComponentMesh()->face_center[j].z);
-			glVertex3f(m->GetComponentMesh()->face_center[j].x + m->GetComponentMesh()->face_normal[j].x*0.15, m->GetComponentMesh()->face_center[j].y + m->GetComponentMesh()->face_normal[j].y*0.15, 
-				m->GetComponentMesh()->face_center[j].z + m->GetComponentMesh()->face_normal[j].z*0.15);
-		}
-
-		glColor3f(1, 1, 1);
-		glEnd();
-	}	
-
 }

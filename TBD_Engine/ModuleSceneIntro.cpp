@@ -167,6 +167,9 @@ void ModuleSceneIntro::DrawRecursively(GameObject* GO)
 void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m, float x, float y, float z)
 {
 	GameObject* obj = App->scene_intro->CreateGameObject();
+	obj->CreateComponent(Component::ComponentType::Mesh);
+	obj->CreateComponent(Component::ComponentType::Texture);
+
 	root->SetChild(obj);
 
 	obj->GetComponentTransform()->position.x = x;

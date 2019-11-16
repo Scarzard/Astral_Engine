@@ -22,19 +22,19 @@ void ComponentMesh::CleanUp()
 	glDeleteBuffers(1, (GLuint*)&id_vertex);
 	glDeleteBuffers(1, (GLuint*)&id_tex_coords);
 
-	if (index)
+	if (index != nullptr)
 	{
 		delete[] index;
 		index = nullptr;
 	}
 
-	if (vertex)
+	if (vertex != nullptr)
 	{
 		delete[] vertex;
 		vertex = nullptr;
 	}
 
-	if (tex_coords)
+	if (tex_coords != nullptr)
 	{
 		delete[] tex_coords;
 		tex_coords = nullptr;

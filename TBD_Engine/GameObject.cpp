@@ -8,12 +8,7 @@ GameObject::GameObject(std::string name)
 	unactive_name = name + " (not active)";
 	this->active = true;
 
-	if(id!=0)
-	{
-		CreateComponent(Component::ComponentType::Transform);
-		CreateComponent(Component::ComponentType::Mesh);
-		CreateComponent(Component::ComponentType::Texture);
-	}
+	CreateComponent(Component::ComponentType::Transform);
 }
 
 GameObject::~GameObject()
@@ -89,8 +84,6 @@ ComponentTexture* GameObject::GetComponentTexture()
 
 void GameObject::Update(float dt)
 {
-
-
 	//update name when GO change state
 	std::string str = this->name + " (not active)";
 	if(unactive_name.compare(str) != 0)
@@ -152,8 +145,6 @@ void GameObject::SetChild(GameObject* GO)
 	GO->parent = this;
 	children.push_back(GO);
 
-	//ComponentTransform* transform = GO->GetComponentTransform();
-	//transform->SetGlobalTransform(GO->GetComponentTransform()->GetGlobalTransform());
 }
 
 void GameObject::RemoveChild(GameObject* GO)
@@ -170,8 +161,16 @@ void GameObject::RemoveChild(GameObject* GO)
 
 void GameObject::CleanUp()
 {
-	this->GetComponentMesh()->CleanUp();
-	this->GetComponentTexture()->CleanUp();
+	if (this->GetComponentMesh() != nullptr)
+	{
+
+		this->GetComponentMesh()->CleanUp();
+	}
+	else if (this->GetComponentTexture() != nullptr)
+	{
+
+		this->GetComponentTexture()->CleanUp();
+	}
 
 	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
 	{

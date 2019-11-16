@@ -57,3 +57,46 @@ bool Importer::Export(const char * name, std::string & output_file, ComponentMes
 	return ret;
 }
 
+bool Importer::Export(const char * name, std::string & output_file, ComponentTransform* transf) // Create .transf own file format
+{
+	bool ret = false;
+	//position, scale, rotation + local_matrix, global_matrix
+	uint size = sizeof(float3) * 3 + sizeof(float) * 32; 
+
+	char* data = new char[size];
+	char* cursor = data;
+
+	// Preparing data to be stored ---------------------------------------------------
+	float3 p_r_s[3] = { transf->position, transf->rotation_euler, transf->scale }; 
+
+	float l_matrix[16], g_matrix[16];
+	int counter = 0;
+	for (int i = 0; i < 4; ++i)
+		for (int j = 0; j < 4; ++j)
+		{
+			l_matrix[counter] = transf->local_matrix.At(i, j);
+			g_matrix[counter] = transf->global_matrix.At(i, j);
+			counter++;
+		}
+	//----------------------------------------------------------------------------------
+
+	uint bytes = sizeof(float3)*3;// Store position, rotation and scale
+	memcpy(cursor, p_r_s, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float)*16; // Store Local Transformation
+	memcpy(cursor, l_matrix, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float) * 16; // Store Global Transformation
+	memcpy(cursor, g_matrix, bytes);
+
+	ret = App->file_system->SaveUnique(output_file, data, size, LIBRARY_TRANSF_FOLDER, name, "transf");
+
+	if (ret)
+		App->LogInConsole("Exported %s.transf into Library/Transforms floder", name);
+	else
+		App->LogInConsole("Failed exporting %s.transf into Library/Transforms  floder", name);
+
+	return ret;
+}
