@@ -71,9 +71,9 @@ update_status W_Game::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-bool W_Game::Cleanup()
+bool W_Game::CleanUp()
 {
-	fbo->CleanUp();
+	fbo->DeleteBuffers();
 	delete fbo;
 
 	fbo = nullptr;

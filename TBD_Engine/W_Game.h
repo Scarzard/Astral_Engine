@@ -15,7 +15,7 @@ public:
 	bool Draw();
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
-	bool Cleanup();
+	bool CleanUp();
 
 public:
 	ImVec2 current_size, new_size;

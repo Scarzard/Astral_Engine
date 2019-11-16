@@ -10,7 +10,8 @@ ModuleEngineUI::ModuleEngineUI( bool start_enabled) : Module(start_enabled)
 }
 
 ModuleEngineUI::~ModuleEngineUI()
-{}
+{
+}
 
 bool ModuleEngineUI::Init()
 {
@@ -111,6 +112,8 @@ bool ModuleEngineUI::CleanUp()
 	std::list<Window*>::const_iterator tmp = windows.begin();
 	while (tmp != windows.end())
 	{
+		bool ret = (*tmp)->CleanUp();
+
 		delete *tmp;
 		tmp++;
 	}

@@ -15,7 +15,8 @@ public:
 	virtual ~ComponentMesh();
 
 	void CleanUp();
-
+	
+//mesh
 public:
 	uint id_index = 0; // index in VRAM
 	uint num_index = 0;
@@ -30,7 +31,11 @@ public:
 	float* tex_coords = nullptr;
 
 	bool draw_normals = false;
-
+	
+//bounding box
+public:
+	AABB aabb;
+	OBB obb;
 };
 
 #endif
