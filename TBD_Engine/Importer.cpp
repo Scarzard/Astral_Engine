@@ -148,3 +148,51 @@ bool Importer::Load(const char * full_path, ComponentMesh * mesh)
 
 	return ret;
 }
+
+bool Importer::Load(const char * full_path, ComponentTransform * transf)
+{
+
+	char* buffer = nullptr;
+	App->file_system->Load(full_path, &buffer); //put data file in buffer
+	char* cursor = buffer;
+
+	// position / rotation / scale
+	float3 p_r_s[3];
+	uint bytes = sizeof(p_r_s);
+	memcpy(p_r_s, cursor, bytes);
+
+	transf->position = p_r_s[0]; //position
+	transf->rotation_euler = p_r_s[1]; //rotation
+	transf->scale = p_r_s[2]; //scale
+
+
+	// ---------------------- Local_matrix ------------------------
+	float transform_matrix[16];
+	cursor += bytes;
+	bytes = sizeof(float)*16;
+	memcpy(transform_matrix, cursor, bytes);
+
+	int counter = 0;
+	for (int i = 0; i < 4; ++i)
+		for (int j = 0; j < 4; ++j)
+		{
+			transf->local_matrix[i][j] = transform_matrix[counter]; 
+			counter++;
+		}
+
+
+	//--------------------------Global_matrix-----------------------
+	cursor += bytes;
+	bytes = sizeof(float)*16;
+	memcpy(transform_matrix, cursor, bytes);
+
+	counter = 0;
+	for (int i = 0; i < 4; ++i)
+		for (int j = 0; j < 4; ++j)
+		{
+			transf->global_matrix[i][j] = transform_matrix[counter];
+			counter++;
+		}
+
+	return true;
+}

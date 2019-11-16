@@ -15,7 +15,10 @@ public:
 	//export transform
 	bool Export(const char * name, std::string & output_file, ComponentTransform* trans);
 
+	//Import mesh
 	bool Load(const char* full_path, ComponentMesh* mesh);
+	//IMport transform
+	bool Load(const char* full_path, ComponentTransform* transf);
 };
 
 #endif // __IMPORTER_H__
