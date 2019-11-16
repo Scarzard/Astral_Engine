@@ -25,7 +25,8 @@ bool Importer::Export(const char * name, std::string & output_file, ComponentMes
 	char* cursor = data;
 
 	uint bytes = sizeof(ranges); // First store ranges
-	memcpy(cursor, ranges, bytes);
+	memcpy(cursor, ranges, bytes);
+
 	cursor += bytes; // Store indices
 	bytes = sizeof(uint) * mesh->num_index;
 	memcpy(cursor, mesh->index, bytes);

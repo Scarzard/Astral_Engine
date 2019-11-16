@@ -7,8 +7,13 @@
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 
+#include "Assimp/include/cimport.h"
+
 class GameObject;
 class aiMesh;
+class aiNode;
+class aiScene;
+class Importer;
 
 class MeshLoader : public Module
 {
@@ -22,6 +27,7 @@ public:
 	bool CleanUp();
 
 	void LoadFile(const char* path);
+	void LoadNode(const aiScene * scene, aiNode * node, GameObject* parent, const char* full_path, Importer ex, std::string output_file);
 
 };
 
