@@ -1,5 +1,11 @@
 #include "GameObject.h"
 
+#include "glew/include/GL/glew.h"
+#include "SDL/include/SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#include "Color.h"
+
 #include "mmgr/mmgr.h"
 
 GameObject::GameObject(std::string name)
@@ -13,6 +19,7 @@ GameObject::GameObject(std::string name)
 		CreateComponent(Component::ComponentType::Transform);
 		CreateComponent(Component::ComponentType::Mesh);
 		CreateComponent(Component::ComponentType::Texture);
+		CreateBoundingBox(this->GetComponentMesh());
 	}
 }
 
@@ -89,8 +96,6 @@ ComponentTexture* GameObject::GetComponentTexture()
 
 void GameObject::Update(float dt)
 {
-
-
 	//update name when GO change state
 	std::string str = this->name + " (not active)";
 	if(unactive_name.compare(str) != 0)
@@ -103,6 +108,18 @@ void GameObject::Update(float dt)
 	{
 		(*it)->Update(dt);
 	}
+	
+	if(active)
+		if (aabb != nullptr)
+		{
+			ComponentTransform* transform = this->GetComponentTransform();
+			if (transform != nullptr)
+			{
+				bounding_box = *aabb;
+				bounding_box.TransformAsAABB(transform->GetGlobalTransform());
+			}
+		}
+	RenderBoundingBox();
 }
 
 void GameObject::Enable()
@@ -166,6 +183,31 @@ void GameObject::RemoveChild(GameObject* GO)
 			break;
 		}
 	}
+}
+
+void GameObject::CreateBoundingBox(ComponentMesh * tmp)
+{
+	if (aabb == nullptr)
+	{
+		aabb = new AABB();
+	}
+	aabb->SetNegativeInfinity();
+	aabb->Enclose((float3*)tmp->vertex, tmp->num_vertex);
+}
+
+void GameObject::RenderBoundingBox()
+{
+	glBegin(GL_LINES);
+	glLineWidth(5.0f);
+
+	glColor4f(White.r, White.g, White.b, White.a);
+
+	for (uint i = 0; i < 12; i++)
+	{
+		glVertex3f(bounding_box.Edge(i).a.x, bounding_box.Edge(i).a.y, bounding_box.Edge(i).a.z);
+		glVertex3f(bounding_box.Edge(i).b.x, bounding_box.Edge(i).b.y, bounding_box.Edge(i).b.z);
+	}
+	glEnd();
 }
 
 void GameObject::CleanUp()

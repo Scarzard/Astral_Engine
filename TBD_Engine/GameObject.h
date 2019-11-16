@@ -33,19 +33,22 @@ public:
 	void SetChild(GameObject* GO);
 	void RemoveChild(GameObject* GO);
 
+	//BBs
+	AABB* aabb = nullptr;
+	AABB bounding_box;
+	void CreateBoundingBox(ComponentMesh* tmp);
+	void RenderBoundingBox();
+
 
 public:
 
 	bool active = true;
-
+	uint id = -1;
 	std::string name;
 	std::string unactive_name;
 
-	uint id = -1;
-
-	std::vector<Component*> components;
-
 	GameObject* parent = nullptr;
+	std::vector<Component*> components;
 	std::vector<GameObject*> children;
 };
 
