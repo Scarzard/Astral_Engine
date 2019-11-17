@@ -33,15 +33,13 @@ public:
 	void ResetTransform();
 	void ResetPosition();
 
-private:
 	void UpdateLocalTransform();
 	void UpdateTRS();
 
-private:
+public:
 	float4x4 local_matrix = float4x4::identity;
 	float4x4 global_matrix = float4x4::identity;
 
-public:
 	float3 position = float3::zero;
 	Quat rotation_quat = Quat::identity;
 	float3 rotation_euler = float3::zero;
