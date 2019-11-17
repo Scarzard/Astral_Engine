@@ -75,7 +75,7 @@ void MeshLoader::LoadFile(const char* full_path)
 
 		float3 pos(translation.x, translation.y, translation.z);
 		float3 s(1, 1, 1);
-		Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
+		Quat rot(-0.7071068, rotation.y, rotation.z, 0.7071068);
 
 		Empty->GetComponentTransform()->position = pos;
 		Empty->GetComponentTransform()->scale = s;
@@ -135,10 +135,8 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 			node->mTransformation.Decompose(scaling, rotation, translation);
 
 			float3 pos2(translation.x, translation.y, translation.z);
-			//float3 pos2(0, 0, 0);
-			//float3 s2(scaling.x, scaling.y, scaling.z);
 			float3 s2(1, 1, 1);
-			Quat rot2(0, rotation.y, rotation.z, rotation.w);
+			Quat rot2(rotation.x, rotation.y, rotation.z, rotation.w);
 
 			obj->GetComponentTransform()->position = pos2;
 			obj->GetComponentTransform()->scale = s2;
@@ -177,6 +175,8 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 				mesh->vertex[i].z = new_mesh->mVertices[i].z;
 			}
 
+			bool indices3 = true;
+
 			// copy faces
 			if (new_mesh->HasFaces())
 			{
@@ -185,13 +185,19 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 				for (uint i = 0; i < new_mesh->mNumFaces; ++i)
 				{
 					if (new_mesh->mFaces[i].mNumIndices != 3)
-						App->LogInConsole("WARNING, geometry face with != 3 indices!");
+					{
+						indices3 = false;
+						App->LogInConsole("WARNING, mesh %s geometry face with != 3 indices!", obj->name.c_str());
+					}
 					else
 						memcpy(&mesh->index[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
+				
+			}
 
-				//normals
-
+			//normals
+			if (new_mesh->HasNormals() && indices3)
+			{
 				mesh->face_center = new float3[mesh->num_index];
 				mesh->face_normal = new float3[mesh->num_index];
 				mesh->num_normals = mesh->num_index / 3;
@@ -199,11 +205,12 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 				{
 					float3 face_A, face_B, face_C;
 
-					face_A = mesh->vertex[mesh->index[j * 3]];
-					face_B = mesh->vertex[mesh->index[(j * 3) + 1]];
-					face_C = mesh->vertex[mesh->index[(j * 3) + 2]];
-
-
+					
+					face_A = obj->GetComponentMesh()->vertex[mesh->index[j * 3]];
+					face_B = obj->GetComponentMesh()->vertex[mesh->index[(j * 3) + 1]];
+					face_C = obj->GetComponentMesh()->vertex[mesh->index[(j * 3) + 2]];
+					
+					
 					mesh->face_center[j] = (face_A + face_B + face_C) / 3;
 
 

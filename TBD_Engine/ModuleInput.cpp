@@ -116,7 +116,8 @@ update_status ModuleInput::PreUpdate(float dt)
 					App->mesh_loader->LoadFile(DroppedFile);
 					App->LogInConsole("FBX dropped with root: %s", DroppedFile);
 				}
-				else if (App->GetFileExtension(DroppedFile) == "png" || App->GetFileExtension(DroppedFile) == "dds")
+				else if (App->GetFileExtension(DroppedFile) == "png" || App->GetFileExtension(DroppedFile) == "dds" || App->GetFileExtension(DroppedFile) == "PNG" ||
+					App->GetFileExtension(DroppedFile) == "DDS" || App->GetFileExtension(DroppedFile) == "jpg" || App->GetFileExtension(DroppedFile) == "tga")
 				{
 					if (App->gui->ins_window->selected_GO != nullptr)
 					{

@@ -50,9 +50,7 @@ bool Importer::Export(const char * name, std::string & output_file, ComponentMes
 
 	ret = App->file_system->SaveUnique(output_file, data, size, LIBRARY_MESH_FOLDER, name, "mesh");
 
-	if (ret)
-		App->LogInConsole("Exported %s.mesh into Library/mesh floder", name);
-	else
+	if (!ret)
 		App->LogInConsole("Failed exporting %s.mesh into Library/mesh floder", name);
 
 	return ret;
@@ -94,9 +92,7 @@ bool Importer::Export(const char * name, std::string & output_file, ComponentTra
 
 	ret = App->file_system->SaveUnique(output_file, data, size, LIBRARY_TRANSF_FOLDER, name, "transf");
 
-	if (ret)
-		App->LogInConsole("Exported %s.transf into Library/Transforms floder", name);
-	else
+	if (!ret)
 		App->LogInConsole("Failed exporting %s.transf into Library/Transforms  floder", name);
 
 	return ret;
