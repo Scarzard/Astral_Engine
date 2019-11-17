@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Application.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -95,16 +96,23 @@ void GameObject::Update(float dt)
 	if(unactive_name.compare(str) != 0)
 		unactive_name = name + " (not active)";
 
-	if (this->GetComponentTransform()->has_transformed)
-		TransformGlobal(this);
+	if (this->active)
+	{
+		if (this->GetComponentTransform()->has_transformed)
+			TransformGlobal(this);
+
+		if (App->gui->conf_window->draw_aabb)
+		{
+			UpdateBoundingBox();
+			RenderBoundingBox();
+		}
+	}
 
 	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
 	{
 		(*it)->Update(dt);
 	}
 
-	UpdateBoundingBox();
-	RenderBoundingBox();
 }
 
 void GameObject::Enable()

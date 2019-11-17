@@ -62,7 +62,7 @@ void W_Hierarchy::DrawRecursively(GameObject* GO)
 	if (node_open) 
 	{
 		// only if it has childs 
-		if (GO->children.size() > 0)
+		if (GO->children.size() > 0 && GO->active)
 		{
 			for (std::vector<GameObject*>::iterator iterator = GO->children.begin(); iterator != GO->children.end(); iterator++)
 			{

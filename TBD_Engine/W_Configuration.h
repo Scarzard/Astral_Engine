@@ -42,7 +42,8 @@ private:
 	bool vertex = false;
 
 	Hardware_Info info;
-
+public:
+	bool draw_aabb = false;
 };
 
 #endif // !_W_CONFIGURATION_H_

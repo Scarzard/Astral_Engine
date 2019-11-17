@@ -152,6 +152,8 @@ bool W_Configuration::Draw()
 				else
 					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			}
+			ImGui::SameLine();
+			ImGui::Checkbox("Draw Bounding Boxes", &draw_aabb);
 		}
 
 		if (ImGui::CollapsingHeader("Input"))
