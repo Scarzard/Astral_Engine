@@ -14,6 +14,8 @@ public:
 	ComponentMesh(GameObject* GO);
 	virtual ~ComponentMesh();
 
+	const AABB& GetBoundingBox();
+
 	void CleanUp();
 	
 //mesh
@@ -35,7 +37,6 @@ public:
 //bounding box
 public:
 	AABB aabb;
-	OBB obb;
 };
 
 #endif

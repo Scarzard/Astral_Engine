@@ -16,6 +16,11 @@ ComponentMesh::~ComponentMesh()
 
 }
 
+const AABB& ComponentMesh::GetBoundingBox()
+{
+	return aabb;
+}
+
 void ComponentMesh::CleanUp()
 {
 	glDeleteBuffers(1, (GLuint*)&id_index);

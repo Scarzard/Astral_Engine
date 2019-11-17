@@ -34,9 +34,9 @@ public:
 	void RemoveChild(GameObject* GO);
 
 	//BBs
-	AABB* aabb = nullptr;
-	AABB bounding_box;
-	void CreateBoundingBox(ComponentMesh* tmp);
+	AABB aabb;
+	OBB obb;
+	void UpdateBoundingBox();
 	void RenderBoundingBox();
 
 

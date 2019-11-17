@@ -87,6 +87,8 @@ void ComponentTransform::TransformGlobalMat(const float4x4 & global)
 	UpdateTRS();
 
 	has_transformed = false;
+
+	my_GO->UpdateBoundingBox();
 }
 
 void ComponentTransform::ResetTransform()

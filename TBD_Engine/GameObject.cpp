@@ -19,7 +19,6 @@ GameObject::GameObject(std::string name)
 		CreateComponent(Component::ComponentType::Transform);
 		CreateComponent(Component::ComponentType::Mesh);
 		CreateComponent(Component::ComponentType::Texture);
-		CreateBoundingBox(this->GetComponentMesh());
 	}
 }
 
@@ -108,17 +107,7 @@ void GameObject::Update(float dt)
 	{
 		(*it)->Update(dt);
 	}
-	
-	if(active)
-		if (aabb != nullptr)
-		{
-			ComponentTransform* transform = this->GetComponentTransform();
-			if (transform != nullptr)
-			{
-				bounding_box = *aabb;
-				bounding_box.TransformAsAABB(transform->GetGlobalTransform());
-			}
-		}
+
 	RenderBoundingBox();
 }
 
@@ -169,8 +158,6 @@ void GameObject::SetChild(GameObject* GO)
 	GO->parent = this;
 	children.push_back(GO);
 
-	//ComponentTransform* transform = GO->GetComponentTransform();
-	//transform->SetGlobalTransform(GO->GetComponentTransform()->GetGlobalTransform());
 }
 
 void GameObject::RemoveChild(GameObject* GO)
@@ -185,27 +172,32 @@ void GameObject::RemoveChild(GameObject* GO)
 	}
 }
 
-void GameObject::CreateBoundingBox(ComponentMesh * tmp)
+void GameObject::UpdateBoundingBox()
 {
-	if (aabb == nullptr)
+	ComponentMesh* mesh = this->GetComponentMesh();
+	if (mesh)
 	{
-		aabb = new AABB();
+		obb = mesh->GetBoundingBox();
+		obb.Transform(this->GetComponentTransform()->GetGlobalTransform());
+
+		aabb.SetNegativeInfinity();
+		aabb.Enclose(obb);
 	}
-	aabb->SetNegativeInfinity();
-	aabb->Enclose((float3*)tmp->vertex, tmp->num_vertex);
 }
 
 void GameObject::RenderBoundingBox()
 {
 	glBegin(GL_LINES);
-	glLineWidth(5.0f);
+
+	//glLineWidth doesnt work?
+	glLineWidth(3.5f);
 
 	glColor4f(White.r, White.g, White.b, White.a);
 
 	for (uint i = 0; i < 12; i++)
 	{
-		glVertex3f(bounding_box.Edge(i).a.x, bounding_box.Edge(i).a.y, bounding_box.Edge(i).a.z);
-		glVertex3f(bounding_box.Edge(i).b.x, bounding_box.Edge(i).b.y, bounding_box.Edge(i).b.z);
+		glVertex3f(aabb.Edge(i).a.x, aabb.Edge(i).a.y, aabb.Edge(i).a.z);
+		glVertex3f(aabb.Edge(i).b.x, aabb.Edge(i).b.y, aabb.Edge(i).b.z);
 	}
 	glEnd();
 }

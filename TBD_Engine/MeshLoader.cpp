@@ -153,9 +153,10 @@ void MeshLoader::LoadFile(const char* full_path)
 					obj->GetComponentMesh()->tex_coords[(i * 2) + 1] = new_mesh->mTextureCoords[0][i].y;
 				}
 			}
-			ComponentMesh* mesh = obj->GetComponentMesh();
-			mesh->aabb.SetNegativeInfinity();
-			mesh->aabb.Enclose((float3*)mesh->vertex, mesh->num_vertex);
+			//Initiate bounding box when creating our mesh
+			ComponentMesh* tmp = obj->GetComponentMesh();
+			tmp->aabb.SetNegativeInfinity();
+			tmp->aabb = tmp->aabb.MinimalEnclosingAABB(tmp->vertex, tmp->num_vertex);
 
 			//Generate the buffers 
 			App->renderer3D->NewVertexBuffer(obj->GetComponentMesh()->vertex, obj->GetComponentMesh()->num_vertex, obj->GetComponentMesh()->id_vertex);
