@@ -174,6 +174,8 @@ Texture TextureLoader::LoadTextureFromPath(const char* path) const
 				tex.height = ilGetInteger(IL_IMAGE_HEIGHT);
 				tex.width = ilGetInteger(IL_IMAGE_WIDTH);
 				tex.path = path;
+
+				CreateFileDDS(path);
 			}
 			else
 				App->LogInConsole("Failed converting image: %s", iluErrorString(ilGetError()));
@@ -189,6 +191,7 @@ Texture TextureLoader::LoadTextureFromPath(const char* path) const
 		App->LogInConsole("Could not load image from path! Path %s was nullptr", path);
 	}
 
+
 	return tex;
 }
 
@@ -201,4 +204,29 @@ Texture TextureLoader::CreateDefaultTexture() const
 	tex.path = "none";
 
 	return tex;
+}
+
+bool TextureLoader::CreateFileDDS(const char * path) const
+{
+	bool ret = false;
+
+	std::string output_file, name;
+
+	name = App->GetNameFromPath(path);
+
+	ILuint   size;
+	ILubyte *data;
+
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+	size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
+	if (size > 0)
+	{
+		data = new ILubyte[size]; // allocate data buffer   
+		if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function        
+			ret = App->file_system->SaveUnique(output_file, data, size, LIBRARY_TEXTURES_FOLDER, name.data(), "dds");
+		RELEASE_ARRAY(data);
+	}
+
+
+	return ret;
 }

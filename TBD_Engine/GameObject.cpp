@@ -14,12 +14,7 @@ GameObject::GameObject(std::string name)
 	unactive_name = name + " (not active)";
 	this->active = true;
 
-	if(id!=0)
-	{
-		CreateComponent(Component::ComponentType::Transform);
-		CreateComponent(Component::ComponentType::Mesh);
-		CreateComponent(Component::ComponentType::Texture);
-	}
+	CreateComponent(Component::ComponentType::Transform);
 }
 
 GameObject::~GameObject()
@@ -205,8 +200,16 @@ void GameObject::RenderBoundingBox()
 
 void GameObject::CleanUp()
 {
-	this->GetComponentMesh()->CleanUp();
-	this->GetComponentTexture()->CleanUp();
+	if (this->GetComponentMesh() != nullptr)
+	{
+
+		this->GetComponentMesh()->CleanUp();
+	}
+	else if (this->GetComponentTexture() != nullptr)
+	{
+
+		this->GetComponentTexture()->CleanUp();
+	}
 
 	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
 	{

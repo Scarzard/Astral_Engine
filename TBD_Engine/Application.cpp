@@ -189,3 +189,45 @@ void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
 }
+
+const std::string Application::GetNameFromPath(std::string path)
+{
+	std::string name = path;
+
+	uint num = name.find_last_of("/\\");
+	name = name.substr(num + 1, name.size());
+
+	uint dot = name.find_last_of(".");
+	name = name.substr(0, dot);
+
+	return name;
+}
+
+const std::string Application::GetDirectoryFromPath(std::string path)
+{
+	std::string directory;
+	size_t found = path.find_last_of("/\\");
+	directory = path.substr(0, found);
+
+	return directory;
+}
+
+const std::string Application::GetFileExtension(const std::string FileName)
+{
+	if (FileName.find_last_of(".") != std::string::npos)
+		return (FileName.substr(FileName.find_last_of(".") + 1));
+	else
+		return "";
+}
+
+void Application::eraseSubStr(std::string & mainStr, const std::string & toErase)
+{
+	// Search for the substring in string
+	size_t pos = mainStr.find(toErase);
+
+	if (pos != std::string::npos)
+	{
+		// If found then erase it from string
+		mainStr.erase(pos, toErase.length());
+	}
+}

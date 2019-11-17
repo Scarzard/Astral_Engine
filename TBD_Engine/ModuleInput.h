@@ -58,7 +58,6 @@ public:
 		return mouse_y_motion;
 	}
 
-	const std::string GetFileExtension(const std::string FileName);
 
 private:
 	KEY_STATE* keyboard;

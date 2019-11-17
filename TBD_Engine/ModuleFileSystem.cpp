@@ -32,7 +32,7 @@ ModuleFileSystem::ModuleFileSystem(bool start_enabled, const char* game_path) : 
 		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
 
 	// Make sure standard paths exist
-	const char* dirs[] = { ASSETS_FOLDER, LIBRARY_FOLDER, LIBRARY_TEXTURES_FOLDER, LIBRARY_MESH_FOLDER, LIBRARY_MODEL_FOLDER, LIBRARY_MATERIAL_FOLDER };
+	const char* dirs[] = { ASSETS_FOLDER, LIBRARY_FOLDER, LIBRARY_TEXTURES_FOLDER, LIBRARY_MESH_FOLDER, LIBRARY_TRANSF_FOLDER };
 
 	for (uint i = 0; i < sizeof(dirs) / sizeof(const char*); ++i)
 	{
@@ -360,12 +360,13 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 
 	return ret;
 }
-/*
-bool ModuleFileSystem::SaveUnique(string& name, const void * buffer, uint size, const char * path, const char * prefix, const char * extension)
+
+bool ModuleFileSystem::SaveUnique(std::string& name, const void * buffer, uint size, const char * path, const char * prefix, const char * extension)
 {
 	char result[250];
 
-	sprintf_s(result, 250, "%s%s_%llu.%s", path, prefix, App->resources->GenerateNewUID(), extension);
+	//sprintf_s(result, 250, "%s%s_%llu.%s", path, prefix, App->resources->GenerateNewUID(), extension);
+	sprintf_s(result, 250, "%s%s.%s", path, prefix, extension);
 	NormalizePath(result);
 	if (Save(result, buffer, size) > 0)
 	{
@@ -373,7 +374,7 @@ bool ModuleFileSystem::SaveUnique(string& name, const void * buffer, uint size, 
 		return true;
 	}
 	return false;
-}*/
+}
 
 bool ModuleFileSystem::Remove(const char * file)
 {

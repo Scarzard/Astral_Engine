@@ -111,12 +111,12 @@ update_status ModuleInput::PreUpdate(float dt)
 
 				DroppedFile = e.drop.file;
 
-				if (GetFileExtension(DroppedFile) == "FBX" || GetFileExtension(DroppedFile) == "fbx")
+				if (App->GetFileExtension(DroppedFile) == "FBX" || App->GetFileExtension(DroppedFile) == "fbx")
 				{
 					App->mesh_loader->LoadFile(DroppedFile);
 					App->LogInConsole("FBX dropped with root: %s", DroppedFile);
 				}
-				else if (GetFileExtension(DroppedFile) == "png" || GetFileExtension(DroppedFile) == "dds")
+				else if (App->GetFileExtension(DroppedFile) == "png" || App->GetFileExtension(DroppedFile) == "dds")
 				{
 					if (App->gui->ins_window->selected_GO != nullptr)
 					{
@@ -168,10 +168,4 @@ bool ModuleInput::CleanUp()
 	return true;
 }
 
-const std::string ModuleInput::GetFileExtension(const std::string FileName)
-{
-	if (FileName.find_last_of(".") != std::string::npos)
-		return (FileName.substr(FileName.find_last_of(".") + 1));
-	else
-		return "";
-}
+

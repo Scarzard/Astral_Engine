@@ -48,6 +48,12 @@ public:
 	std::vector<std::string>	Logs_Console;
 
 
+	const std::string GetNameFromPath(std::string path);
+	const std::string GetDirectoryFromPath(std::string path);
+	const std::string GetFileExtension(const std::string FileName);
+	void eraseSubStr(std::string & mainStr, const std::string & toErase);
+
+
 	//Framerate logs
 	std::vector<float>	ms_log;
 	std::vector<float>	fps_log;
