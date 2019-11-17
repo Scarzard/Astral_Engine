@@ -15,7 +15,8 @@ public:
 		NONE = -1,
 		Transform,
 		Mesh,
-		Texture
+		Texture,
+		Camera
 	};
 
 	Component(Component::ComponentType type, GameObject* GO);

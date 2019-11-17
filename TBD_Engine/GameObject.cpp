@@ -88,6 +88,20 @@ ComponentTexture* GameObject::GetComponentTexture()
 	return (ComponentTexture*)texture;
 }
 
+ComponentCamera * GameObject::GetComponentCamera()
+{
+	Component* camera = nullptr;
+	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
+	{
+		if ((*iterator)->type == Component::ComponentType::Camera)
+		{
+			return (ComponentCamera*)*iterator;
+		}
+	}
+
+	return (ComponentCamera*)camera;
+}
+
 void GameObject::Update(float dt)
 {
 	//update name when GO change state

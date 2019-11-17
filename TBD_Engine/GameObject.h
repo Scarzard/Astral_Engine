@@ -6,8 +6,7 @@
 #include "Component_Mesh.h"
 #include "Component_Transform.h"
 #include "Component_Texture.h"
-
-
+#include "Component_Camera.h"
 
 class GameObject
 {
@@ -26,6 +25,7 @@ public:
 	ComponentMesh* GetComponentMesh();
 	ComponentTransform* GetComponentTransform();
 	ComponentTexture* GetComponentTexture();
+	ComponentCamera* GetComponentCamera();
 
 	void TransformGlobal(GameObject* GO);
 
