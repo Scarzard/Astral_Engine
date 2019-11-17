@@ -191,9 +191,9 @@ void GameObject::RenderBoundingBox()
 	glBegin(GL_LINES);
 
 	//glLineWidth doesnt work?
-	glLineWidth(3.5f);
+	glLineWidth(1.0f);
 
-	glColor4f(White.r, White.g, White.b, White.a);
+	glColor4f(Green.r, Green.g, Green.b, Green.a);
 
 	for (uint i = 0; i < 12; i++)
 	{

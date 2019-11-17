@@ -99,15 +99,9 @@ void ComponentTransform::ResetTransform()
 
 void ComponentTransform::ResetPosition()
 {
-	float3 a, b;
-	Quat c;
-	a = float3::zero;
-	b = float3::one;
-	c = Quat::identity;
-
-	this->position = a;
-	this->scale = b;
-	this->rotation_quat = c;
+	this->position = float3::zero;
+	this->scale = float3::one;
+	this->rotation_quat = Quat::identity;
 	
 	ResetTransform();
 }
