@@ -201,6 +201,11 @@ void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m)
 	//Checkers texture to primitive
 	obj->GetComponentTexture()->texture = App->tex_loader->DefaultTexture;
 
+	//Generate Bounding box for Primitive
+	ComponentMesh* tmp = obj->GetComponentMesh();
+	tmp->aabb.SetNegativeInfinity();
+	tmp->aabb = tmp->aabb.MinimalEnclosingAABB(tmp->vertex, tmp->num_vertex);
+
 	//Generate the buffers 
 	App->renderer3D->NewVertexBuffer(obj->GetComponentMesh()->vertex, obj->GetComponentMesh()->num_vertex, obj->GetComponentMesh()->id_vertex);
 	App->renderer3D->NewIndexBuffer(obj->GetComponentMesh()->index, obj->GetComponentMesh()->num_index, obj->GetComponentMesh()->id_index);

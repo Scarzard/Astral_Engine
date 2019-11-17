@@ -108,6 +108,7 @@ void GameObject::Update(float dt)
 		(*it)->Update(dt);
 	}
 
+	UpdateBoundingBox();
 	RenderBoundingBox();
 }
 
