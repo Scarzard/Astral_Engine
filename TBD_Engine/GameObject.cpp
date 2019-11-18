@@ -137,21 +137,24 @@ void GameObject::Disable()
 	}
 }
 
-void GameObject::DeleteGO(GameObject* GO)
+void GameObject::DeleteGO(GameObject* GO, bool original)
 {
-	//first delete its childrens (if it has)
+
+	//delete its childrens (if it has)
 	if (GO->children.size() > 0)
 	{
 		for (std::vector<GameObject*>::iterator it = GO->children.begin(); it != GO->children.end(); ++it)
 		{
-			DeleteGO(*it);
+			DeleteGO(*it, false);
 		}
 
 		GO->children.clear();
 	}
 
+	if (GO->parent != nullptr && original == true)
+		GO->parent->RemoveChild(GO);
+	
 	delete GO;
-	GO = nullptr;
 }
 
 void GameObject::SetChild(GameObject* GO)

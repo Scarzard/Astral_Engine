@@ -29,7 +29,7 @@ public:
 
 	void TransformGlobal(GameObject* GO);
 
-	void DeleteGO(GameObject* GO);
+	void DeleteGO(GameObject* GO, bool original);
 	void SetChild(GameObject* GO);
 	void RemoveChild(GameObject* GO);
 

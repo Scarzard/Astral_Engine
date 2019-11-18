@@ -44,4 +44,16 @@ void ComponentMesh::CleanUp()
 		delete[] tex_coords;
 		tex_coords = nullptr;
 	}
+
+	if (face_center != nullptr)
+	{
+		delete[] face_center;
+		face_center = nullptr;
+	}
+
+	if (face_normal != nullptr)
+	{
+		delete[] face_normal;
+		face_normal = nullptr;
+	}
 }

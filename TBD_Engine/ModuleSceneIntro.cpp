@@ -52,7 +52,7 @@ bool ModuleSceneIntro::CleanUp()
 	App->LogInConsole("Unloading Intro scene");
 	
 	root->CleanUp();
-	root->DeleteGO(root);
+	root->DeleteGO(root, true);
 
 	return true;
 }
@@ -76,11 +76,11 @@ GameObject* ModuleSceneIntro::CreateGameObject()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	//Trying to delete GO selected if pressed SUPR
-	/*if (App->gui->ins_window->selected_GO != nullptr && App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+	if (App->gui->ins_window->selected_GO != nullptr && App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
 	{
-		App->gui->ins_window->selected_GO->DeleteGO(App->gui->ins_window->selected_GO);
+		App->gui->ins_window->selected_GO->DeleteGO(App->gui->ins_window->selected_GO, true);
 		App->gui->ins_window->selected_GO = nullptr;
-	}*/
+	}
 
 	root->Update(dt);
 

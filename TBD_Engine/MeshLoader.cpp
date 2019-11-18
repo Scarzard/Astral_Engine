@@ -77,7 +77,7 @@ void MeshLoader::LoadFile(const char* full_path)
 
 		Importer ex;
 		std::string output_file;
-		ex.Export(Empty->name.c_str(), output_file, Empty->GetComponentTransform());
+		//ex.Export(Empty->name.c_str(), output_file, Empty->GetComponentTransform());
 
 		//Child of root node
 		App->scene_intro->root->SetChild(Empty);
@@ -238,9 +238,9 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 			//Generate the buffer for texture coords
 			App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->tex_coords, obj->GetComponentMesh()->num_tex_coords, obj->GetComponentMesh()->id_tex_coords);
 
-			const char* name = obj->name.c_str();
-			ex.Export(name, output_file, obj->GetComponentMesh());
-			ex.Export(name, output_file, obj->GetComponentTransform());
+			//const char* name = obj->name.c_str();
+			//ex.Export(name, output_file, obj->GetComponentMesh());
+			//ex.Export(name, output_file, obj->GetComponentTransform());
 			
 		}
 	}
