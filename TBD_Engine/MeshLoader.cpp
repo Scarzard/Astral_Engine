@@ -130,11 +130,11 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 			float3 s2(1, 1, 1);
 			Quat rot2(rotation.x, rotation.y, rotation.z, rotation.w);
 
-			obj->GetComponentTransform()->position = pos2;
-			obj->GetComponentTransform()->scale = s2;
-			obj->GetComponentTransform()->rotation_quat = rot2;
+			transf->position = pos2;
+			transf->scale = s2;
+			transf->rotation_quat = rot2;
 
-			obj->GetComponentTransform()->UpdateLocalTransform();
+			transf->UpdateLocalTransform();
 
 			aiMesh* new_mesh = scene->mMeshes[node->mMeshes[i]];
 
@@ -198,9 +198,9 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 					float3 face_A, face_B, face_C;
 
 					
-					face_A = obj->GetComponentMesh()->vertex[mesh->index[j * 3]];
-					face_B = obj->GetComponentMesh()->vertex[mesh->index[(j * 3) + 1]];
-					face_C = obj->GetComponentMesh()->vertex[mesh->index[(j * 3) + 2]];
+					face_A = mesh->vertex[mesh->index[j * 3]];
+					face_B = mesh->vertex[mesh->index[(j * 3) + 1]];
+					face_C = mesh->vertex[mesh->index[(j * 3) + 2]];
 					
 					
 					mesh->face_center[j] = (face_A + face_B + face_C) / 3;
@@ -236,7 +236,7 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 			App->renderer3D->NewVertexBuffer(mesh->vertex, mesh->num_vertex, mesh->id_vertex);
 			App->renderer3D->NewIndexBuffer(mesh->index, mesh->num_index, mesh->id_index);
 			//Generate the buffer for texture coords
-			App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->tex_coords, obj->GetComponentMesh()->num_tex_coords, obj->GetComponentMesh()->id_tex_coords);
+			App->renderer3D->NewTexBuffer(mesh->tex_coords, mesh->num_tex_coords, mesh->id_tex_coords);
 
 			//const char* name = obj->name.c_str();
 			//ex.Export(name, output_file, obj->GetComponentMesh());
