@@ -13,10 +13,8 @@ Component::~Component()
 {
 }
 
-bool Component::Update()
+void Component::Update()
 {
-
-	return true;
 }
 
 void Component::Enable()

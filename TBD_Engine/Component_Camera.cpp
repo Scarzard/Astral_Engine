@@ -13,15 +13,16 @@
 
 ComponentCamera::ComponentCamera(GameObject* gameobj) : Component(Component::ComponentType::Camera, gameobj)
 {
-	CalculateViewMatrix();
+	aspect_ratio = 1.7778f;   // 16 / 9
+	frustum.type = math::PerspectiveFrustum;
+	frustum.front = math::float3::unitZ;
+	frustum.up = math::float3::unitY;
+	frustum.pos = math::float3::zero;
+	frustum.nearPlaneDistance = 1.0f;
+	frustum.farPlaneDistance = 100.0f;
+	frustum.verticalFov = 60 * DEGTORAD;
+	frustum.horizontalFov = 2.0f * atanf(aspect_ratio * tanf(frustum.verticalFov * 0.5f));
 
-	//frustum_vertices = new float3[8];
-	frustum.pos = { 0,0,0 };
-	frustum.up = { 0,1,0 };
-	frustum.front = { 0,0,1 };
-
-	Position = vec3(0.0f, 0.0f, 5.0f);
-	Reference = vec3(0.0f, 0.0f, 0.0f);
 }
 
 ComponentCamera::~ComponentCamera()
@@ -29,142 +30,93 @@ ComponentCamera::~ComponentCamera()
 
 }
 
-
-void ComponentCamera::CameraControl()
+void ComponentCamera::Update()
 {
-	if (App->gui->is_game_focused)
-	{
-
-		vec3 newPos(0, 0, 0);
-		float speed = 3.0f;
-		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-			speed = 8.0f;
-
-
-
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
-
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
-
-			if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y += speed;
-			if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y -= speed;
-		}
-		else
-		{
-			if (App->input->GetMouseZ() > 0) newPos -= Z * speed * 15;
-			if (App->input->GetMouseZ() < 0) newPos += Z * speed * 15;
-		}
-
-		if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
-		{
-			if (-App->input->GetMouseXMotion() > 0) newPos += X * speed * 2;
-			if (-App->input->GetMouseXMotion() < 0) newPos -= X * speed * 2;
-
-			if (-App->input->GetMouseYMotion() > 0) newPos.y -= speed * 2;
-			if (-App->input->GetMouseYMotion() < 0) newPos.y += speed * 2;
-		}
-
-		Position += newPos;
-		Reference += newPos;
-
-		// Mouse motion ----------------
-
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-		{
-			int dx = -App->input->GetMouseXMotion();
-			int dy = -App->input->GetMouseYMotion();
-
-			float Sensitivity = 0.25f;
-
-			Position -= Reference;
-
-			if (dx != 0)
-			{
-				float DeltaX = (float)dx * Sensitivity;
-
-				X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			}
-
-			if (dy != 0)
-			{
-				float DeltaY = (float)dy * Sensitivity;
-
-				Y = rotate(Y, DeltaY, X);
-				Z = rotate(Z, DeltaY, X);
-
-				if (Y.y < 0.0f)
-				{
-					Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-					Y = cross(Z, X);
-				}
-			}
-
-			Position = Reference + Z * length(Position);
-		}
-	}
-}
-// -----------------------------------------------------------------
-void ComponentCamera::Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference)
-{
-	this->Position = Position;
-	this->Reference = Reference;
-
-	Z = normalize(Position - Reference);
-	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
-	Y = cross(Z, X);
-
-	if (!RotateAroundReference)
-	{
-		this->Reference = this->Position;
-		this->Position += Z * 0.05f;
-	}
-
-	CalculateViewMatrix();
+	if(frustrum_view)
+		DrawFrustum();
 }
 
-// -----------------------------------------------------------------
-void ComponentCamera::LookAt(const vec3 &Spot)
+float ComponentCamera::GetFOV() const
 {
-	Reference = Spot;
-
-	Z = normalize(Position - Reference);
-	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
-	Y = cross(Z, X);
-
-	CalculateViewMatrix();
+	return  frustum.verticalFov * RADTODEG;
 }
 
-
-// -----------------------------------------------------------------
-void ComponentCamera::Move(const vec3 &Movement)
+float ComponentCamera::GetNearPlane() const
 {
-	Position += Movement;
-	Reference += Movement;
+	return frustum.nearPlaneDistance;
+}
 
-	CalculateViewMatrix();
+float ComponentCamera::GetFarPlane() const
+{
+	return frustum.farPlaneDistance;
+}
+
+float ComponentCamera::GetAspectRatio() const
+{
+	return aspect_ratio;
 }
 
 // -----------------------------------------------------------------
 float* ComponentCamera::GetViewMatrix()
 {
-	return &ViewMatrix;
+	view_mat = frustum.ViewMatrix();
+	view_mat.Transpose();
+
+	return (float*)view_mat.v;
+}
+
+float * ComponentCamera::GetProjectionMatrix()
+{
+	projection_mat = frustum.ProjectionMatrix();
+	projection_mat.Transpose();
+
+	return (float*)projection_mat.v;
 }
 
 
-// -----------------------------------------------------------------
-void ComponentCamera::CalculateViewMatrix()
+void ComponentCamera::SetFOV(float fov)
 {
-	
-	ViewMatrix = mat4x4({ X.x, Y.x, Z.x, 0.0f },	
-						{ X.y, Y.y, Z.y, 0.0f },
-						{ X.z, Y.z, Z.z, 0.0f }, 
-						{ -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f });
+	frustum.verticalFov = DEGTORAD * fov;
+	frustum.horizontalFov = 2.0f * atanf(aspect_ratio * tanf(frustum.verticalFov * 0.5f));
+}
 
-	frustum.SetWorldMatrix(float3x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f));
+void ComponentCamera::SetAspectRatio(float aspect)
+{
+	aspect_ratio = aspect;
+	frustum.horizontalFov = 2.0f * atanf(aspect_ratio * tanf(frustum.verticalFov * 0.5f));
+}
+
+void ComponentCamera::SetNearPlane(float near_plane)
+{
+	if (near_plane >= frustum.farPlaneDistance)
+		near_plane = frustum.farPlaneDistance - 1.0f;
+
+	if (near_plane < 0.0f)
+		near_plane = 0.1f;
+
+	frustum.nearPlaneDistance = near_plane;
+}
+
+void ComponentCamera::SetFarPlane(float far_plane)
+{
+	if (far_plane <= frustum.nearPlaneDistance)
+		far_plane = frustum.nearPlaneDistance + 1.0f;
+
+	frustum.farPlaneDistance = far_plane;
+}
+
+void ComponentCamera::DrawFrustum()
+{
+	glBegin(GL_LINES);
+	glLineWidth(2.0f);
+	glColor4f(Red.r, Red.g, Red.b, Red.a);
+
+	for (uint i = 0; i < frustum.NumEdges(); i++)
+	{
+		glVertex3f(frustum.Edge(i).a.x, frustum.Edge(i).a.y, frustum.Edge(i).a.z);
+		glVertex3f(frustum.Edge(i).b.x, frustum.Edge(i).b.y, frustum.Edge(i).b.z);
+	}
+
+	glEnd();
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }

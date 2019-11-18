@@ -15,37 +15,33 @@ public:
 	ComponentCamera(GameObject* gameObject);
 	~ComponentCamera();
 
-	void CameraControl();
+	void Update();
 
-	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3 &Spot);
-	void Move(const vec3 &Movement);
-
+	//---------Getters------------
+	float GetFOV() const;
+	float GetNearPlane() const;
+	float GetFarPlane() const;
+	float GetAspectRatio() const;
 	float* GetViewMatrix();
+	float* GetProjectionMatrix();
 
-	void CalculateViewMatrix();
+	//---------Setters------------
+	void SetFOV(float fov);
+	void SetAspectRatio(float aspect);
+	void SetNearPlane(float near_plane);
+	void SetFarPlane(float far_plane);
+
+	void DrawFrustum();
 
 public:
-	vec3 X, Y, Z, Position, Reference;
+	math::Frustum frustum;
+	bool frustrum_view = true;
 
-public:
-
-	bool perspective = true;
-
-	float z_near = 1.0f;
-	float z_far = 100.0f;
-
-	float fov_y = 60.0f;
-
-	float width = 1280.0f;
-	float height = 720.0f;
-
-	Frustum frustum;
 private:
 
-	mat4x4 ViewMatrix, ProjectionMatrix;
-
-	float3 frustrum_edges[12];
-
+	float4x4 view_mat;
+	float4x4 projection_mat;
+	float aspect_ratio = 0.0f;
+	bool culling = false;
 };
 #endif // !_COMPONENT_CAMERA_H

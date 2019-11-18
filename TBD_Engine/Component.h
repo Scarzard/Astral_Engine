@@ -23,7 +23,7 @@ public:
 	virtual ~Component();
 
 	virtual void Enable();
-	virtual bool Update();
+	virtual void Update();
 	virtual void Disable();
 
 public:
