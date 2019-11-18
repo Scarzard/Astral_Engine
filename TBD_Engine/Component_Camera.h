@@ -11,7 +11,7 @@
 class ComponentCamera : public Component
 {
 public:
-
+	ALIGN_CLASS_TO_16
 	ComponentCamera(GameObject* gameObject =  nullptr);
 	~ComponentCamera();
 

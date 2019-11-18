@@ -14,7 +14,7 @@ ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 	main_camera->SetNearPlane(-40.0f);
 	main_camera->SetFarPlane(500.0f);
 	Move({ 5.0f, 5.0f, 5.0f });
-	LookAt({ -100.0f, -100.0f, -100.0f });
+	//LookAt({ -100.0f, -100.0f, -100.0f });
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -142,7 +142,6 @@ void ModuleCamera3D::Look(const float3 &Position, const float3 &Reference)
 {
 	main_camera->frustum.pos = Position;
 	LookAt(Reference);
-
 }
 
 // -----------------------------------------------------------------

@@ -24,7 +24,7 @@ public:
 
 	//Color background = Color(0, 0, 0, 255);
 
-private:
+public:
 
 	ComponentCamera* main_camera = nullptr;
 };

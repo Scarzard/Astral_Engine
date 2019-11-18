@@ -145,11 +145,13 @@ bool ModuleRenderer3D::Start()
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 
-	//Color c = App->camera->background;
-	//glClearColor(c.r, c.g, c.b, c.a);
 
 	// light 0 on cam pos
 	//lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(App->camera->main_camera->GetViewMatrix());
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -189,8 +191,9 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
+
+	App->camera->main_camera->SetAspectRatio((float)width / (float)height);
+	glLoadMatrixf(App->camera->main_camera->GetProjectionMatrix());
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

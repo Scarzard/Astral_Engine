@@ -32,6 +32,17 @@ ComponentCamera::~ComponentCamera()
 
 void ComponentCamera::Update()
 {
+
+	if (my_GO->active) {
+		ComponentTransform* transform = my_GO->GetComponentTransform();
+		math::float4x4 global_mat = transform->GetGlobalTransform();
+
+		frustum.pos = transform->GetGlobalTransform().TranslatePart();
+		frustum.front = global_mat.WorldZ().Normalized();
+		frustum.up = global_mat.WorldY().Normalized();
+	}
+
+
 	if(frustrum_view)
 		DrawFrustum();
 }

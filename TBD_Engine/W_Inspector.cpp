@@ -27,7 +27,7 @@ bool W_Inspector::Draw()
 
 		ImGui::Begin("Inspector");
 		//Draw Inspector stuff
-		if (selected_GO != nullptr && selected_GO->id != 0)
+		if (selected_GO != nullptr /*&& selected_GO->id != 0*/)
 		{
 			ImGui::InputText("Name", (char*)selected_GO->name.c_str(), 20, ImGuiInputTextFlags_EnterReturnsTrue);
 			ImGui::Text("");
@@ -132,43 +132,43 @@ bool W_Inspector::Draw()
 						ImGui::Text("Texture preview:");
 						ImGui::Image((ImTextureID*)App->tex_loader->CheckersTexture.id, ImVec2(200, 200), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 0.5f));
 					}
+				}
 
-					//if (ImGui::CollapsingHeader("Camera Settings", ImGuiTreeNodeFlags_Leaf))
-					//{
-					//	ComponentCamera* camera = selected_GO->GetComponentCamera();
-					//	ImGui::Text("Horizontal FOV:");
-					//	ImGui::SameLine();
-					//	ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", camera->frustum.horizontalFov);
-
-
-					//	ImGui::Text("Vertical FOV:");
-					//	ImGui::SameLine();
-					//	ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", camera->frustum.verticalFov);
-
-					//	float fov = camera->frustum.verticalFov * RADTODEG;
-					//	ImGui::Text("FOV");
-					//	ImGui::SameLine();
-					//	if (ImGui::DragFloat("Set FOV", &fov, 1.0f))
-					//		camera->SetFOV(fov);
+				if (ImGui::CollapsingHeader("Camera Settings", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentCamera() != nullptr)
+				{
+					ComponentCamera* camera = selected_GO->GetComponentCamera();
+					ImGui::Text("Horizontal FOV:");
+					ImGui::SameLine();
+					ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", camera->frustum.horizontalFov);
 
 
-					//	float near_plane = camera->frustum.nearPlaneDistance;
-					//	ImGui::Text("Near Plane:");
-					//	ImGui::SameLine();
-					//	if (ImGui::DragFloat("Set Near Plane", &near_plane, 1.0F, -INFINITY, INFINITY))
-					//	{
-					//		camera->SetNearPlane(near_plane);
-					//	}
+					ImGui::Text("Vertical FOV:");
+					ImGui::SameLine();
+					ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", camera->frustum.verticalFov);
+
+					float fov = camera->frustum.verticalFov * RADTODEG;
+					ImGui::Text("FOV");
+					ImGui::SameLine();
+					if (ImGui::DragFloat("Set FOV", &fov, 1.0f))
+						camera->SetFOV(fov);
 
 
-					//	float far_plane = camera->frustum.farPlaneDistance;
-					//	ImGui::Text("Set Far Plane:");
-					//	ImGui::SameLine();
-					//	if (ImGui::DragFloat("far", &far_plane, 1.0F, -INFINITY, INFINITY))
-					//	{
-					//		camera->SetFarPlane(far_plane);
-					//	}
-					//}
+					float near_plane = camera->frustum.nearPlaneDistance;
+					ImGui::Text("Near Plane:");
+					ImGui::SameLine();
+					if (ImGui::DragFloat("Set Near Plane", &near_plane, 1.0F, -INFINITY, INFINITY))
+					{
+						camera->SetNearPlane(near_plane);
+					}
+
+
+					float far_plane = camera->frustum.farPlaneDistance;
+					ImGui::Text("Set Far Plane:");
+					ImGui::SameLine();
+					if (ImGui::DragFloat("far", &far_plane, 1.0F, -INFINITY, INFINITY))
+					{
+						camera->SetFarPlane(far_plane);
+					}
 				}
 			}
 		}
