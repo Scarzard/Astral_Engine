@@ -12,7 +12,7 @@ class ComponentCamera : public Component
 {
 public:
 
-	ComponentCamera(GameObject* gameObject);
+	ComponentCamera(GameObject* gameObject =  nullptr);
 	~ComponentCamera();
 
 	void Update();

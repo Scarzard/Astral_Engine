@@ -37,6 +37,9 @@ Component* GameObject::CreateComponent(Component::ComponentType type)
 	case Component::ComponentType::Texture:
 		component = new ComponentTexture(this);
 		break;
+	case Component::ComponentType::Camera:
+		component = new ComponentCamera(this);
+		break;
 
 	}
 
