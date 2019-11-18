@@ -55,8 +55,7 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	App->LogInConsole("Unloading Intro scene");
-	
-	root->CleanUp();
+	Octree->CleanUp();
 	root->DeleteGO(root, true);
 
 	return true;

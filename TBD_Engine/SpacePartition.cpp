@@ -4,7 +4,7 @@
 
 #include "mmgr/mmgr.h"
 
-//--------------------------------------------------- TREE NO
+//--------------------------------------------------- TREE
 Tree::Tree(AABB aabb)
 {
 	Root = new TreeNode(aabb);
@@ -18,12 +18,14 @@ Tree::Tree(float3 minPoint, float3 maxPoint)
 }
 
 Tree::~Tree()
-{}
+{
+}
 
 void Tree::DrawTree(TreeNode* node)
 {
 	node->DrawNode();
 
+	//recursive draw
 	if (node->childs.size() > 0)
 	{
 		for (std::vector<TreeNode*>::iterator it = node->childs.begin(); it != node->childs.end(); ++it)
@@ -34,6 +36,12 @@ void Tree::DrawTree(TreeNode* node)
 }
 
 
+void Tree::CleanUp()
+{
+	Root->CleanUp(Root);
+
+	delete this;
+}
 
 //--------------------------------------------------- TREE NODE
 TreeNode::TreeNode(AABB aabb)
@@ -46,7 +54,8 @@ TreeNode::TreeNode()
 }
 
 TreeNode::~TreeNode()
-{}
+{
+}
 
 void TreeNode::DrawNode()
 {
@@ -62,6 +71,22 @@ void TreeNode::DrawNode()
 	glEnd();
 	glLineWidth(1.0f);
 
+}
+
+void TreeNode::CleanUp(TreeNode* node) 
+{
+	//delete its childrens (if it has)
+	if (node->childs.size() > 0)
+	{
+		for (std::vector<TreeNode*>::iterator it = node->childs.begin(); it != node->childs.end(); ++it)
+		{
+			CleanUp(*it);
+		}
+
+		node->childs.clear();
+	}
+	//delete this node
+	delete node;
 }
 
 void TreeNode::Split()

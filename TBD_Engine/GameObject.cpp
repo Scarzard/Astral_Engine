@@ -153,7 +153,8 @@ void GameObject::DeleteGO(GameObject* GO, bool original)
 
 	if (GO->parent != nullptr && original == true)
 		GO->parent->RemoveChild(GO);
-	
+
+	GO->CleanUp();
 	delete GO;
 }
 

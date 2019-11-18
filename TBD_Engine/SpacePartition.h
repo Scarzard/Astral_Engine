@@ -15,6 +15,8 @@ public:
 
 	void DrawTree(TreeNode* node);
 
+	void CleanUp();
+
 public:
 	TreeNode* Root;
 };
@@ -32,6 +34,8 @@ public:
 	void Split();
 
 	void DrawNode();
+
+	void CleanUp(TreeNode* node);
 
 public:
 
