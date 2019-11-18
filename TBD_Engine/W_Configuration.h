@@ -36,7 +36,7 @@ private:
 	int height_slider = SCREEN_HEIGHT;
 
 	bool depth = false;
-	bool light = false;
+	bool light = true;
 	bool wireframe = false;
 	bool cullface = false;
 	bool vertex = false;
@@ -44,6 +44,7 @@ private:
 	Hardware_Info info;
 public:
 	bool draw_aabb = false;
+	bool draw_plane = true;
 };
 
 #endif // !_W_CONFIGURATION_H_

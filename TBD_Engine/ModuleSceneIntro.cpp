@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
+#include "SpacePartition.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -43,6 +44,10 @@ bool ModuleSceneIntro::Start()
 
 	App->mesh_loader->LoadFile("Assets/Street/Street environment_V01.fbx");
 
+
+	Octree = new Tree(float3(-10, -10, -10), float3(10, 10, 10));
+	Octree->Root->Split();
+
 	return ret;
 }
 
@@ -84,62 +89,47 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	root->Update(dt);
 
+
+
 	return want_to_quit;
 }
 
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
-
-	//PLANE -----------------------------
-	glLineWidth(2.0f);
-
-	glBegin(GL_LINES);
-	glColor3ub(255, 255, 255);
-	for (float i = -10; i <= 10; ++i)
+	if (App->gui->conf_window->draw_plane)
 	{
-		glVertex3f(i, 0.f, 0.f);
-		glVertex3f(i, 0, 10.f);
+		//PLANE -----------------------------
+		glLineWidth(2.0f);
 
-		glVertex3f(0.f, 0.f, i);
-		glVertex3f(10.f, 0, i);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		for (float i = -10; i <= 10; ++i)
+		{
+			glVertex3f(i, 0.f, 0.f);
+			glVertex3f(i, 0, 10.f);
 
-		glVertex3f(i, 0.f, 0.f);
-		glVertex3f(i, 0, -10.f);
+			glVertex3f(0.f, 0.f, i);
+			glVertex3f(10.f, 0, i);
 
-		glVertex3f(0.f, 0.f, i);
-		glVertex3f(-10.f, 0, i);
+			glVertex3f(i, 0.f, 0.f);
+			glVertex3f(i, 0, -10.f);
+
+			glVertex3f(0.f, 0.f, i);
+			glVertex3f(-10.f, 0, i);
+
+		}
+		glColor3ub(255, 255, 255);
+		glEnd();
+
+		
 	}
-	glEnd();
-
-	// AXIS ------------------------
-	glLineWidth(4.0f);
-
-	glBegin(GL_LINES);
-	//Y
-	glColor3ub(0, 255, 0);
-	glVertex3f(0.f, 0.f, 0.f);
-	glVertex3f(0.f, 1.f, 0.f);
-	glEnd();
-
-	glBegin(GL_LINES);
-	//X
-	glColor3ub(255, 0, 0);
-	glVertex3f(0.f, 0.001f, 0.f);
-	glVertex3f(1.f, 0.001f, 0.f);
-	glEnd();
-
-	glBegin(GL_LINES);
-	//Z
-	glColor3ub(0, 0, 255);
-	glVertex3f(0.f, 0.001f, 0.f);
-	glVertex3f(0.f, 0.001f, 1.f);
-	glEnd();
-
-	glColor3ub(255, 255, 255);
-
 
 	//Draw GameObjects Recursively
 	DrawRecursively(root);
+
+	Octree->DrawTree(Octree->Root);
+
+	glColor3ub(255, 255, 255);
 
 	return UPDATE_CONTINUE;
 }

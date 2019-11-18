@@ -147,12 +147,12 @@ uint TextureLoader::CreateTexture(const void* img, uint width, uint height, int 
 
 Texture TextureLoader::LoadTextureFromPath(const char* path)
 {
-	// Check if the texture beeing loaded is already loaded
+	// Check if the texture being loaded is already loaded
 	for (std::vector<Texture>::iterator iterator = loaded_textures.begin(); iterator != loaded_textures.end(); iterator++)
 	{
 		if ((*iterator).path == path)
 		{
-			//App->LogInConsole("Recicled texture with path %s", path);
+			App->LogInConsole("Texture already in memory, directly applying texture");
 			return (*iterator);
 		}
 	}

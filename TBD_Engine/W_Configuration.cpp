@@ -124,9 +124,9 @@ bool W_Configuration::Draw()
 			if (ImGui::Checkbox("Lighting", &light))
 			{
 				if (light)
-					glDisable(GL_LIGHTING);
-				else 
 					glEnable(GL_LIGHTING);
+				else 
+					glDisable(GL_LIGHTING);
 			}
 		
 			if (ImGui::Checkbox("Wireframe", &wireframe))
@@ -153,7 +153,9 @@ bool W_Configuration::Draw()
 					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			}
 			ImGui::SameLine();
-			ImGui::Checkbox("Draw Bounding Boxes", &draw_aabb);
+			ImGui::Checkbox("Draw Bounding Boxes", &draw_aabb); 
+
+			ImGui::Checkbox("Draw Plane", &draw_plane);
 		}
 
 		if (ImGui::CollapsingHeader("Input"))

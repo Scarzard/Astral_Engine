@@ -393,6 +393,9 @@
     <ClInclude Include="Importer.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="SpacePartition.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -606,6 +609,9 @@
       <Filter>Sources\Tools\PCG</Filter>
     </ClCompile>
     <ClCompile Include="Importer.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="SpacePartition.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>

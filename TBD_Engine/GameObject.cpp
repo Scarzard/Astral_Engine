@@ -206,6 +206,7 @@ void GameObject::RenderBoundingBox()
 		glVertex3f(aabb.Edge(i).a.x, aabb.Edge(i).a.y, aabb.Edge(i).a.z);
 		glVertex3f(aabb.Edge(i).b.x, aabb.Edge(i).b.y, aabb.Edge(i).b.z);
 	}
+	glColor3ub(255, 255, 255);
 	glEnd();
 }
 
