@@ -23,6 +23,8 @@ ComponentCamera::ComponentCamera(GameObject* gameobj) : Component(Component::Com
 	frustum.verticalFov = 60 * DEGTORAD;
 	frustum.horizontalFov = 2.0f * atanf(aspect_ratio * tanf(frustum.verticalFov * 0.5f));
 
+	UpdateMatrixView();
+
 }
 
 ComponentCamera::~ComponentCamera()
@@ -91,13 +93,15 @@ void ComponentCamera::SetFOV(float fov)
 	frustum.verticalFov = DEGTORAD * fov;
 	frustum.horizontalFov = 2.0f * atanf(aspect_ratio * tanf(frustum.verticalFov * 0.5f));
 
-	//App->renderer3D->OnResize(frustum.horizontalFov, frustum.verticalFov);
+	UpdateMatrixView();
+	has_transformed = true;
 }
 
 void ComponentCamera::SetAspectRatio(float aspect)
 {
 	aspect_ratio = aspect;
 	frustum.horizontalFov = 2.0f * atanf(aspect_ratio * tanf(frustum.verticalFov * 0.5f));
+	has_transformed = true;
 }
 
 void ComponentCamera::SetNearPlane(float near_plane)
@@ -110,7 +114,8 @@ void ComponentCamera::SetNearPlane(float near_plane)
 
 	frustum.nearPlaneDistance = near_plane;
 
-	//App->renderer3D->OnResize(frustum.nearPlaneDistance, frustum.farPlaneDistance);
+	UpdateMatrixView();
+	has_transformed = true;
 }
 
 void ComponentCamera::SetFarPlane(float far_plane)
@@ -120,7 +125,8 @@ void ComponentCamera::SetFarPlane(float far_plane)
 
 	frustum.farPlaneDistance = far_plane;
 
-	//App->renderer3D->OnResize(frustum.horizontalFov, frustum.verticalFov);
+	UpdateMatrixView();
+	has_transformed = true;
 }
 
 void ComponentCamera::DrawFrustum()
@@ -137,6 +143,21 @@ void ComponentCamera::DrawFrustum()
 
 	glEnd();
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+void ComponentCamera::OnUpdateTransform(const float4x4 & global, const float4x4 & parent_global)
+{
+	frustum.nearPlaneDistance = *global.WorldZ().ptr();
+	frustum.farPlaneDistance = *global.WorldY().ptr();
+
+	float3 position = float3::zero;
+	float3 scale = float3::one;
+	Quat quat = Quat::identity;
+	global.Decompose(position, quat, scale);
+
+	frustum.pos = position;
+	UpdateMatrixView();
+	has_transformed = true;
 }
 
 void ComponentCamera::UpdateMatrixView()

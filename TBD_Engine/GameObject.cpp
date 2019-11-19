@@ -1,4 +1,6 @@
 #include "GameObject.h"
+#include "ModuleSceneIntro.h"
+#include "Application.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -116,6 +118,9 @@ void GameObject::Update(float dt)
 	if (this->GetComponentTransform()->has_transformed)
 		TransformGlobal(this);
 
+	if (App->camera->main_camera->has_transformed == true)
+		App->camera->main_camera->OnUpdateTransform(App->scene_intro->camera->GetComponentTransform()->GetGlobalTransform());
+
 	//Game Object iterative update
 	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
 	{
@@ -127,6 +132,7 @@ void GameObject::Update(float dt)
 	{
 		(*it)->Update();
 	}
+
 
 	UpdateBoundingBox();
 	RenderBoundingBox();

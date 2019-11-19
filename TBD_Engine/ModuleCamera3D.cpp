@@ -11,8 +11,8 @@ ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 {
 	main_camera = new ComponentCamera();
 
-	main_camera->SetNearPlane(2.0f);
-	main_camera->SetFarPlane(500.0f);
+	main_camera->frustum.AspectRatio();
+	main_camera
 	Move({ 5.0f, 5.0f, 5.0f });
 	//LookAt({ -100.0f, -100.0f, -100.0f });
 }
@@ -25,6 +25,8 @@ bool ModuleCamera3D::Start()
 {
 	App->LogInConsole("Setting up the camera");
 	bool ret = true;
+
+	App->renderer3D->camera = main_camera;
 
 	return ret;
 }
