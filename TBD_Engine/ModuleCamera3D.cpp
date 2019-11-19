@@ -11,7 +11,7 @@ ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 {
 	main_camera = new ComponentCamera();
 
-	main_camera->SetNearPlane(-40.0f);
+	main_camera->SetNearPlane(2.0f);
 	main_camera->SetFarPlane(500.0f);
 	Move({ 5.0f, 5.0f, 5.0f });
 	//LookAt({ -100.0f, -100.0f, -100.0f });
@@ -66,14 +66,7 @@ update_status ModuleCamera3D::Update(float dt)
 			
 		}
 		Move(newPos);
-		//Mouse Drag movement
-		//else
-		//{
-		//	float3 newPos(0, 0, 0);
-
-		//	newPos += scene_cam->frustum.front * speed * App->input->GetMouseZ();
-		//	Move(newPos);
-		//}
+		
 		//Camera pan
 		if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
 		{
@@ -130,6 +123,14 @@ update_status ModuleCamera3D::Update(float dt)
 				}
 			}
 
+		}
+		//Mouse Drag movement
+		if(true)
+		{
+			float3 newPos(0, 0, 0);
+
+			newPos += main_camera->frustum.front * speed * App->input->GetMouseZ();
+			Move(newPos);
 		}
 	}
 

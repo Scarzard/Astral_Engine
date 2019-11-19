@@ -33,7 +33,8 @@ ComponentCamera::~ComponentCamera()
 void ComponentCamera::Update()
 {
 
-	if (my_GO->active) {
+	if (my_GO->active)
+	{
 		ComponentTransform* transform = my_GO->GetComponentTransform();
 		math::float4x4 global_mat = transform->GetGlobalTransform();
 

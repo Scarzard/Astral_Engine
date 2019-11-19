@@ -34,4 +34,5 @@ public:
 	update_status want_to_quit = UPDATE_CONTINUE;
 	uint numGO = 0;
 	GameObject* root = nullptr;
+	GameObject* camera = nullptr;
 };

@@ -29,9 +29,13 @@ bool ModuleSceneIntro::Init()
 	root = CreateGameObject();
 	root->name = "root";
 
-	GameObject* camera = new GameObject(*root);
-	camera->CreateComponent(Component::ComponentType::Camera);
+	//GameObject* camera = new GameObject(*root);
+	//camera->CreateComponent(Component::ComponentType::Camera);
+	//camera->name = "Main Camera";
+
+	camera = CreateGameObject();
 	camera->name = "Main Camera";
+	camera->CreateComponent(Component::ComponentType::Camera);
 
 	return ret;
 }
