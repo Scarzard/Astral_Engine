@@ -133,7 +133,7 @@ bool W_Inspector::Draw()
 						ImGui::Image((ImTextureID*)App->tex_loader->CheckersTexture.id, ImVec2(200, 200), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 0.5f));
 					}
 				}
-				////Hardcoded camera inspector
+				//////Hardcoded camera inspector
 				//if (ImGui::CollapsingHeader("Camera Settings", ImGuiTreeNodeFlags_Leaf))
 				//{
 				//	ComponentCamera* camera = selected_GO->GetComponentCamera();
@@ -172,7 +172,7 @@ bool W_Inspector::Draw()
 				//Non hardcode inspector for camera
 				if (ImGui::CollapsingHeader("Camera Settings", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentCamera() != nullptr)
 				{
-					if (ImGui::Checkbox("Toggle frustum draw", &selected_GO->GetComponentCamera()->frustrum_view));
+					if (ImGui::Checkbox("Toggle frustum draw", &selected_GO->GetComponentCamera()->frustum_view));
 
 					ComponentCamera* camera = selected_GO->GetComponentCamera();
 					ImGui::Text("Horizontal FOV:");

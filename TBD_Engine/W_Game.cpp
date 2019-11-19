@@ -60,7 +60,6 @@ update_status W_Game::PreUpdate(float dt)
 	}
 
 
-
 	fbo->PreUpdate();
 	return UPDATE_CONTINUE;
 }

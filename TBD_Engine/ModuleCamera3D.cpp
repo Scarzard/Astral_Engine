@@ -161,5 +161,4 @@ void ModuleCamera3D::LookAt(const float3 &Spot)
 void ModuleCamera3D::Move(const float3 &Movement)
 {
 	main_camera->frustum.Translate(Movement);
-
 }

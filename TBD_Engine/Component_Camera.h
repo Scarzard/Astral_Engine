@@ -32,10 +32,13 @@ public:
 	void SetFarPlane(float far_plane);
 
 	void DrawFrustum();
+	void UpdateMatrixView();
 
 public:
 	math::Frustum frustum;
-	bool frustrum_view = false;
+	bool frustum_view = false;
+	bool has_transformed = false;
+	Plane		planes[6];
 
 private:
 

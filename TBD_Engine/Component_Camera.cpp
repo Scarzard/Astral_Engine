@@ -44,7 +44,7 @@ void ComponentCamera::Update()
 	}
 
 
-	if(frustrum_view)
+	if(frustum_view)
 		DrawFrustum();
 }
 
@@ -90,6 +90,8 @@ void ComponentCamera::SetFOV(float fov)
 {
 	frustum.verticalFov = DEGTORAD * fov;
 	frustum.horizontalFov = 2.0f * atanf(aspect_ratio * tanf(frustum.verticalFov * 0.5f));
+
+	//App->renderer3D->OnResize(frustum.horizontalFov, frustum.verticalFov);
 }
 
 void ComponentCamera::SetAspectRatio(float aspect)
@@ -107,6 +109,8 @@ void ComponentCamera::SetNearPlane(float near_plane)
 		near_plane = 0.1f;
 
 	frustum.nearPlaneDistance = near_plane;
+
+	//App->renderer3D->OnResize(frustum.nearPlaneDistance, frustum.farPlaneDistance);
 }
 
 void ComponentCamera::SetFarPlane(float far_plane)
@@ -115,6 +119,8 @@ void ComponentCamera::SetFarPlane(float far_plane)
 		far_plane = frustum.nearPlaneDistance + 1.0f;
 
 	frustum.farPlaneDistance = far_plane;
+
+	//App->renderer3D->OnResize(frustum.horizontalFov, frustum.verticalFov);
 }
 
 void ComponentCamera::DrawFrustum()
@@ -131,4 +137,9 @@ void ComponentCamera::DrawFrustum()
 
 	glEnd();
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+void ComponentCamera::UpdateMatrixView()
+{
+	frustum.GetPlanes(planes);
 }
