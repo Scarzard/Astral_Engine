@@ -100,7 +100,7 @@ void GameObject::Update(float dt)
 	{
 		if (this->GetComponentTransform()->has_transformed)
 			TransformGlobal(this);
-
+		
 		UpdateBoundingBox();
 
 		if (App->gui->conf_window->draw_aabb)
@@ -183,7 +183,9 @@ void GameObject::RemoveChild(GameObject* GO)
 
 void GameObject::UpdateBoundingBox()
 {
+	
 	ComponentMesh* mesh = this->GetComponentMesh();
+	
 	if (mesh)
 	{
 		obb = mesh->GetBoundingBox();

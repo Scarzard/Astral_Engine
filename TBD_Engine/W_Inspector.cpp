@@ -42,13 +42,14 @@ bool W_Inspector::Draw()
 					if (selected_GO->is_static)
 					{
 						//TODO: add mesh to static_meshes && update Octree ?
-
+						App->scene_intro->static_meshes.push_back(mesh);
+						App->scene_intro->Octree->update_tree = true;
 					}
 					else
 					{
 						//TODO: remove mesh from static_meshes && update Octree 
 						
-						/*for (std::vector<ComponentMesh*>::iterator it = App->scene_intro->static_meshes.begin(); it != App->scene_intro->static_meshes.end(); it++)
+						for (std::vector<ComponentMesh*>::iterator it = App->scene_intro->static_meshes.begin(); it != App->scene_intro->static_meshes.end(); it++)
 						{
 							if ((*it)->my_GO->id == selected_GO->id)
 							{
@@ -56,7 +57,7 @@ bool W_Inspector::Draw()
 								break;
 							}
 						}
-						App->scene_intro->Octree->UpdateTree();*/
+						App->scene_intro->Octree->update_tree = true;
 					}
 				}
 				

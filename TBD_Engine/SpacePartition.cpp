@@ -25,8 +25,13 @@ void Tree::UpdateTree()
 
 	for (std::vector<ComponentMesh*>::iterator it = App->scene_intro->static_meshes.begin(); it != App->scene_intro->static_meshes.end(); it++)
 	{
-		if((*it) != nullptr)
-			CalculateNewSize((*it)->aabb.minPoint, (*it)->aabb.maxPoint);
+		if ((*it) != nullptr)
+		{
+			AABB box(float3(0, 0, 0), float3(0, 0, 0));
+			box.Enclose((*it)->aabb.Transform((*it)->my_GO->GetComponentTransform()->GetGlobalTransform()));
+			CalculateNewSize(box.minPoint, box.maxPoint);
+		}
+			
 	}
 
 	AABB aabb(min_point, max_point);
@@ -107,7 +112,7 @@ void TreeNode::DrawNode()
 {
 	glLineWidth(5.0f);
 	glBegin(GL_LINES);
-	glColor4f(Red.r, Red.g, Red.b, Red.a);
+	glColor4f(Yellow.r, Yellow.g, Yellow.b, Yellow.a);
 
 	for (int i = 0; i < 12; i++)
 	{

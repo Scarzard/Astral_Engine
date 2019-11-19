@@ -95,7 +95,6 @@ update_status ModuleSceneIntro::Update(float dt)
 		Octree->Root->Split();
 	}
 
-
 	return want_to_quit;
 }
 

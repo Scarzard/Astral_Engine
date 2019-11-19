@@ -33,13 +33,6 @@ public:
 	void SetChild(GameObject* GO);
 	void RemoveChild(GameObject* GO);
 
-	//BBs
-	AABB aabb;
-	OBB obb;
-	void UpdateBoundingBox();
-	void RenderBoundingBox();
-
-
 public:
 
 	bool active = true;
@@ -52,6 +45,15 @@ public:
 	GameObject* parent = nullptr;
 	std::vector<Component*> components;
 	std::vector<GameObject*> children;
+
+
+	//BBs
+	AABB aabb;
+private:
+	void UpdateBoundingBox();
+	void RenderBoundingBox();
+	bool updated_aabb = false;
+	OBB obb;
 };
 
 #endif
