@@ -1,6 +1,7 @@
 #include "SpacePartition.h"
 #include "SDL/include/SDL_opengl.h"
 #include "Color.h"
+#include "Application.h"
 
 #include "mmgr/mmgr.h"
 
@@ -10,15 +11,64 @@ Tree::Tree(AABB aabb)
 	Root = new TreeNode(aabb);
 }
 
-Tree::Tree(float3 minPoint, float3 maxPoint) 
-{
-	Root = new TreeNode();
-	Root->box.minPoint = minPoint;
-	Root->box.maxPoint = maxPoint;
-}
-
 Tree::~Tree()
 {
+}
+
+void Tree::UpdateTree()
+{
+	min_point = float3::zero;
+	max_point = float3::zero;
+
+	if(Root != nullptr)
+		Root->CleanUp(Root);
+
+	for (std::vector<ComponentMesh*>::iterator it = App->scene_intro->static_meshes.begin(); it != App->scene_intro->static_meshes.end(); it++)
+	{
+		if((*it) != nullptr)
+			CalculateNewSize((*it)->aabb.minPoint, (*it)->aabb.maxPoint);
+	}
+
+	AABB aabb(min_point, max_point);
+	Root = new TreeNode(aabb);
+
+	update_tree = false;
+}
+
+void Tree::CalculateNewSize(float3 AABB_min_point, float3 AABB_max_point)
+{
+	if (min_point.x == 0 && min_point.y == 0 && min_point.z == 0 && max_point.x == 0 && max_point.y == 0 && max_point.z == 0)
+	{
+		min_point = AABB_min_point;
+		max_point = AABB_max_point;
+	}
+	else 
+	{
+		if (AABB_min_point.x < min_point.x)
+		{
+			min_point.x = AABB_min_point.x;
+		}
+		if (AABB_min_point.y < min_point.z)
+		{
+			min_point.z = AABB_min_point.y;
+		}
+		if (AABB_min_point.z < min_point.y)
+		{
+			min_point.y = AABB_min_point.z;
+		}
+		if (AABB_max_point.x > max_point.x)
+		{
+			max_point.x = AABB_max_point.x;
+		}
+		if (AABB_max_point.y > max_point.z)
+		{
+			max_point.z = AABB_max_point.y;
+		}
+		if (AABB_max_point.z > max_point.y)
+		{
+			max_point.y = AABB_max_point.z;
+		}
+	}
 }
 
 void Tree::DrawTree(TreeNode* node)
@@ -35,10 +85,10 @@ void Tree::DrawTree(TreeNode* node)
 	}
 }
 
-
 void Tree::CleanUp()
 {
 	Root->CleanUp(Root);
+	Root = nullptr;
 
 	delete this;
 }
@@ -47,10 +97,6 @@ void Tree::CleanUp()
 TreeNode::TreeNode(AABB aabb)
 {
 	box = aabb;
-}
-
-TreeNode::TreeNode()
-{
 }
 
 TreeNode::~TreeNode()

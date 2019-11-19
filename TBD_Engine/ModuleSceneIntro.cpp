@@ -44,8 +44,9 @@ bool ModuleSceneIntro::Start()
 
 	App->mesh_loader->LoadFile("Assets/Street/Street environment_V01.fbx");
 
-
-	Octree = new Tree(float3(-10, -10, -10), float3(10, 10, 10));
+	AABB box(float3(0, 0, 0), float3(0, 0, 0)); 
+	box.SetNegativeInfinity();
+	Octree = new Tree(box);
 	Octree->Root->Split();
 
 	return ret;
@@ -88,6 +89,11 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	root->Update(dt);
 
+	if (Octree->update_tree)
+	{
+		Octree->UpdateTree();
+		Octree->Root->Split();
+	}
 
 
 	return want_to_quit;
@@ -126,6 +132,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//Draw GameObjects Recursively
 	DrawRecursively(root);
 
+	//Draw Octree Recursively
 	Octree->DrawTree(Octree->Root);
 
 	glColor3ub(255, 255, 255);

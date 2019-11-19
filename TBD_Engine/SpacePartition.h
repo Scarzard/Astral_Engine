@@ -10,15 +10,19 @@ class Tree
 {
 public:
 	Tree(AABB aabb);
-	Tree(float3 minPoint, float3 maxPoint);
 	~Tree();
 
 	void DrawTree(TreeNode* node);
-
 	void CleanUp();
+
+	void UpdateTree();
+	void CalculateNewSize(float3 min_point, float3 max_point);
 
 public:
 	TreeNode* Root;
+	float3 min_point, max_point;
+
+	bool update_tree = true;
 };
 
 
@@ -27,7 +31,6 @@ public:
 class TreeNode
 {
 public:
-	TreeNode();
 	TreeNode(AABB aabb);
 	~TreeNode();
 

@@ -101,9 +101,11 @@ void GameObject::Update(float dt)
 		if (this->GetComponentTransform()->has_transformed)
 			TransformGlobal(this);
 
+		UpdateBoundingBox();
+
 		if (App->gui->conf_window->draw_aabb)
 		{
-			UpdateBoundingBox();
+			
 			RenderBoundingBox();
 		}
 	}

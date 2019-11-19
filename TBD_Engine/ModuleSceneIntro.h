@@ -36,4 +36,6 @@ public:
 	uint numGO = 0;
 	GameObject* root = nullptr;
 	Tree* Octree = nullptr;
+
+	std::vector<ComponentMesh*> static_meshes;
 };

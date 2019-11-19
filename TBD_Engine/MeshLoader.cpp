@@ -242,6 +242,8 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 			//ex.Export(name, output_file, obj->GetComponentMesh());
 			//ex.Export(name, output_file, obj->GetComponentTransform());
 			
+			App->scene_intro->static_meshes.push_back(mesh);
+
 		}
 	}
 	

@@ -43,6 +43,8 @@ public:
 public:
 
 	bool active = true;
+	bool is_static = true;
+
 	uint id = -1;
 	std::string name;
 	std::string unactive_name;
