@@ -48,25 +48,25 @@ void Tree::CalculateNewSize(float3 AABB_min_point, float3 AABB_max_point)
 		{
 			min_point.x = AABB_min_point.x;
 		}
-		if (AABB_min_point.y < min_point.z)
+		if (AABB_min_point.y < min_point.y)
 		{
-			min_point.z = AABB_min_point.y;
+			min_point.y = AABB_min_point.y;
 		}
-		if (AABB_min_point.z < min_point.y)
+		if (AABB_min_point.z < min_point.z)
 		{
-			min_point.y = AABB_min_point.z;
+			min_point.z = AABB_min_point.z;
 		}
 		if (AABB_max_point.x > max_point.x)
 		{
 			max_point.x = AABB_max_point.x;
 		}
-		if (AABB_max_point.y > max_point.z)
+		if (AABB_max_point.y > max_point.y)
 		{
-			max_point.z = AABB_max_point.y;
+			max_point.y= AABB_max_point.y;
 		}
-		if (AABB_max_point.z > max_point.y)
+		if (AABB_max_point.z > max_point.z)
 		{
-			max_point.y = AABB_max_point.z;
+			max_point.z = AABB_max_point.z;
 		}
 	}
 }
