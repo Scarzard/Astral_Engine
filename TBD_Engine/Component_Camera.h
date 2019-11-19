@@ -35,7 +35,7 @@ public:
 
 public:
 	math::Frustum frustum;
-	bool frustrum_view = true;
+	bool frustrum_view = false;
 
 private:
 

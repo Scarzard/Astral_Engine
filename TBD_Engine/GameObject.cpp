@@ -15,6 +15,7 @@ GameObject::GameObject(std::string name)
 	this->active = true;
 
 	CreateComponent(Component::ComponentType::Transform);
+	CreateComponent(Component::ComponentType::Camera);
 }
 
 GameObject::~GameObject()
@@ -115,9 +116,16 @@ void GameObject::Update(float dt)
 	if (this->GetComponentTransform()->has_transformed)
 		TransformGlobal(this);
 
+	//Game Object iterative update
 	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
 	{
 		(*it)->Update(dt);
+	}
+
+	//Component iterative update
+	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); ++it)
+	{
+		(*it)->Update();
 	}
 
 	UpdateBoundingBox();
