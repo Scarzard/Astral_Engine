@@ -15,20 +15,35 @@ public:
 	bool CleanUp();
 
 	//Moving camera
+	void Move(const float3 &movement);
+	void LookAt(const float3 &spot, float dist = 0.0f);
+	void CenterToObject(GameObject* obj);
 
+	//Getters
 	float3 GetPosition() const;
-	void Look(const float3& position);
-	void CenterOn(const float3& position, float distance);
+	float* GetOpenGLView() const;
+	float* GetOpenGLProjection() const;
+	bool* GetProjectionUpdateFlag() const;
+	ComponentCamera* GetActiveCamera() const;
+	const Frustum& GetActiveFrustum() const;
+
+	bool Intersects(const AABB& refBox) const;
 
 private:
 
-	void Move(float dt);
+	// Input Checks
+	void MoveCamera(float& movSpeed);
+	void DragCamera(float delta_x, float delta_y);
+	void Zoom(float delta_z);
+	bool FirstPersonCamera(float& movSpeed);
+
+	// Camera Rotations
 	void Orbit(float motion_x, float motion_y);
-	void LookAt(float motion_x, float motion_y);
-	void Zoom(float zoom);
+	void Rotate(float motion_x, float motion_y);
 
 public:
 	float3 looking_at;
 	ComponentCamera* main_camera = nullptr;
+	ComponentCamera* active_camera = nullptr;
 	bool looking = false;
 };

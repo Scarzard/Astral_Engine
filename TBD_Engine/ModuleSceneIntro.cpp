@@ -29,14 +29,6 @@ bool ModuleSceneIntro::Init()
 	root = CreateGameObject();
 	root->name = "root";
 
-	//GameObject* camera = new GameObject(*root);
-	//camera->CreateComponent(Component::ComponentType::Camera);
-	//camera->name = "Main Camera";
-
-	camera = CreateGameObject();
-	camera->name = "Main Camera";
-	camera->CreateComponent(Component::ComponentType::Camera);
-
 	return ret;
 }
 
@@ -46,7 +38,7 @@ bool ModuleSceneIntro::Start()
 	App->LogInConsole("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(float3(1.0f, 1.0f, 0.0f));
+	App->camera->Move(float3(15.0f, 15.0f, 15.0f));
 	App->camera->LookAt(float3(0, 0, 0));
 
 	App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");

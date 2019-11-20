@@ -16,14 +16,18 @@ public:
 	~ComponentCamera();
 
 	void Update();
+	void LookAt(const float3& position);
 
 	//---------Getters------------
 	float GetFOV() const;
 	float GetNearPlane() const;
 	float GetFarPlane() const;
 	float GetAspectRatio() const;
-	float* GetViewMatrix();
-	float* GetProjectionMatrix();
+
+	float4x4 GetViewMatrix() const;
+	float4x4 GetProjectionMatrix() const;
+	float4x4 GetOpenGLView() const;
+	float4x4 GetOpenGLProjection() const;
 
 	//---------Setters------------
 	void SetFOV(float fov);
@@ -32,21 +36,14 @@ public:
 	void SetFarPlane(float far_plane);
 
 	void DrawFrustum();
-	void OnUpdateTransform(const float4x4& global, const float4x4& parent_global = float4x4::identity);
-
-private:
-	void UpdateMatrixView();
 
 public:
-	math::Frustum frustum;
+	Frustum frustum;
 	bool frustum_view = false;
 	bool has_transformed = false;
-	Plane		planes[6];
 
 private:
 
-	float4x4 view_mat;
-	float4x4 projection_mat;
 	float aspect_ratio = 0.0f;
 	bool culling = false;
 };

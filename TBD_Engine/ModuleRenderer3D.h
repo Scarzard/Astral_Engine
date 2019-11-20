@@ -19,7 +19,6 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
-	void UpdateProjectionMatrix();
 
 	void NewVertexBuffer(float3* vertex, uint &size, uint &id_vertex);
 	void NewIndexBuffer(uint* index, uint &size, uint &id_index);
@@ -31,6 +30,5 @@ public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	ComponentCamera* camera = nullptr;
 			
 };

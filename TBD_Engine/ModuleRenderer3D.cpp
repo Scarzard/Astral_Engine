@@ -145,22 +145,28 @@ bool ModuleRenderer3D::Start()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-
-
-	// light 0 on cam pos
-	//lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
-
-	if (camera->has_transformed)
+	bool* update_camera = App->camera->GetProjectionUpdateFlag();
+	if (*update_camera)
 	{
-		UpdateProjectionMatrix();
-		camera->has_transformed = false;
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+
+		glLoadMatrixf((GLfloat*)App->camera->GetOpenGLProjection());
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+
+		*update_camera = false;
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(camera->GetViewMatrix());
+	glLoadMatrixf(App->camera->GetOpenGLView());
+
+	// light 0 on cam pos
+//lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -198,25 +204,11 @@ void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	App->camera->main_camera->SetAspectRatio((float)width / (float)height);
-	glLoadMatrixf(App->camera->main_camera->GetProjectionMatrix());
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-}
-
-void ModuleRenderer3D::UpdateProjectionMatrix()
-{
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	glLoadMatrixf(App->scene_intro->camera->GetComponentCamera()->GetProjectionMatrix());
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	ComponentCamera* tmp = App->camera->GetActiveCamera();
+	if (tmp != nullptr)
+		tmp->has_transformed = true;
+	else
+		SDL_assert(false);
 }
 
 void ModuleRenderer3D::NewVertexBuffer(float3 * vertex, uint &size, uint &id_vertex)
@@ -287,7 +279,6 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 		}
 
 	}
-	
 	
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
