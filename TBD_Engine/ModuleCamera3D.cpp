@@ -10,10 +10,7 @@
 ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 {
 	main_camera = new ComponentCamera();
-
-	main_camera->frustum.AspectRatio();
-	main_camera
-	Move({ 5.0f, 5.0f, 5.0f });
+	
 	//LookAt({ -100.0f, -100.0f, -100.0f });
 }
 
@@ -164,3 +161,24 @@ void ModuleCamera3D::Move(const float3 &Movement)
 {
 	main_camera->frustum.Translate(Movement);
 }
+
+
+float3 ModuleCamera3D::GetPosition() const
+{
+	return main_camera->frustum.pos;
+}
+
+void ModuleCamera3D::Look(const float3 & position)
+{
+}
+
+void ModuleCamera3D::CenterOn(const float3 & position, float distance)
+{
+}
+
+void ModuleCamera3D::Orbit(float motion_x, float motion_y)
+{
+}
+
+void ModuleCamera3D::Zoom(float zoom)
+{
