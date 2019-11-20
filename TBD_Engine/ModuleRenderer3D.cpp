@@ -270,7 +270,7 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 				glVertex3f(mesh->face_center[j].x, mesh->face_center[j].y, mesh->face_center[j].z);
 				glVertex3f(mesh->face_center[j].x + mesh->face_normal[j].x, mesh->face_center[j].y + mesh->face_normal[j].y, mesh->face_center[j].z + mesh->face_normal[j].z);
 			}
-
+			glColor4f(White.r, White.g, White.b, White.a);
 			
 			glEnd();
 		}
