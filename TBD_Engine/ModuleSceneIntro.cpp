@@ -47,8 +47,8 @@ bool ModuleSceneIntro::Start()
 	box.SetNegativeInfinity();
 	Octree = new Tree(box);
 
-	//App->mesh_loader->LoadFile("Assets/Street/Street environment_V01.fbx");
-	App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
+	App->mesh_loader->LoadFile("Assets/Street/Street environment_V01.fbx");
+	//App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
 	return ret;
 }
 
@@ -85,6 +85,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	{
 		App->gui->ins_window->selected_GO->DeleteGO(App->gui->ins_window->selected_GO, true);
 		App->gui->ins_window->selected_GO = nullptr;
+		Octree->update_tree = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
@@ -98,11 +99,13 @@ update_status ModuleSceneIntro::Update(float dt)
 	{
 		Octree->UpdateTree();
 
-		//Insert all the contents to the new octree
+		//Insert all the contents to the octree
 		for (std::vector<ComponentMesh*>::iterator it = static_meshes.begin(); it != static_meshes.end(); it++)
 		{
-			Octree->Insert(*it);
+			if((*it)->my_GO->name.find("dummy") == std::string::npos)
+				Octree->Insert(*it);
 		}
+
 		Octree->update_tree = false;
 	}
 

@@ -111,6 +111,7 @@ void Tree::CleanUp()
 TreeNode::TreeNode(AABB aabb)
 {
 	box = aabb;
+	this->is_leaf = true;
 }
 
 TreeNode::~TreeNode()
@@ -119,9 +120,9 @@ TreeNode::~TreeNode()
 
 void TreeNode::DrawNode() const
 {
-	glLineWidth(5.0f);
+	glLineWidth(1.0f);
 	glBegin(GL_LINES);
-	glColor4f(Yellow.r, Yellow.g, Yellow.b, Yellow.a);
+	glColor4f(Blue.r, Blue.g, Blue.b, Blue.a);
 
 	for (int i = 0; i < 12; i++)
 	{
@@ -150,7 +151,7 @@ void TreeNode::Node_Insert(ComponentMesh* mesh)
 	{
 		for (std::vector<TreeNode*>::iterator it = childs.begin(); it != childs.end(); ++it)
 		{
-			Node_Insert(mesh);
+			(*it)->Node_Insert(mesh);
 		}
 	}
 
@@ -175,7 +176,7 @@ void TreeNode::CleanUp(TreeNode* node)
 
 bool TreeNode::isNodeFull()
 {
-	return (meshes.size() == Bucket);
+	return (meshes.size() == BUCKET);
 }
 
 

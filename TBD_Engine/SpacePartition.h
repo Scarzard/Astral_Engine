@@ -3,6 +3,8 @@
 
 #include "MathGeoLib/include/MathGeoLib.h"
 
+#define BUCKET 10
+
 class GameObject;
 class TreeNode;
 class ComponentMesh;
@@ -51,8 +53,6 @@ public:
 	AABB box;
 	std::vector<TreeNode*> childs;
 	std::vector<ComponentMesh*> meshes;
-
-	const int Bucket = 4;
 	int level = 0;
 
 	bool is_leaf = true;

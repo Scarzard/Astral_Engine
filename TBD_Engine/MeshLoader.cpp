@@ -150,9 +150,9 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 		{
 			node_name = new_mesh->mName.C_Str();
 			if (node_name == "")
-				node_name = obj->name + "_submesh";
+				node_name = obj->name + "dummy";
 			if (i > 0)
-				node_name.append("(" + std::to_string(i) + ")");
+				node_name = obj->name + "_submesh";
 			child = App->scene_intro->CreateGameObject();
 			obj->SetChild(child);
 			child->name = node_name;
