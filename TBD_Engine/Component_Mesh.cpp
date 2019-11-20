@@ -22,6 +22,32 @@ const AABB& ComponentMesh::GetBoundingBox()
 	return aabb;
 }
 
+void ComponentMesh::UpdateAABB()
+{
+	aabb.SetNegativeInfinity();
+	aabb.Enclose(vertex, num_vertex);
+}
+
+void ComponentMesh::DrawAABB()
+{
+	int num_v = aabb.NumVerticesInEdgeList();
+	math::float3* vertices = new math::float3[num_v];
+	aabb.ToEdgeList((float3*)vertices);
+
+	glBegin(GL_LINES);
+	glColor4f(Green.r, Green.g, Green.b, Green.a);
+
+	for (uint i = 0; i < aabb.NumVerticesInEdgeList(); i++)
+	{
+		glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
+	}
+
+	delete[] vertices;
+
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glEnd();
+}
+
 void ComponentMesh::CleanUp()
 {
 

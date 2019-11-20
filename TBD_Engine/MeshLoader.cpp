@@ -253,8 +253,7 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 			}
 		}
 		//Initiate bounding box when creating our mesh
-		mesh->aabb.SetNegativeInfinity();
-		mesh->aabb = mesh->aabb.MinimalEnclosingAABB(mesh->vertex, mesh->num_vertex);
+		mesh->UpdateAABB();
 
 
 		//Generate the buffers 

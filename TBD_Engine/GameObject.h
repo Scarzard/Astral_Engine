@@ -47,13 +47,8 @@ public:
 	std::vector<GameObject*> children;
 
 
-	//BBs
-	AABB aabb;
 private:
-	void UpdateBoundingBox();
 	void RenderBoundingBox();
-	bool updated_aabb = false;
-	OBB obb;
 };
 
 #endif

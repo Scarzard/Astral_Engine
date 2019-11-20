@@ -15,6 +15,8 @@ public:
 	virtual ~ComponentMesh();
 
 	const AABB& GetBoundingBox();
+	void UpdateAABB();
+	void DrawAABB();
 
 	void CleanUp();
 	

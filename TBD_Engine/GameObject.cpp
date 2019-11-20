@@ -100,13 +100,8 @@ void GameObject::Update(float dt)
 	{
 		if (this->GetComponentTransform()->has_transformed)
 			TransformGlobal(this);
-		
-		UpdateBoundingBox();
 
-		if (App->gui->conf_window->draw_aabb)
-		{
-			RenderBoundingBox();
-		}
+		
 	}
 
 	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
@@ -179,39 +174,6 @@ void GameObject::RemoveChild(GameObject* GO)
 			break;
 		}
 	}
-}
-
-void GameObject::UpdateBoundingBox()
-{
-	
-	ComponentMesh* mesh = this->GetComponentMesh();
-	
-	if (mesh)
-	{
-		obb = mesh->GetBoundingBox();
-		obb.Transform(this->GetComponentTransform()->GetGlobalTransform());
-
-		aabb.SetNegativeInfinity();
-		aabb.Enclose(obb);
-	}
-}
-
-void GameObject::RenderBoundingBox()
-{
-	glBegin(GL_LINES);
-
-	//glLineWidth doesnt work?
-	glLineWidth(1.0f);
-
-	glColor4f(Green.r, Green.g, Green.b, Green.a);
-
-	for (uint i = 0; i < 12; i++)
-	{
-		glVertex3f(aabb.Edge(i).a.x, aabb.Edge(i).a.y, aabb.Edge(i).a.z);
-		glVertex3f(aabb.Edge(i).b.x, aabb.Edge(i).b.y, aabb.Edge(i).b.z);
-	}
-	glColor3ub(255, 255, 255);
-	glEnd();
 }
 
 void GameObject::CleanUp()
