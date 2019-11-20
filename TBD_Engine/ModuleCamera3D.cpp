@@ -43,47 +43,30 @@ update_status ModuleCamera3D::Update(float dt)
 	if (App->gui->is_game_focused)
 	{
 		float currMovSpeed = 4.0f * dt;
-		float slowingFactor = 0.7;
+		float slowingFactor = 2.0;
 
-		float3 speed = {(float)-App->input->GetMouseXMotion() * slowingFactor *  dt, (float)App->input->GetMouseYMotion() * slowingFactor * dt, (float)App->input->GetMouseZ() * slowingFactor * dt };
+		float3 speed = {(float)-App->input->GetMouseXMotion() * slowingFactor *  dt, (float)-App->input->GetMouseYMotion() * slowingFactor * dt, (float)App->input->GetMouseZ() * slowingFactor * dt };
 
-		// Mouse Button Controls
-		if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT || App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT || App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT|| speed.z != 0.f)
+		if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 		{
-			if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT&& App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_IDLE) 
-			{	
-				DragCamera(speed.x / 5.f, speed.y / 5.f);
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
-			{
-				if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
-					Orbit(speed.x, speed.y);	// Rotate Camera around Reference
-				else if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) 
-					Zoom(-speed.y);		// Zoom Camera
-			}
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+				Orbit(speed.x, speed.y);											//Orbit center
 			else if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-			{	// Rotate Camera around Self
-				Rotate(speed.x, speed.y);
-
-				if (FirstPersonCamera(currMovSpeed))
-					Zoom(speed.z);	// Mouse Scroll: Forward/Backwrads
-			}
+				Zoom(-speed.y);		                                                // Zoom Camera
 		}
 
-		// Regular Controls
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT)
-		{	// If First Person disabled...
-			MoveCamera(currMovSpeed);		// Arrow Key Controls
-			Zoom(speed.z);					// Mouse Scroll: Forward/Backwrads	// Mouse Scroll: Zoom
+		else if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+		{
+			Rotate(speed.x / slowingFactor, speed.y / slowingFactor);				//Rotate normally
+			MoveCamera(currMovSpeed);												//WASD movement
 		}
+
+		
 
 		// Center camera to object
-		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {	// Focus camera to position from a certain dist and angle
-			if (App->gui->ins_window->selected_GO == nullptr) 
-			{
-				return UPDATE_CONTINUE;
-			}
-			else
+		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) 
+		{	
+			if (App->gui->ins_window->selected_GO != nullptr) 
 			{
 				CenterToObject(App->gui->ins_window->selected_GO);
 			}
@@ -165,27 +148,6 @@ bool ModuleCamera3D::Intersects(const AABB & refBox) const
 
 void ModuleCamera3D::MoveCamera(float & movSpeed)
 {
-}
-
-void ModuleCamera3D::DragCamera(float delta_x, float delta_y)
-{
-	float3 mov(float3::zero);
-
-	mov += main_camera->frustum.WorldRight() * delta_x;
-	mov -= main_camera->frustum.up * delta_y;
-
-	main_camera->frustum.Translate(mov * 100.f);
-	looking_at += mov * 100.f;
-}
-
-void ModuleCamera3D::Zoom(float delta_z)
-{
-	main_camera->frustum.pos += main_camera->frustum.front * delta_z;
-}
-
-bool ModuleCamera3D::FirstPersonCamera(float & movSpeed)
-{
-	bool ret = false;
 	float3 mov(float3::zero);
 
 	float3 right(main_camera->frustum.WorldRight());
@@ -208,8 +170,29 @@ bool ModuleCamera3D::FirstPersonCamera(float & movSpeed)
 
 	if (!mov.Equals(float3::zero)) {
 		main_camera->frustum.Translate(mov * movSpeed);
-		ret = true;
 	}
+}
+
+void ModuleCamera3D::DragCamera(float delta_x, float delta_y)
+{
+	float3 mov(float3::zero);
+
+	mov += main_camera->frustum.WorldRight() * delta_x;
+	mov -= main_camera->frustum.up * delta_y;
+
+	main_camera->frustum.Translate(mov * 100.f);
+	looking_at += mov * 100.f;
+}
+
+void ModuleCamera3D::Zoom(float delta_z)
+{
+	main_camera->frustum.pos += main_camera->frustum.front * delta_z;
+}
+
+bool ModuleCamera3D::FirstPersonCamera(float & movSpeed)
+{
+	bool ret = false;
+	
 
 	return ret;
 }
