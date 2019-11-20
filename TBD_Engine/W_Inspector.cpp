@@ -78,7 +78,7 @@ bool W_Inspector::Draw()
 				{
 					ComponentTransform* transform = selected_GO->GetComponentTransform();
 
-					if (ImGui::Button("Reset transform")) transform->ResetPosition();
+					if (ImGui::Button("Reset transform")) if(!selected_GO->is_static)transform->ResetPosition();
 					if (ImGui::IsItemHovered())
 						ImGui::SetTooltip(" Position: (0, 0, 0) \n Rotation: (0, 0, 0) \n Scale:    (1, 1, 1)");
 

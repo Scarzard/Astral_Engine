@@ -1,4 +1,5 @@
 #include "Component_Mesh.h"
+#include "Application.h"
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
@@ -23,6 +24,16 @@ const AABB& ComponentMesh::GetBoundingBox()
 
 void ComponentMesh::CleanUp()
 {
+
+	for (std::vector<ComponentMesh*>::iterator iterator = App->scene_intro->static_meshes.begin(); iterator != App->scene_intro->static_meshes.end(); iterator++)
+	{
+		if ((*iterator)->my_GO->id == this->my_GO->id)
+		{
+			App->scene_intro->static_meshes.erase(iterator);
+			break;
+		}
+	}
+
 	glDeleteBuffers(1, (GLuint*)&id_index);
 	glDeleteBuffers(1, (GLuint*)&id_vertex);
 	glDeleteBuffers(1, (GLuint*)&id_tex_coords);

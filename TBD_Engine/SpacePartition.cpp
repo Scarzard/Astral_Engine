@@ -36,8 +36,6 @@ void Tree::UpdateTree()
 
 	AABB aabb(min_point, max_point);
 	Root = new TreeNode(aabb);
-
-	update_tree = false;
 }
 
 void Tree::CalculateNewSize(float3 AABB_min_point, float3 AABB_max_point)
@@ -76,6 +74,17 @@ void Tree::CalculateNewSize(float3 AABB_min_point, float3 AABB_max_point)
 	}
 }
 
+void Tree::Insert(ComponentMesh * mesh)
+{
+	if (mesh == nullptr)
+	{
+		App->LogInConsole("Can't Insert mesh in Octree. Mesh is nullptr");
+		return;
+	}
+
+	Root->Node_Insert(mesh);
+}
+
 void Tree::DrawTree(TreeNode* node)
 {
 	node->DrawNode();
@@ -108,7 +117,7 @@ TreeNode::~TreeNode()
 {
 }
 
-void TreeNode::DrawNode()
+void TreeNode::DrawNode() const
 {
 	glLineWidth(5.0f);
 	glBegin(GL_LINES);
@@ -121,6 +130,30 @@ void TreeNode::DrawNode()
 	}
 	glEnd();
 	glLineWidth(1.0f);
+
+}
+
+void TreeNode::Node_Insert(ComponentMesh* mesh)
+{
+	if (this->is_leaf)
+	{
+		if (isNodeFull() == false)
+		{
+			meshes.push_back(mesh);
+		}
+		else
+		{
+			Split();
+		}
+	}
+	else
+	{
+		for (std::vector<TreeNode*>::iterator it = childs.begin(); it != childs.end(); ++it)
+		{
+			Node_Insert(mesh);
+		}
+	}
+
 
 }
 
@@ -140,8 +173,19 @@ void TreeNode::CleanUp(TreeNode* node)
 	delete node;
 }
 
+bool TreeNode::isNodeFull()
+{
+	return (meshes.size() == Bucket);
+}
+
+
+
 void TreeNode::Split()
 {
+	this->is_leaf = false;
+
+	App->LogInConsole("Splitted node with level %i", level);
+
 	//OCTREE --> Making an AABB for each Node (8 nodes)
 	AABB temp_aabb;
 	//TOP FAR LEFT - NODE 1
@@ -191,4 +235,24 @@ void TreeNode::Split()
 	temp_aabb.maxPoint = { box.MinX(), box.MinY(), box.MinZ() };
 	TreeNode* node8 = new TreeNode(temp_aabb);
 	childs.push_back(node8);
+
+
+
+	for (std::vector<ComponentMesh*>::iterator it = this->meshes.begin(); it != this->meshes.end(); it++)
+	{
+		if ((*it) != nullptr)
+		{
+			for (int i = 0; i < childs.size(); i++)
+			{
+				childs[i]->level = level + 1;
+				if (childs[i]->box.Intersects((*it)->aabb.ToOBB().MinimalEnclosingAABB()))
+				{
+					childs[i]->Node_Insert(*it);
+				}
+			}
+		}
+		
+	}
+	meshes.clear();
+
 }

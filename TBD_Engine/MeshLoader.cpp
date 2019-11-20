@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "ModuleSceneIntro.h"
 #include "Importer.h"
+#include "SpacePartition.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -77,6 +78,8 @@ void MeshLoader::LoadFile(const char* full_path)
 		aiReleaseImport(scene);
 		App->LogInConsole("Succesfully loaded mesh with path: %s", full_path);
 
+		if(App->scene_intro->Octree != nullptr) //if octree is created
+			App->scene_intro->Octree->update_tree = true;
 	}
 	else
 	{
@@ -177,10 +180,6 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 			directory.append(path.C_Str());
 
 			child->GetComponentTexture()->texture = App->tex_loader->LoadTextureFromPath(directory.c_str());
-		}
-		else
-		{
-			child->GetComponentTexture()->texture = App->tex_loader->DefaultTexture;
 		}
 
 		mesh->num_vertex = new_mesh->mNumVertices;

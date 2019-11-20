@@ -5,6 +5,7 @@
 
 class GameObject;
 class TreeNode;
+class ComponentMesh;
 // ----------------------------------------------- TREE
 class Tree
 {
@@ -17,6 +18,8 @@ public:
 
 	void UpdateTree();
 	void CalculateNewSize(float3 min_point, float3 max_point);
+
+	void Insert(ComponentMesh* mesh);
 
 public:
 	TreeNode* Root;
@@ -36,17 +39,23 @@ public:
 
 	void Split();
 
-	void DrawNode();
+	void DrawNode() const;
+	void Node_Insert(ComponentMesh* mesh);
 
 	void CleanUp(TreeNode* node);
+
+	bool isNodeFull();
 
 public:
 
 	AABB box;
 	std::vector<TreeNode*> childs;
-	std::vector<GameObject*> my_GOs;
+	std::vector<ComponentMesh*> meshes;
 
-	bool isNode_bottom;
+	const int Bucket = 4;
+	int level = 0;
+
+	bool is_leaf = true;
 };
 
 

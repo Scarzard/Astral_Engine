@@ -42,13 +42,13 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	App->mesh_loader->LoadFile("Assets/Street/Street environment_V01.fbx");
-
+	//---- Create Octree -----------------------
 	AABB box(float3(0, 0, 0), float3(0, 0, 0)); 
 	box.SetNegativeInfinity();
 	Octree = new Tree(box);
-	Octree->Root->Split();
 
+	//App->mesh_loader->LoadFile("Assets/Street/Street environment_V01.fbx");
+	App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
 	return ret;
 }
 
@@ -87,12 +87,23 @@ update_status ModuleSceneIntro::Update(float dt)
 		App->gui->ins_window->selected_GO = nullptr;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
+	}
+
 	root->Update(dt);
 
 	if (Octree->update_tree)
 	{
 		Octree->UpdateTree();
-		Octree->Root->Split();
+
+		//Insert all the contents to the new octree
+		for (std::vector<ComponentMesh*>::iterator it = static_meshes.begin(); it != static_meshes.end(); it++)
+		{
+			Octree->Insert(*it);
+		}
+		Octree->update_tree = false;
 	}
 
 	return want_to_quit;
@@ -107,19 +118,19 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 		glBegin(GL_LINES);
 		glColor3ub(255, 255, 255);
-		for (float i = -10; i <= 10; ++i)
+		for (float i = -100; i <= 100; i+=5)
 		{
 			glVertex3f(i, 0.f, 0.f);
-			glVertex3f(i, 0, 10.f);
+			glVertex3f(i, 0, 100.f);
 
 			glVertex3f(0.f, 0.f, i);
-			glVertex3f(10.f, 0, i);
+			glVertex3f(100.f, 0, i);
 
 			glVertex3f(i, 0.f, 0.f);
-			glVertex3f(i, 0, -10.f);
+			glVertex3f(i, 0, -100.f);
 
 			glVertex3f(0.f, 0.f, i);
-			glVertex3f(-10.f, 0, i);
+			glVertex3f(-100.f, 0, i);
 
 		}
 		glColor3ub(255, 255, 255);
