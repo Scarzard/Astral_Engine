@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "ModuleSceneIntro.h"
+
 #include "Application.h"
 
 #include "glew/include/GL/glew.h"
@@ -17,7 +18,6 @@ GameObject::GameObject(std::string name)
 	this->active = true;
 
 	CreateComponent(Component::ComponentType::Transform);
-	CreateComponent(Component::ComponentType::Camera);
 }
 
 GameObject::~GameObject()
@@ -115,11 +115,20 @@ void GameObject::Update(float dt)
 	if(unactive_name.compare(str) != 0)
 		unactive_name = name + " (not active)";
 
-	if (this->GetComponentTransform()->has_transformed)
-		TransformGlobal(this);
+	if (this->active)
+	{
+		if (this->GetComponentTransform()->has_transformed)
+		{
+			TransformGlobal(this);
+			
+		}
+			
+		ComponentMesh* mesh = this->GetComponentMesh();
+		if (mesh != nullptr)
+			mesh->UpdateGlobalAABB();
+		
+	}
 
-	//if (App->camera->main_camera->has_transformed == true)
-	//	App->camera->main_camera->OnUpdateTransform(App->scene_intro->camera->GetComponentTransform()->GetGlobalTransform());
 
 	//Game Object iterative update
 	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
@@ -127,15 +136,7 @@ void GameObject::Update(float dt)
 		(*it)->Update(dt);
 	}
 
-	//Component iterative update
-	/*for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); ++it)
-	{
-		(*it)->Update();
-	}*/
 
-
-	UpdateBoundingBox();
-	RenderBoundingBox();
 }
 
 void GameObject::Enable()
@@ -160,21 +161,25 @@ void GameObject::Disable()
 	}
 }
 
-void GameObject::DeleteGO(GameObject* GO)
+void GameObject::DeleteGO(GameObject* GO, bool original)
 {
-	//first delete its childrens (if it has)
+
+	//delete its childrens (if it has)
 	if (GO->children.size() > 0)
 	{
 		for (std::vector<GameObject*>::iterator it = GO->children.begin(); it != GO->children.end(); ++it)
 		{
-			DeleteGO(*it);
+			DeleteGO(*it, false);
 		}
 
 		GO->children.clear();
 	}
 
+	if (GO->parent != nullptr && original == true)
+		GO->parent->RemoveChild(GO);
+
+	GO->CleanUp();
 	delete GO;
-	GO = nullptr;
 }
 
 void GameObject::SetChild(GameObject* GO)
@@ -197,36 +202,6 @@ void GameObject::RemoveChild(GameObject* GO)
 			break;
 		}
 	}
-}
-
-void GameObject::UpdateBoundingBox()
-{
-	ComponentMesh* mesh = this->GetComponentMesh();
-	if (mesh)
-	{
-		obb = mesh->GetBoundingBox();
-		obb.Transform(this->GetComponentTransform()->GetGlobalTransform());
-
-		aabb.SetNegativeInfinity();
-		aabb.Enclose(obb); 
-	}
-}
-
-void GameObject::RenderBoundingBox()
-{
-	glBegin(GL_LINES);
-
-	//glLineWidth doesnt work?
-	glLineWidth(1.0f);
-
-	glColor4f(Green.r, Green.g, Green.b, Green.a);
-
-	for (uint i = 0; i < 12; i++)
-	{
-		glVertex3f(aabb.Edge(i).a.x, aabb.Edge(i).a.y, aabb.Edge(i).a.z);
-		glVertex3f(aabb.Edge(i).b.x, aabb.Edge(i).b.y, aabb.Edge(i).b.z);
-	}
-	glEnd();
 }
 
 void GameObject::CleanUp()

@@ -396,6 +396,9 @@
     <ClInclude Include="Component_Camera.h">
       <Filter>Sources\Modules\Components</Filter>
     </ClInclude>
+    <ClInclude Include="SpacePartition.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -613,6 +616,9 @@
     </ClCompile>
     <ClCompile Include="Component_Camera.cpp">
       <Filter>Sources\Modules\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SpacePartition.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

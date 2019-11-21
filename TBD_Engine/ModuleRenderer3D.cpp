@@ -124,9 +124,9 @@ bool ModuleRenderer3D::Init()
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
-		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
+
 
 	}
 
@@ -263,21 +263,31 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
 		glDrawElements(GL_TRIANGLES, mesh->num_index, GL_UNSIGNED_INT, nullptr);
 
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+
 		if (mesh->draw_normals)
 		{
 			glBegin(GL_LINES);
-			glColor3f(1, 0, 0);
+			glColor4f(Red.r, Red.g, Red.b, Red.a);
 
 			for (int j = 0; j < mesh->num_normals; ++j)
 			{
 				glVertex3f(mesh->face_center[j].x, mesh->face_center[j].y, mesh->face_center[j].z);
 				glVertex3f(mesh->face_center[j].x + mesh->face_normal[j].x, mesh->face_center[j].y + mesh->face_normal[j].y, mesh->face_center[j].z + mesh->face_normal[j].z);
 			}
-
-			glColor3f(1, 1, 1);
+			glColor4f(White.r, White.g, White.b, White.a);
+			
 			glEnd();
 		}
 
+		if (App->gui->conf_window->draw_aabb)
+		{
+			mesh->DrawAABB();
+		}
 	}
 
 	if (m->GetComponentCamera() != nullptr)
@@ -287,12 +297,6 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 		camera->Update();
 	}
 	
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
 
 		
 }

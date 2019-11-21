@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
+#include "SpacePartition.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -41,8 +42,13 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(float3(15.0f, 15.0f, 15.0f));
 	App->camera->LookAt(float3(0, 0, 0));
 
-	App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
+	//---- Create Octree -----------------------
+	AABB box(float3(0, 0, 0), float3(0, 0, 0)); 
+	box.SetNegativeInfinity();
+	QuadTree = new Tree(box);
 
+	App->mesh_loader->LoadFile("Assets/Street/Street environment_V01.fbx");
+	//App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
 	return ret;
 }
 
@@ -50,9 +56,8 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	App->LogInConsole("Unloading Intro scene");
-	
-	root->CleanUp();
-	root->DeleteGO(root);
+	QuadTree->CleanUp();
+	root->DeleteGO(root, true);
 
 	return true;
 }
@@ -76,70 +81,79 @@ GameObject* ModuleSceneIntro::CreateGameObject()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	//Trying to delete GO selected if pressed SUPR
-	/*if (App->gui->ins_window->selected_GO != nullptr && App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+	if (App->gui->ins_window->selected_GO != nullptr && App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
 	{
-		App->gui->ins_window->selected_GO->DeleteGO(App->gui->ins_window->selected_GO);
+		App->gui->ins_window->selected_GO->DeleteGO(App->gui->ins_window->selected_GO, true);
 		App->gui->ins_window->selected_GO = nullptr;
-	}*/
+		QuadTree->update_tree = true;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
+	}
 
 	root->Update(dt);
 
+	if (QuadTree->update_tree && !skip_tree)
+	{
+		QuadTree->UpdateTree();
+
+		//Insert all the contents to the octree
+		for (std::vector<ComponentMesh*>::iterator it = static_meshes.begin(); it != static_meshes.end(); it++)
+		{
+			if((*it)->my_GO->name.find("dummy") == std::string::npos)
+				QuadTree->Insert(*it);
+		}
+
+		QuadTree->Root->PruneEmptyLeafs();
+
+		QuadTree->update_tree = false;
+	}
+	skip_tree = false;
 	return want_to_quit;
 }
 
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
-
-	//PLANE -----------------------------
-	glLineWidth(2.0f);
-
-	glBegin(GL_LINES);
-	glColor3ub(255, 255, 255);
-	for (float i = -10; i <= 10; ++i)
+	if (App->gui->conf_window->draw_plane)
 	{
-		glVertex3f(i, 0.f, 0.f);
-		glVertex3f(i, 0, 10.f);
+		//PLANE -----------------------------
+		glLineWidth(2.0f);
 
-		glVertex3f(0.f, 0.f, i);
-		glVertex3f(10.f, 0, i);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		for (float i = -100; i <= 100; i+=5)
+		{
+			glVertex3f(i, 0.f, 0.f);
+			glVertex3f(i, 0, 100.f);
 
-		glVertex3f(i, 0.f, 0.f);
-		glVertex3f(i, 0, -10.f);
+			glVertex3f(0.f, 0.f, i);
+			glVertex3f(100.f, 0, i);
 
-		glVertex3f(0.f, 0.f, i);
-		glVertex3f(-10.f, 0, i);
+			glVertex3f(i, 0.f, 0.f);
+			glVertex3f(i, 0, -100.f);
+
+			glVertex3f(0.f, 0.f, i);
+			glVertex3f(-100.f, 0, i);
+
+		}
+		glColor3ub(255, 255, 255);
+		glEnd();
+
+		
 	}
-	glEnd();
-
-	// AXIS ------------------------
-	glLineWidth(4.0f);
-
-	glBegin(GL_LINES);
-	//Y
-	glColor3ub(0, 255, 0);
-	glVertex3f(0.f, 0.f, 0.f);
-	glVertex3f(0.f, 1.f, 0.f);
-	glEnd();
-
-	glBegin(GL_LINES);
-	//X
-	glColor3ub(255, 0, 0);
-	glVertex3f(0.f, 0.001f, 0.f);
-	glVertex3f(1.f, 0.001f, 0.f);
-	glEnd();
-
-	glBegin(GL_LINES);
-	//Z
-	glColor3ub(0, 0, 255);
-	glVertex3f(0.f, 0.001f, 0.f);
-	glVertex3f(0.f, 0.001f, 1.f);
-	glEnd();
-
-	glColor3ub(255, 255, 255);
-
 
 	//Draw GameObjects Recursively
 	DrawRecursively(root);
+
+	//Draw Octree Recursively
+	if(App->gui->conf_window->draw_quadtree)
+		QuadTree->DrawTree(QuadTree->Root);
+
+	
+
+	glColor3ub(255, 255, 255);
 
 	return UPDATE_CONTINUE;
 }

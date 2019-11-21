@@ -145,8 +145,18 @@ uint TextureLoader::CreateTexture(const void* img, uint width, uint height, int 
 	return id_texture;
 }
 
-Texture TextureLoader::LoadTextureFromPath(const char* path) const
+Texture TextureLoader::LoadTextureFromPath(const char* path)
 {
+	// Check if the texture being loaded is already loaded
+	for (std::vector<Texture>::iterator iterator = loaded_textures.begin(); iterator != loaded_textures.end(); iterator++)
+	{
+		if ((*iterator).path == path)
+		{
+			App->LogInConsole("Texture already in memory, directly applying texture");
+			return (*iterator);
+		}
+	}
+
 	Texture tex;
 	uint id_img = 0;
 
@@ -174,7 +184,6 @@ Texture TextureLoader::LoadTextureFromPath(const char* path) const
 				tex.height = ilGetInteger(IL_IMAGE_HEIGHT);
 				tex.width = ilGetInteger(IL_IMAGE_WIDTH);
 				tex.path = path;
-
 				CreateFileDDS(path);
 			}
 			else
@@ -182,7 +191,7 @@ Texture TextureLoader::LoadTextureFromPath(const char* path) const
 		}
 		else
 		{
-			App->LogInConsole("Failed loading image: %s", iluErrorString(ilGetError()));
+			App->LogInConsole("Failed loading image: %s, %s", iluErrorString(ilGetError()), path);
 		}
 		
 	}
@@ -191,6 +200,7 @@ Texture TextureLoader::LoadTextureFromPath(const char* path) const
 		App->LogInConsole("Could not load image from path! Path %s was nullptr", path);
 	}
 
+	loaded_textures.push_back(tex);
 
 	return tex;
 }

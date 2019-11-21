@@ -178,6 +178,7 @@
     <ClInclude Include="PCG\entropy.h" />
     <ClInclude Include="PCG\pcg_spinlock.h" />
     <ClInclude Include="PCG\pcg_variants.h" />
+    <ClInclude Include="SpacePartition.h" />
     <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="W_Configuration.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="parson\parson.c" />
     <ClCompile Include="par_shapes.cpp" />
     <ClCompile Include="PCG\entropy.c" />
+    <ClCompile Include="SpacePartition.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="W_Configuration.cpp" />
     <ClCompile Include="W_Console.cpp" />

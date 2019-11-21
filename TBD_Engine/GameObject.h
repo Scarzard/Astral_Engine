@@ -29,20 +29,15 @@ public:
 
 	void TransformGlobal(GameObject* GO);
 
-	void DeleteGO(GameObject* GO);
+	void DeleteGO(GameObject* GO, bool original);
 	void SetChild(GameObject* GO);
 	void RemoveChild(GameObject* GO);
-
-	//BBs
-	AABB aabb;
-	OBB obb;
-	void UpdateBoundingBox();
-	void RenderBoundingBox();
-
 
 public:
 
 	bool active = true;
+	bool is_static = true;
+
 	uint id = -1;
 	std::string name;
 	std::string unactive_name;
@@ -50,6 +45,10 @@ public:
 	GameObject* parent = nullptr;
 	std::vector<Component*> components;
 	std::vector<GameObject*> children;
+
+
+private:
+	void RenderBoundingBox();
 };
 
 #endif

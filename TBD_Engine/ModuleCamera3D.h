@@ -37,6 +37,9 @@ private:
 	void Zoom(float delta_z);
 	bool FirstPersonCamera(float& movSpeed);
 
+	Color background = Color(0.1f, 0.1f, 0.1f, 255);
+
+
 	// Camera Rotations
 	void Orbit(float motion_x, float motion_y);
 	void Rotate(float motion_x, float motion_y);

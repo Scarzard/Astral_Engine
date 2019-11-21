@@ -2,6 +2,8 @@
 #include "W_Inspector.h"
 #include "Component_Transform.h"
 #include "Component_Camera.h"
+#include "SpacePartition.h"
+
 
 W_Inspector::W_Inspector() : Window()
 {
@@ -34,6 +36,35 @@ bool W_Inspector::Draw()
 			active_bool = selected_GO->active;
 			ImGui::Checkbox("Active", &active_bool);
 
+			if (ImGui::Checkbox("Static", &selected_GO->is_static))
+			{
+				if (selected_GO->GetComponentMesh() != nullptr)
+				{
+					ComponentMesh* mesh = selected_GO->GetComponentMesh();
+					if (selected_GO->is_static)
+					{
+						//TODO: add mesh to static_meshes && update Octree ?
+						App->scene_intro->static_meshes.push_back(mesh);
+						App->scene_intro->QuadTree->update_tree = true;
+					}
+					else
+					{
+						//TODO: remove mesh from static_meshes && update Octree 
+						
+						for (std::vector<ComponentMesh*>::iterator it = App->scene_intro->static_meshes.begin(); it != App->scene_intro->static_meshes.end(); it++)
+						{
+							if ((*it)->my_GO->id == selected_GO->id)
+							{
+								App->scene_intro->static_meshes.erase(it);
+								break;
+							}
+						}
+						App->scene_intro->QuadTree->update_tree = true;
+					}
+				}
+				
+			}
+
 			if (active_bool)
 			{
 				selected_GO->Enable();
@@ -49,7 +80,7 @@ bool W_Inspector::Draw()
 				{
 					ComponentTransform* transform = selected_GO->GetComponentTransform();
 
-					if (ImGui::Button("Reset transform")) transform->ResetPosition();
+					if (ImGui::Button("Reset transform")) if(!selected_GO->is_static)transform->ResetPosition();
 					if (ImGui::IsItemHovered())
 						ImGui::SetTooltip(" Position: (0, 0, 0) \n Rotation: (0, 0, 0) \n Scale:    (1, 1, 1)");
 
@@ -59,7 +90,7 @@ bool W_Inspector::Draw()
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##X1", &position.x, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Y1", &position.y, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Z1", &position.z, 0.05f, -INFINITY, INFINITY);
-					if (!transform->GetPosition().Equals(position))
+					if (!transform->GetPosition().Equals(position) && !selected_GO->is_static)
 						transform->SetPosition(position);
 
 					ImGui::Text("");
@@ -70,7 +101,7 @@ bool W_Inspector::Draw()
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##X2", &rotation.x, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Y2", &rotation.y, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Z2", &rotation.z, 0.05f, -INFINITY, INFINITY);
-					if (!transform->GetEulerRotation().Equals(rotation))
+					if (!transform->GetEulerRotation().Equals(rotation) && !selected_GO->is_static)
 						transform->SetEulerRotation(rotation);
 					ImGui::Text("");
 
@@ -81,7 +112,7 @@ bool W_Inspector::Draw()
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Y3", &sc.y, 0.05f, -INFINITY, INFINITY);
 					ImGui::SameLine(); ImGui::PushItemWidth(50); ImGui::DragFloat("##Z3", &sc.z, 0.05f, -INFINITY, INFINITY);
 	
-					if (!transform->GetScale().Equals(sc))
+					if (!transform->GetScale().Equals(sc) && !selected_GO->is_static)
 						transform->SetScale(sc);
 					
 				}

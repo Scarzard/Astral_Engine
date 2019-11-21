@@ -24,7 +24,7 @@ public:
 	bool CleanUp();
 
 	Texture CreateCheckersTexture() const;
-	Texture LoadTextureFromPath(const char* path) const;
+	Texture LoadTextureFromPath(const char* path);
 	Texture CreateDefaultTexture() const;
 	uint CreateTexture(const void* img, uint width, uint height, int internalFormat, uint format) const;
 
@@ -35,6 +35,9 @@ public:
 
 	Texture CheckersTexture;
 	Texture DefaultTexture;
+
+
+	std::vector<Texture> loaded_textures;
 };
 
 #endif //!__TEXTURE_LOADER_H__
