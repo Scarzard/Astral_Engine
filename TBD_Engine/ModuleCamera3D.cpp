@@ -24,11 +24,10 @@ bool ModuleCamera3D::Start()
 	App->LogInConsole("Setting up the camera");
 	bool ret = true;
 
-	//obj_camera = App->scene_intro->CreateGameObject();
-	//obj_camera->name = "Main Camera";
-	//obj_camera->CreateComponent(Component::ComponentType::Camera);
-	//obj_camera->GetComponentCamera() = main_camera;
-
+	obj_camera = App->scene_intro->CreateGameObject();
+	obj_camera->name = "Main Camera";
+	obj_camera->CreateComponent(Component::ComponentType::Camera);
+	
 	return ret;
 }
 
