@@ -23,6 +23,10 @@ public:
 
 	void Insert(ComponentMesh* mesh);
 
+	void Intersects(std::vector<GameObject*>& collector, const AABB& area);
+	void Intersects(std::vector<GameObject*>& collector, const Frustum& frustum);
+	void Intersects(std::vector<GameObject*>& collector, const LineSegment& line);
+
 public:
 	TreeNode* Root;
 	float3 min_point, max_point;
@@ -48,6 +52,10 @@ public:
 	void PruneEmptyLeafs();
 
 	bool isNodeFull();
+
+	void Intersects(std::vector<GameObject*>& collector, const AABB& area);
+	void Intersects(std::vector<GameObject*>& collector, const Frustum& frustum);
+	void Intersects(std::vector<GameObject*>& collector, const LineSegment& line);
 
 public:
 

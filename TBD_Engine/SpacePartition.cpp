@@ -110,6 +110,22 @@ void Tree::CleanUp()
 	delete this;
 }
 
+// Intersects
+void Tree::Intersects(std::vector<GameObject*>& collector, const AABB& area)
+{
+	Root->Intersects(collector, area);
+}
+
+void Tree::Intersects(std::vector<GameObject*>& collector, const Frustum& frustum)
+{
+	Root->Intersects(collector, frustum);
+}
+
+void Tree::Intersects(std::vector<GameObject*>& collector, const LineSegment& line)
+{
+	Root->Intersects(collector, line);
+}
+
 //--------------------------------------------------- TREE NODE
 TreeNode::TreeNode(AABB aabb, TreeNode* node)
 {
@@ -219,6 +235,52 @@ void TreeNode::CleanUp(TreeNode* node)
 	//delete this node
 	delete node;
 }
+
+
+// Intersects
+void TreeNode::Intersects(std::vector<GameObject*>& collector, const AABB& area)
+{
+	if (box.Intersects(area)) {
+		for (int i = 0; i < meshes.size(); i++)
+			if (area.Intersects(meshes[i]->global_aabb))
+				collector.push_back(meshes[i]->my_GO);
+
+		if (childs.size() > 0)
+			for (int i = 0; i < childs.size(); i++)
+				childs[i]->Intersects(collector, area);
+	}
+}
+
+void TreeNode::Intersects(std::vector<GameObject*>& collector, const Frustum& frustum)
+{
+	//if () //Camera Intersection(frustum, box)
+	{
+		for (int i = 0; i < meshes.size(); i++)
+			if(frustum.Intersects(meshes[i]->global_aabb))
+				collector.push_back(meshes[i]->my_GO);
+
+		if (childs.size() > 0)
+			for (int i = 0; i < childs.size(); i++)
+				childs[i]->Intersects(collector, frustum);
+	}
+}
+
+void TreeNode::Intersects(std::vector<GameObject*>& collector, const LineSegment& line)
+{
+	if (box.Intersects(line)) {
+		for (int i = 0; i < meshes.size(); i++) {
+			float nearHit, farHit;
+			if (meshes[i]->global_aabb.Intersects(line, nearHit, farHit))
+				collector[nearHit] = meshes[i]->my_GO;
+		}
+
+		if (childs.size() > 0)
+			for (int i = 0; i < childs.size(); i++)
+				childs[i]->Intersects(collector, line);
+	}
+}
+
+// -----------------------------------------------------------------
 
 bool TreeNode::isNodeFull()
 {
