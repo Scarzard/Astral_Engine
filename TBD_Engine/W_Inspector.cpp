@@ -43,7 +43,7 @@ bool W_Inspector::Draw()
 					{
 						//TODO: add mesh to static_meshes && update Octree ?
 						App->scene_intro->static_meshes.push_back(mesh);
-						App->scene_intro->Octree->update_tree = true;
+						App->scene_intro->QuadTree->update_tree = true;
 					}
 					else
 					{
@@ -57,7 +57,7 @@ bool W_Inspector::Draw()
 								break;
 							}
 						}
-						App->scene_intro->Octree->update_tree = true;
+						App->scene_intro->QuadTree->update_tree = true;
 					}
 				}
 				

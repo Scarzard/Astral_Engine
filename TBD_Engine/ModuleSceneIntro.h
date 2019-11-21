@@ -35,7 +35,7 @@ public:
 	update_status want_to_quit = UPDATE_CONTINUE;
 	uint numGO = 0;
 	GameObject* root = nullptr;
-	Tree* Octree = nullptr;
+	Tree* QuadTree = nullptr;
 
 	std::vector<ComponentMesh*> static_meshes;
 

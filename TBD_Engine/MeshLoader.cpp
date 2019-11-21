@@ -78,8 +78,8 @@ void MeshLoader::LoadFile(const char* full_path)
 		aiReleaseImport(scene);
 		App->LogInConsole("Succesfully loaded mesh with path: %s", full_path);
 
-		if(App->scene_intro->Octree != nullptr) //if octree is created
-			App->scene_intro->Octree->update_tree = true;
+		if(App->scene_intro->QuadTree != nullptr) //if octree is created
+			App->scene_intro->QuadTree->update_tree = true;
 	}
 	else
 	{

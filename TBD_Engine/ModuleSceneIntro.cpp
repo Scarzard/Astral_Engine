@@ -45,7 +45,7 @@ bool ModuleSceneIntro::Start()
 	//---- Create Octree -----------------------
 	AABB box(float3(0, 0, 0), float3(0, 0, 0)); 
 	box.SetNegativeInfinity();
-	Octree = new Tree(box);
+	QuadTree = new Tree(box);
 
 	App->mesh_loader->LoadFile("Assets/Street/Street environment_V01.fbx");
 	//App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
@@ -56,7 +56,7 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	App->LogInConsole("Unloading Intro scene");
-	Octree->CleanUp();
+	QuadTree->CleanUp();
 	root->DeleteGO(root, true);
 
 	return true;
@@ -85,7 +85,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	{
 		App->gui->ins_window->selected_GO->DeleteGO(App->gui->ins_window->selected_GO, true);
 		App->gui->ins_window->selected_GO = nullptr;
-		Octree->update_tree = true;
+		QuadTree->update_tree = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
@@ -95,18 +95,18 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	root->Update(dt);
 
-	if (Octree->update_tree && !skip_tree)
+	if (QuadTree->update_tree && !skip_tree)
 	{
-		Octree->UpdateTree();
+		QuadTree->UpdateTree();
 
 		//Insert all the contents to the octree
 		for (std::vector<ComponentMesh*>::iterator it = static_meshes.begin(); it != static_meshes.end(); it++)
 		{
 			if((*it)->my_GO->name.find("dummy") == std::string::npos)
-				Octree->Insert(*it);
+				QuadTree->Insert(*it);
 		}
 
-		Octree->update_tree = false;
+		QuadTree->update_tree = false;
 	}
 	skip_tree = false;
 	return want_to_quit;
@@ -146,7 +146,9 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	DrawRecursively(root);
 
 	//Draw Octree Recursively
-	Octree->DrawTree(Octree->Root);
+	QuadTree->DrawTree(QuadTree->Root);
+
+	
 
 	glColor3ub(255, 255, 255);
 
