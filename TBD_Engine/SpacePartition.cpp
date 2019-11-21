@@ -27,15 +27,14 @@ void Tree::UpdateTree()
 	{
 		if ((*it) != nullptr)
 		{
-			AABB box(float3(0, 0, 0), float3(0, 0, 0));
-			box.Enclose((*it)->aabb.Transform((*it)->my_GO->GetComponentTransform()->GetGlobalTransform()));
-			CalculateNewSize(box.minPoint, box.maxPoint);
+			CalculateNewSize((*it)->global_aabb.minPoint, (*it)->global_aabb.maxPoint);
 		}
 			
 	}
 
 	AABB aabb(min_point, max_point);
 	Root = new TreeNode(aabb);
+
 }
 
 void Tree::CalculateNewSize(float3 AABB_min_point, float3 AABB_max_point)
@@ -82,7 +81,10 @@ void Tree::Insert(ComponentMesh * mesh)
 		return;
 	}
 
-	Root->Node_Insert(mesh);
+	if (Root->Node_Insert(mesh))
+		App->LogInConsole("inserted mesh succes");
+	else
+		App->LogInConsole("failed inserting mesh");
 }
 
 void Tree::DrawTree(TreeNode* node)
@@ -134,28 +136,76 @@ void TreeNode::DrawNode() const
 
 }
 
-void TreeNode::Node_Insert(ComponentMesh* mesh)
+bool TreeNode::Node_Insert(ComponentMesh* mesh)
 {
-	if (this->is_leaf)
+	bool ret = false;
+	if (box.Intersects(mesh->global_aabb))
 	{
-		if (isNodeFull() == false)
+		if (is_leaf)
 		{
-			meshes.push_back(mesh);
+			if (isNodeFull() == false)
+			{
+				meshes.push_back(mesh);
+				ret = true;
+			}
+			else
+			{
+				Split();
+				meshes.push_back(mesh);
+				bool is_assigned = false;
+				std::vector<ComponentMesh*> remainings;
+				for (std::vector<ComponentMesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
+				{
+					for (int i = 0; i < childs.size(); i++)
+					{
+						childs[i]->level = level + 1;
+						if (childs[i]->Node_Insert((*it)))
+						{
+							is_assigned = true;
+							break;
+						}
+
+					}
+
+					if (is_assigned == false)
+						remainings.push_back((*it));
+					else
+						is_assigned = false;
+				}
+
+				if (remainings.size() != meshes.size())
+					meshes = remainings;
+				else
+				{
+					for (std::vector<TreeNode*>::iterator it = childs.begin(); it != childs.end(); ++it)
+					{
+						delete (*it);
+					}
+					childs.clear();
+				}
+				
+
+			}
 		}
 		else
 		{
-			Split();
-		}
-	}
-	else
-	{
-		for (std::vector<TreeNode*>::iterator it = childs.begin(); it != childs.end(); ++it)
-		{
-			(*it)->Node_Insert(mesh);
+			for (std::vector<TreeNode*>::iterator it = childs.begin(); it != childs.end(); ++it)
+			{
+				if ((*it)->Node_Insert(mesh))
+				{
+					ret = true;
+					break;
+				}
+			}
+
+			if (!ret) {
+				meshes.push_back(mesh);
+				ret = true;
+			}
 		}
 	}
 
-
+	return ret;
 }
 
 void TreeNode::CleanUp(TreeNode* node) 
@@ -183,9 +233,7 @@ bool TreeNode::isNodeFull()
 
 void TreeNode::Split()
 {
-	this->is_leaf = false;
-
-	App->LogInConsole("Splitted node with level %i", level);
+	is_leaf = false;
 
 	//OCTREE --> Making an AABB for each Node (8 nodes)
 	AABB temp_aabb;
@@ -236,24 +284,5 @@ void TreeNode::Split()
 	temp_aabb.maxPoint = { box.MinX(), box.MinY(), box.MinZ() };
 	TreeNode* node8 = new TreeNode(temp_aabb);
 	childs.push_back(node8);
-
-
-
-	for (std::vector<ComponentMesh*>::iterator it = this->meshes.begin(); it != this->meshes.end(); it++)
-	{
-		if ((*it) != nullptr)
-		{
-			for (int i = 0; i < childs.size(); i++)
-			{
-				childs[i]->level = level + 1;
-				if (childs[i]->box.Intersects((*it)->aabb.ToOBB().MinimalEnclosingAABB()))
-				{
-					childs[i]->Node_Insert(*it);
-				}
-			}
-		}
-		
-	}
-	meshes.clear();
 
 }

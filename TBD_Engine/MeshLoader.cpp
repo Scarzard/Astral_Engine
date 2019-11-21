@@ -254,7 +254,7 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 		}
 		//Initiate bounding box when creating our mesh
 		mesh->UpdateAABB();
-
+		mesh->UpdateGlobalAABB();
 
 		//Generate the buffers 
 		App->renderer3D->NewVertexBuffer(mesh->vertex, mesh->num_vertex, mesh->id_vertex);

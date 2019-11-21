@@ -26,6 +26,16 @@ void ComponentMesh::UpdateAABB()
 {
 	aabb.SetNegativeInfinity();
 	aabb.Enclose(vertex, num_vertex);
+
+}
+
+void ComponentMesh::UpdateGlobalAABB()
+{
+	OBB obb = aabb;
+	obb.Transform(my_GO->GetComponentTransform()->GetGlobalTransform());
+
+	global_aabb.SetNegativeInfinity();
+	global_aabb.Enclose(obb);
 }
 
 void ComponentMesh::DrawAABB()

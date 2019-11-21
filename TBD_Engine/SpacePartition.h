@@ -3,7 +3,7 @@
 
 #include "MathGeoLib/include/MathGeoLib.h"
 
-#define BUCKET 10
+#define BUCKET 4
 
 class GameObject;
 class TreeNode;
@@ -42,7 +42,7 @@ public:
 	void Split();
 
 	void DrawNode() const;
-	void Node_Insert(ComponentMesh* mesh);
+	bool Node_Insert(ComponentMesh* mesh);
 
 	void CleanUp(TreeNode* node);
 

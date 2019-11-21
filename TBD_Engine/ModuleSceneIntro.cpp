@@ -95,7 +95,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	root->Update(dt);
 
-	if (Octree->update_tree)
+	if (Octree->update_tree && !skip_tree)
 	{
 		Octree->UpdateTree();
 
@@ -108,7 +108,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 		Octree->update_tree = false;
 	}
-
+	skip_tree = false;
 	return want_to_quit;
 }
 

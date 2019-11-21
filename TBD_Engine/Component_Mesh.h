@@ -16,6 +16,7 @@ public:
 
 	const AABB& GetBoundingBox();
 	void UpdateAABB();
+	void UpdateGlobalAABB();
 	void DrawAABB();
 
 	void CleanUp();
@@ -43,6 +44,7 @@ public:
 //bounding box
 public:
 	AABB aabb;
+	AABB global_aabb;
 };
 
 #endif

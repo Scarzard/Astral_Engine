@@ -38,4 +38,7 @@ public:
 	Tree* Octree = nullptr;
 
 	std::vector<ComponentMesh*> static_meshes;
+
+private:
+	bool skip_tree = true;
 };

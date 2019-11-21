@@ -99,8 +99,14 @@ void GameObject::Update(float dt)
 	if (this->active)
 	{
 		if (this->GetComponentTransform()->has_transformed)
+		{
 			TransformGlobal(this);
-
+			
+		}
+			
+		ComponentMesh* mesh = this->GetComponentMesh();
+		if (mesh != nullptr)
+			mesh->UpdateGlobalAABB();
 		
 	}
 
