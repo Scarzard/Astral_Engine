@@ -279,6 +279,13 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 		}
 
 	}
+
+	if (m->GetComponentCamera() != nullptr)
+	{
+		ComponentCamera* camera = m->GetComponentCamera();
+
+		camera->Update();
+	}
 	
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

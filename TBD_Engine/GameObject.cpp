@@ -128,10 +128,10 @@ void GameObject::Update(float dt)
 	}
 
 	//Component iterative update
-	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); ++it)
+	/*for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
 		(*it)->Update();
-	}
+	}*/
 
 
 	UpdateBoundingBox();
@@ -208,7 +208,7 @@ void GameObject::UpdateBoundingBox()
 		obb.Transform(this->GetComponentTransform()->GetGlobalTransform());
 
 		aabb.SetNegativeInfinity();
-		aabb.Enclose(obb);
+		aabb.Enclose(obb); 
 	}
 }
 

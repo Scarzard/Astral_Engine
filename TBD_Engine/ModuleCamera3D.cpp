@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEngineUI.h"
+#include "GameObject.h"
 
 #include "mmgr/mmgr.h"
 
@@ -22,6 +23,11 @@ bool ModuleCamera3D::Start()
 {
 	App->LogInConsole("Setting up the camera");
 	bool ret = true;
+
+	//obj_camera = App->scene_intro->CreateGameObject();
+	//obj_camera->name = "Main Camera";
+	//obj_camera->CreateComponent(Component::ComponentType::Camera);
+	//obj_camera->GetComponentCamera() = main_camera;
 
 	return ret;
 }
@@ -60,8 +66,6 @@ update_status ModuleCamera3D::Update(float dt)
 			Rotate(speed.x / slowingFactor, speed.y / slowingFactor);				//Rotate normally
 			MoveCamera(currMovSpeed);												//WASD movement
 		}
-
-		
 
 		// Center camera to object
 		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) 

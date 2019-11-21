@@ -36,6 +36,9 @@ public:
 	void SetFarPlane(float far_plane);
 
 	void DrawFrustum();
+	
+	bool ContainsAABB(const AABB& reference);
+	bool ContainsAABB(const Frustum& frustum, const AABB& reference);
 
 public:
 	Frustum frustum;

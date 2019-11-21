@@ -43,6 +43,7 @@ private:
 
 public:
 	float3 looking_at;
+	GameObject* obj_camera = nullptr;
 	ComponentCamera* main_camera = nullptr;
 	ComponentCamera* active_camera = nullptr;
 	bool looking = false;

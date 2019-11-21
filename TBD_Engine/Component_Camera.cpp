@@ -32,7 +32,7 @@ ComponentCamera::~ComponentCamera()
 
 void ComponentCamera::Update()
 {
-	if(frustum_view)
+	if(!frustum_view)
 		DrawFrustum();
 }
 
@@ -138,5 +138,40 @@ void ComponentCamera::DrawFrustum()
 
 	glEnd();
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+bool ComponentCamera::ContainsAABB(const AABB & reference)
+{
+	return ContainsAABB(frustum, reference);
+}
+
+bool ComponentCamera::ContainsAABB(const Frustum & frustum, const AABB & reference)
+{
+	float3 corners[8];
+	reference.GetCornerPoints(corners);
+
+	Plane p[6];
+	frustum.GetPlanes(p);
+
+	uint totalInside = 0;
+
+	for (int i = 0; i < 6; ++i)
+	{	
+		int insideCount = 8;
+
+		for (int j = 0; j < 8; ++j)
+			if (p[i].IsOnPositiveSide(corners[j]))	
+				--insideCount;
+
+		if (insideCount == 0)
+			return false;	
+		else
+			totalInside += 1;
+	}
+
+	if (totalInside == 6)
+		return true;	
+	else
+		return true;	
 }
 
