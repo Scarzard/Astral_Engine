@@ -156,6 +156,8 @@ bool W_Configuration::Draw()
 			ImGui::Checkbox("Draw Bounding Boxes", &draw_aabb); 
 
 			ImGui::Checkbox("Draw Plane", &draw_plane);
+
+			ImGui::Checkbox("Draw QuadTree", &draw_quadtree);
 		}
 
 		if (ImGui::CollapsingHeader("Input"))

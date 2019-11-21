@@ -106,6 +106,8 @@ update_status ModuleSceneIntro::Update(float dt)
 				QuadTree->Insert(*it);
 		}
 
+		QuadTree->Root->PruneEmptyLeafs();
+
 		QuadTree->update_tree = false;
 	}
 	skip_tree = false;
@@ -146,7 +148,8 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	DrawRecursively(root);
 
 	//Draw Octree Recursively
-	QuadTree->DrawTree(QuadTree->Root);
+	if(App->gui->conf_window->draw_quadtree)
+		QuadTree->DrawTree(QuadTree->Root);
 
 	
 

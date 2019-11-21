@@ -3,7 +3,7 @@
 
 #include "MathGeoLib/include/MathGeoLib.h"
 
-#define BUCKET 1
+#define BUCKET 3
 
 class GameObject;
 class TreeNode;
@@ -26,7 +26,6 @@ public:
 public:
 	TreeNode* Root;
 	float3 min_point, max_point;
-	int num_meshes = 0;
 	bool update_tree = true;
 };
 
@@ -36,16 +35,17 @@ public:
 class TreeNode
 {
 public:
-	TreeNode(AABB aabb);
+	TreeNode(AABB aabb, TreeNode* parent = nullptr);
 	~TreeNode();
 
-	void Split();
+	void OctSplit();
 	void QuadSplit();
 
 	void DrawNode() const;
 	bool Node_Insert(ComponentMesh* mesh);
 
 	void CleanUp(TreeNode* node);
+	void PruneEmptyLeafs();
 
 	bool isNodeFull();
 
@@ -57,6 +57,7 @@ public:
 	int level = 0;
 
 	bool is_leaf = true;
+	TreeNode* parent = nullptr;
 };
 
 

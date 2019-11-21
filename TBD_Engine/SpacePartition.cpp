@@ -81,18 +81,10 @@ void Tree::Insert(ComponentMesh * mesh)
 		return;
 	}
 
-	num_meshes++;
-
-	if (Root->Node_Insert(mesh))
-	{
-		App->LogInConsole("inserted mesh succes %i", num_meshes);
-	}
-	else
+	if (!Root->Node_Insert(mesh))
 	{
 		Root->meshes.push_back(mesh);
 	}
-		
-
 
 }
 
@@ -119,10 +111,11 @@ void Tree::CleanUp()
 }
 
 //--------------------------------------------------- TREE NODE
-TreeNode::TreeNode(AABB aabb)
+TreeNode::TreeNode(AABB aabb, TreeNode* node)
 {
 	box = aabb;
-	this->is_leaf = true;
+	is_leaf = true;
+	parent = node;
 }
 
 TreeNode::~TreeNode()
@@ -134,8 +127,29 @@ void TreeNode::DrawNode() const
 	if (is_leaf)
 	{
 		glLineWidth(3.0f);
+		
+
+		bool draw_red = false;
+
+		if(App->gui->ins_window->selected_GO != nullptr)
+			if (App->gui->ins_window->selected_GO->GetComponentMesh() != nullptr)
+			{
+				for (int i = 0; i < meshes.size(); i++)
+				{
+					if (meshes[i]->my_GO == App->gui->ins_window->selected_GO)
+						draw_red = true;
+				}
+			}
+		
+		if(!draw_red)
+			glColor4f(Blue.r, Blue.g, Blue.b, Blue.a);
+		else
+		{
+			glLineWidth(5.0f);
+			glColor4f(Red.r, Red.g, Red.b, Red.a);
+		}
+		
 		glBegin(GL_LINES);
-		glColor4f(Blue.r, Blue.g, Blue.b, Blue.a);
 
 		for (int i = 0; i < 12; i++)
 		{
@@ -217,30 +231,31 @@ void TreeNode::QuadSplit()
 {
 	is_leaf = false;
 
+
 	AABB temp_aabb;
 	//NORTH-WEST subnode
 	temp_aabb.maxPoint = { box.MaxX(), box.MaxY(), box.MaxZ() };
 	temp_aabb.minPoint = { (box.MaxX() + box.MinX()) / 2 , box.MinY(), (box.MaxZ() + box.MinZ()) / 2 };
-	TreeNode* node1 = new TreeNode(temp_aabb);
+	TreeNode* node1 = new TreeNode(temp_aabb, this);
 	childs.push_back(node1);
-	
+
 
 	//NORTH-EAST subnode
 	temp_aabb.maxPoint = { (box.MaxX() + box.MinX()) / 2, box.MaxY(), box.MaxZ() };
 	temp_aabb.minPoint = { box.MinX(), box.MinY(), (box.MaxZ() + box.MinZ()) / 2 };
-	TreeNode* node2 = new TreeNode(temp_aabb);
+	TreeNode* node2 = new TreeNode(temp_aabb, this);
 	childs.push_back(node2);
 
 	//SOUTH-WEST subnode
 	temp_aabb.maxPoint = { box.MaxX(), box.MaxY(),(box.MaxZ() + box.MinZ()) / 2 };
 	temp_aabb.minPoint = { (box.MaxX() + box.MinX()) / 2, box.MinY(), box.MinZ() };
-	TreeNode* node3 = new TreeNode(temp_aabb);
+	TreeNode* node3 = new TreeNode(temp_aabb, this);
 	childs.push_back(node3);
 
 	//SOUTH-EAST subnode
 	temp_aabb.maxPoint = { (box.MaxX() + box.MinX()) / 2, box.MaxY(),(box.MaxZ() + box.MinZ()) / 2 };
 	temp_aabb.minPoint = { box.MinX(), box.MinY(), box.MinZ() };
-	TreeNode* node4 = new TreeNode(temp_aabb);
+	TreeNode* node4 = new TreeNode(temp_aabb, this);
 	childs.push_back(node4);
 
 	for (std::vector<ComponentMesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
@@ -265,7 +280,116 @@ void TreeNode::QuadSplit()
 		{
 			is_assigned = false;
 		}
+
+	}
+
+}
+
+void TreeNode::PruneEmptyLeafs()
+{
+	if (is_leaf)
+	{
+		if (meshes.size() == 0)
+		{
+			for (std::vector<TreeNode*>::iterator it = parent->childs.begin(); it != parent->childs.end(); ++it)
+			{
+				if ((*it) == this)
+				{
+					parent->childs.erase(it);
+					delete this;
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int i=0; i < childs.size(); i++)
+		{
+			if(childs[i] != nullptr)
+				childs[i]->PruneEmptyLeafs();
+		}
+	}
+
+}
+
+void TreeNode::OctSplit()
+{
+	is_leaf = false;
+
+	//OCTREE --> Making an AABB for each Node (8 nodes)
+	AABB temp_aabb;
+	//TOP FAR LEFT - NODE 1
+	temp_aabb.minPoint = { box.MaxX(), box.MaxY(), box.MaxZ() };
+	temp_aabb.maxPoint = { (box.MaxX() + box.MinX()) / 2 , (box.MinY() + box.MaxY()) / 2, (box.MaxZ() + box.MinZ()) / 2 };
+	TreeNode* node1 = new TreeNode(temp_aabb);
+	childs.push_back(node1);
+
+	//TOP FAR RIGHT - NODE 2
+	temp_aabb.minPoint = { (box.MaxX() + box.MinX()) / 2, box.MaxY(), box.MaxZ() };
+	temp_aabb.maxPoint = { box.MinX(), (box.MinY() + box.MaxY()) / 2, (box.MaxZ() + box.MinZ()) / 2 };
+	TreeNode* node2 = new TreeNode(temp_aabb);
+	childs.push_back(node2);
+
+	//DOWN FAR LEFT - NODE 3
+	temp_aabb.minPoint = { box.MaxX(), (box.MinY() + box.MaxY()) / 2, box.MaxZ() };
+	temp_aabb.maxPoint = { (box.MaxX() + box.MinX()) / 2 ,box.MinY(), (box.MaxZ() + box.MinZ()) / 2 };
+	TreeNode* node3 = new TreeNode(temp_aabb);
+	childs.push_back(node3);
+
+	//DOWN FAR RIGHT - NODE 4
+	temp_aabb.minPoint = { (box.MaxX() + box.MinX()) / 2,(box.MinY() + box.MaxY()) / 2, box.MaxZ() };
+	temp_aabb.maxPoint = { box.MinX(), box.MinY(), (box.MaxZ() + box.MinZ()) / 2 };
+	TreeNode* node4 = new TreeNode(temp_aabb);
+	childs.push_back(node4);
+
+	//TOP CLOSE LEFT - NODE 5
+	temp_aabb.minPoint = { box.MaxX(), box.MaxY(),(box.MaxZ() + box.MinZ()) / 2 };
+	temp_aabb.maxPoint = { (box.MaxX() + box.MinX()) / 2, (box.MinY() + box.MaxY()) / 2, box.MinZ() };
+	TreeNode* node5 = new TreeNode(temp_aabb);
+	childs.push_back(node5);
+
+	//TOP CLOSE RIGHT - NODE 6
+	temp_aabb.minPoint = { (box.MaxX() + box.MinX()) / 2, box.MaxY(),(box.MaxZ() + box.MinZ()) / 2 };
+	temp_aabb.maxPoint = { box.MinX(), (box.MinY() + box.MaxY()) / 2, box.MinZ() };
+	TreeNode* node6 = new TreeNode(temp_aabb);
+	childs.push_back(node6);
+
+	//DOWN CLOSE LEFT - NODE 7
+	temp_aabb.minPoint = { box.MaxX(), (box.MinY() + box.MaxY()) / 2, (box.MaxZ() + box.MinZ()) / 2 };
+	temp_aabb.maxPoint = { (box.MaxX() + box.MinX()) / 2, box.MinY(), box.MinZ() };
+	TreeNode* node7 = new TreeNode(temp_aabb);
+	childs.push_back(node7);
+
+	//DOWN CLOSE RIGHT - NODE 8
+	temp_aabb.minPoint = { (box.MaxX() + box.MinX()) / 2,(box.MinY() + box.MaxY()) / 2,(box.MaxZ() + box.MinZ()) / 2 };
+	temp_aabb.maxPoint = { box.MinX(), box.MinY(), box.MinZ() };
+	TreeNode* node8 = new TreeNode(temp_aabb);
+	childs.push_back(node8);
+
+
+	for (std::vector<ComponentMesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
+	{
+		bool is_assigned = false;
+
+		for (int i = 0; i < childs.size(); i++)
+		{
+			childs[i]->level = level + 1;
+
+			if (childs[i]->Node_Insert(*it))
+			{
+				//App->LogInConsole("Passed mesh to child");
+				is_assigned = true;
+			}
+
+		}
+
+		if (!is_assigned)
+			App->LogInConsole("Mesh doesn't fit in any child");
+		else
+		{
 			is_assigned = false;
+		}
 
 	}
 }

@@ -45,6 +45,7 @@ private:
 public:
 	bool draw_aabb = false;
 	bool draw_plane = true;
+	bool draw_quadtree = false;
 };
 
 #endif // !_W_CONFIGURATION_H_
