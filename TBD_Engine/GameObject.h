@@ -38,8 +38,16 @@ public:
 	bool active = true;
 	bool is_static = true;
 
+	//id just for naming
 	uint id = -1;
+
+	//random id
+	uint UUID = 0;
+
+	//name
 	std::string name;
+
+	//display this name when unactive
 	std::string unactive_name;
 
 	GameObject* parent = nullptr;

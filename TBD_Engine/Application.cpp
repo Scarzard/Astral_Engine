@@ -12,7 +12,6 @@
 
 #include <fstream>
 #include <iomanip>
-
 #include "mmgr/mmgr.h"
 
 Application::Application()
@@ -49,6 +48,7 @@ Application::Application()
 	AddModule(renderer3D);
 
 	SettingsPath = "Settings/config.json";
+	random = new math::LCG();
 }
 
 Application::~Application()
@@ -195,8 +195,12 @@ update_status Application::Update()
 bool Application::CleanUp()
 {
 	bool ret = true;
+
 	//Save config
 	SaveSettings();
+
+	if(random)
+		delete random;
 
 	std::list<Module*>::reverse_iterator item = list_modules.rbegin();
 
@@ -271,6 +275,11 @@ void Application::SaveSettings()
 	stream.open(SettingsPath);
 	stream << std::setw(4) << config << std::endl;
 	stream.close();
+}
+
+uint Application::GetRandomUUID()
+{
+	return (uint)random->Int();
 }
 
 const std::string Application::GetNameFromPath(std::string path)

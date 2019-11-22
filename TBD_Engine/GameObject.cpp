@@ -14,7 +14,7 @@ GameObject::GameObject(std::string name)
 	this->name = name;
 	unactive_name = name + " (not active)";
 	this->active = true;
-
+	UUID = App->GetRandomUUID();
 	CreateComponent(Component::ComponentType::Transform);
 }
 

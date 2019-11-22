@@ -5,7 +5,7 @@
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
-
+#include "MathGeoLib/include/Algorithm/Random/LCG.h"
 
 
 class ModuleWindow;
@@ -54,7 +54,7 @@ public:
 	void LogInConsole(const char* format, ...);
 	std::vector<std::string>	Logs_Console;
 
-
+	uint GetRandomUUID();
 	const std::string GetNameFromPath(std::string path);
 	const std::string GetDirectoryFromPath(std::string path);
 	const std::string GetFileExtension(const std::string FileName);
@@ -91,6 +91,9 @@ private:
 	Uint32	new_sec_FrameCount = 0;
 	Uint32	prev_sec_FrameCount = 0;
 	float	dt = 0.0f;
+
+	// Random number 
+	math::LCG* random = nullptr;
 
 	//Save & load
 	const char* SettingsPath;
