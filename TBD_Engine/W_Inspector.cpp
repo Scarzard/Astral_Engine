@@ -128,7 +128,10 @@ bool W_Inspector::Draw()
 
 				if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentTexture() != nullptr)
 				{
-					ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checers_texture);
+					if (ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checers_texture))
+					{
+
+					}
 
 					if (selected_GO->GetComponentTexture()->Checers_texture == false)
 					{

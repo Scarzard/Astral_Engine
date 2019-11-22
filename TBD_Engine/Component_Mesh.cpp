@@ -20,6 +20,11 @@ ComponentMesh::~ComponentMesh()
 
 }
 
+void ComponentMesh::Save(uint obj_num, nlohmann::json &scene)
+{
+	scene["Game Objects"][obj_num]["Components"]["Mesh"]["DrawNormals"] = draw_normals;
+}
+
 const AABB& ComponentMesh::GetBoundingBox()
 {
 	return aabb;

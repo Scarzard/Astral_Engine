@@ -22,20 +22,22 @@ GameObject::~GameObject()
 {
 }
 
-void GameObject::Save(uint obj_num, nlohmann::json &scene_file)
+void GameObject::Save(uint obj_num, nlohmann::json &scene)
 {
-	scene_file["Game Objects"][obj_num]["UUID"] = UUID;
-	scene_file["Game Objects"][obj_num]["Name"] = name;
+	scene["Game Objects"][obj_num]["UUID"] = UUID;
+	scene["Game Objects"][obj_num]["Name"] = name;
 
 	if(parent)
-		scene_file["Game Objects"][obj_num]["ParentUUID"] = parent->UUID;
+		scene["Game Objects"][obj_num]["ParentUUID"] = parent->UUID;
 	else
-		scene_file["Game Objects"][obj_num]["ParentUUID"] = "NONE";
+		scene["Game Objects"][obj_num]["ParentUUID"] = "NONE";
 
-	scene_file["Game Objects"][obj_num]["Active"] = active;
-	scene_file["Game Objects"][obj_num]["Static"] = is_static;
+	scene["Game Objects"][obj_num]["Active"] = active;
+	scene["Game Objects"][obj_num]["Static"] = is_static;
 
 	//save components too
+	for (int i = 0; i < components.size(); i++)
+		components[i]->Save(obj_num, scene);
 }
 
 Component* GameObject::CreateComponent(Component::ComponentType type)

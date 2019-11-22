@@ -1,0 +1,1423 @@
+{
+    "Game Objects": [
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "root",
+            "ParentUUID": "NONE",
+            "Static": true,
+            "UUID": 843239517
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "Street environment_V01",
+            "ParentUUID": 843239517,
+            "Static": true,
+            "UUID": 1417955018
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        18.153732299804688,
+                        0.0,
+                        58.96091079711914
+                    ],
+                    "Rotation Quat": [
+                        1.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999997615814209,
+                        0.9999997615814209
+                    ]
+                }
+            },
+            "Name": "Sky001",
+            "ParentUUID": 1417955018,
+            "Static": true,
+            "UUID": 1770539235
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        -0.7071067094802856,
+                        0.0,
+                        0.0,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "Dummy001",
+            "ParentUUID": 1417955018,
+            "Static": true,
+            "UUID": 1150742135
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building03_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        -41.47589111328125,
+                        21.01409912109375,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_004",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1793245853
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/Building_V02_C.png"
+                },
+                "Transform": {
+                    "Position": [
+                        17.707164764404297,
+                        20.05327606201172,
+                        2.121072952832037e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_001",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1460229721
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building_016_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        16.0104923248291,
+                        37.4932861328125,
+                        -1.5106878663573298e-06
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_007",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 777556761
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building_025_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        40.97999572753906,
+                        18.270824432373047,
+                        -2.0522466002148576e-06
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_008",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 511484005
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": ""
+                },
+                "Transform": {
+                    "Position": [
+                        -2.1597719192504883,
+                        1.8538382053375244,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        -0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "Line002",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 454077551
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": ""
+                },
+                "Transform": {
+                    "Position": [
+                        -0.02860260009765625,
+                        0.026032090187072754,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "Plane001",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 226410684
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        25.154010772705078,
+                        -39.15372085571289,
+                        8.553864176974457e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_010",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 408261784
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building 01_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_010dummy",
+            "ParentUUID": 408261784,
+            "Static": true,
+            "UUID": 1647595819
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building 01_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_010_submesh",
+            "ParentUUID": 408261784,
+            "Static": true,
+            "UUID": 1576993741
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building_016_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        30.134540557861328,
+                        37.4932861328125,
+                        -1.5106878663573298e-06
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_011",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1779789286
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building 06_ c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        -42.288055419921875,
+                        33.201576232910156,
+                        5.014607040720875e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_013",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 903448706
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building03_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        -19.439706802368164,
+                        32.061729431152344,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        -4.371138828673793e-08
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_014",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1353823443
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        34.270423889160156,
+                        -41.972747802734375,
+                        8.553864176974457e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        -4.371138828673793e-08
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_016",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1484658273
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building 01_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_016dummy",
+            "ParentUUID": 1484658273,
+            "Static": true,
+            "UUID": 710727129
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building 01_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_016_submesh",
+            "ParentUUID": 1484658273,
+            "Static": true,
+            "UUID": 1362737582
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        44.26008224487305,
+                        -39.15372085571289,
+                        8.553864176974457e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_017",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1473155609
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building 01_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_017dummy",
+            "ParentUUID": 1473155609,
+            "Static": true,
+            "UUID": 895157116
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building 01_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_017_submesh",
+            "ParentUUID": 1473155609,
+            "Static": true,
+            "UUID": 1758137096
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building05 _c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        -20.831323623657227,
+                        -27.426488876342773,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        1.9470718370939721e-07
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_022",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 989848910
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building_016_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        42.13064193725586,
+                        37.4932861328125,
+                        -1.5106878663573298e-06
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_023",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1520730880
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building_025_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        -20.572771072387695,
+                        43.060829162597656,
+                        -0.06919445842504501
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        4.371138828673793e-08
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_024",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1713315733
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building05 _c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        31.51188850402832,
+                        -16.446016311645508,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        4.371138828673793e-08
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_026",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 775474578
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/Building_V01_C.png"
+                },
+                "Transform": {
+                    "Position": [
+                        13.38798999786377,
+                        -33.75503921508789,
+                        -9.383451811117993e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_028",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1576709358
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": ""
+                },
+                "Transform": {
+                    "Position": [
+                        -2.5033531188964844,
+                        15.800846099853516,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "Object010",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1308113266
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/Building_V01_C.png"
+                },
+                "Transform": {
+                    "Position": [
+                        -42.8072395324707,
+                        -41.83556365966797,
+                        -9.383451811117993e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        -0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_030",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1667190210
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/Building_V01_C.png"
+                },
+                "Transform": {
+                    "Position": [
+                        -34.679481506347656,
+                        -41.83556365966797,
+                        -9.383451811117993e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        -0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_031",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 2105973707
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building03_c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        -29.478403091430664,
+                        21.01409912109375,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_032",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 549456122
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building 06_ c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        -32.36149597167969,
+                        42.37042236328125,
+                        5.014607040720875e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_033",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 558465751
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building05 _c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        16.049516677856445,
+                        -16.696884155273438,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        -0.7071068286895752,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_034",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 752621436
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/Building_V01_C.png"
+                },
+                "Transform": {
+                    "Position": [
+                        13.38798999786377,
+                        -40.80251693725586,
+                        -9.383451811117993e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_035",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1803492603
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building 06_ c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        -31.216331481933594,
+                        33.201576232910156,
+                        5.014607040720875e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        -0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_036",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1884640667
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building05 _c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        -20.31769371032715,
+                        -16.16360855102539,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        1.9470718370939721e-07
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "City_building_037",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1464529154
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/building05 _c.tga"
+                },
+                "Transform": {
+                    "Position": [
+                        -41.64900207519531,
+                        -16.495393753051758,
+                        0.0
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        -0.7071068286895752,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_038",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1608154721
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/Building_V01_C.png"
+                },
+                "Transform": {
+                    "Position": [
+                        -42.8072395324707,
+                        -30.643888473510742,
+                        -9.383451811117993e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        -0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_039",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 132410749
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/Building_V01_C.png"
+                },
+                "Transform": {
+                    "Position": [
+                        -34.679481506347656,
+                        -30.643888473510742,
+                        -9.383451811117993e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        -0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_040",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1568943205
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Mesh": {
+                    "DrawNormals": false
+                },
+                "Texture": {
+                    "Checkers": false,
+                    "Path": "Assets/Street/Building_V02_C.png"
+                },
+                "Transform": {
+                    "Position": [
+                        30.69527816772461,
+                        21.612646102905273,
+                        2.121072952832037e-07
+                    ],
+                    "Rotation Quat": [
+                        0.0,
+                        0.0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "Scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "City_building_041",
+            "ParentUUID": 1150742135,
+            "Static": true,
+            "UUID": 1786654297
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        -78.31243133544922,
+                        45.251216888427734,
+                        -97.03111267089844
+                    ],
+                    "Rotation Quat": [
+                        0.04933978244662285,
+                        0.9322873950004578,
+                        0.13933119177818298,
+                        -0.3301403522491455
+                    ],
+                    "Scale": [
+                        0.9999998807907104,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "Camera001",
+            "ParentUUID": 1417955018,
+            "Static": true,
+            "UUID": 2111009903
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        -28.13262176513672,
+                        20.873329162597656,
+                        -35.064212799072266
+                    ],
+                    "Rotation Quat": [
+                        0.04933978244662285,
+                        0.932287335395813,
+                        0.1393311768770218,
+                        -0.33014047145843506
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "Camera001.Target",
+            "ParentUUID": 1417955018,
+            "Static": true,
+            "UUID": 1134623377
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        -66.72126770019531,
+                        141.9341278076172,
+                        6.204137662280118e-06
+                    ],
+                    "Rotation Quat": [
+                        0.6900351643562317,
+                        0.15443938970565796,
+                        0.6900351047515869,
+                        -0.15443943440914154
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            },
+            "Name": "Spot001",
+            "ParentUUID": 1417955018,
+            "Static": true,
+            "UUID": 575658869
+        },
+        {
+            "Active": true,
+            "Components": {
+                "Transform": {
+                    "Position": [
+                        28.890945434570313,
+                        -60.96388244628906,
+                        -2.6648158382158726e-06
+                    ],
+                    "Rotation Quat": [
+                        5.9604641222676946e-08,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "Name": "Spot001.Target",
+            "ParentUUID": 1417955018,
+            "Static": true,
+            "UUID": 1606298335
+        }
+    ]
+}

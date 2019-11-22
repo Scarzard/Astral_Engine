@@ -20,6 +20,10 @@ public:
 	void DrawAABB();
 
 	void CleanUp();
+
+	// Load & Save 
+	//void Load(uint obj_num, const nlohmann::json &scene_file);
+	void Save(uint obj_num, nlohmann::json &scene_file);
 	
 //mesh
 public:
