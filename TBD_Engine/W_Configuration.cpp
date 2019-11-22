@@ -113,7 +113,11 @@ bool W_Configuration::Draw()
 		}
 		if (ImGui::CollapsingHeader("Camera Settings", ImGuiTreeNodeFlags_Leaf))
 		{
-			//ComponentCamera* camera = selected_GO->GetComponentCamera();
+
+			if (ImGui::Checkbox("Toggle main cameraa frustum draw", &App->camera->obj_camera->GetComponentCamera()->frustum_view));
+			if (ImGui::Checkbox("Toggle frustum culling", &App->camera->obj_camera->GetComponentCamera()->culling));
+				
+
 			ImGui::Text("Horizontal FOV:");
 			ImGui::SameLine();
 			ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", App->camera->main_camera->frustum.horizontalFov);

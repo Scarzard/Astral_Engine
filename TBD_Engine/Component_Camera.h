@@ -44,10 +44,10 @@ public:
 	Frustum frustum;
 	bool frustum_view = false;
 	bool has_transformed = false;
+	bool culling = false;
 
 private:
-
 	float aspect_ratio = 0.0f;
-	bool culling = false;
+	
 };
 #endif // !_COMPONENT_CAMERA_H

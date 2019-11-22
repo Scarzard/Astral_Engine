@@ -1,6 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "SpacePartition.h"
+#include "ModuleSceneIntro.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -177,9 +179,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-
-	App->scene_intro->Draw();
-
 	//Draw UI
 	App->gui->Draw();
 
@@ -290,12 +289,7 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 		}
 	}
 
-	if (m->GetComponentCamera() != nullptr)
-	{
-		ComponentCamera* camera = m->GetComponentCamera();
-
-		camera->Update();
-	}
+	
 	
 
 		

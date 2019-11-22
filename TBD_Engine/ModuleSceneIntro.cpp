@@ -145,13 +145,27 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	}
 
 	//Draw GameObjects Recursively
-	DrawRecursively(root);
+	if (App->camera->obj_camera->active && App->camera->obj_camera->GetComponentCamera()->culling)
+	{
+		std::vector<GameObject*> tmp;
+		
+		for (int i = 0; i > static_meshes.size(); ++i)
+		{
+			tmp.push_back(static_meshes[i]->my_GO);
+		}
+		
+		QuadTree->Intersects(tmp, App->camera->obj_camera->GetComponentCamera()->frustum);
+		for (int i = 0; i < tmp.size(); i++)
+			if (tmp[i]->active)
+				DrawRecursively((tmp[i]));
+	}
+	else
+		DrawRecursively(root);
 
+	
 	//Draw Octree Recursively
 	if(App->gui->conf_window->draw_quadtree)
 		QuadTree->DrawTree(QuadTree->Root);
-
-	
 
 	glColor3ub(255, 255, 255);
 

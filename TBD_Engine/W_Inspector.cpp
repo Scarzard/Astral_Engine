@@ -170,7 +170,7 @@ bool W_Inspector::Draw()
 				//Non hardcode inspector for camera
 				if (ImGui::CollapsingHeader("Camera Settings", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentCamera() != nullptr)
 				{
-					if (ImGui::Checkbox("Toggle frustum draw", &selected_GO->GetComponentCamera()->frustum_view));
+					if (selected_GO->name != "Main Camera" && ImGui::Checkbox("Toggle frustum draw", &selected_GO->GetComponentCamera()->frustum_view));
 
 					ComponentCamera* camera = selected_GO->GetComponentCamera();
 					ImGui::Text("Horizontal FOV:");

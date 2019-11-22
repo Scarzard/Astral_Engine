@@ -126,9 +126,13 @@ void GameObject::Update(float dt)
 		ComponentMesh* mesh = this->GetComponentMesh();
 		if (mesh != nullptr)
 			mesh->UpdateGlobalAABB();
-		
 	}
+	if (this->GetComponentCamera() != nullptr)
+	{
+		ComponentCamera* camera = this->GetComponentCamera();
 
+		camera->Update();
+	}
 
 	//Game Object iterative update
 	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); ++it)
