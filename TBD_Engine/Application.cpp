@@ -10,6 +10,11 @@
 #include "TextureLoader.h"
 #include "ModuleFileSystem.h"
 
+#include <fstream>
+#include <iomanip>
+
+#include "mmgr/mmgr.h"
+
 Application::Application()
 {
 	window = new ModuleWindow(this);
@@ -42,6 +47,8 @@ Application::Application()
 
 	// Renderer last!
 	AddModule(renderer3D);
+
+	SettingsPath = "Settings/config.json";
 }
 
 Application::~Application()
@@ -58,6 +65,9 @@ Application::~Application()
 bool Application::Init()
 {
 	bool ret = true;
+
+	//Load config
+	LoadSettings();
 
 	// Call Init() in all modules
 	std::list<Module*>::const_iterator item = list_modules.begin();
@@ -185,6 +195,9 @@ update_status Application::Update()
 bool Application::CleanUp()
 {
 	bool ret = true;
+	//Save config
+	SaveSettings();
+
 	std::list<Module*>::reverse_iterator item = list_modules.rbegin();
 
 	while(item != list_modules.rend() && ret == true)
@@ -198,6 +211,66 @@ bool Application::CleanUp()
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
+}
+
+
+void Application::LoadSettings()
+{
+	json config;
+
+	//If the adress of the settings file is null, create  an exception
+	assert(SettingsPath != nullptr);
+
+	//Create a stream and open the file
+	std::ifstream stream;
+	stream.open(SettingsPath);
+
+	//Load configuration for all the modules
+	std::list<Module*>::iterator it = list_modules.begin();
+
+	config = json::parse(stream);
+
+	//close the file
+	stream.close();
+
+	std::string name = config["Application"]["Name"];
+	NameEngine = name;
+
+	std::string org = config["Application"]["Organization"];
+	Organization = org;
+
+	std::string version = config["Application"]["Version"];
+	VerisonEngine = version;
+
+	while (it != list_modules.end())
+	{
+		(*it)->Load(config);
+		it++;
+	}
+}
+
+void Application::SaveSettings()
+{
+	//Create auxiliar file
+	json config;
+	config["Application"]["Name"] = NameEngine;
+	config["Application"]["Version"] = VerisonEngine;
+	config["Application"]["Organization"] = Organization;
+
+	//Save configuration for all the modules
+	std::list<Module*>::iterator it = list_modules.begin();
+
+	while (it != list_modules.end())
+	{
+		(*it)->Save(config);
+		it++;
+	}
+
+	//Create the stream and open the file
+	std::ofstream stream;
+	stream.open(SettingsPath);
+	stream << std::setw(4) << config << std::endl;
+	stream.close();
 }
 
 const std::string Application::GetNameFromPath(std::string path)

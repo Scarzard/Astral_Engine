@@ -19,7 +19,7 @@ Application* App = NULL;
 
 int main(int argc, char ** argv)
 {
-	LOG("Starting Astral Engine '%s'...", TITLE);
+	LOG("Starting Astral Engine");
 
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;

@@ -32,8 +32,8 @@ private:
 	SDL_version linked;
 
 	float brightness_slider = 1.0f;
-	int width_slider = SCREEN_WIDTH;
-	int height_slider = SCREEN_HEIGHT;
+	int width_slider = 0;
+	int height_slider = 0;
 
 	bool depth = false;
 	bool light = true;

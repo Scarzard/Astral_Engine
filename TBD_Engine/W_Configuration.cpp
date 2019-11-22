@@ -51,6 +51,9 @@ bool W_Configuration::Start()
 		info.vram_reserved = float(video_mem_reserved) / (1024.f * 1024.f * 1024.f);
 	}
 
+	width_slider = App->window->width;
+	height_slider = App->window->height;
+
 	return true;
 }
 
@@ -67,8 +70,9 @@ bool W_Configuration::Draw()
 
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			ImGui::Text("Application name: %s", TITLE);
-			ImGui::Text("Organization name: %s", ORGANIZATION);
+			ImGui::Text("Application name: %s", App->NameEngine.c_str());
+			ImGui::Text("Organization: %s", App->Organization.c_str());
+			ImGui::Text("Software Version: %s", App->VerisonEngine.c_str());
 
 
 			//Framerate Histograms
@@ -176,12 +180,6 @@ bool W_Configuration::Draw()
 			ImGui::BulletText("Mouse released:"); for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (ImGui::IsMouseReleased(i)) { ImGui::SameLine(); ImGui::Text("b%d", i); }
 			ImGui::BulletText("Mouse wheel: %.1f", io.MouseWheel);
 
-			//Keyboard inputs
-			//ImGui::Text("Keys down:");      for (int i = 0; i < IM_ARRAYSIZE(io.KeysDown); i++) if (io.KeysDownDuration[i] >= 0.0f) { ImGui::SameLine(); ImGui::Text("%d (0x%X) (%.02f secs)", i, i, io.KeysDownDuration[i]); }
-			//ImGui::Text("Keys pressed:");   for (int i = 0; i < IM_ARRAYSIZE(io.KeysDown); i++) if (ImGui::IsKeyPressed(i)) { ImGui::SameLine(); ImGui::Text("%d (0x%X)", i, i); }
-			//ImGui::Text("Keys release:");   for (int i = 0; i < IM_ARRAYSIZE(io.KeysDown); i++) if (ImGui::IsKeyReleased(i)) { ImGui::SameLine(); ImGui::Text("%d (0x%X)", i, i); }
-			//ImGui::Text("Keys mods: %s%s%s%s", io.KeyCtrl ? "CTRL " : "", io.KeyShift ? "SHIFT " : "", io.KeyAlt ? "ALT " : "", io.KeySuper ? "SUPER " : "");
-			//ImGui::Text("Chars queue:"); for (int i = 0; i < io.InputQueueCharacters.Size; i++) { ImWchar c = io.InputQueueCharacters[i]; ImGui::SameLine(); ImGui::Text("\'%c\' (0x%04X)", (c > ' ' && c <= 255) ? (char)c : '?', c); } // FIXME: We should convert 'c' to UTF-8 here but the functions are not public.
 
 		}
 

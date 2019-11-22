@@ -18,6 +18,10 @@ public:
 	bool Init();
 	bool CleanUp();
 
+	//Save & Load
+	void Load(const nlohmann::json  &config);
+	void Save(nlohmann::json &config);
+
 public:
 	//Setters
 	void SetTitle(const char* title);
@@ -42,8 +46,9 @@ public:
 
 
 public:
-	int width = SCREEN_WIDTH;
-	int height = SCREEN_HEIGHT;
+	int width = 0;
+	int height = 0;
+	int size = 1;
 
 	bool fullscreen = false;
 	bool resizable = false;

@@ -66,11 +66,21 @@ public:
 	std::vector<float>	fps_log;
 	int	MaxFPS = -1;
 
+
+	// Aditional data
+	std::string NameEngine;
+	std::string VerisonEngine;
+	std::string Organization;
+
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+	//Save & load
+	void LoadSettings();	// Called Before Init()
+	void SaveSettings();
 
 	//Framerate
 	uint	frame_count = 0;
@@ -81,6 +91,10 @@ private:
 	Uint32	new_sec_FrameCount = 0;
 	Uint32	prev_sec_FrameCount = 0;
 	float	dt = 0.0f;
+
+	//Save & load
+	const char* SettingsPath;
+	json		settingsFile;
 
 };
 

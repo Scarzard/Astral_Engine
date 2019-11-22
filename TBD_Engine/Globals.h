@@ -61,18 +61,8 @@ enum update_status
 	UPDATE_ERROR
 };
 
-// Configuration -----------
-#define SCREEN_WIDTH 1680
-#define SCREEN_HEIGHT 1000
-#define SCREEN_SIZE 1
-#define WIN_FULLSCREEN false
-#define WIN_RESIZABLE true
-#define WIN_BORDERLESS false
-#define WIN_FULLSCREEN_DESKTOP false
+// Configuration -------------------------------------
 #define VSYNC true
-#define TITLE "ASTRAL ENGINE"
-#define ORGANIZATION "CITM - UPC TECH TALENT CENTER"
-
 
 #define ASSETS_FOLDER "/Assets/"
 #define LIBRARY_FOLDER "/Library/"

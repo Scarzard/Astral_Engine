@@ -17,6 +17,29 @@ ModuleWindow::~ModuleWindow()
 {
 }
 
+void ModuleWindow::Load(const nlohmann::json &config) 
+{
+	width = config["Window"]["Width"];
+	height = config["Window"]["Height"];
+	size = config["Window"]["Size"];
+	fullscreen = config["Window"]["Full Screen"];
+	resizable = config["Window"]["Resizable"];
+	borderless = config["Window"]["Borderless"];
+	fullscreen_desktop = config["Window"]["Full Screen Desktop"];
+	
+}
+
+void ModuleWindow::Save(nlohmann::json &config) 
+{
+	config["Window"]["Width"] = width;
+	config["Window"]["Height"] = height;
+	config["Window"]["Size"] = size;
+	config["Window"]["Full Screen"] = fullscreen;
+	config["Window"]["Resizable"] = resizable;
+	config["Window"]["Borderless"] = borderless;
+	config["Window"]["Full Screen Desktop"] = fullscreen_desktop;
+}
+
 // Called before render is available
 bool ModuleWindow::Init()
 {
@@ -41,27 +64,27 @@ bool ModuleWindow::Init()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-		if(WIN_FULLSCREEN == true)
+		if(fullscreen == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		if(WIN_RESIZABLE == true)
+		if(resizable == true)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
 
-		if(WIN_BORDERLESS == true)
+		if(borderless == true)
 		{
 			flags |= SDL_WINDOW_BORDERLESS;
 		}
 
-		if(WIN_FULLSCREEN_DESKTOP == true)
+		if(fullscreen_desktop == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
 
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		window = SDL_CreateWindow(App->NameEngine.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
 		SDL_GL_CreateContext(window);
 
