@@ -1,5 +1,15 @@
 #include "Application.h"
 
+#include "ModuleWindow.h"
+#include "ModuleInput.h"
+#include "ModuleSceneIntro.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
+#include "ModuleEngineUI.h"
+#include "MeshLoader.h"
+#include "TextureLoader.h"
+#include "ModuleFileSystem.h"
+
 Application::Application()
 {
 	window = new ModuleWindow(this);

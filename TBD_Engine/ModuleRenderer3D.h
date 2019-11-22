@@ -4,7 +4,10 @@
 #include "glmath.h"
 #include "Light.h"
 
+#include "MathGeoLib/include/MathGeoLib.h"
+
 #define MAX_LIGHTS 8
+class GameObject;
 
 class ModuleRenderer3D : public Module
 {

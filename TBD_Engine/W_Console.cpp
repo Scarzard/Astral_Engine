@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "W_Console.h"
-
+#include "ModuleEngineUI.h"
 W_Console::W_Console() : Window()
 {
 }

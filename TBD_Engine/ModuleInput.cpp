@@ -1,6 +1,11 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "MeshLoader.h"
+#include "TextureLoader.h"
+#include "ModuleRenderer3D.h"
+#include "GameObject.h"
+#include "ModuleEngineUI.h"
 
 #include "mmgr/mmgr.h"
 

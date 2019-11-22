@@ -1,8 +1,10 @@
 #include "SpacePartition.h"
-#include "SDL/include/SDL_opengl.h"
 #include "Color.h"
 #include "Application.h"
+#include "ModuleSceneIntro.h"
+#include "ModuleEngineUI.h"
 
+#include "SDL/include/SDL_opengl.h"
 #include "mmgr/mmgr.h"
 
 //--------------------------------------------------- TREE
@@ -353,6 +355,7 @@ void TreeNode::PruneEmptyLeafs()
 	{
 		if (meshes.size() == 0)
 		{
+			
 			for (std::vector<TreeNode*>::iterator it = parent->childs.begin(); it != parent->childs.end(); ++it)
 			{
 				if ((*it) == this)

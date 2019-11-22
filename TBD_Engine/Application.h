@@ -5,15 +5,22 @@
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleSceneIntro.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
-#include "ModuleEngineUI.h"
-#include "MeshLoader.h"
-#include "TextureLoader.h"
-#include "ModuleFileSystem.h"
+
+
+
+class ModuleWindow;
+class ModuleInput;
+class ModuleSceneIntro;
+class ModuleRenderer3D;
+class ModuleCamera3D;
+class ModuleEngineUI;
+class MeshLoader;
+class TextureLoader;
+class ModuleFileSystem;
+
+
+
+using json = nlohmann::json;
 
 class Application
 {

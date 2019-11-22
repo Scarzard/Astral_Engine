@@ -1,6 +1,8 @@
 #ifndef _FRAMEBUFFEROBJECT_H_
 #define _FRAMEBUFFEROBJECT_H_
 
+#include "ImGui/imgui.h"
+
 class FrameBufferObject
 {
 public:

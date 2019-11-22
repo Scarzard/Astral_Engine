@@ -1,5 +1,8 @@
 #include "Component_Mesh.h"
 #include "Application.h"
+#include "Color.h"
+#include "Component_Transform.h"
+#include "ModuleSceneIntro.h"
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>

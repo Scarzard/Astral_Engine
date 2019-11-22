@@ -4,7 +4,9 @@
 #include "Module.h"
 #include "Application.h"
 #include "Window.h"
+#include "ImGui/imgui.h"
 
+class GameObject;
 class W_Inspector : public Window
 {
 public:

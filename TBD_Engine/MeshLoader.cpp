@@ -5,6 +5,7 @@
 #include "ModuleSceneIntro.h"
 #include "Importer.h"
 #include "SpacePartition.h"
+#include "ModuleRenderer3D.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"

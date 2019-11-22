@@ -5,6 +5,8 @@
 #include "Application.h"
 #include "Window.h"
 
+class GameObject;
+
 class W_Hierarchy : public Window
 {
 public:

@@ -2,6 +2,8 @@
 #include "W_Inspector.h"
 #include "Component_Transform.h"
 #include "SpacePartition.h"
+#include "ModuleEngineUI.h"
+#include "ModuleSceneIntro.h"
 
 W_Inspector::W_Inspector() : Window()
 {

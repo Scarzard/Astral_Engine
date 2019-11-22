@@ -1,6 +1,6 @@
 #include "TextureLoader.h"
 #include "Application.h"
-
+#include "ModuleFileSystem.h"
 #include "glew/include/GL/glew.h"
 
 #include "DevIL/include/il.h"

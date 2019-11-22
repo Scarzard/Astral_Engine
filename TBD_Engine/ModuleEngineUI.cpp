@@ -2,6 +2,7 @@
 #include "ModuleEngineUI.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleWindow.h"
 
 #include "mmgr/mmgr.h"
 

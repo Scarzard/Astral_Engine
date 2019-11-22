@@ -2,6 +2,8 @@
 #include "Importer.h"
 
 #include "Component_Mesh.h"
+#include "Component_Transform.h"
+#include "ModuleFileSystem.h"
 
 #include "mmgr/mmgr.h"
 

@@ -1,5 +1,7 @@
 #include "Application.h"
 #include "W_Hierarchy.h"
+#include "ModuleEngineUI.h"
+#include "ModuleSceneIntro.h"
 
 W_Hierarchy::W_Hierarchy() : Window()
 {

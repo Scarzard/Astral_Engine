@@ -2,6 +2,11 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "SpacePartition.h"
+#include "ModuleCamera3D.h"
+#include "MeshLoader.h"
+#include "ModuleEngineUI.h"
+#include "ModuleInput.h"
+#include "ModuleRenderer3D.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -88,10 +93,10 @@ update_status ModuleSceneIntro::Update(float dt)
 		QuadTree->update_tree = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) //Test
 	{
 		App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
-	}
+	}*/
 
 	root->Update(dt);
 
@@ -106,7 +111,7 @@ update_status ModuleSceneIntro::Update(float dt)
 				QuadTree->Insert(*it);
 		}
 
-		QuadTree->Root->PruneEmptyLeafs();
+		//QuadTree->Root->PruneEmptyLeafs();
 
 		QuadTree->update_tree = false;
 	}
