@@ -42,6 +42,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(float3(15.0f, 15.0f, 15.0f));
 	App->camera->LookAt(float3(0, 0, 0));
 
+
 	//---- Create Octree -----------------------
 	AABB box(float3(0, 0, 0), float3(0, 0, 0)); 
 	box.SetNegativeInfinity();
@@ -145,19 +146,21 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	}
 
 	//Draw GameObjects Recursively
+	//Toggle Frustum culling 
 	if (App->camera->obj_camera->active && App->camera->obj_camera->GetComponentCamera()->culling)
 	{
-		std::vector<GameObject*> tmp;
-		
-		for (int i = 0; i > static_meshes.size(); ++i)
-		{
-			tmp.push_back(static_meshes[i]->my_GO);
-		}
-		
-		QuadTree->Intersects(tmp, App->camera->obj_camera->GetComponentCamera()->frustum);
-		for (int i = 0; i < tmp.size(); i++)
-			if (tmp[i]->active)
-				DrawRecursively((tmp[i]));
+		// Dynamic Frustum Culling
+		std::vector<GameObject*> tmp_dynamic_go;
+		for (int i = 0; i < tmp_dynamic_go.size(); i++)
+			if (!tmp_dynamic_go[i]->is_static && tmp_dynamic_go[i]->active && App->camera->Intersects(tmp_dynamic_go[i]->GetComponentMesh()->aabb))
+				DrawRecursively(tmp_dynamic_go[i]);
+
+		// Static Frustum Culling
+		std::vector<GameObject*> tmp_static_go;
+		QuadTree->Intersects(tmp_static_go, App->camera->obj_camera->GetComponentCamera()->frustum);
+		for (int i = 0; i < tmp_static_go.size(); i++)
+			if (tmp_static_go[i]->active)
+				DrawRecursively(tmp_static_go[i]);
 	}
 	else
 		DrawRecursively(root);

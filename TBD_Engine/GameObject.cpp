@@ -127,7 +127,7 @@ void GameObject::Update(float dt)
 		if (mesh != nullptr)
 			mesh->UpdateGlobalAABB();
 	}
-	if (this->GetComponentCamera() != nullptr)
+	if (this->GetComponentCamera() != nullptr && active)
 	{
 		ComponentCamera* camera = this->GetComponentCamera();
 

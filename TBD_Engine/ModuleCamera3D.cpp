@@ -147,7 +147,7 @@ const Frustum & ModuleCamera3D::GetActiveFrustum() const
 
 bool ModuleCamera3D::Intersects(const AABB & refBox) const
 {
-	return main_camera->ContainsAABB(refBox);
+	return obj_camera->GetComponentCamera()->ContainsAABB(refBox);
 }
 
 void ModuleCamera3D::MoveCamera(float & movSpeed)

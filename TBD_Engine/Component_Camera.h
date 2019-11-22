@@ -38,7 +38,7 @@ public:
 	void DrawFrustum();
 	
 	bool ContainsAABB(const AABB& reference);
-	bool ContainsAABB(const Frustum& frustum, const AABB& reference);
+	static bool ContainsAABB(const Frustum& frustum, const AABB& reference);
 
 public:
 	Frustum frustum;

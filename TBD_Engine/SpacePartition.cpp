@@ -2,6 +2,7 @@
 #include "SDL/include/SDL_opengl.h"
 #include "Color.h"
 #include "Application.h"
+#include "Component_Camera.h"
 
 #include "mmgr/mmgr.h"
 
@@ -242,7 +243,6 @@ void TreeNode::Intersects(std::vector<GameObject*>& collector, const AABB& area)
 {
 	if (box.Intersects(area)) {
 		for (int i = 0; i < meshes.size(); i++)
-			if (area.Intersects(meshes[i]->global_aabb))
 				collector.push_back(meshes[i]->my_GO);
 
 		if (childs.size() > 0)
@@ -253,11 +253,10 @@ void TreeNode::Intersects(std::vector<GameObject*>& collector, const AABB& area)
 
 void TreeNode::Intersects(std::vector<GameObject*>& collector, const Frustum& frustum)
 {
-	//if () //Camera Intersection(frustum, box)
+	if (ComponentCamera::ContainsAABB(frustum, box))
 	{
 		for (int i = 0; i < meshes.size(); i++)
-			if(frustum.Intersects(meshes[i]->global_aabb))
-				collector.push_back(meshes[i]->my_GO);
+			collector.push_back(meshes[i]->my_GO);
 
 		if (childs.size() > 0)
 			for (int i = 0; i < childs.size(); i++)
