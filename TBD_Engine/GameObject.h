@@ -18,6 +18,10 @@ public:
 	void Update(float dt);
 	void CleanUp();
 
+	// Load & Save 
+	void Load(const nlohmann::json &scene_file);
+	void Save(uint obj_num, nlohmann::json &scene_file);
+
 	void Enable();
 	void Disable();
 
@@ -53,10 +57,6 @@ public:
 	GameObject* parent = nullptr;
 	std::vector<Component*> components;
 	std::vector<GameObject*> children;
-
-
-private:
-	void RenderBoundingBox();
 };
 
 #endif

@@ -18,6 +18,13 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	//Save & Load
+	/*void Load(const nlohmann::json  &config);
+	void Save(nlohmann::json &config);*/
+
+	void SaveScene(std::string scene_name);
+	void SaveGameObjects(nlohmann::json  &scene, GameObject* Root);
+
 public:
 
 	GameObject* CreateGameObject();

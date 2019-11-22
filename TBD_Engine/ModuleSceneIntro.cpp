@@ -16,6 +16,9 @@
 #include "par/par_shapes.h"
 #include "Math.h"
 
+#include <fstream>
+#include <iomanip>
+
 #include "mmgr/mmgr.h"
 
 
@@ -25,7 +28,8 @@ ModuleSceneIntro::ModuleSceneIntro(bool start_enabled) : Module(start_enabled)
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
-{}
+{
+}
 
 bool ModuleSceneIntro::Init()
 {
@@ -93,10 +97,11 @@ update_status ModuleSceneIntro::Update(float dt)
 		QuadTree->update_tree = true;
 	}
 
-	/*if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) //Test
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) //Test
 	{
-		App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
-	}*/
+		//App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
+		SaveScene("Test_Scene");
+	}
 
 	root->Update(dt);
 
@@ -181,6 +186,30 @@ void ModuleSceneIntro::DrawRecursively(GameObject* GO)
 			DrawRecursively(*it);
 		}
 	}
+}
+
+
+void ModuleSceneIntro::SaveScene(std::string scene_name)
+{
+	// Create auxiliar file
+	json scene;
+	std::string full_path = SCENES_FOLDER + scene_name + ".json";
+
+	SaveGameObjects(scene, root);
+
+	// Create the stream and open the file
+	std::ofstream stream;
+	stream.open(full_path);
+	stream << std::setw(4) << scene << std::endl;
+	stream.close();
+}
+
+void ModuleSceneIntro::SaveGameObjects(nlohmann::json  &scene, GameObject* GO)
+{
+	GO->Save(GO->id, scene);
+
+	for (int i = 0; i < GO->children.size(); ++i)
+		SaveGameObjects(scene, GO->children[i]);
 }
 
 void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m)
