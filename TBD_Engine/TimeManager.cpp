@@ -2,9 +2,7 @@
 #include "Globals.h"
 #include "TimeManager.h"
 
-
-
-TimeManager::TimeManager(Application* app, bool start_enabled) : Module(app, "Time", start_enabled)
+TimeManager::TimeManager(bool start_enabled) : Module(start_enabled)
 {
 }
 

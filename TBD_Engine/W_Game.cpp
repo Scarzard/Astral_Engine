@@ -2,6 +2,7 @@
 #include "W_Game.h"
 #include "ModuleRenderer3D.h"
 #include "glew/include/GL/glew.h"
+#include "TimeManager.h"
 
 #include "mmgr/mmgr.h"
 
@@ -30,11 +31,53 @@ bool W_Game::Draw()
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
+		
 		ImGui::Begin("Game");
+
+		static char* button_name1 = "Play";
+		static char* button_name2 = "Pause";
+		
+		static uint time_scale_width = 100;
+		ENGINE_STATE engine_state = App->GetState();
+
+		// Play/Pause
+		//ImGui::SetCursorPos({ (float)(width / 2 - 35), (float)(height / 3) });
+
+		//Play/Stop
+		if (ImGui::Button(button_name1)) 
+		{
+			if (engine_state == ENGINE_STATE::IN_EDITOR)
+			{
+				if (App->Play())
+				{
+					button_name1 = "Stop";
+					in_editor = false;
+				}
+			}
+			else 
+			{
+				App->Stop();
+				button_name1 = "Play";
+				in_editor = true;
+			}
+		}
+		ImGui::SameLine();
+		if (ImGui::Button(button_name2)) 
+		{
+			if (engine_state == ENGINE_STATE::PLAY)
+				button_name2 = "Resume";
+			else if (engine_state == ENGINE_STATE::PAUSE)
+				button_name2 = "Pause";
+
+			App->Pause();
+		}
+		
+
 		//
 		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			App->gui->is_game_focused = ImGui::IsWindowHovered();
-		//1. Create aFrame Buffer Object
+
+		//1. Create a Frame Buffer Object
 		//2. Texture obtained from step 1
 		//3. We need to put the image in ImGui::Image
 		//ImGui::Image(texture, size);
@@ -46,6 +89,8 @@ bool W_Game::Draw()
 		ImGui::End();
 		ImGui::PopStyleVar();
 	}
+
+	
 	
 	return true;
 }

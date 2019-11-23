@@ -21,6 +21,7 @@ public:
 	ImVec2 current_size, new_size;
 private:
 	FrameBufferObject* fbo = nullptr;
+	bool in_editor = true;
 };
 
 #endif // !_W_GAME_H_

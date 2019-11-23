@@ -4,17 +4,11 @@
 #include "Module.h"
 #include "Globals.h"
 
-enum class ENGINE_STATE
-{
-	EDITOR = 0,
-	PLAY,
-	PAUSE
-};
 
 class TimeManager : public Module
 {
 public:
-	TimeManager(Application* app, bool start_enabled = true);
+	TimeManager(bool start_enabled = true);
 	~TimeManager();
 
 	update_status PostUpdate(float dt);
