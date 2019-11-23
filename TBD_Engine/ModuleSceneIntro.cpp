@@ -97,10 +97,9 @@ update_status ModuleSceneIntro::Update(float dt)
 		QuadTree->update_tree = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) //Test
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) //Test
 	{
-		//App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
-		SaveScene("Test_Scene");
+		App->gui->save_scene_pop = true;
 	}
 
 	root->Update(dt);
