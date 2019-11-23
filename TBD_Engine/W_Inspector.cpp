@@ -5,6 +5,7 @@
 #include "SpacePartition.h"
 #include "ModuleEngineUI.h"
 #include "ModuleSceneIntro.h"
+#include "ResourceTexture.h"
 
 
 W_Inspector::W_Inspector() : Window()
@@ -130,24 +131,23 @@ bool W_Inspector::Draw()
 
 				if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentTexture() != nullptr)
 				{
-					if (ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checers_texture))
-					{
+					ComponentTexture* comp_tex = selected_GO->GetComponentTexture();
 
-					}
+					if (ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checers_texture)){}
 
 					if (selected_GO->GetComponentTexture()->Checers_texture == false)
 					{
-						if (selected_GO->GetComponentTexture()->texture.id != 0)
+						if (comp_tex->res_texture != nullptr)
 						{
 							ImGui::Text("");
-							ImGui::Text("Texture path: %s", selected_GO->GetComponentTexture()->texture.path.c_str());
+							ImGui::Text("Texture path: %s", comp_tex->res_texture->file.c_str());
 							ImGui::Text("");
-							ImGui::Text("Texture Width: %u", selected_GO->GetComponentTexture()->texture.width);
+							ImGui::Text("Texture Width: %u", comp_tex->res_texture->width);
 							ImGui::Text("");
-							ImGui::Text("Texture Height: %u", selected_GO->GetComponentTexture()->texture.height);
+							ImGui::Text("Texture Height: %u", comp_tex->res_texture->height);
 							ImGui::Text("");
 							ImGui::Text("Texture preview:");
-							ImGui::Image((ImTextureID*)selected_GO->GetComponentTexture()->texture.id, ImVec2(200, 200), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 0.5f));
+							ImGui::Image((ImTextureID*)comp_tex->res_texture->texture, ImVec2(200, 200), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 0.5f));
 						}
 						else
 						{

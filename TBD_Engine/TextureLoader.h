@@ -5,6 +5,8 @@
 #include "Globals.h"
 #include "Module.h"
 
+class ResourceTexture;
+
 struct Texture
 {
 	uint id, height, width;
@@ -24,11 +26,12 @@ public:
 	bool CleanUp();
 
 	Texture CreateCheckersTexture() const;
-	Texture LoadTextureFromPath(const char* path);
+	bool LoadTextureFromPath(const char* path, std::string& output_file);
+	bool LoadTextureFromLibrary(ResourceTexture* tex);
 	Texture CreateDefaultTexture() const;
 	uint CreateTexture(const void* img, uint width, uint height, int internalFormat, uint format) const;
 
-	bool CreateFileDDS(const char* path) const;
+	bool CreateFileDDS(const char* path, std::string& output_file) const;
 
 
 public:

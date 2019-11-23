@@ -9,16 +9,17 @@ class Resource
 {
 
 public:
-	enum RESOURCE_TYPE {
+	enum RES_TYPE {
+		UNKNOWN = 1,
 		TEXTURE,
 		MESH,
-		SCENE,
-		UNKNOWN
+		MODEL,
+		SCENE		
 	};
 
-	Resource(uint UUID, RESOURCE_TYPE type) : res_UUID(UUID), type(type) {}
+	Resource(uint UUID, RES_TYPE type) : res_UUID(UUID), type(type) {}
 	virtual ~Resource() {}
-	RESOURCE_TYPE GetType() const;
+	RES_TYPE GetType() const;
 
 	bool IsLoadedToMemory() const;
 	bool LoadToMemory();
@@ -30,15 +31,15 @@ public:
 	const char* GetImportedFile() const;
 	
 
-	virtual void Load(const nlohmann::json &config);
-	virtual void Save(nlohmann::json &config) const;
+	//virtual void Load(const nlohmann::json &config);
+	//virtual void Save(nlohmann::json &config) const;
 	virtual bool LoadInMemory() = 0;
 
-protected:
+public:
 	uint res_UUID = 0;
 	std::string file;
-	std::string imported_file;
-	RESOURCE_TYPE type = RESOURCE_TYPE::UNKNOWN;
+	std::string exported_file;
+	RES_TYPE type = RES_TYPE::UNKNOWN;
 	uint loaded = 0;
 };
 

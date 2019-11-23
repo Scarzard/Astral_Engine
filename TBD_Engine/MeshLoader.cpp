@@ -6,6 +6,7 @@
 #include "Importer.h"
 #include "SpacePartition.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleResources.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -165,7 +166,6 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 		}
 
 		child->CreateComponent(Component::ComponentType::Mesh);
-		child->CreateComponent(Component::ComponentType::Texture);
 		ComponentMesh* mesh = child->GetComponentMesh();
 
 		aiMaterial* material = scene->mMaterials[new_mesh->mMaterialIndex];
@@ -174,13 +174,15 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 		aiString path;
 		material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
 
-		if (path.C_Str() != nullptr)
+		if (path.C_Str() != nullptr && path.length > 0)
 		{
+			child->CreateComponent(Component::ComponentType::Texture);
 			std::string directory = App->GetDirectoryFromPath(full_path);
 			directory.append("/");
 			directory.append(path.C_Str());
 
-			child->GetComponentTexture()->texture = App->tex_loader->LoadTextureFromPath(directory.c_str());
+			child->GetComponentTexture()->res_texture = (ResourceTexture*)App->resources->Get(App->resources->GetNewFile(directory.c_str()));
+			child->GetComponentTexture()->res_texture->LoadInMemory();
 		}
 
 		mesh->num_vertex = new_mesh->mNumVertices;

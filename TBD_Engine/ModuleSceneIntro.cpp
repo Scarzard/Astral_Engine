@@ -59,8 +59,8 @@ bool ModuleSceneIntro::Start()
 	box.SetNegativeInfinity();
 	QuadTree = new Tree(box);
 
-	App->mesh_loader->LoadFile("Assets/Street/Street environment_V01.fbx");
-	//App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
+	App->mesh_loader->LoadFile("Assets/FBX/Street/Street environment_V01.fbx");
+	//App->mesh_loader->LoadFile("Assets/FBX/BakerHouse/BakerHouse.fbx");
 	return ret;
 }
 
@@ -261,7 +261,7 @@ void ModuleSceneIntro::SaveScene(std::string scene_name)
 {
 	// Create auxiliar file
 	json scene;
-	std::string full_path = SCENES_FOLDER + scene_name + ".json";
+	std::string full_path = ASSETS_SCENES_FOLDER + scene_name + ".json";
 
 	SaveGameObjects(scene, root);
 
@@ -318,7 +318,7 @@ void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m)
 		obj->GetComponentMesh()->tex_coords[i] = m->tcoords[i];
 
 	//Checkers texture to primitive
-	obj->GetComponentTexture()->texture = App->tex_loader->DefaultTexture;
+	//obj->GetComponentTexture()->res_texture = App->tex_loader->DefaultTexture; //TODO make default texture a resource
 
 	//Generate Bounding box for Primitive
 	ComponentMesh* tmp = obj->GetComponentMesh();

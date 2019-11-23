@@ -65,7 +65,8 @@ enum update_status
 #define VSYNC true
 
 #define ASSETS_FOLDER "/Assets/"
-#define SCENES_FOLDER "Assets/Scenes/"
+#define ASSETS_SCENES_FOLDER "Assets/Scenes/"
+#define ASSETS_TEXTURES_FOLDER "Assets/Textures/"
 #define LIBRARY_FOLDER "/Library/"
 #define LIBRARY_TEXTURES_FOLDER "/Library/Textures/"
 #define LIBRARY_MESH_FOLDER "/Library/Meshes/"

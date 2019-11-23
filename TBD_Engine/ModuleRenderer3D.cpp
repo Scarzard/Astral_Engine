@@ -246,7 +246,11 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 		if (m->GetComponentTexture()->Checers_texture == true)
 			glBindTexture(GL_TEXTURE_2D, App->tex_loader->CheckersTexture.id);
 		else
-			glBindTexture(GL_TEXTURE_2D, m->GetComponentTexture()->texture.id);
+		{
+			if(m->GetComponentTexture()->res_texture)
+				glBindTexture(GL_TEXTURE_2D, m->GetComponentTexture()->res_texture->texture);
+		}
+			
 
 
 	}

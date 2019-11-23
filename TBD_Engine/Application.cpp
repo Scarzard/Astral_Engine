@@ -9,6 +9,7 @@
 #include "MeshLoader.h"
 #include "TextureLoader.h"
 #include "ModuleFileSystem.h"
+#include "ModuleResources.h"
 
 #include <fstream>
 #include <iomanip>
@@ -25,6 +26,7 @@ Application::Application()
 	gui = new ModuleEngineUI(this);
 	mesh_loader = new MeshLoader(this);
 	tex_loader = new TextureLoader(this);
+	resources = new ModuleResources(this);
 	file_system = new ModuleFileSystem(true, ASSETS_FOLDER);
 
 	// The order of calls is very important!
@@ -38,6 +40,7 @@ Application::Application()
 	AddModule(mesh_loader);
 	AddModule(tex_loader);
 	AddModule(file_system);
+	AddModule(resources);
 	// Scenes
 	AddModule(scene_intro);
 

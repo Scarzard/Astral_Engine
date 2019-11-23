@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "Resource.h"
+#include "Importer.h"
+
 
 class ModuleResources : public Module
 {
@@ -17,22 +19,24 @@ public:
 	bool CleanUp();
 
 
-	Resource* NewResource(Resource::RESOURCE_TYPE type);
-	uint ImportFile(const char* new_file_in_assets, Resource::RESOURCE_TYPE type, bool force = false);
+	Resource* NewResource(Resource::RES_TYPE type);
+	uint GetNewFile(const char* new_file);
+	uint ImportFile(const char* new_file_in_assets, Resource::RES_TYPE type);
 
 	uint Find(const char* file_in_assets) const;
 
-	uint GenerateNewUID() { return App->GetRandomUUID(); }
+	//uint GenerateNewUID() {  }
 
 	// Getters ------------
-	const Resource* Get(uint uid) const;
 	Resource* Get(uint uid);
 
-
+private:
+	uint ResourceInAssets(const char* file)const;
 	void DrawExplorer();
 
 private:
 	std::map<uint, Resource*> resources;
+	Importer importer;
 };
 
 #endif //!__ModuleResources_H__

@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
 #include "glew/include/GL/glew.h"
+#include "ResourceTexture.h"
 
 #include "DevIL/include/il.h"
 #include "DevIL/include/ilu.h"
@@ -143,18 +144,11 @@ uint TextureLoader::CreateTexture(const void* img, uint width, uint height, int 
 	return id_texture;
 }
 
-Texture TextureLoader::LoadTextureFromPath(const char* path)
+bool TextureLoader::LoadTextureFromPath(const char* path, std::string& output_file)
 {
-	// Check if the texture being loaded is already loaded
-	for (std::vector<Texture>::iterator iterator = loaded_textures.begin(); iterator != loaded_textures.end(); iterator++)
-	{
-		if ((*iterator).path == path)
-		{
-			return (*iterator);
-		}
-	}
+	bool ret = false;
 
-	Texture tex;
+	uint tex = 0;
 	uint id_img = 0;
 
 	if (path != nullptr)
@@ -166,22 +160,12 @@ Texture TextureLoader::LoadTextureFromPath(const char* path)
 
 		if (ilLoadImage(path))
 		{
-			
-			ILinfo ImgInfo;
-			iluGetImageInfo(&ImgInfo);
-
-			//FLip image in case it is flipped 
-			if (ImgInfo.Origin == IL_ORIGIN_UPPER_LEFT)
-				iluFlipImage();
 
 			if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 			{
-				//Create TExture
-				tex.id = CreateTexture(ilGetData(), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_FORMAT));
-				tex.height = ilGetInteger(IL_IMAGE_HEIGHT);
-				tex.width = ilGetInteger(IL_IMAGE_WIDTH);
-				tex.path = path;
-				CreateFileDDS(path);
+				//Create Texture
+				tex = CreateTexture(ilGetData(), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_FORMAT));
+				return CreateFileDDS(path, output_file);
 			}
 			else
 				App->LogInConsole("Failed converting image: %s", iluErrorString(ilGetError()));
@@ -197,9 +181,39 @@ Texture TextureLoader::LoadTextureFromPath(const char* path)
 		App->LogInConsole("Could not load image from path! Path %s was nullptr", path);
 	}
 
-	loaded_textures.push_back(tex);
 
 	return tex;
+}
+
+bool TextureLoader::LoadTextureFromLibrary(ResourceTexture* tex)
+{
+	bool ret = false;
+
+	uint id_img;
+	ilGenImages(1, &id_img);
+	ilBindImage(id_img);
+	const char* path = strstr(tex->exported_file.c_str(), "library");
+
+	if (ilLoadImage(path))
+	{
+		ILinfo ImgInfo;
+		iluGetImageInfo(&ImgInfo);
+
+		//FLip image in case it is flipped 
+		if (ImgInfo.Origin == IL_ORIGIN_UPPER_LEFT)
+			iluFlipImage();
+
+		tex->texture = CreateTexture(ilGetData(), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_FORMAT));
+		tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
+		tex->width = ilGetInteger(IL_IMAGE_WIDTH);
+		ret = true;
+	}
+	else
+	{
+		App->LogInConsole("Failed loading image: %s, %s", iluErrorString(ilGetError()), tex->exported_file.c_str());
+	}
+
+	return ret;
 }
 
 Texture TextureLoader::CreateDefaultTexture() const
@@ -213,11 +227,11 @@ Texture TextureLoader::CreateDefaultTexture() const
 	return tex;
 }
 
-bool TextureLoader::CreateFileDDS(const char * path) const
+bool TextureLoader::CreateFileDDS(const char * path, std::string& output_file) const
 {
 	bool ret = false;
 
-	std::string output_file, name;
+	std::string name;
 
 	name = App->GetNameFromPath(path);
 

@@ -7,7 +7,7 @@
 #include "GameObject.h"
 #include "ModuleEngineUI.h"
 #include "ModuleWindow.h"
-
+#include "ModuleResources.h"
 #include "mmgr/mmgr.h"
 
 
@@ -126,7 +126,8 @@ update_status ModuleInput::PreUpdate(float dt)
 				{
 					if (App->gui->ins_window->selected_GO != nullptr)
 					{
-						App->gui->ins_window->selected_GO->GetComponentTexture()->texture = App->tex_loader->LoadTextureFromPath(DroppedFile);
+						App->gui->ins_window->selected_GO->GetComponentTexture()->res_texture = (ResourceTexture*)App->resources->Get(App->resources->GetNewFile(DroppedFile));
+						App->gui->ins_window->selected_GO->GetComponentTexture()->res_texture->LoadInMemory();
 						App->LogInConsole("Texture dropped with root: %s", DroppedFile);
 					}
 					else
