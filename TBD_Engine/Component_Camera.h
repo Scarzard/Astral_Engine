@@ -34,6 +34,9 @@ public:
 	void SetAspectRatio(float aspect);
 	void SetNearPlane(float near_plane);
 	void SetFarPlane(float far_plane);
+	void UpdateTransform();
+
+	void UpdatePlanes();
 
 	void DrawFrustum();
 	
@@ -48,6 +51,8 @@ public:
 
 private:
 	float aspect_ratio = 0.0f;
+
+	Plane planes[6];
 	
 };
 #endif // !_COMPONENT_CAMERA_H

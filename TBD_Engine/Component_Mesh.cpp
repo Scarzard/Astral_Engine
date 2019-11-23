@@ -69,6 +69,14 @@ void ComponentMesh::CleanUp()
 			break;
 		}
 	}
+	for (std::vector<ComponentMesh*>::iterator iterator = App->scene_intro->meshes.begin(); iterator != App->scene_intro->meshes.end(); iterator++)
+	{
+		if ((*iterator)->my_GO->id == this->my_GO->id)
+		{
+			App->scene_intro->meshes.erase(iterator);
+			break;
+		}
+	}
 
 	glDeleteBuffers(1, (GLuint*)&id_index);
 	glDeleteBuffers(1, (GLuint*)&id_vertex);

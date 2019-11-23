@@ -19,7 +19,7 @@ ComponentCamera::ComponentCamera(GameObject* gameobj) : Component(Component::Com
 	frustum.up = math::float3::unitY;
 	frustum.pos = math::float3::zero;
 	frustum.nearPlaneDistance = 1.0f;
-	frustum.farPlaneDistance = 250.0f;
+	frustum.farPlaneDistance = 50.0f;
 	frustum.verticalFov = 60 * DEGTORAD;
 	frustum.horizontalFov = 2.0f * atanf(aspect_ratio * tanf(frustum.verticalFov * 0.5f));
 
@@ -122,6 +122,20 @@ void ComponentCamera::SetFarPlane(float far_plane)
 	frustum.farPlaneDistance = far_plane;
 
 	has_transformed = true;
+}
+
+void ComponentCamera::UpdateTransform()
+{
+	frustum.pos = my_GO->GetComponentTransform()->GetPosition();
+	frustum.front = my_GO->GetComponentTransform()->GetGlobalTransform().WorldZ();
+	frustum.up = my_GO->GetComponentTransform()->GetGlobalTransform().WorldY();
+
+	UpdatePlanes();
+}
+
+void ComponentCamera::UpdatePlanes()
+{
+	frustum.GetPlanes(planes);
 }
 
 void ComponentCamera::DrawFrustum()

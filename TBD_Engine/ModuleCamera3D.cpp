@@ -3,6 +3,8 @@
 #include "ModuleCamera3D.h"
 #include "ModuleEngineUI.h"
 #include "GameObject.h"
+#include "ModuleEngineUI.h"
+#include "SDL/include/SDL_opengl.h"
 
 #include "mmgr/mmgr.h"
 
@@ -28,6 +30,7 @@ bool ModuleCamera3D::Start()
 	obj_camera->name = "Main Camera";
 	obj_camera->is_static = false;
 	obj_camera->CreateComponent(Component::ComponentType::Camera);
+	obj_camera->CreateComponent(Component::ComponentType::Transform);
 	
 	return ret;
 }
@@ -46,6 +49,14 @@ update_status ModuleCamera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
+
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		
+		MouseClick((float)App->input->GetMouseX(), (float)App->input->GetMouseY());
+		
+	}
+	DrawRay();
 	if (App->gui->is_game_focused)
 	{
 		float currMovSpeed = 4.0f * dt;
@@ -85,22 +96,22 @@ update_status ModuleCamera3D::Update(float dt)
 // -----------------------------------------------------------------
 void ModuleCamera3D::Move(const float3 &Movement)
 {
-	main_camera->frustum.pos += Movement;
+	active_camera->frustum.pos += Movement;
 	looking_at += Movement;
 }
 
 void ModuleCamera3D::LookAt(const float3 & spot, float dist)
 {
 	looking_at = spot;
-	main_camera->LookAt(looking_at);
+	active_camera->LookAt(looking_at);
 
 	if (dist > 0.f)
-		main_camera->frustum.pos = looking_at - main_camera->frustum.front * dist;
+		active_camera->frustum.pos = looking_at - active_camera->frustum.front * dist;
 }
 
 void ModuleCamera3D::CenterToObject(GameObject * obj)
 {
-	if (obj != nullptr) {
+	/*if (obj != nullptr) {
 		float dist = Length({ 10.0f, 10.0f, 10.0f });
 
 		ComponentTransform* transform = obj->GetComponentTransform();
@@ -109,30 +120,30 @@ void ModuleCamera3D::CenterToObject(GameObject * obj)
 
 		ComponentMesh* mesh = obj->GetComponentMesh();
 		if (mesh != nullptr)
-			dist = Length(float3(transform->scale.x, transform->scale.y, transform->scale.z));
+			dist = Length(float3(mesh., mesh->mesh->size.y, mesh->mesh->size.z)) * Length(float3(transform->scale.x, transform->scale.y, transform->scale.z));
 
 		LookAt(looking_at, dist);
-	}
+	}*/
 }
 
 float3 ModuleCamera3D::GetPosition() const
 {
-	return main_camera->frustum.pos;
+	return active_camera->frustum.pos;
 }
 
 float * ModuleCamera3D::GetOpenGLView() const
 {
-	return *main_camera->GetOpenGLView().v;
+	return *active_camera->GetOpenGLView().v;
 }
 
 float * ModuleCamera3D::GetOpenGLProjection() const
 {
-	return *main_camera->GetOpenGLProjection().v;
+	return *active_camera->GetOpenGLProjection().v;
 }
 
 bool * ModuleCamera3D::GetProjectionUpdateFlag() const
 {
-	return &main_camera->has_transformed;
+	return &active_camera->has_transformed;
 }
 
 ComponentCamera * ModuleCamera3D::GetActiveCamera() const
@@ -147,15 +158,15 @@ const Frustum & ModuleCamera3D::GetActiveFrustum() const
 
 bool ModuleCamera3D::Intersects(const AABB & refBox) const
 {
-	return obj_camera->GetComponentCamera()->ContainsAABB(refBox);
+	return active_camera->ContainsAABB(refBox);
 }
 
 void ModuleCamera3D::MoveCamera(float & movSpeed)
 {
 	float3 mov(float3::zero);
 
-	float3 right(main_camera->frustum.WorldRight());
-	float3 front(main_camera->frustum.front);
+	float3 right(active_camera->frustum.WorldRight());
+	float3 front(active_camera->frustum.front);
 
 	// Boost speed if not already
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) movSpeed *= 8.0;
@@ -173,7 +184,7 @@ void ModuleCamera3D::MoveCamera(float & movSpeed)
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) mov += float3::unitY;
 
 	if (!mov.Equals(float3::zero)) {
-		main_camera->frustum.Translate(mov * movSpeed);
+		active_camera->frustum.Translate(mov * movSpeed);
 	}
 }
 
@@ -181,16 +192,16 @@ void ModuleCamera3D::DragCamera(float delta_x, float delta_y)
 {
 	float3 mov(float3::zero);
 
-	mov += main_camera->frustum.WorldRight() * delta_x;
-	mov -= main_camera->frustum.up * delta_y;
+	mov += active_camera->frustum.WorldRight() * delta_x;
+	mov -= active_camera->frustum.up * delta_y;
 
-	main_camera->frustum.Translate(mov * 100.f);
+	active_camera->frustum.Translate(mov * 100.f);
 	looking_at += mov * 100.f;
 }
 
 void ModuleCamera3D::Zoom(float delta_z)
 {
-	main_camera->frustum.pos += main_camera->frustum.front * delta_z;
+	active_camera->frustum.pos += active_camera->frustum.front * delta_z;
 }
 
 bool ModuleCamera3D::FirstPersonCamera(float & movSpeed)
@@ -201,17 +212,30 @@ bool ModuleCamera3D::FirstPersonCamera(float & movSpeed)
 	return ret;
 }
 
+void ModuleCamera3D::MouseClick(float mouse_x, float mouse_y)
+{
+	float x = mouse_x / (float)App->gui->game_window->current_size.x;
+	float y = 1.0f - (mouse_y / (float)App->gui->game_window->current_size.y);
+
+	x = (x - 0.5) / 0.5;
+	y = (y - 0.5) / 0.5;
+
+	hit = App->camera->active_camera->frustum.UnProjectLineSegment(x, y);
+
+	App->scene_intro->CollectHits(hit);
+}
+
 void ModuleCamera3D::Orbit(float motion_x, float motion_y)
 {
-	float3 focus = main_camera->frustum.pos - looking_at;
+	float3 focus = active_camera->frustum.pos - looking_at;
 
-	Quat qy(main_camera->frustum.up, motion_x);
-	Quat qx(main_camera->frustum.WorldRight(), motion_y);
+	Quat qy(active_camera->frustum.up, motion_x);
+	Quat qx(active_camera->frustum.WorldRight(), motion_y);
 
 	focus = qx.Transform(focus);
 	focus = qy.Transform(focus);
 
-	main_camera->frustum.pos = focus + looking_at;
+	active_camera->frustum.pos = focus + looking_at;
 
 	LookAt(looking_at);
 }
@@ -222,23 +246,38 @@ void ModuleCamera3D::Rotate(float motion_x, float motion_y)
 	if (motion_x != 0.f)
 	{
 		Quat q = Quat::RotateY(motion_x);
-		main_camera->frustum.front = q.Mul(main_camera->frustum.front).Normalized();
-		main_camera->frustum.up = q.Mul(main_camera->frustum.up).Normalized();
+		active_camera->frustum.front = q.Mul(active_camera->frustum.front).Normalized();
+		active_camera->frustum.up = q.Mul(active_camera->frustum.up).Normalized();
 	}
 
 	// Y motion makes the camera rotate in X local axis
 	if (motion_y != 0.f)
 	{
-		Quat q = Quat::RotateAxisAngle(main_camera->frustum.WorldRight(), motion_y);
-		float3 newPos = q.Mul(main_camera->frustum.up).Normalized();
+		Quat q = Quat::RotateAxisAngle(active_camera->frustum.WorldRight(), motion_y);
+		float3 newPos = q.Mul(active_camera->frustum.up).Normalized();
 
 		if (newPos.y > 0.0f)
 		{
-			main_camera->frustum.up = newPos;
-			main_camera->frustum.front = q.Mul(main_camera->frustum.front).Normalized();
+			active_camera->frustum.up = newPos;
+			active_camera->frustum.front = q.Mul(active_camera->frustum.front).Normalized();
 		}
 	}
 
-	float3 dist = looking_at - main_camera->frustum.pos;
-	looking_at = main_camera->frustum.pos + main_camera->frustum.front * dist.Length();
+	float3 dist = looking_at - active_camera->frustum.pos;
+	looking_at = active_camera->frustum.pos + active_camera->frustum.front * dist.Length();
 }
+
+void ModuleCamera3D::DrawRay()
+{
+	glBegin(GL_LINES);
+	glLineWidth(2.0f);
+	glColor4f(Red.r, Red.g, Red.b, Red.a);
+
+	
+	glVertex3f(hit.a.x, hit.a.y, hit.a.z);
+	glVertex3f(hit.b.x, hit.b.y, hit.b.z);
+
+	glEnd();
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+}
+

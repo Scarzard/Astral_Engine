@@ -120,18 +120,22 @@ void GameObject::Update(float dt)
 		if (this->GetComponentTransform()->has_transformed)
 		{
 			TransformGlobal(this);
-			
+			if (this->GetComponentCamera() != nullptr)
+			{
+				ComponentCamera* camera = this->GetComponentCamera();
+
+				camera->UpdateTransform();
+			}
 		}
-			
+		if (this->GetComponentCamera() != nullptr)
+		{
+			ComponentCamera* camera = this->GetComponentCamera();
+			camera->DrawFrustum();
+		}
+		
 		ComponentMesh* mesh = this->GetComponentMesh();
 		if (mesh != nullptr)
 			mesh->UpdateGlobalAABB();
-	}
-	if (this->GetComponentCamera() != nullptr && active)
-	{
-		ComponentCamera* camera = this->GetComponentCamera();
-
-		camera->Update();
 	}
 
 	//Game Object iterative update

@@ -115,33 +115,33 @@ bool W_Configuration::Draw()
 		{
 			ImGui::Text("Horizontal FOV:");
 			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", App->camera->main_camera->frustum.horizontalFov);
+			ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", App->camera->active_camera->frustum.horizontalFov);
 
 
 			ImGui::Text("Vertical FOV:");
 			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", App->camera->main_camera->frustum.verticalFov);
+			ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", App->camera->active_camera->frustum.verticalFov);
 
-			float fov = App->camera->main_camera->frustum.verticalFov * RADTODEG;
+			float fov = App->camera->active_camera->frustum.verticalFov * RADTODEG;
 			ImGui::Text("Set FOV:       ");
 			ImGui::SameLine(); ImGui::PushItemWidth(100);
 			if (ImGui::DragFloat("1", &fov, 1.0f))
-				App->camera->main_camera->SetFOV(fov);
+				App->camera->active_camera->SetFOV(fov);
 
-			float near_plane = App->camera->main_camera->frustum.nearPlaneDistance;
+			float near_plane = App->camera->active_camera->frustum.nearPlaneDistance;
 			ImGui::Text("Set Near Plane:");
 			ImGui::SameLine(); ImGui::PushItemWidth(100);
 			if (ImGui::DragFloat("2", &near_plane, 1.0F, -INFINITY, INFINITY))
 			{
-				App->camera->main_camera->SetNearPlane(near_plane);
+				App->camera->active_camera->SetNearPlane(near_plane);
 			}
 
-			float far_plane = App->camera->main_camera->frustum.farPlaneDistance;
+			float far_plane = App->camera->active_camera->frustum.farPlaneDistance;
 			ImGui::Text("Set Far Plane: ");
 			ImGui::SameLine(); ImGui::PushItemWidth(100);
 			if (ImGui::DragFloat("3", &far_plane, 1.0F, -INFINITY, INFINITY))
 			{
-				App->camera->main_camera->SetFarPlane(far_plane);
+				App->camera->active_camera->SetFarPlane(far_plane);
 			}
 		}
 		if (ImGui::CollapsingHeader("Renderer"))

@@ -82,10 +82,7 @@ void Tree::Insert(ComponentMesh * mesh)
 		return;
 	}
 
-	if (!Root->Node_Insert(mesh))
-	{
-		Root->meshes.push_back(mesh);
-	}
+	Root->Node_Insert(mesh);
 
 }
 
@@ -122,7 +119,7 @@ void Tree::Intersects(std::vector<GameObject*>& collector, const Frustum& frustu
 	Root->Intersects(collector, frustum);
 }
 
-void Tree::Intersects(std::vector<GameObject*>& collector, const LineSegment& line)
+void Tree::Intersects(std::map<float, GameObject*>& collector, const LineSegment& line)
 {
 	Root->Intersects(collector, line);
 }
@@ -208,11 +205,6 @@ bool TreeNode::Node_Insert(ComponentMesh* mesh)
 					break;
 				}
 			}
-			if (!inserted)
-			{
-				meshes.push_back(mesh);
-				ret = true;
-			}
 				
 		}
 
@@ -256,7 +248,8 @@ void TreeNode::Intersects(std::vector<GameObject*>& collector, const Frustum& fr
 	if (ComponentCamera::ContainsAABB(frustum, box))
 	{
 		for (int i = 0; i < meshes.size(); i++)
-			collector.push_back(meshes[i]->my_GO);
+			if (ComponentCamera::ContainsAABB(frustum, meshes[i]->global_aabb))
+				collector.push_back(meshes[i]->my_GO);
 
 		if (childs.size() > 0)
 			for (int i = 0; i < childs.size(); i++)
@@ -264,12 +257,14 @@ void TreeNode::Intersects(std::vector<GameObject*>& collector, const Frustum& fr
 	}
 }
 
-void TreeNode::Intersects(std::vector<GameObject*>& collector, const LineSegment& line)
+void TreeNode::Intersects(std::map<float, GameObject*>& collector, const LineSegment& line)
 {
-	if (box.Intersects(line)) {
+	if (line.Intersects(box))
+	{
 		for (int i = 0; i < meshes.size(); i++) {
 			float nearHit, farHit;
-			if (meshes[i]->global_aabb.Intersects(line, nearHit, farHit))
+			OBB obb = meshes[i]->global_aabb;
+			if (obb.Intersects(line, nearHit, farHit))
 				collector[nearHit] = meshes[i]->my_GO;
 		}
 
@@ -279,7 +274,7 @@ void TreeNode::Intersects(std::vector<GameObject*>& collector, const LineSegment
 	}
 }
 
-// -----------------------------------------------------------------
+// ----------------------------------------------------------------- i wanna die
 
 bool TreeNode::isNodeFull()
 {

@@ -8,6 +8,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#include <map>
+
 #include "par/par_shapes.h"
 #include "Math.h"
 
@@ -93,7 +95,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	{
 		App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
 	}
-
+	
 	root->Update(dt);
 
 	if (QuadTree->update_tree && !skip_tree)
@@ -164,7 +166,6 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	}
 	else
 		DrawRecursively(root);
-
 	
 	//Draw Octree Recursively
 	if(App->gui->conf_window->draw_quadtree)
@@ -193,6 +194,58 @@ void ModuleSceneIntro::DrawRecursively(GameObject* GO)
 			DrawRecursively(*it);
 		}
 	}
+}
+
+void ModuleSceneIntro::CollectHits(LineSegment & ray)
+{
+	std::map<float, GameObject*> tmp;
+	// --- Gather non-static gos ---
+	for (std::vector<ComponentMesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
+	{
+		if (ray.Intersects((*it)->global_aabb))
+		{
+			OBB obb = (*it)->global_aabb;
+			float hit_near, hit_far;
+			if (ray.Intersects(obb, hit_near, hit_far))
+				tmp[hit_near] = (*it)->my_GO;
+		}
+	}
+
+	GameObject* selection = nullptr;
+	for (std::map<float, GameObject*>::iterator it = tmp.begin(); it != tmp.end() && selection == nullptr; it++)
+	{
+		// --- We have to test triangle by triangle ---
+		ComponentMesh* mesh = it->second->GetComponentMesh();
+
+		if (mesh)
+		{
+
+			// --- We need to transform the ray to local mesh space ---
+			LineSegment line = ray;
+			line.Transform(it->second->GetComponentTransform()->GetGlobalTransform().Inverted());
+
+			for (uint j = 0; j < mesh->num_index / 3; j++)
+			{
+				float3 a = mesh->vertex[mesh->index[j * 3]];
+				float3 b = mesh->vertex[mesh->index[(j * 3) + 1]];
+				float3 c = mesh->vertex[mesh->index[(j * 3) + 2]];
+				// --- Create Triangle given three vertices ---
+				Triangle triangle(a, b, c);
+
+				// --- Test ray/triangle intersection ---
+				if (line.Intersects(triangle, nullptr, nullptr))
+				{
+					selection = it->second;
+					break;
+				}
+			}
+
+		}
+	}
+
+	// --- Set Selected ---
+	if (selection)
+		App->gui->ins_window->selected_GO = selection;
 }
 
 void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m)

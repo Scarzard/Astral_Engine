@@ -4,6 +4,8 @@
 #include "glmath.h"
 #include "Component_Camera.h"
 
+
+
 class ModuleCamera3D : public Module
 {
 public:
@@ -28,6 +30,8 @@ public:
 	const Frustum& GetActiveFrustum() const;
 
 	bool Intersects(const AABB& refBox) const;
+	void MouseClick(float mouse_x, float mouse_y);
+	
 
 private:
 
@@ -43,8 +47,9 @@ private:
 	// Camera Rotations
 	void Orbit(float motion_x, float motion_y);
 	void Rotate(float motion_x, float motion_y);
-
+	void DrawRay();
 public:
+	LineSegment hit;
 	float3 looking_at;
 	GameObject* obj_camera = nullptr;
 	ComponentCamera* main_camera = nullptr;

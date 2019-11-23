@@ -22,6 +22,7 @@ public:
 
 	GameObject* CreateGameObject();
 	void DrawRecursively(GameObject* GO);
+	void CollectHits(LineSegment& ray);
 
 	void LoadPrimitiveMesh(const par_shapes_mesh_s* m);
 
@@ -38,6 +39,7 @@ public:
 	Tree* QuadTree = nullptr;
 
 	std::vector<ComponentMesh*> static_meshes;
+	std::vector<ComponentMesh*> meshes;
 
 private:
 	bool skip_tree = true;

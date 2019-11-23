@@ -263,7 +263,7 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 		App->renderer3D->NewTexBuffer(mesh->tex_coords, mesh->num_tex_coords, mesh->id_tex_coords);
 
 		App->scene_intro->static_meshes.push_back(mesh);
-
+		App->scene_intro->meshes.push_back(mesh);
 	}
 	
 	

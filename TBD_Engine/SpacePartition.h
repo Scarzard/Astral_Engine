@@ -2,6 +2,7 @@
 #define __SPACEPARTITION_H__
 
 #include "MathGeoLib/include/MathGeoLib.h"
+#include <map>
 
 #define BUCKET 3
 
@@ -25,7 +26,7 @@ public:
 
 	void Intersects(std::vector<GameObject*>& collector, const AABB& area);
 	void Intersects(std::vector<GameObject*>& collector, const Frustum& frustum);
-	void Intersects(std::vector<GameObject*>& collector, const LineSegment& line);
+	void Intersects(std::map<float, GameObject*>& collector, const LineSegment& line);
 
 public:
 	TreeNode* Root;
@@ -55,7 +56,7 @@ public:
 
 	void Intersects(std::vector<GameObject*>& collector, const AABB& area);
 	void Intersects(std::vector<GameObject*>& collector, const Frustum& frustum);
-	void Intersects(std::vector<GameObject*>& collector, const LineSegment& line);
+	void Intersects(std::map<float, GameObject*>& collector, const LineSegment& line);
 
 public:
 

@@ -161,6 +161,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 		*update_camera = false;
 	}
 
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -289,8 +290,4 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 		}
 	}
 
-	
-	
-
-		
 }
