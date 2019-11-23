@@ -58,7 +58,7 @@ bool ModuleFileSystem::Init()
 	bool ret = true;
 
 	// Ask SDL for a write dir
-	char* write_path = SDL_GetPrefPath(ORGANIZATION, TITLE);
+	char* write_path = SDL_GetPrefPath(App->Organization.c_str(), App->NameEngine.c_str());
 
 	// Trun this on while in game mode
 	//if(PHYSFS_setWriteDir(write_path) == 0)

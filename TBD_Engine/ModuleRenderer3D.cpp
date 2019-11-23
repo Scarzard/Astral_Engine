@@ -3,7 +3,10 @@
 #include "ModuleRenderer3D.h"
 #include "SpacePartition.h"
 #include "ModuleSceneIntro.h"
-
+#include "ModuleWindow.h"
+#include "ModuleCamera3D.h"
+#include "ModuleSceneIntro.h"
+#include "ModuleEngineUI.h"
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
@@ -131,9 +134,7 @@ bool ModuleRenderer3D::Init()
 
 
 	}
-
-	// Projection matrix for
-	//OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	OnResize(App->window->width, App->window->height);
 
 	return ret;
 }

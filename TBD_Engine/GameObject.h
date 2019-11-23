@@ -17,6 +17,10 @@ public:
 	void Update(float dt);
 	void CleanUp();
 
+	// Load & Save 
+	void Load(const nlohmann::json &scene_file);
+	void Save(uint obj_num, nlohmann::json &scene_file);
+
 	void Enable();
 	void Disable();
 
@@ -38,14 +42,21 @@ public:
 	bool active = true;
 	bool is_static = true;
 
+	//id just for naming
 	uint id = -1;
+
+	//random id
+	uint UUID = 0;
+
+	//name
 	std::string name;
+
+	//display this name when unactive
 	std::string unactive_name;
 
 	GameObject* parent = nullptr;
 	std::vector<Component*> components;
 	std::vector<GameObject*> children;
-
 };
 
 #endif

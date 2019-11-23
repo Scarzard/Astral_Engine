@@ -1,0 +1,16 @@
+{
+    "Application": {
+        "Name": "ASTRAL ENGINE",
+        "Organization": "UPC-CITM-TECH TALENT CENTER",
+        "Version": "0.5"
+    },
+    "Window": {
+        "Borderless": false,
+        "Full Screen": false,
+        "Full Screen Desktop": false,
+        "Height": 1000,
+        "Resizable": true,
+        "Size": 1,
+        "Width": 1680
+    }
+}

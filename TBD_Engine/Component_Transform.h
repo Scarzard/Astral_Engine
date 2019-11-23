@@ -16,6 +16,10 @@ public:
 
 	virtual ~ComponentTransform();
 
+	// Load & Save 
+	//void Load(uint obj_num, const nlohmann::json &scene_file);
+	void Save(uint obj_num, nlohmann::json &scene_file);
+
 	//Transform getters
 	float3 GetPosition() const;
 	Quat GetQuaternionRotation() const;

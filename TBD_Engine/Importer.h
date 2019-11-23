@@ -3,6 +3,9 @@
 
 #include "Module.h"
 
+class ComponentMesh;
+class ComponentTransform;
+
 class Importer 
 {
 public:

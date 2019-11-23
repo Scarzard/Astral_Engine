@@ -3,6 +3,8 @@
 #include "Component_Transform.h"
 #include "Component_Camera.h"
 #include "SpacePartition.h"
+#include "ModuleEngineUI.h"
+#include "ModuleSceneIntro.h"
 
 
 W_Inspector::W_Inspector() : Window()
@@ -128,7 +130,10 @@ bool W_Inspector::Draw()
 
 				if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentTexture() != nullptr)
 				{
-					ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checers_texture);
+					if (ImGui::Checkbox("Checkers Texture", &selected_GO->GetComponentTexture()->Checers_texture))
+					{
+
+					}
 
 					if (selected_GO->GetComponentTexture()->Checers_texture == false)
 					{

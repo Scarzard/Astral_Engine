@@ -12,6 +12,14 @@ ComponentTransform::~ComponentTransform()
 
 }
 
+void ComponentTransform::Save(uint obj_num, nlohmann::json &scene)
+{
+	scene["Game Objects"][obj_num]["Components"]["Transform"]["UUID"] = UUID;
+	scene["Game Objects"][obj_num]["Components"]["Transform"]["Position"] = { position.x, position.y, position.z };
+	scene["Game Objects"][obj_num]["Components"]["Transform"]["Rotation Quat"] = { rotation_quat.x, rotation_quat.y, rotation_quat.z, rotation_quat.w };
+	scene["Game Objects"][obj_num]["Components"]["Transform"]["Scale"] = { scale.x, scale.y, scale.y };
+}						 
+
 // ------------GETTERS--------------
 
 float4x4 ComponentTransform::GetTransform() const

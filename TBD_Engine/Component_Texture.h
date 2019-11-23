@@ -15,9 +15,13 @@ public:
 
 	void CleanUp();
 
+	// Load & Save 
+	//void Load(uint obj_num, const nlohmann::json &scene_file);
+	void Save(uint obj_num, nlohmann::json &scene_file);
+
 public:
 	
-	bool Checers_texture;
+	bool Checers_texture = false;
 
 	Texture texture;
 };

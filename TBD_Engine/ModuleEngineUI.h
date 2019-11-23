@@ -45,6 +45,7 @@ public:
 	W_Hierarchy* h_window = nullptr;
 	W_Configuration* conf_window = nullptr;
 	
+	bool save_scene_pop = false;
 private:
 
 	//bool show_demo_window = true;
@@ -52,7 +53,6 @@ private:
 	bool p_open = true;
 	bool demo_cpp = false;
 	bool about_window = false;
-
 	//Store the windows here and iterate them in Start, Draw, Pre/Post Update 
 	std::list<Window*> windows;
 

@@ -1,5 +1,8 @@
 #include "Component_Mesh.h"
 #include "Application.h"
+#include "Color.h"
+#include "Component_Transform.h"
+#include "ModuleSceneIntro.h"
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
@@ -15,6 +18,12 @@ ComponentMesh::ComponentMesh(GameObject* GO) : Component(Component::ComponentTyp
 ComponentMesh::~ComponentMesh()
 {
 
+}
+
+void ComponentMesh::Save(uint obj_num, nlohmann::json &scene)
+{
+	scene["Game Objects"][obj_num]["Components"]["Mesh"]["UUID"] = UUID;
+	scene["Game Objects"][obj_num]["Components"]["Mesh"]["DrawNormals"] = draw_normals;
 }
 
 const AABB& ComponentMesh::GetBoundingBox()

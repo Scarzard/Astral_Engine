@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "ModuleEngineUI.h"
 #include "SDL/include/SDL_opengl.h"
+#include "ModuleInput.h"
 
 #include "mmgr/mmgr.h"
 

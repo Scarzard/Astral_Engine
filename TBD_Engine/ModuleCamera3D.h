@@ -3,8 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Component_Camera.h"
-
-
+#include "Color.h"
 
 class ModuleCamera3D : public Module
 {

@@ -2,6 +2,11 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "SpacePartition.h"
+#include "ModuleCamera3D.h"
+#include "MeshLoader.h"
+#include "ModuleEngineUI.h"
+#include "ModuleInput.h"
+#include "ModuleRenderer3D.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -13,6 +18,9 @@
 #include "par/par_shapes.h"
 #include "Math.h"
 
+#include <fstream>
+#include <iomanip>
+
 #include "mmgr/mmgr.h"
 
 
@@ -22,7 +30,8 @@ ModuleSceneIntro::ModuleSceneIntro(bool start_enabled) : Module(start_enabled)
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
-{}
+{
+}
 
 bool ModuleSceneIntro::Init()
 {
@@ -91,9 +100,9 @@ update_status ModuleSceneIntro::Update(float dt)
 		QuadTree->update_tree = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) //Test
 	{
-		App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
+		App->gui->save_scene_pop = true;
 	}
 	
 	root->Update(dt);
@@ -109,7 +118,7 @@ update_status ModuleSceneIntro::Update(float dt)
 				QuadTree->Insert(*it);
 		}
 
-		QuadTree->Root->PruneEmptyLeafs();
+		//QuadTree->Root->PruneEmptyLeafs();
 
 		QuadTree->update_tree = false;
 	}
@@ -196,7 +205,7 @@ void ModuleSceneIntro::DrawRecursively(GameObject* GO)
 	}
 }
 
-void ModuleSceneIntro::CollectHits(LineSegment & ray)
+	void ModuleSceneIntro::CollectHits(LineSegment & ray)
 {
 	std::map<float, GameObject*> tmp;
 	// --- Gather non-static gos ---
@@ -246,6 +255,29 @@ void ModuleSceneIntro::CollectHits(LineSegment & ray)
 	// --- Set Selected ---
 	if (selection)
 		App->gui->ins_window->selected_GO = selection;
+}
+
+void ModuleSceneIntro::SaveScene(std::string scene_name)
+{
+	// Create auxiliar file
+	json scene;
+	std::string full_path = SCENES_FOLDER + scene_name + ".json";
+
+	SaveGameObjects(scene, root);
+
+	// Create the stream and open the file
+	std::ofstream stream;
+	stream.open(full_path);
+	stream << std::setw(4) << scene << std::endl;
+	stream.close();
+}
+
+void ModuleSceneIntro::SaveGameObjects(nlohmann::json  &scene, GameObject* GO)
+{
+	GO->Save(GO->id, scene);
+
+	for (int i = 0; i < GO->children.size(); ++i)
+		SaveGameObjects(scene, GO->children[i]);
 }
 
 void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m)

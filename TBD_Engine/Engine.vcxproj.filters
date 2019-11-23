@@ -40,9 +40,6 @@
     <Filter Include="Sources\Tools\PCG">
       <UniqueIdentifier>{c609d461-f298-4468-91ac-a172497e371d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Tools\Parson">
-      <UniqueIdentifier>{b85e8297-372e-4524-9c5c-8aafbf3057a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Modules\GUI">
       <UniqueIdentifier>{feb3e2ef-ccaf-46a2-80a5-ec1b32d88a75}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,9 @@
     </Filter>
     <Filter Include="Sources\Modules\Components">
       <UniqueIdentifier>{6c162245-4d8a-4b22-8831-8cc5d58332b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Tools\JSON">
+      <UniqueIdentifier>{602181cb-af40-4b46-8eb1-e26bca393b9a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -312,9 +312,6 @@
     <ClInclude Include="glew\include\GL\wglew.h">
       <Filter>Sources\Tools\glew</Filter>
     </ClInclude>
-    <ClInclude Include="parson\parson.h">
-      <Filter>Sources\Tools\Parson</Filter>
-    </ClInclude>
     <ClInclude Include="Console.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
@@ -398,6 +395,9 @@
     </ClInclude>
     <ClInclude Include="SpacePartition.h">
       <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Json Parser\nlohmann\json.hpp">
+      <Filter>Sources\Tools\JSON</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -550,9 +550,6 @@
     </ClCompile>
     <ClCompile Include="ImGui\imgui_widgets.cpp">
       <Filter>Sources\Tools\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="parson\parson.c">
-      <Filter>Sources\Tools\Parson</Filter>
     </ClCompile>
     <ClCompile Include="ModuleEngineUI.cpp">
       <Filter>Sources\Modules\GUI</Filter>

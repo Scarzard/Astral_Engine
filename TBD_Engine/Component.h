@@ -26,11 +26,17 @@ public:
 	virtual void Update();
 	virtual void Disable();
 
+	// Load & Save 
+	virtual void Load(uint obj_num, const nlohmann::json &scene_file) {}
+	virtual void Save(uint obj_num, nlohmann::json &scene_file) {}
+
+
 public:
 
 	Component::ComponentType type;
 	bool active = true;
 	GameObject* my_GO = nullptr;
+	uint UUID = 0;
 };
 
 #endif

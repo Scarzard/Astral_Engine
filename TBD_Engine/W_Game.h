@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "FrameBufferObject.h"
 #include "Window.h"
+#include "ImGui/imgui.h"
 
 class W_Game : public Window
 {

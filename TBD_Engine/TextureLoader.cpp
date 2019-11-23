@@ -1,6 +1,6 @@
 #include "TextureLoader.h"
 #include "Application.h"
-
+#include "ModuleFileSystem.h"
 #include "glew/include/GL/glew.h"
 
 #include "DevIL/include/il.h"
@@ -140,8 +140,6 @@ uint TextureLoader::CreateTexture(const void* img, uint width, uint height, int 
 	//Unbind Texture
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	App->LogInConsole("Loaded Texture(id:%i) with Width: %i and Height: %i ", id_texture, width, height);
-
 	return id_texture;
 }
 
@@ -152,7 +150,6 @@ Texture TextureLoader::LoadTextureFromPath(const char* path)
 	{
 		if ((*iterator).path == path)
 		{
-			App->LogInConsole("Texture already in memory, directly applying texture");
 			return (*iterator);
 		}
 	}

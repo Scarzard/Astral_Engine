@@ -1,7 +1,10 @@
 #include "Application.h"
 #include "W_Game.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleEngineUI.h"
+#include "ModuleInput.h"
 #include "glew/include/GL/glew.h"
+#include "FrameBufferObject.h"
 
 #include "mmgr/mmgr.h"
 

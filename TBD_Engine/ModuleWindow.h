@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "SDL/include/SDL.h"
 
-class Application;
+class SDL_Window;
 
 class ModuleWindow : public Module
 {
@@ -17,6 +17,10 @@ public:
 
 	bool Init();
 	bool CleanUp();
+
+	//Save & Load
+	void Load(const nlohmann::json  &config);
+	void Save(nlohmann::json &config);
 
 public:
 	//Setters
@@ -42,8 +46,9 @@ public:
 
 
 public:
-	int width = SCREEN_WIDTH;
-	int height = SCREEN_HEIGHT;
+	int width = 0;
+	int height = 0;
+	int size = 1;
 
 	bool fullscreen = false;
 	bool resizable = false;

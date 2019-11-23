@@ -2,6 +2,8 @@
 #include "ModuleEngineUI.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleWindow.h"
+#include "ModuleInput.h"
 
 #include "mmgr/mmgr.h"
 
@@ -178,19 +180,7 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 			{
 
 			}
-			if (ImGui::BeginMenu("Open Recent"))
-			{
-				ImGui::MenuItem("A");
-				ImGui::MenuItem("B");
-				ImGui::MenuItem("C");
-				if (ImGui::BeginMenu("More.."))
-				{
-					ImGui::MenuItem("Hello");
-
-					ImGui::EndMenu();
-				}
-				ImGui::EndMenu();
-			}
+			ImGui::MenuItem("Save Scene", NULL, &save_scene_pop);
 			if (ImGui::MenuItem("Quit", "(Esc)"))
 			{
 				App->scene_intro->want_to_quit = UPDATE_STOP;
@@ -310,6 +300,29 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 				ImGui::TextWrapped("License\n\nMIT License\n\nCopyright(c) 2019 Josep Lleal and Victor Chen\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
 				if (ImGui::Button("Close"))
 					about_window = false;
+				ImGui::EndPopup();
+			}
+		}
+		if (save_scene_pop)
+		{
+			ImGui::OpenPopup("Save Scene");
+			if (ImGui::BeginPopupModal("Save Scene"))
+				ImGui::SetWindowSize(ImVec2(400, 100));
+			{
+				ImGui::Text("File Name");
+				ImGui::Separator();
+				static char str0[128] = "Scene";
+				ImGui::InputText("", str0, IM_ARRAYSIZE(str0));
+				ImGui::SameLine();
+				if (ImGui::Button("Save"))
+				{
+					App->scene_intro->SaveScene(str0);
+					save_scene_pop = false;
+				}
+				if (ImGui::Button("Cancel"))
+				{
+					save_scene_pop = false;
+				}
 				ImGui::EndPopup();
 			}
 		}

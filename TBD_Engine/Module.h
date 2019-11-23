@@ -2,7 +2,7 @@
 
 class Application;
 
-
+#include "Globals.h"
 
 class Module
 {
@@ -51,5 +51,11 @@ public:
 	{ 
 		return true; 
 	}
+
+	virtual void Load(const nlohmann::json &config)
+	{}
+
+	virtual void Save(nlohmann::json &config)
+	{}
 
 };

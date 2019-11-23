@@ -1,9 +1,11 @@
 #include "SpacePartition.h"
-#include "SDL/include/SDL_opengl.h"
 #include "Color.h"
 #include "Application.h"
 #include "Component_Camera.h"
+#include "ModuleSceneIntro.h"
+#include "ModuleEngineUI.h"
 
+#include "SDL/include/SDL_opengl.h"
 #include "mmgr/mmgr.h"
 
 //--------------------------------------------------- TREE
@@ -245,6 +247,7 @@ void TreeNode::Intersects(std::vector<GameObject*>& collector, const AABB& area)
 
 void TreeNode::Intersects(std::vector<GameObject*>& collector, const Frustum& frustum)
 {
+
 	if (ComponentCamera::ContainsAABB(frustum, box))
 	{
 		for (int i = 0; i < meshes.size(); i++)
@@ -339,6 +342,8 @@ void TreeNode::QuadSplit()
 
 	}
 
+	meshes.clear();
+
 }
 
 void TreeNode::PruneEmptyLeafs()
@@ -347,6 +352,7 @@ void TreeNode::PruneEmptyLeafs()
 	{
 		if (meshes.size() == 0)
 		{
+			
 			for (std::vector<TreeNode*>::iterator it = parent->childs.begin(); it != parent->childs.end(); ++it)
 			{
 				if ((*it) == this)
