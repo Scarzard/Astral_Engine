@@ -147,6 +147,9 @@ bool W_Configuration::Draw()
 			{
 				App->camera->active_camera->SetFarPlane(far_plane);
 			}
+
+			if (ImGui::Checkbox("Activate mouse picking (May crash)", &App->camera->activate_mouse_picking));
+
 		}
 		if (ImGui::CollapsingHeader("Renderer"))
 		{

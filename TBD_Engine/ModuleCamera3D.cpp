@@ -54,7 +54,7 @@ update_status ModuleCamera3D::Update(float dt)
 	
 	if (App->gui->is_game_focused)
 	{
-		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && (App->input->GetMouseX() > App->gui->game_window->position.x && App->input->GetMouseX() < App->gui->game_window->position.x + App->gui->game_window->current_size.x) &&
+		if (activate_mouse_picking && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && (App->input->GetMouseX() > App->gui->game_window->position.x && App->input->GetMouseX() < App->gui->game_window->position.x + App->gui->game_window->current_size.x) &&
 			(App->input->GetMouseY() > App->gui->game_window->position.y && App->input->GetMouseY() < App->gui->game_window->position.y + App->gui->game_window->current_size.y))
 			MouseClick();
 

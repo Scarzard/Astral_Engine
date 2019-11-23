@@ -57,4 +57,5 @@ public:
 	ComponentCamera* main_camera = nullptr;
 	ComponentCamera* active_camera = nullptr;
 	bool looking = false;
+	bool activate_mouse_picking = false;
 };
