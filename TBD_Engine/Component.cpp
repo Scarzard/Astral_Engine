@@ -7,7 +7,8 @@ Component::Component(Component::ComponentType type, GameObject* GO)
 {
 	this->type = type;
 	my_GO = GO;
-	UUID = App->GetRandomUUID();
+	if(type != ComponentType::Camera)
+		UUID = App->GetRandomUUID();
 }
 
 

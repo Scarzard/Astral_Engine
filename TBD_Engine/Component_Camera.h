@@ -18,6 +18,10 @@ public:
 	void Update();
 	void LookAt(const float3& position);
 
+	// Load & Save 
+	//void Load(uint obj_num, const nlohmann::json &scene_file);
+	void Save(uint obj_num, nlohmann::json &scene_file);
+
 	//---------Getters------------
 	float GetFOV() const;
 	float GetNearPlane() const;

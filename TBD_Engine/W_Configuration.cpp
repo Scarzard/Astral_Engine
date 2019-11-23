@@ -2,7 +2,7 @@
 #include "W_Configuration.h"
 #include "ModuleWindow.h"
 #include "ModuleEngineUI.h"
-
+#include "ModuleCamera3D.h"
 #include "Assimp/include/version.h"
 
 #include "DevIL/include/il.h"

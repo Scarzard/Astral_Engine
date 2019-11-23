@@ -2,7 +2,8 @@
 #include "Globals.h"
 #include "Application.h"
 #include "Component_Mesh.h"
-
+#include "GameObject.h"
+#include "Color.h"
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
@@ -28,6 +29,16 @@ ComponentCamera::ComponentCamera(GameObject* gameobj) : Component(Component::Com
 ComponentCamera::~ComponentCamera()
 {
 
+}
+
+void ComponentCamera::Save(uint obj_num, nlohmann::json &scene)
+{
+	scene["Game Objects"][obj_num]["Components"]["Camera"]["FrustumView"] = frustum_view;
+	scene["Game Objects"][obj_num]["Components"]["Camera"]["Culling"] = culling;
+	scene["Game Objects"][obj_num]["Components"]["Camera"]["FrusutmFar"] = frustum.farPlaneDistance;
+	scene["Game Objects"][obj_num]["Components"]["Camera"]["FrustumNear"] = frustum.nearPlaneDistance;
+	scene["Game Objects"][obj_num]["Components"]["Camera"]["VerticalFOV"] = frustum.verticalFov;
+	scene["Game Objects"][obj_num]["Components"]["Camera"]["HorizontalFOV"] = frustum.horizontalFov;
 }
 
 void ComponentCamera::Update()

@@ -4,6 +4,7 @@
 #include "ModuleEngineUI.h"
 #include "GameObject.h"
 #include "ModuleEngineUI.h"
+#include "ModuleSceneIntro.h"
 #include "SDL/include/SDL_opengl.h"
 #include "ModuleInput.h"
 
