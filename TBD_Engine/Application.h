@@ -53,7 +53,7 @@ public:
 	const std::string GetFileExtension(const std::string FileName);
 	void eraseSubStr(std::string & mainStr, const std::string & toErase);
 
-
+	float GetDT();
 	//Framerate logs
 	std::vector<float>	ms_log;
 	std::vector<float>	fps_log;

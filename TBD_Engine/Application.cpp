@@ -231,3 +231,8 @@ void Application::eraseSubStr(std::string & mainStr, const std::string & toErase
 		mainStr.erase(pos, toErase.length());
 	}
 }
+
+float Application::GetDT()
+{
+	return dt;
+}
