@@ -180,6 +180,7 @@
     <ClInclude Include="PCG\pcg_variants.h" />
     <ClInclude Include="SpacePartition.h" />
     <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="W_Configuration.h" />
     <ClInclude Include="W_Console.h" />
@@ -255,6 +256,7 @@
     <ClCompile Include="PCG\entropy.c" />
     <ClCompile Include="SpacePartition.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="W_Configuration.cpp" />
     <ClCompile Include="W_Console.cpp" />
     <ClCompile Include="W_Game.cpp" />

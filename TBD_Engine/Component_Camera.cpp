@@ -4,6 +4,8 @@
 #include "Component_Mesh.h"
 #include "GameObject.h"
 #include "Color.h"
+#include "ModuleEngineUI.h"
+
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
@@ -20,7 +22,7 @@ ComponentCamera::ComponentCamera(GameObject* gameobj) : Component(Component::Com
 	frustum.up = math::float3::unitY;
 	frustum.pos = math::float3::zero;
 	frustum.nearPlaneDistance = 1.0f;
-	frustum.farPlaneDistance = 50.0f;
+	frustum.farPlaneDistance = 250.0f;
 	frustum.verticalFov = 60 * DEGTORAD;
 	frustum.horizontalFov = 2.0f * atanf(aspect_ratio * tanf(frustum.verticalFov * 0.5f));
 
@@ -43,8 +45,7 @@ void ComponentCamera::Save(uint obj_num, nlohmann::json &scene)
 
 void ComponentCamera::Update()
 {
-	if(!frustum_view)
-		DrawFrustum();
+
 }
 
 void ComponentCamera::LookAt(const float3 & position)
@@ -74,7 +75,7 @@ float ComponentCamera::GetFarPlane() const
 
 float ComponentCamera::GetAspectRatio() const
 {
-	return aspect_ratio;
+	return tanf(frustum.horizontalFov / 2) / tanf(frustum.verticalFov / 2);
 }
 
 float4x4 ComponentCamera::GetViewMatrix() const

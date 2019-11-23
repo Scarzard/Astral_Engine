@@ -148,7 +148,8 @@ void GameObject::Update(float dt)
 		if (this->GetComponentCamera() != nullptr)
 		{
 			ComponentCamera* camera = this->GetComponentCamera();
-			camera->DrawFrustum();
+			if(camera->frustum_view && App->gui->game_window->in_editor && App->gui->ins_window->selected_GO == App->camera->obj_camera)
+				camera->DrawFrustum();
 		}
 		
 		ComponentMesh* mesh = this->GetComponentMesh();

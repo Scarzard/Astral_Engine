@@ -49,7 +49,7 @@ public:
 
 public:
 	Frustum frustum;
-	bool frustum_view = false;
+	bool frustum_view = true;
 	bool has_transformed = false;
 	bool culling = false;
 

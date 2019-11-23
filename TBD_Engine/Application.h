@@ -22,6 +22,24 @@ class ModuleFileSystem;
 
 using json = nlohmann::json;
 
+#include "ModuleWindow.h"
+#include "ModuleInput.h"
+#include "ModuleSceneIntro.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
+#include "ModuleEngineUI.h"
+#include "MeshLoader.h"
+#include "TextureLoader.h"
+#include "ModuleFileSystem.h"
+#include "TimeManager.h"
+
+enum class ENGINE_STATE
+{
+	IN_EDITOR = 0,
+	PLAY,
+	PAUSE
+};
+
 class Application
 {
 public:
@@ -31,6 +49,7 @@ public:
 	ModuleRenderer3D*		renderer3D = nullptr;
 	ModuleCamera3D*			camera = nullptr;
 	ModuleEngineUI*			gui = nullptr;
+	TimeManager*			time = nullptr;
 	MeshLoader*				mesh_loader = nullptr;
 	TextureLoader*			tex_loader = nullptr;
 	ModuleFileSystem*		file_system = nullptr;
@@ -48,6 +67,12 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	bool Play();
+	void Pause();
+	void Stop();
+
+	void ForceEngineState(ENGINE_STATE state = ENGINE_STATE::IN_EDITOR);
+
 	//Request browser
 	void OpenLink(const char* link);
 
@@ -55,12 +80,14 @@ public:
 	std::vector<std::string>	Logs_Console;
 
 	uint GetRandomUUID();
+	ENGINE_STATE GetState();
+
 	const std::string GetNameFromPath(std::string path);
 	const std::string GetDirectoryFromPath(std::string path);
 	const std::string GetFileExtension(const std::string FileName);
 	void eraseSubStr(std::string & mainStr, const std::string & toErase);
 
-
+	float GetDT();
 	//Framerate logs
 	std::vector<float>	ms_log;
 	std::vector<float>	fps_log;
@@ -91,6 +118,9 @@ private:
 	Uint32	new_sec_FrameCount = 0;
 	Uint32	prev_sec_FrameCount = 0;
 	float	dt = 0.0f;
+	float	using_dt = 0.0f;
+
+	ENGINE_STATE state = ENGINE_STATE::IN_EDITOR;
 
 	// Random number 
 	math::LCG* random = nullptr;

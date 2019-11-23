@@ -23,6 +23,7 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	gui = new ModuleEngineUI(this);
+	time = new TimeManager(this);
 	mesh_loader = new MeshLoader(this);
 	tex_loader = new TextureLoader(this);
 	file_system = new ModuleFileSystem(true, ASSETS_FOLDER);
@@ -35,6 +36,7 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(time);
 	AddModule(mesh_loader);
 	AddModule(tex_loader);
 	AddModule(file_system);
@@ -96,11 +98,20 @@ bool Application::Init()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	frame_count++;
-	new_sec_FrameCount++;
-
 	dt = (float)frame_time.ReadSec();
 	frame_time.Start();
+
+	switch (state)
+	{
+
+	case ENGINE_STATE::IN_EDITOR:
+		using_dt = dt;
+		break;
+	case ENGINE_STATE::PLAY:
+	case ENGINE_STATE::PAUSE:
+		using_dt = time->GetGameDT();
+	}
+
 }
 
 // ---------------------------------------------
@@ -212,11 +223,73 @@ bool Application::CleanUp()
 	return ret;
 }
 
+bool Application::Play()
+{
+	switch (state)
+	{
+	case ENGINE_STATE::IN_EDITOR:
+		if (camera->GetActiveCamera() != nullptr) 
+		{
+			//Change camera view
+			camera->active_camera = camera->obj_camera->GetComponentCamera();
+			camera->active_camera->has_transformed = true;
+			ForceEngineState(ENGINE_STATE::PLAY);
+
+			//We need to save the scene 
+
+			return true;
+		}
+		else
+			LogInConsole("There's no active camera!");
+
+		break;
+	}
+
+	return false;
+}
+
+void Application::Pause()
+{
+	switch (state)
+	{
+	case ENGINE_STATE::PLAY:
+		ForceEngineState(ENGINE_STATE::PAUSE);
+		break;
+
+	case ENGINE_STATE::PAUSE:
+		ForceEngineState(ENGINE_STATE::PLAY);
+		break;
+	}
+}
+
+void Application::Stop()
+{
+	switch (state) {
+	case ENGINE_STATE::PLAY:
+	case ENGINE_STATE::PAUSE:
+		//Change camera view
+		camera->active_camera = camera->main_camera;
+		camera->main_camera->has_transformed = true;
+
+		ForceEngineState(ENGINE_STATE::IN_EDITOR);
+
+		//Load the scene we saved just before hitting play
+
+		time->ResetGameTimer();
+
+		break;
+	}
+}
+
+void Application::ForceEngineState(ENGINE_STATE state)
+{
+	this->state = state;
+}
+
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
 }
-
 
 void Application::LoadSettings()
 {
@@ -282,6 +355,11 @@ uint Application::GetRandomUUID()
 	return (uint)random->Int();
 }
 
+ENGINE_STATE Application::GetState()
+{
+	return state;
+}
+
 const std::string Application::GetNameFromPath(std::string path)
 {
 	std::string name = path;
@@ -322,4 +400,9 @@ void Application::eraseSubStr(std::string & mainStr, const std::string & toErase
 		// If found then erase it from string
 		mainStr.erase(pos, toErase.length());
 	}
+}
+
+float Application::GetDT()
+{
+	return dt;
 }

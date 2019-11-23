@@ -205,56 +205,45 @@ void ModuleSceneIntro::DrawRecursively(GameObject* GO)
 	}
 }
 
-	void ModuleSceneIntro::CollectHits(LineSegment & ray)
+GameObject* ModuleSceneIntro::CollectHits()
 {
-	std::map<float, GameObject*> tmp;
-	// --- Gather non-static gos ---
-	for (std::vector<ComponentMesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
-	{
-		if (ray.Intersects((*it)->global_aabb))
-		{
-			OBB obb = (*it)->global_aabb;
-			float hit_near, hit_far;
-			if (ray.Intersects(obb, hit_near, hit_far))
-				tmp[hit_near] = (*it)->my_GO;
-		}
-	}
+	GameObject* ret = nullptr;
 
-	GameObject* selection = nullptr;
-	for (std::map<float, GameObject*>::iterator it = tmp.begin(); it != tmp.end() && selection == nullptr; it++)
-	{
-		// --- We have to test triangle by triangle ---
-		ComponentMesh* mesh = it->second->GetComponentMesh();
+	LineSegment ray = *App->camera->GetLastRay();
 
+	std::map<float, GameObject*> objects;
+	App->scene_intro->QuadTree->Intersects(objects, ray);
+
+	std::map<float, GameObject*>::iterator it;
+	for (it = objects.begin(); it != objects.end(); ++it)
+	{
+		ComponentMesh* mesh = (*it).second->GetComponentMesh();
 		if (mesh)
 		{
-
-			// --- We need to transform the ray to local mesh space ---
-			LineSegment line = ray;
-			line.Transform(it->second->GetComponentTransform()->GetGlobalTransform().Inverted());
-
-			for (uint j = 0; j < mesh->num_index / 3; j++)
+			LineSegment localRay = ray;
+			localRay.Transform(it->second->GetComponentTransform()->GetGlobalTransform().Inverted());
+			for (uint tmp = 0; tmp < mesh->num_index; tmp += 3)
 			{
-				float3 a = mesh->vertex[mesh->index[j * 3]];
-				float3 b = mesh->vertex[mesh->index[(j * 3) + 1]];
-				float3 c = mesh->vertex[mesh->index[(j * 3) + 2]];
-				// --- Create Triangle given three vertices ---
+				uint indexA = mesh->index[tmp] * 3;
+				float3 a(mesh->vertex[indexA]);
+
+				uint indexB = mesh->index[tmp + 1] * 3;
+				float3 b(mesh->vertex[indexB]);
+
+				uint indexC = mesh->index[tmp + 2] * 3;
+				float3 c(mesh->vertex[indexC]);
+
 				Triangle triangle(a, b, c);
 
-				// --- Test ray/triangle intersection ---
-				if (line.Intersects(triangle, nullptr, nullptr))
+				if (localRay.Intersects(triangle, nullptr, nullptr))
 				{
-					selection = it->second;
-					break;
+					return (GameObject*)it->second;
 				}
 			}
-
 		}
 	}
 
-	// --- Set Selected ---
-	if (selection)
-		App->gui->ins_window->selected_GO = selection;
+	return ret;
 }
 
 void ModuleSceneIntro::SaveScene(std::string scene_name)
