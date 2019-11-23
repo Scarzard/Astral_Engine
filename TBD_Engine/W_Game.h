@@ -18,10 +18,10 @@ public:
 	bool CleanUp();
 
 public:
-	ImVec2 current_size, new_size;
+	ImVec2 current_size, new_size; 
+	bool in_editor = true;
 private:
 	FrameBufferObject* fbo = nullptr;
-	bool in_editor = true;
 };
 
 #endif // !_W_GAME_H_

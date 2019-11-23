@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "Component_Mesh.h"
+#include "ModuleEngineUI.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -19,7 +20,7 @@ ComponentCamera::ComponentCamera(GameObject* gameobj) : Component(Component::Com
 	frustum.up = math::float3::unitY;
 	frustum.pos = math::float3::zero;
 	frustum.nearPlaneDistance = 1.0f;
-	frustum.farPlaneDistance = 50.0f;
+	frustum.farPlaneDistance = 250.0f;
 	frustum.verticalFov = 60 * DEGTORAD;
 	frustum.horizontalFov = 2.0f * atanf(aspect_ratio * tanf(frustum.verticalFov * 0.5f));
 
@@ -32,8 +33,7 @@ ComponentCamera::~ComponentCamera()
 
 void ComponentCamera::Update()
 {
-	if(!frustum_view)
-		DrawFrustum();
+
 }
 
 void ComponentCamera::LookAt(const float3 & position)
