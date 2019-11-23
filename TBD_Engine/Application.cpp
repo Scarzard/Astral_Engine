@@ -206,10 +206,9 @@ bool Application::Play()
 			//Change camera view
 			camera->active_camera = camera->obj_camera->GetComponentCamera();
 			camera->active_camera->has_transformed = true;
-			ForceEngineState();
+			ForceEngineState(ENGINE_STATE::PLAY);
 
 			//We need to save the scene 
-
 
 			return true;
 		}

@@ -71,7 +71,11 @@ bool W_Game::Draw()
 
 			App->Pause();
 		}
-		
+		if (!in_editor)
+		{
+			float showtime =+ App->GetDT();
+			ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", showtime);
+		}
 
 		//
 		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
