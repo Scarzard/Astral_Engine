@@ -22,6 +22,7 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::Save(uint obj_num, nlohmann::json &scene)
 {
+	scene["Game Objects"][obj_num]["Components"]["Mesh"]["UUID"] = UUID;
 	scene["Game Objects"][obj_num]["Components"]["Mesh"]["DrawNormals"] = draw_normals;
 }
 

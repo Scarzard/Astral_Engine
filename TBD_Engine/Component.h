@@ -35,6 +35,7 @@ public:
 	Component::ComponentType type;
 	bool active = true;
 	GameObject* my_GO = nullptr;
+	uint UUID = 0;
 };
 
 #endif

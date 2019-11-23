@@ -17,6 +17,7 @@ ComponentTexture::~ComponentTexture()
 
 void ComponentTexture::Save(uint obj_num, nlohmann::json &scene)
 {
+	scene["Game Objects"][obj_num]["Components"]["Texture"]["UUID"] = UUID;
 	scene["Game Objects"][obj_num]["Components"]["Texture"]["Checkers"] = Checers_texture;
 	scene["Game Objects"][obj_num]["Components"]["Texture"]["Path"] = texture.path; // temporal - TODO: resourceID
 }
