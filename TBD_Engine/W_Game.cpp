@@ -94,7 +94,7 @@ bool W_Game::Draw()
 		ImGui::PopStyleVar();
 	}
 
-	
+	position = ImGui::GetWindowPos();
 	
 	return true;
 }

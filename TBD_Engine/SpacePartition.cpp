@@ -119,9 +119,9 @@ void Tree::Intersects(std::vector<GameObject*>& collector, const Frustum& frustu
 	Root->Intersects(collector, frustum);
 }
 
-void Tree::Intersects(std::map<float, GameObject*>& collector, const LineSegment& line)
+void Tree::Intersects(std::map<float, GameObject*>& collector, const LineSegment& line, float closer)
 {
-	Root->Intersects(collector, line);
+	Root->Intersects(collector, line, closer);
 }
 
 //--------------------------------------------------- TREE NODE
@@ -257,20 +257,26 @@ void TreeNode::Intersects(std::vector<GameObject*>& collector, const Frustum& fr
 	}
 }
 
-void TreeNode::Intersects(std::map<float, GameObject*>& collector, const LineSegment& line)
+void TreeNode::Intersects(std::map<float, GameObject*>& collector, const LineSegment& line, float closer)
 {
-	if (line.Intersects(box))
+	if (line.Intersects(box)) 
 	{
-		for (int i = 0; i < meshes.size(); i++) {
+		for (int i = 0; i < meshes.size(); ++i) 
+		{
 			float nearHit, farHit;
-			OBB obb = meshes[i]->global_aabb;
-			if (obb.Intersects(line, nearHit, farHit))
-				collector[nearHit] = meshes[i]->my_GO;
+			if (meshes[i]->aabb.Intersects(line, nearHit, farHit))
+			{
+				if (closer)
+					collector[nearHit] = meshes[i]->my_GO;
+				else
+					collector[farHit] = meshes[i]->my_GO;
+			}
 		}
 
 		if (childs.size() > 0)
 			for (int i = 0; i < childs.size(); i++)
-				childs[i]->Intersects(collector, line);
+				childs[i]->Intersects(collector, line, closer);
+
 	}
 }
 

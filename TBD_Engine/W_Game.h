@@ -19,6 +19,7 @@ public:
 
 public:
 	ImVec2 current_size, new_size; 
+	ImVec2 position;
 	bool in_editor = true;
 private:
 	FrameBufferObject* fbo = nullptr;

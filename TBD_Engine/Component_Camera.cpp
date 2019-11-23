@@ -63,7 +63,7 @@ float ComponentCamera::GetFarPlane() const
 
 float ComponentCamera::GetAspectRatio() const
 {
-	return aspect_ratio;
+	return tanf(frustum.horizontalFov / 2) / tanf(frustum.verticalFov / 2);
 }
 
 float4x4 ComponentCamera::GetViewMatrix() const

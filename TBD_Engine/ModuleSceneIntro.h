@@ -22,7 +22,7 @@ public:
 
 	GameObject* CreateGameObject();
 	void DrawRecursively(GameObject* GO);
-	void CollectHits(LineSegment& ray);
+	GameObject* CollectHits();
 
 	void LoadPrimitiveMesh(const par_shapes_mesh_s* m);
 

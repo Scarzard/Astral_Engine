@@ -49,16 +49,13 @@ update_status ModuleCamera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
-
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		
-		//MouseClick((float)App->input->GetMouseX(), (float)App->input->GetMouseY());
-		
-	}
-	DrawRay();
+	
 	if (App->gui->is_game_focused)
 	{
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && (App->input->GetMouseX() > App->gui->game_window->position.x && App->input->GetMouseX() < App->gui->game_window->position.x + App->gui->game_window->current_size.x) &&
+			(App->input->GetMouseY() > App->gui->game_window->position.y && App->input->GetMouseY() < App->gui->game_window->position.y + App->gui->game_window->current_size.y))
+			MouseClick();
+
 		float currMovSpeed = 4.0f * dt;
 		float slowingFactor = 2.0;
 
@@ -88,6 +85,7 @@ update_status ModuleCamera3D::Update(float dt)
 		}
 		
 	}
+	DrawRay();
 
 	return UPDATE_CONTINUE;
 }
@@ -212,17 +210,20 @@ bool ModuleCamera3D::FirstPersonCamera(float & movSpeed)
 	return ret;
 }
 
-void ModuleCamera3D::MouseClick(float mouse_x, float mouse_y)
+void ModuleCamera3D::MouseClick()
 {
-	float x = mouse_x / (float)App->gui->game_window->current_size.x;
-	float y = 1.0f - (mouse_y / (float)App->gui->game_window->current_size.y);
+	vec2 mousePos(float(App->input->GetMouseX() - App->gui->game_window->position.x - 5), float(App->input->GetMouseY() - App->gui->game_window->position.y - 30));
+	mousePos.x = -1.0 + 2.0f*(mousePos.x / App->gui->game_window->current_size.x);
+	mousePos.y = 1.0 - 2.0f*(mousePos.y / (App->gui->game_window->current_size.x / App->camera->active_camera->GetAspectRatio()));
 
-	x = (x - 0.5) / 0.5;
-	y = (y - 0.5) / 0.5;
+	App->camera->OnClick(mousePos);
 
-	hit = App->camera->active_camera->frustum.UnProjectLineSegment(x, y);
+	App->gui->ins_window->selected_GO = App->scene_intro->CollectHits();
+}
 
-	App->scene_intro->CollectHits(hit);
+void ModuleCamera3D::OnClick(const vec2 & normMousePos)
+{
+	hit = active_camera->frustum.UnProjectLineSegment(normMousePos.x, normMousePos.y);
 }
 
 void ModuleCamera3D::Orbit(float motion_x, float motion_y)

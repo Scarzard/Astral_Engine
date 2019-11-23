@@ -29,9 +29,12 @@ public:
 	ComponentCamera* GetActiveCamera() const;
 	const Frustum& GetActiveFrustum() const;
 
+	//Mouse picking
+	const LineSegment* GetLastRay()const { return &hit; }
+
 	bool Intersects(const AABB& refBox) const;
-	void MouseClick(float mouse_x, float mouse_y);
-	
+	void MouseClick();
+	void OnClick(const vec2& normMousePos);
 
 private:
 
