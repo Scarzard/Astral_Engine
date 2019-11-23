@@ -58,6 +58,9 @@
     <Filter Include="Sources\Tools\JSON">
       <UniqueIdentifier>{602181cb-af40-4b46-8eb1-e26bca393b9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\Resources">
+      <UniqueIdentifier>{e377ba00-7018-4c86-84ed-738c7e54a114}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -399,6 +402,12 @@
     <ClInclude Include="Json Parser\nlohmann\json.hpp">
       <Filter>Sources\Tools\JSON</Filter>
     </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Sources\Modules\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResources.h">
+      <Filter>Sources\Modules\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -616,6 +625,9 @@
     </ClCompile>
     <ClCompile Include="SpacePartition.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleResources.cpp">
+      <Filter>Sources\Modules\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

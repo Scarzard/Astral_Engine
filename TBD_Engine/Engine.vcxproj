@@ -172,12 +172,14 @@
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleInput.h" />
+    <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="par\par_shapes.h" />
     <ClInclude Include="PCG\entropy.h" />
     <ClInclude Include="PCG\pcg_spinlock.h" />
     <ClInclude Include="PCG\pcg_variants.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="SpacePartition.h" />
     <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="Window.h" />
@@ -249,6 +251,7 @@
     <ClCompile Include="ModuleFileSystem.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
+    <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="par_shapes.cpp" />
