@@ -123,9 +123,9 @@ bool W_Inspector::Draw()
 				if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentMesh() != nullptr)
 				{
 					ImGui::Text("Vertex:");
-					ImGui::SameLine(); ImGui::Text("%d", selected_GO->GetComponentMesh()->num_vertex);
+					ImGui::SameLine(); ImGui::Text("%d", selected_GO->GetComponentMesh()->res_mesh->num_vertex);
 					ImGui::Text("Faces:");
-					ImGui::SameLine(); ImGui::Text("%d", (selected_GO->GetComponentMesh()->num_vertex / 3));
+					ImGui::SameLine(); ImGui::Text("%d", (selected_GO->GetComponentMesh()->res_mesh->num_vertex / 3));
 					ImGui::Checkbox("Show normals", &selected_GO->GetComponentMesh()->draw_normals);
 				}
 

@@ -644,6 +644,9 @@
     <ClCompile Include="W_Resources.cpp">
       <Filter>Sources\Modules\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceMesh.cpp">
+      <Filter>Sources\Modules\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl">

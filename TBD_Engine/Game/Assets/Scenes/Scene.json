@@ -20,13 +20,13 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 237764234
+                    "UUID": 696640558
                 }
             },
             "Name": "root",
             "ParentUUID": "NONE",
             "Static": true,
-            "UUID": 1376692778
+            "UUID": 1900761752
         },
         {
             "Active": true,
@@ -56,13 +56,13 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 2114736590
+                    "UUID": 1638076075
                 }
             },
             "Name": "Main Camera",
-            "ParentUUID": 1376692778,
+            "ParentUUID": 1900761752,
             "Static": false,
-            "UUID": 579784238
+            "UUID": 2041604670
         },
         {
             "Active": true,
@@ -84,13 +84,13 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1176778442
+                    "UUID": 378872264
                 }
             },
             "Name": "Street environment_V01",
-            "ParentUUID": 1376692778,
+            "ParentUUID": 1900761752,
             "Static": true,
-            "UUID": 744777717
+            "UUID": 227859993
         },
         {
             "Active": true,
@@ -112,13 +112,13 @@
                         0.9999997615814209,
                         0.9999997615814209
                     ],
-                    "UUID": 1321015892
+                    "UUID": 835882535
                 }
             },
             "Name": "Sky001",
-            "ParentUUID": 744777717,
+            "ParentUUID": 227859993,
             "Static": true,
-            "UUID": 1990777432
+            "UUID": 2071739490
         },
         {
             "Active": true,
@@ -140,25 +140,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 1974371944
+                    "UUID": 1227480159
                 }
             },
             "Name": "Dummy001",
-            "ParentUUID": 744777717,
+            "ParentUUID": 227859993,
             "Static": true,
-            "UUID": 165266863
+            "UUID": 318619182
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1774730313
+                    "UUID": 1881132794
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 1446831538,
-                    "UUID": 880007581
+                    "Resource UUID": 805858327,
+                    "UUID": 2056038779
                 },
                 "Transform": {
                     "Position": [
@@ -177,25 +177,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 190649713
+                    "UUID": 2042605654
                 }
             },
             "Name": "City_building_004",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1615836048
+            "UUID": 1431901021
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 2082727806
+                    "UUID": 2595719
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 1074368545,
-                    "UUID": 1349252439
+                    "Resource UUID": 647907514,
+                    "UUID": 327926151
                 },
                 "Transform": {
                     "Position": [
@@ -214,25 +214,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 2119012465
+                    "UUID": 952874383
                 }
             },
             "Name": "City_building_001",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 2138044563
+            "UUID": 1652306192
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1348083489
+                    "UUID": 1746182736
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 1498555577,
-                    "UUID": 1295279181
+                    "Resource UUID": 446581992,
+                    "UUID": 1939006386
                 },
                 "Transform": {
                     "Position": [
@@ -251,25 +251,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 218867074
+                    "UUID": 771683035
                 }
             },
             "Name": "City_building_007",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1757046435
+            "UUID": 75026959
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 78645184
+                    "UUID": 1912981496
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 1285570590,
-                    "UUID": 1420539061
+                    "Resource UUID": 1003667349,
+                    "UUID": 1043913370
                 },
                 "Transform": {
                     "Position": [
@@ -288,20 +288,20 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 1074406128
+                    "UUID": 1933043452
                 }
             },
             "Name": "City_building_008",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1887287763
+            "UUID": 216623766
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 931242562
+                    "UUID": 777102640
                 },
                 "Transform": {
                     "Position": [
@@ -320,20 +320,20 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 1744101623
+                    "UUID": 1147704696
                 }
             },
             "Name": "Line002",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 2034090371
+            "UUID": 1501598643
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 3072971
+                    "UUID": 773203247
                 },
                 "Transform": {
                     "Position": [
@@ -352,13 +352,13 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 180846292
+                    "UUID": 132183402
                 }
             },
             "Name": "Plane001",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1507106072
+            "UUID": 1107380569
         },
         {
             "Active": true,
@@ -380,25 +380,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 887775411
+                    "UUID": 441616588
                 }
             },
             "Name": "City_building_010",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1342432938
+            "UUID": 210680038
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1498688051
+                    "UUID": 1731968518
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 989825433,
-                    "UUID": 372841882
+                    "Resource UUID": 7510554,
+                    "UUID": 173412628
                 },
                 "Transform": {
                     "Position": [
@@ -417,25 +417,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 2027886932
+                    "UUID": 986428111
                 }
             },
             "Name": "City_building_010dummy",
-            "ParentUUID": 1342432938,
+            "ParentUUID": 210680038,
             "Static": true,
-            "UUID": 1085044924
+            "UUID": 265099049
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 518997711
+                    "UUID": 1741219774
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 989825433,
-                    "UUID": 1727276756
+                    "Resource UUID": 7510554,
+                    "UUID": 10012504
                 },
                 "Transform": {
                     "Position": [
@@ -454,25 +454,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1889130506
+                    "UUID": 1057866059
                 }
             },
             "Name": "City_building_010_submesh",
-            "ParentUUID": 1342432938,
+            "ParentUUID": 210680038,
             "Static": true,
-            "UUID": 2033722310
+            "UUID": 1053753813
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 572661435
+                    "UUID": 919643901
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 1498555577,
-                    "UUID": 1227859580
+                    "Resource UUID": 446581992,
+                    "UUID": 1450579863
                 },
                 "Transform": {
                     "Position": [
@@ -491,25 +491,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1512787243
+                    "UUID": 1843793606
                 }
             },
             "Name": "City_building_011",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 2093248417
+            "UUID": 1295839356
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1197633628
+                    "UUID": 765763166
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 943707190,
-                    "UUID": 103252919
+                    "Resource UUID": 570356314,
+                    "UUID": 1915843311
                 },
                 "Transform": {
                     "Position": [
@@ -528,25 +528,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 1696819538
+                    "UUID": 814636516
                 }
             },
             "Name": "City_building_013",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 2077766698
+            "UUID": 1107174454
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 500800873
+                    "UUID": 2047183221
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 1446831538,
-                    "UUID": 1860570088
+                    "Resource UUID": 805858327,
+                    "UUID": 600861498
                 },
                 "Transform": {
                     "Position": [
@@ -565,13 +565,13 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 179496246
+                    "UUID": 390346379
                 }
             },
             "Name": "City_building_014",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1723578672
+            "UUID": 1804303964
         },
         {
             "Active": true,
@@ -593,25 +593,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1992017777
+                    "UUID": 1844246101
                 }
             },
             "Name": "City_building_016",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 683993255
+            "UUID": 1744392345
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 828877390
+                    "UUID": 1519720347
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 989825433,
-                    "UUID": 92207006
+                    "Resource UUID": 7510554,
+                    "UUID": 78474444
                 },
                 "Transform": {
                     "Position": [
@@ -630,25 +630,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1708011101
+                    "UUID": 1679458236
                 }
             },
             "Name": "City_building_016dummy",
-            "ParentUUID": 683993255,
+            "ParentUUID": 1744392345,
             "Static": true,
-            "UUID": 1775729257
+            "UUID": 210543591
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 437238129
+                    "UUID": 1746346737
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 989825433,
-                    "UUID": 375082884
+                    "Resource UUID": 7510554,
+                    "UUID": 472018125
                 },
                 "Transform": {
                     "Position": [
@@ -667,13 +667,13 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 660435926
+                    "UUID": 1030136169
                 }
             },
             "Name": "City_building_016_submesh",
-            "ParentUUID": 683993255,
+            "ParentUUID": 1744392345,
             "Static": true,
-            "UUID": 715343843
+            "UUID": 270867756
         },
         {
             "Active": true,
@@ -695,25 +695,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 1693526484
+                    "UUID": 1234051933
                 }
             },
             "Name": "City_building_017",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 244319444
+            "UUID": 1579114231
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 929723107
+                    "UUID": 254748332
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 989825433,
-                    "UUID": 947828220
+                    "Resource UUID": 7510554,
+                    "UUID": 1913665246
                 },
                 "Transform": {
                     "Position": [
@@ -732,25 +732,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1008162555
+                    "UUID": 1821791326
                 }
             },
             "Name": "City_building_017dummy",
-            "ParentUUID": 244319444,
+            "ParentUUID": 1579114231,
             "Static": true,
-            "UUID": 1712671323
+            "UUID": 1551361864
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 502828665
+                    "UUID": 900096886
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 989825433,
-                    "UUID": 1303556218
+                    "Resource UUID": 7510554,
+                    "UUID": 2072480746
                 },
                 "Transform": {
                     "Position": [
@@ -769,25 +769,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1367689745
+                    "UUID": 110655175
                 }
             },
             "Name": "City_building_017_submesh",
-            "ParentUUID": 244319444,
+            "ParentUUID": 1579114231,
             "Static": true,
-            "UUID": 870999604
+            "UUID": 1402631886
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 2083311567
+                    "UUID": 124806111
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 2129533264,
-                    "UUID": 1189087727
+                    "Resource UUID": 896334373,
+                    "UUID": 407418169
                 },
                 "Transform": {
                     "Position": [
@@ -806,25 +806,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1169222662
+                    "UUID": 1030020342
                 }
             },
             "Name": "City_building_022",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 81047511
+            "UUID": 903258983
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 24840017
+                    "UUID": 1956263887
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 1498555577,
-                    "UUID": 662487722
+                    "Resource UUID": 446581992,
+                    "UUID": 1487700440
                 },
                 "Transform": {
                     "Position": [
@@ -843,25 +843,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1566203509
+                    "UUID": 653764305
                 }
             },
             "Name": "City_building_023",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 111867711
+            "UUID": 2115568107
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1017966259
+                    "UUID": 89745672
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 1285570590,
-                    "UUID": 573599545
+                    "Resource UUID": 1003667349,
+                    "UUID": 1153501189
                 },
                 "Transform": {
                     "Position": [
@@ -880,25 +880,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 651344891
+                    "UUID": 781560598
                 }
             },
             "Name": "City_building_024",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1551406743
+            "UUID": 2056038430
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1413050386
+                    "UUID": 400742188
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 2129533264,
-                    "UUID": 1755054636
+                    "Resource UUID": 896334373,
+                    "UUID": 2111812571
                 },
                 "Transform": {
                     "Position": [
@@ -917,25 +917,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 658198232
+                    "UUID": 603402362
                 }
             },
             "Name": "City_building_026",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 2115506480
+            "UUID": 607816157
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1178996584
+                    "UUID": 1596668304
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 362521065,
-                    "UUID": 1801219030
+                    "Resource UUID": 11955262,
+                    "UUID": 1447973123
                 },
                 "Transform": {
                     "Position": [
@@ -954,20 +954,20 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1461037466
+                    "UUID": 1236859510
                 }
             },
             "Name": "City_building_028",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1134265950
+            "UUID": 1182597383
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 765665716
+                    "UUID": 713576850
                 },
                 "Transform": {
                     "Position": [
@@ -986,25 +986,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 128882842
+                    "UUID": 866887778
                 }
             },
             "Name": "Object010",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1851246821
+            "UUID": 1261124313
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 187120363
+                    "UUID": 336906568
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 362521065,
-                    "UUID": 870989721
+                    "Resource UUID": 11955262,
+                    "UUID": 955778194
                 },
                 "Transform": {
                     "Position": [
@@ -1023,25 +1023,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 2035116749
+                    "UUID": 1505350129
                 }
             },
             "Name": "City_building_030",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1573727802
+            "UUID": 47184152
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 591691503
+                    "UUID": 87739865
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 362521065,
-                    "UUID": 1122813609
+                    "Resource UUID": 11955262,
+                    "UUID": 1093649097
                 },
                 "Transform": {
                     "Position": [
@@ -1060,25 +1060,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 692918291
+                    "UUID": 1425734719
                 }
             },
             "Name": "City_building_031",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 679625402
+            "UUID": 305358532
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1998567205
+                    "UUID": 216331856
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 1446831538,
-                    "UUID": 339439234
+                    "Resource UUID": 805858327,
+                    "UUID": 937330165
                 },
                 "Transform": {
                     "Position": [
@@ -1097,25 +1097,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1581901293
+                    "UUID": 1654300560
                 }
             },
             "Name": "City_building_032",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 854037742
+            "UUID": 1911077852
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 163489136
+                    "UUID": 833420481
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 943707190,
-                    "UUID": 613808356
+                    "Resource UUID": 570356314,
+                    "UUID": 706649408
                 },
                 "Transform": {
                     "Position": [
@@ -1134,25 +1134,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1218640172
+                    "UUID": 567187
                 }
             },
             "Name": "City_building_033",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1188858726
+            "UUID": 130352429
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1853258787
+                    "UUID": 997082667
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 2129533264,
-                    "UUID": 617530673
+                    "Resource UUID": 896334373,
+                    "UUID": 483469932
                 },
                 "Transform": {
                     "Position": [
@@ -1171,25 +1171,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 1738871158
+                    "UUID": 1808908635
                 }
             },
             "Name": "City_building_034",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1174461423
+            "UUID": 935565245
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 922563998
+                    "UUID": 1027205376
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 362521065,
-                    "UUID": 739706635
+                    "Resource UUID": 11955262,
+                    "UUID": 1712553749
                 },
                 "Transform": {
                     "Position": [
@@ -1208,25 +1208,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1215689922
+                    "UUID": 206277565
                 }
             },
             "Name": "City_building_035",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 480371993
+            "UUID": 1452694
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1323836917
+                    "UUID": 1250872371
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 943707190,
-                    "UUID": 1146836511
+                    "Resource UUID": 570356314,
+                    "UUID": 81004600
                 },
                 "Transform": {
                     "Position": [
@@ -1245,25 +1245,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 1623532815
+                    "UUID": 538022445
                 }
             },
             "Name": "City_building_036",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 310296628
+            "UUID": 1412477689
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1100915136
+                    "UUID": 234861269
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 2129533264,
-                    "UUID": 973838379
+                    "Resource UUID": 896334373,
+                    "UUID": 335920791
                 },
                 "Transform": {
                     "Position": [
@@ -1282,25 +1282,25 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1801507244
+                    "UUID": 1258339154
                 }
             },
             "Name": "City_building_037",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 462736871
+            "UUID": 329199578
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1212590795
+                    "UUID": 394236768
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 2129533264,
-                    "UUID": 2054091478
+                    "Resource UUID": 896334373,
+                    "UUID": 169532621
                 },
                 "Transform": {
                     "Position": [
@@ -1319,25 +1319,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 2022793341
+                    "UUID": 1407108534
                 }
             },
             "Name": "City_building_038",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1395564922
+            "UUID": 1044474381
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1567676202
+                    "UUID": 832070948
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 362521065,
-                    "UUID": 1623467961
+                    "Resource UUID": 11955262,
+                    "UUID": 1240092883
                 },
                 "Transform": {
                     "Position": [
@@ -1356,25 +1356,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 478063648
+                    "UUID": 1632193293
                 }
             },
             "Name": "City_building_039",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 524285167
+            "UUID": 460482729
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1791401418
+                    "UUID": 2103558445
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 362521065,
-                    "UUID": 1897839406
+                    "Resource UUID": 11955262,
+                    "UUID": 2047708533
                 },
                 "Transform": {
                     "Position": [
@@ -1393,25 +1393,25 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 1335598251
+                    "UUID": 676437748
                 }
             },
             "Name": "City_building_040",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1103603877
+            "UUID": 1221547002
         },
         {
             "Active": true,
             "Components": {
                 "Mesh": {
                     "DrawNormals": false,
-                    "UUID": 1038182167
+                    "UUID": 54757531
                 },
                 "Texture": {
                     "Checkers": false,
-                    "Resource UUID": 1074368545,
-                    "UUID": 1423541628
+                    "Resource UUID": 647907514,
+                    "UUID": 490592326
                 },
                 "Transform": {
                     "Position": [
@@ -1430,13 +1430,13 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 226882412
+                    "UUID": 240471083
                 }
             },
             "Name": "City_building_041",
-            "ParentUUID": 165266863,
+            "ParentUUID": 318619182,
             "Static": true,
-            "UUID": 1250936157
+            "UUID": 666386251
         },
         {
             "Active": true,
@@ -1458,13 +1458,13 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 1176582294
+                    "UUID": 2060928116
                 }
             },
             "Name": "Camera001",
-            "ParentUUID": 744777717,
+            "ParentUUID": 227859993,
             "Static": true,
-            "UUID": 2021373938
+            "UUID": 1948406558
         },
         {
             "Active": true,
@@ -1486,13 +1486,13 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 256619099
+                    "UUID": 954955016
                 }
             },
             "Name": "Camera001.Target",
-            "ParentUUID": 744777717,
+            "ParentUUID": 227859993,
             "Static": true,
-            "UUID": 1219659406
+            "UUID": 1903973378
         },
         {
             "Active": true,
@@ -1514,13 +1514,13 @@
                         0.9999999403953552,
                         0.9999999403953552
                     ],
-                    "UUID": 792611504
+                    "UUID": 539527739
                 }
             },
             "Name": "Spot001",
-            "ParentUUID": 744777717,
+            "ParentUUID": 227859993,
             "Static": true,
-            "UUID": 1161832086
+            "UUID": 976941463
         },
         {
             "Active": true,
@@ -1542,13 +1542,13 @@
                         1.0,
                         1.0
                     ],
-                    "UUID": 1564561758
+                    "UUID": 2006703795
                 }
             },
             "Name": "Spot001.Target",
-            "ParentUUID": 744777717,
+            "ParentUUID": 227859993,
             "Static": true,
-            "UUID": 665726672
+            "UUID": 824247242
         }
     ]
 }

@@ -3,7 +3,6 @@
 
 #include "Module.h"
 #include "Resource.h"
-#include "Importer.h"
 
 class ResourceTexture;
 
@@ -28,6 +27,7 @@ public:
 	// Getters ------------
 	Resource* Get(uint uid);
 	uint GetResourceInAssets(const char* file)const;
+	uint IsResourceInLibrary(const char* name) const;
 
 public:
 	std::map<uint, Resource*> resources;
@@ -35,7 +35,6 @@ public:
 	//-------- For the assets window --------------
 	std::map<uint, ResourceTexture*> tex_resources;
 	//---------------------------------------------
-	Importer importer;
 };
 
 #endif //!__ModuleResources_H__

@@ -17,6 +17,7 @@ public:
 	//void Load(const char* resourceNum, const nlohmann::json &config);
 
 	bool LoadInMemory();
+	void ReleaseMemory();
 
 public:
 	uint id_index = 0; // index in VRAM
@@ -34,12 +35,6 @@ public:
 	uint num_normals = 0;
 	float3* face_center = nullptr;
 	float3* face_normal = nullptr;
-
-	bool draw_normals = false;
-
-	//bounding box
-	AABB aabb;
-	AABB global_aabb;
 };
 
 #endif // __ResourceMesh_H__

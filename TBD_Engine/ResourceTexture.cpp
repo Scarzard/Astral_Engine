@@ -3,6 +3,8 @@
 #include "ModuleResources.h"
 #include "Application.h"
 
+#include "mmgr/mmgr.h"
+
 bool ResourceTexture::LoadInMemory() 
 { 
 	return App->tex_loader->LoadTextureFromLibrary(this); 

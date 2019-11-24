@@ -34,7 +34,7 @@ const AABB& ComponentMesh::GetBoundingBox()
 void ComponentMesh::UpdateAABB()
 {
 	aabb.SetNegativeInfinity();
-	aabb.Enclose(vertex, num_vertex);
+	aabb.Enclose(res_mesh->vertex, res_mesh->num_vertex);
 
 }
 
@@ -87,37 +87,13 @@ void ComponentMesh::CleanUp()
 		}
 	}
 
-	glDeleteBuffers(1, (GLuint*)&id_index);
-	glDeleteBuffers(1, (GLuint*)&id_vertex);
-	glDeleteBuffers(1, (GLuint*)&id_tex_coords);
 
-	if (index != nullptr)
+	if (res_mesh != nullptr)
 	{
-		delete[] index;
-		index = nullptr;
-	}
-
-	if (vertex != nullptr)
-	{
-		delete[] vertex;
-		vertex = nullptr;
-	}
-
-	if (tex_coords != nullptr)
-	{
-		delete[] tex_coords;
-		tex_coords = nullptr;
-	}
-
-	if (face_center != nullptr)
-	{
-		delete[] face_center;
-		face_center = nullptr;
-	}
-
-	if (face_normal != nullptr)
-	{
-		delete[] face_normal;
-		face_normal = nullptr;
+		res_mesh->loaded -= 1;
+		if (res_mesh->loaded == 0)
+		{
+			res_mesh->ReleaseMemory();
+		}
 	}
 }

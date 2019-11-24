@@ -2,6 +2,7 @@
 #include "ModuleResources.h"
 #include "ModuleFileSystem.h"
 #include "TextureLoader.h"
+#include "MeshLoader.h"
 #include "Globals.h"
 
 #include "Resource.h"
@@ -48,6 +49,15 @@ uint ModuleResources::GetNewFile(const char* file)
 			ret = ImportFile(path.c_str(), Resource::RES_TYPE::TEXTURE);
 		}
 	}
+	else if (extension == "FBX" || extension == "fbx")
+	{
+		path = ASSETS_MODELS_FOLDER + path;
+
+		if (App->file_system->CopyFromOutsideFS(file, path.c_str()))
+		{
+			ret = ImportFile(path.c_str(), Resource::RES_TYPE::MODEL);
+		}
+	}
 
 
 	return ret;
@@ -90,6 +100,9 @@ Resource* ModuleResources::NewResource(Resource::RES_TYPE type)
 		if (ret != nullptr)
 			tex_resources[uid] = (ResourceTexture*)ret;
 		break;
+	case Resource::RES_TYPE::MESH:
+		ret = (Resource*) new ResourceMesh(uid);
+		break;
 
 	}
 
@@ -105,6 +118,23 @@ uint ModuleResources::GetResourceInAssets(const char* path)const
 	{
 		std::string s = it->second->file;
 		if (s.compare(path) == 0)
+			return it->first;
+	}
+
+	return 0;
+}
+
+uint ModuleResources::IsResourceInLibrary(const char* name) const
+{
+	for (std::map<uint, Resource*>::const_iterator it = resources.begin(); it != resources.end(); ++it)
+	{
+		char n[250];
+		sprintf_s(n, 250, "%s", name);
+		App->file_system->NormalizePath(n);
+
+		std::string s = App->GetNameFromPath(it->second->exported_file);
+
+		if (s.compare(n) == 0)
 			return it->first;
 	}
 

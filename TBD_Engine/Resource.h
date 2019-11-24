@@ -47,8 +47,8 @@ public:
 
 public:
 	uint res_UUID = 0;
-	std::string file;
-	std::string exported_file;
+	std::string file = "";
+	std::string exported_file = "";
 	RES_TYPE type = RES_TYPE::UNKNOWN;
 
 	uint loaded = 0;

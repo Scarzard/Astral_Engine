@@ -259,14 +259,14 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 	{
 		ComponentMesh* mesh = m->GetComponentMesh();
 
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
+		glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->res_mesh->id_vertex);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->id_tex_coords);
+		glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->res_mesh->id_tex_coords);
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
-		glDrawElements(GL_TRIANGLES, mesh->num_index, GL_UNSIGNED_INT, nullptr);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->GetComponentMesh()->res_mesh->id_index);
+		glDrawElements(GL_TRIANGLES, m->GetComponentMesh()->res_mesh->num_index, GL_UNSIGNED_INT, nullptr);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -279,10 +279,10 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 			glBegin(GL_LINES);
 			glColor4f(Red.r, Red.g, Red.b, Red.a);
 
-			for (int j = 0; j < mesh->num_normals; ++j)
+			for (int j = 0; j < mesh->res_mesh->num_normals; ++j)
 			{
-				glVertex3f(mesh->face_center[j].x, mesh->face_center[j].y, mesh->face_center[j].z);
-				glVertex3f(mesh->face_center[j].x + mesh->face_normal[j].x, mesh->face_center[j].y + mesh->face_normal[j].y, mesh->face_center[j].z + mesh->face_normal[j].z);
+				glVertex3f(mesh->res_mesh->face_center[j].x, mesh->res_mesh->face_center[j].y, mesh->res_mesh->face_center[j].z);
+				glVertex3f(mesh->res_mesh->face_center[j].x + mesh->res_mesh->face_normal[j].x, mesh->res_mesh->face_center[j].y + mesh->res_mesh->face_normal[j].y, mesh->res_mesh->face_center[j].z + mesh->res_mesh->face_normal[j].z);
 			}
 			glColor4f(White.r, White.g, White.b, White.a);
 			
