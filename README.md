@@ -4,11 +4,16 @@ Astral Engine is created by 2 students from UPC-CITM for the Videogame engines s
 
 ## Installation
 
-Download the latest release [here](https://github.com/Scarzard/Astral_Engine/releases) and play around with the engine
+Download the latest release [here](https://github.com/Scarzard/Astral_Engine/releases). Decompress the .zip and execute Astral_Engine v_X.X
+and play around with the engine
 
 ## Controls
 
+- Holding Left Shift: Duplicates any movement.
+
 - While **Mouse Right Click is down:**
+
+- Dragging mouse: Move camera in editor.
 
 - W: Move the camera upwards.
 
@@ -18,15 +23,46 @@ Download the latest release [here](https://github.com/Scarzard/Astral_Engine/rel
 
 - D: Move the camera to the right.
 
-- Mouse wheel: Zoom in and out.
+- While **Mouse Left Alt is down:**
 
-- Mouse middle button: Pan camera
+- Right click and mouse drag: Zoom in/out.
 
-- Holding Left Shift: Duplicated any movement.
+- Left click and mouse drag: Orbit camera.
+
+## Tasklist
+
+### Josep Lleal
+
+- Own file format.
+
+- Scene serialization.
+
+- Resource manager. Refactor for Components to use resources.
+
+- Save/Load scene.
+
+- Space partition as Quadtrees.
+
+### Victor Chen
+
+- Interactive component transform through Inspector window.
+
+- Game Object bounding boxes.
+
+- Frustum culling.
+
+- Camera refactor to use frustums.
+
+- Time manager and Play/Stop/Pause buttons
 
 ## Innovation
 
+### Assignment 1:
 - Game viewport is rendered in a window using Frame Buffers. When you resize the window, the scene is also resized along it.
+
+### Assignment 2:
+
+- 
 
 ## Github
 
