@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "Component.h"
 #include "TextureLoader.h"
+#include "ResourceTexture.h"
 
 class ComponentTexture : public Component
 {
@@ -22,8 +23,7 @@ public:
 public:
 	
 	bool Checers_texture = false;
-
-	Texture texture;
+	ResourceTexture* res_texture = nullptr;
 };
 
 #endif

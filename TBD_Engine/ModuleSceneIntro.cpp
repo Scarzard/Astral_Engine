@@ -59,8 +59,8 @@ bool ModuleSceneIntro::Start()
 	box.SetNegativeInfinity();
 	QuadTree = new Tree(box);
 
-	App->mesh_loader->LoadFile("Assets/Street/Street environment_V01.fbx");
-	//App->mesh_loader->LoadFile("Assets/BakerHouse.fbx");
+	App->mesh_loader->LoadFile("Assets/FBX/Street/Street environment_V01.fbx");
+	//App->mesh_loader->LoadFile("Assets/FBX/BakerHouse/BakerHouse.fbx");
 	return ret;
 }
 
@@ -232,12 +232,18 @@ GameObject* ModuleSceneIntro::CollectHits()
 
 				uint indexC = mesh->index[tmp + 2] * 3;
 				float3 c(mesh->vertex[indexC]);
-
-				Triangle triangle(a, b, c);
-
-				if (localRay.Intersects(triangle, nullptr, nullptr))
+				for (uint j = 0; j < mesh->res_mesh->num_index / 3; j++)
 				{
-					return (GameObject*)it->second;
+					float3 a = mesh->res_mesh->vertex[mesh->res_mesh->index[j * 3]];
+					float3 b = mesh->res_mesh->vertex[mesh->res_mesh->index[(j * 3) + 1]];
+					float3 c = mesh->res_mesh->vertex[mesh->res_mesh->index[(j * 3) + 2]];
+					// --- Create Triangle given three vertices ---
+					Triangle triangle(a, b, c);
+
+					if (localRay.Intersects(triangle, nullptr, nullptr))
+					{
+						return (GameObject*)it->second;
+					}
 				}
 			}
 		}
@@ -256,7 +262,7 @@ void ModuleSceneIntro::LoadScene(std::string scene_name, GameObject* root)
 	root->name = "root";
 
 	json scene_file;
-	std::string full_path = SCENES_FOLDER + scene_name + ".json";
+	std::string full_path = ASSETS_SCENES_FOLDER + scene_name + ".json";
 
 
 	std::ifstream stream;
@@ -281,7 +287,7 @@ void ModuleSceneIntro::SaveScene(std::string scene_name)
 {
 	// Create auxiliar file
 	json scene;
-	std::string full_path = SCENES_FOLDER + scene_name + ".json";
+	std::string full_path = ASSETS_SCENES_FOLDER + scene_name + ".json";
 
 	SaveGameObjects(scene, root);
 
@@ -309,49 +315,49 @@ void ModuleSceneIntro::LoadPrimitiveMesh(const par_shapes_mesh_s* m)
 	root->SetChild(obj);
 
 	// VERTEX ----------------
-	obj->GetComponentMesh()->num_vertex = m->npoints;
-	obj->GetComponentMesh()->vertex = new float3[obj->GetComponentMesh()->num_vertex];
+	obj->GetComponentMesh()->res_mesh->num_vertex = m->npoints;
+	obj->GetComponentMesh()->res_mesh->vertex = new float3[obj->GetComponentMesh()->res_mesh->num_vertex];
 
-	for (int i = 0; i < obj->GetComponentMesh()->num_vertex; i++)
+	for (int i = 0; i < obj->GetComponentMesh()->res_mesh->num_vertex; i++)
 	{
 		int j = i * 3;
-		obj->GetComponentMesh()->vertex[i].x = m->points[j];
-		obj->GetComponentMesh()->vertex[i].y = m->points[j + 1];
-		obj->GetComponentMesh()->vertex[i].z = m->points[j + 2];
+		obj->GetComponentMesh()->res_mesh->vertex[i].x = m->points[j];
+		obj->GetComponentMesh()->res_mesh->vertex[i].y = m->points[j + 1];
+		obj->GetComponentMesh()->res_mesh->vertex[i].z = m->points[j + 2];
 	}
 
 	// INDEX ------------
-	obj->GetComponentMesh()->num_index = m->ntriangles * 3;
-	obj->GetComponentMesh()->index = new uint[obj->GetComponentMesh()->num_index];
+	obj->GetComponentMesh()->res_mesh->num_index = m->ntriangles * 3;
+	obj->GetComponentMesh()->res_mesh->index = new uint[obj->GetComponentMesh()->res_mesh->num_index];
 
-	for (int i = 0; i < obj->GetComponentMesh()->num_index; i++)
+	for (int i = 0; i < obj->GetComponentMesh()->res_mesh->num_index; i++)
 	{
-		obj->GetComponentMesh()->index[i] = (uint)m->triangles[i];
+		obj->GetComponentMesh()->res_mesh->index[i] = (uint)m->triangles[i];
 	}
 
 	// TEXTURE ----------------
-	obj->GetComponentMesh()->num_tex_coords = m->npoints;
-	obj->GetComponentMesh()->tex_coords = new float[obj->GetComponentMesh()->num_tex_coords * 2];
+	obj->GetComponentMesh()->res_mesh->num_tex_coords = m->npoints;
+	obj->GetComponentMesh()->res_mesh->tex_coords = new float[obj->GetComponentMesh()->res_mesh->num_tex_coords * 2];
 
 	//Copy the par_shapes texture coordinates
-	for (int i = 0; i < obj->GetComponentMesh()->num_tex_coords * 2; ++i)
-		obj->GetComponentMesh()->tex_coords[i] = m->tcoords[i];
+	for (int i = 0; i < obj->GetComponentMesh()->res_mesh->num_tex_coords * 2; ++i)
+		obj->GetComponentMesh()->res_mesh->tex_coords[i] = m->tcoords[i];
 
 	//Checkers texture to primitive
-	obj->GetComponentTexture()->texture = App->tex_loader->DefaultTexture;
+	//obj->GetComponentTexture()->res_texture = App->tex_loader->DefaultTexture; //TODO make default texture a resource
 
 	//Generate Bounding box for Primitive
 	ComponentMesh* tmp = obj->GetComponentMesh();
 	tmp->aabb.SetNegativeInfinity();
-	tmp->aabb = tmp->aabb.MinimalEnclosingAABB(tmp->vertex, tmp->num_vertex);
+	tmp->aabb = tmp->aabb.MinimalEnclosingAABB(tmp->res_mesh->vertex, tmp->res_mesh->num_vertex);
 
 	//Generate the buffers 
-	App->renderer3D->NewVertexBuffer(obj->GetComponentMesh()->vertex, obj->GetComponentMesh()->num_vertex, obj->GetComponentMesh()->id_vertex);
-	App->renderer3D->NewIndexBuffer(obj->GetComponentMesh()->index, obj->GetComponentMesh()->num_index, obj->GetComponentMesh()->id_index);
+	App->renderer3D->NewVertexBuffer(obj->GetComponentMesh()->res_mesh->vertex, obj->GetComponentMesh()->res_mesh->num_vertex, obj->GetComponentMesh()->res_mesh->id_vertex);
+	App->renderer3D->NewIndexBuffer(obj->GetComponentMesh()->res_mesh->index, obj->GetComponentMesh()->res_mesh->num_index, obj->GetComponentMesh()->res_mesh->id_index);
 	//Generate the buffer for texture coords
-	App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->tex_coords, obj->GetComponentMesh()->num_tex_coords, obj->GetComponentMesh()->id_tex_coords);
+	App->renderer3D->NewTexBuffer(obj->GetComponentMesh()->res_mesh->tex_coords, obj->GetComponentMesh()->res_mesh->num_tex_coords, obj->GetComponentMesh()->res_mesh->id_tex_coords);
 
-	App->LogInConsole("Created Primitive with %d vertices and %d indices.", obj->GetComponentMesh()->num_vertex, obj->GetComponentMesh()->num_index);
+	App->LogInConsole("Created Primitive with %d vertices and %d indices.", obj->GetComponentMesh()->res_mesh->num_vertex, obj->GetComponentMesh()->res_mesh->num_index);
 
 }
 

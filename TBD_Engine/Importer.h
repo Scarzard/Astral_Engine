@@ -13,6 +13,8 @@ public:
 
 	~Importer();
 
+
+
 	//export mesh
 	bool Export(const char * name, std::string & output_file, ComponentMesh* mesh);
 	//export transform

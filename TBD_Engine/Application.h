@@ -17,6 +17,7 @@ class ModuleEngineUI;
 class MeshLoader;
 class TextureLoader;
 class ModuleFileSystem;
+class ModuleResources;
 
 
 
@@ -53,6 +54,7 @@ public:
 	MeshLoader*				mesh_loader = nullptr;
 	TextureLoader*			tex_loader = nullptr;
 	ModuleFileSystem*		file_system = nullptr;
+	ModuleResources*		resources = nullptr;
 
 private:
 

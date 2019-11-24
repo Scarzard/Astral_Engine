@@ -25,6 +25,8 @@ ModuleCamera3D::~ModuleCamera3D()
 // -----------------------------------------------------------------
 bool ModuleCamera3D::Start()
 {
+	main_camera->frustum.farPlaneDistance = 300;
+
 	App->LogInConsole("Setting up the camera");
 	bool ret = true;
 
@@ -51,7 +53,7 @@ update_status ModuleCamera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
-	
+
 	if (App->gui->is_game_focused)
 	{
 		if (activate_mouse_picking && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && (App->input->GetMouseX() > App->gui->game_window->position.x && App->input->GetMouseX() < App->gui->game_window->position.x + App->gui->game_window->current_size.x) &&

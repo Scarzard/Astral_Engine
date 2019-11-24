@@ -33,12 +33,14 @@ bool ModuleEngineUI::Init()
 	console_window		= new W_Console();
 	h_window			= new W_Hierarchy();
 	conf_window			= new W_Configuration();
+	resources_window	= new W_Resources();
 
 	windows.push_back(game_window);
 	windows.push_back(ins_window);
 	windows.push_back(console_window);
 	windows.push_back(h_window);
 	windows.push_back(conf_window);
+	windows.push_back(resources_window);
 
 	return true;
 }

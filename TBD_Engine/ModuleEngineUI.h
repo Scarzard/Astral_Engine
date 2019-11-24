@@ -14,6 +14,7 @@
 #include "W_Console.h"
 #include "W_Inspector.h"
 #include "W_Configuration.h"
+#include "W_Resources.h"
 
 class ModuleEngineUI : public Module
 {
@@ -38,12 +39,14 @@ public:
 	bool hierarchy = true;
 	bool game = true;
 	bool inspector = true;
+	bool w_resources = true;
 
-	W_Game* game_window = nullptr;
-	W_Inspector* ins_window = nullptr;
-	W_Console* console_window = nullptr;
-	W_Hierarchy* h_window = nullptr;
-	W_Configuration* conf_window = nullptr;
+	W_Game*				game_window = nullptr;
+	W_Inspector*		ins_window = nullptr;
+	W_Console*			console_window = nullptr;
+	W_Hierarchy*		h_window = nullptr;
+	W_Configuration*	conf_window = nullptr;
+	W_Resources*		resources_window = nullptr;
 	
 	bool save_scene_pop = false;
 private:
