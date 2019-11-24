@@ -44,16 +44,15 @@ void GameObject::Load(uint obj_num, nlohmann::json & scene_file)
 
 void GameObject::Save(uint obj_num, nlohmann::json &scene)
 {
-	scene["Game Objects"][obj_num]["UUID"] = UUID;
-	scene["Game Objects"][obj_num]["Name"] = name;
+	scene[name.c_str()]["UUID"] = std::to_string(UUID);
 
 	if(parent)
-		scene["Game Objects"][obj_num]["ParentUUID"] = parent->UUID;
+		scene[name.c_str()]["ParentUUID"] = std::to_string(parent->UUID);
 	else
-		scene["Game Objects"][obj_num]["ParentUUID"] = "NONE";
+		scene[name.c_str()]["ParentUUID"] = "NONE";
 
-	scene["Game Objects"][obj_num]["Active"] = active;
-	scene["Game Objects"][obj_num]["Static"] = is_static;
+	scene[name.c_str()]["Active"] = std::to_string(active);
+	scene[name.c_str()]["Static"] = std::to_string(is_static);
 
 	//save components too
 	for (int i = 0; i < components.size(); i++)

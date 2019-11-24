@@ -35,12 +35,12 @@ ComponentCamera::~ComponentCamera()
 
 void ComponentCamera::Save(uint obj_num, nlohmann::json &scene)
 {
-	scene["Game Objects"][obj_num]["Components"]["Camera"]["FrustumView"] = frustum_view;
-	scene["Game Objects"][obj_num]["Components"]["Camera"]["Culling"] = culling;
-	scene["Game Objects"][obj_num]["Components"]["Camera"]["FrusutmFar"] = frustum.farPlaneDistance;
-	scene["Game Objects"][obj_num]["Components"]["Camera"]["FrustumNear"] = frustum.nearPlaneDistance;
-	scene["Game Objects"][obj_num]["Components"]["Camera"]["VerticalFOV"] = frustum.verticalFov;
-	scene["Game Objects"][obj_num]["Components"]["Camera"]["HorizontalFOV"] = frustum.horizontalFov;
+	scene[my_GO->name]["Components"]["Camera"]["FrustumView"] = frustum_view;
+	scene[my_GO->name]["Components"]["Camera"]["Culling"] = culling;
+	scene[my_GO->name]["Components"]["Camera"]["FrusutmFar"] = frustum.farPlaneDistance;
+	scene[my_GO->name]["Components"]["Camera"]["FrustumNear"] = frustum.nearPlaneDistance;
+	scene[my_GO->name]["Components"]["Camera"]["VerticalFOV"] = frustum.verticalFov;
+	scene[my_GO->name]["Components"]["Camera"]["HorizontalFOV"] = frustum.horizontalFov;
 }
 
 void ComponentCamera::Update()

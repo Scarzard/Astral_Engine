@@ -14,10 +14,16 @@ ComponentTransform::~ComponentTransform()
 
 void ComponentTransform::Save(uint obj_num, nlohmann::json &scene)
 {
-	scene["Game Objects"][obj_num]["Components"]["Transform"]["UUID"] = UUID;
-	scene["Game Objects"][obj_num]["Components"]["Transform"]["Position"] = { position.x, position.y, position.z };
-	scene["Game Objects"][obj_num]["Components"]["Transform"]["Rotation Quat"] = { rotation_quat.x, rotation_quat.y, rotation_quat.z, rotation_quat.w };
-	scene["Game Objects"][obj_num]["Components"]["Transform"]["Scale"] = { scale.x, scale.y, scale.y };
+	scene[my_GO->name]["Components"]["Transform"]["UUID"] = std::to_string(UUID);
+	scene[my_GO->name]["Components"]["Transform"]["PositionX"] = std::to_string(position.x);
+	scene[my_GO->name]["Components"]["Transform"]["PositionY"] = std::to_string(position.y);
+	scene[my_GO->name]["Components"]["Transform"]["PositionZ"] = std::to_string(position.z);
+	scene[my_GO->name]["Components"]["Transform"]["RotationX"] = std::to_string(rotation_euler.x);
+	scene[my_GO->name]["Components"]["Transform"]["RotationY"] = std::to_string(rotation_euler.y);
+	scene[my_GO->name]["Components"]["Transform"]["RotationZ"] = std::to_string(rotation_euler.z);
+	scene[my_GO->name]["Components"]["Transform"]["ScaleX"] = std::to_string(scale.x);
+	scene[my_GO->name]["Components"]["Transform"]["ScaleY"] = std::to_string(scale.y);
+	scene[my_GO->name]["Components"]["Transform"]["ScaleZ"] = std::to_string(scale.z);
 }						 
 
 // ------------GETTERS--------------

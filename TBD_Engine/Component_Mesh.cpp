@@ -22,8 +22,9 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::Save(uint obj_num, nlohmann::json &scene)
 {
-	scene["Game Objects"][obj_num]["Components"]["Mesh"]["UUID"] = UUID;
-	scene["Game Objects"][obj_num]["Components"]["Mesh"]["DrawNormals"] = draw_normals;
+	scene[my_GO->name]["Components"]["Mesh"]["UUID"] = std::to_string(UUID);
+	scene[my_GO->name]["Components"]["Mesh"]["DrawNormals"] = std::to_string(draw_normals);
+	scene[my_GO->name]["Components"]["Mesh"]["ResourceName"] = App->GetNameFromPath(res_mesh->exported_file);
 }
 
 const AABB& ComponentMesh::GetBoundingBox()
@@ -91,9 +92,5 @@ void ComponentMesh::CleanUp()
 	if (res_mesh != nullptr)
 	{
 		res_mesh->loaded -= 1;
-		if (res_mesh->loaded == 0)
-		{
-			res_mesh->ReleaseMemory();
-		}
 	}
 }

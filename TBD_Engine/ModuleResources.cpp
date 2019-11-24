@@ -160,7 +160,7 @@ void ModuleResources::DrawExplorer()
 
 	for (std::map<uint, Resource*>::const_iterator it = resources.begin(); it != resources.end(); ++it)
 	{
-		if (it->second != nullptr)
+		if (it->second != nullptr && it->second->loaded > 0)
 		{
 			
 			if (it->second->type == Resource::RES_TYPE::TEXTURE)

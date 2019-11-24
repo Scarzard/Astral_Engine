@@ -17,10 +17,10 @@ ComponentTexture::~ComponentTexture()
 
 void ComponentTexture::Save(uint obj_num, nlohmann::json &scene)
 {
-	scene["Game Objects"][obj_num]["Components"]["Texture"]["UUID"] = UUID;
-	scene["Game Objects"][obj_num]["Components"]["Texture"]["Checkers"] = Checers_texture;
+	scene[my_GO->name]["Components"]["Texture"]["UUID"] = std::to_string(UUID);
+	scene[my_GO->name]["Components"]["Texture"]["Checkers"] = std::to_string(Checers_texture);
 	if(res_texture!=nullptr)
-		scene["Game Objects"][obj_num]["Components"]["Texture"]["Resource UUID"] = res_texture->res_UUID; // temporal - TODO: resourceID
+		scene[my_GO->name]["Components"]["Texture"]["Resource UUID"] = std::to_string(res_texture->res_UUID); // temporal - TODO: resourceID
 }
 
 void ComponentTexture::CleanUp()
@@ -28,9 +28,5 @@ void ComponentTexture::CleanUp()
 	if (res_texture != nullptr)
 	{
 		res_texture->loaded -= 1;
-		if (res_texture->loaded == 0)
-		{
-			res_texture->ReleaseMemory();
-		}
 	}
 }

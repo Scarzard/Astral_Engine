@@ -7,6 +7,7 @@
 #include "ModuleEngineUI.h"
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleResources.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -161,15 +162,24 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 	//Draw GameObjects Recursively
 	//Toggle Frustum culling 
-	
-	if (App->camera->obj_camera->components.size() > 0 && App->camera->obj_camera->active && App->camera->obj_camera->GetComponentCamera()->culling)
+	if (App->camera->obj_camera->components.size() > 0)
 	{
-		// Static Frustum Culling
-		std::vector<GameObject*> tmp_static_go;
-		QuadTree->Intersects(tmp_static_go, App->camera->obj_camera->GetComponentCamera()->frustum);
-		for (int i = 0; i < tmp_static_go.size(); i++)
-			if (tmp_static_go[i]->active)
-				DrawRecursively(tmp_static_go[i]);
+		if (App->camera->obj_camera->GetComponentCamera() != nullptr)
+		{
+			if (App->camera->obj_camera->components.size() > 0 && App->camera->obj_camera->active && App->camera->obj_camera->GetComponentCamera()->culling)
+			{
+				// Static Frustum Culling
+				std::vector<GameObject*> tmp_static_go;
+				QuadTree->Intersects(tmp_static_go, App->camera->obj_camera->GetComponentCamera()->frustum);
+				for (int i = 0; i < tmp_static_go.size(); i++)
+					if (tmp_static_go[i]->active)
+						DrawRecursively(tmp_static_go[i]);
+			}
+			else
+				DrawRecursively(root);
+		}
+		else
+			DrawRecursively(root);
 	}
 	else
 		DrawRecursively(root);
@@ -254,9 +264,7 @@ GameObject* ModuleSceneIntro::CollectHits()
 
 void ModuleSceneIntro::LoadScene(std::string scene_name)
 {
-	
-	// First we delete the current scene
-	
+	// Delete the current scene
 	for (int i = 0; root->children.size() != 0;)
 	{
 		root->children[i]->DeleteGO(root->children[i], true);
@@ -264,7 +272,101 @@ void ModuleSceneIntro::LoadScene(std::string scene_name)
 		QuadTree->update_tree = true;
 	}
 	root->children.clear();
+	numGO = 0;
 
+	json file;
+	std::string path = ASSETS_SCENES_FOLDER + scene_name;
+
+	std::ifstream stream;
+	stream.open(path);
+	file = json::parse(stream);
+	stream.close();
+
+	std::vector<GameObject*> objects;
+	for (json::iterator it = file.begin(); it != file.end(); ++it)
+	{
+		std::string name = it.key().data();
+		GameObject* obj = CreateGameObject();
+		if (name.compare("root") != 0)
+		{
+			
+			obj->name = name;
+			std::string uid = file[it.key()]["UUID"];
+			obj->UUID = std::stoi(uid);
+
+			if (name == "Main Camera")
+			{
+				App->camera->obj_camera = obj;
+			}
+
+			json components = file[it.key()]["Components"];
+			ComponentTransform* transform = obj->GetComponentTransform();
+
+			std::string posx = components["Transform"]["PositionX"];
+			std::string posy = components["Transform"]["PositionY"];
+			std::string posz = components["Transform"]["PositionZ"];
+
+			std::string rotx = components["Transform"]["RotationX"];
+			std::string roty = components["Transform"]["RotationY"];
+			std::string rotz = components["Transform"]["RotationZ"];
+
+			std::string sx = components["Transform"]["ScaleX"];
+			std::string sy = components["Transform"]["ScaleY"];
+			std::string sz = components["Transform"]["ScaleZ"];
+
+			
+			transform->SetPosition(float3(std::stof(posx), std::stof(posy), std::stof(posz)));
+			transform->SetEulerRotation(float3(std::stof(rotx), std::stof(roty), std::stof(rotz)));
+			transform->SetScale(float3(std::stof(sx), std::stof(sy), std::stof(sz)));
+
+			for (json::iterator comp = components.begin(); comp != components.end(); ++comp)
+			{
+				std::string type = comp.key();
+
+				if (type.compare("Mesh") == 0)
+				{
+					obj->CreateComponent(Component::ComponentType::Mesh);
+					ComponentMesh* mesh = obj->GetComponentMesh();
+
+					std::string comp_id = components[comp.key()]["UUID"];
+					uint mesh_id = std::stoi(comp_id);
+					mesh->UUID = mesh_id;
+					
+					std::string name = components[comp.key()]["ResourceName"];
+
+					mesh->res_mesh = (ResourceMesh*)App->resources->Get(App->resources->IsResourceInLibrary(name.c_str()));
+					mesh->res_mesh->UpdateNumReference();
+
+					mesh->UpdateAABB();
+					mesh->UpdateGlobalAABB();
+					App->scene_intro->static_meshes.push_back(mesh);
+					App->scene_intro->meshes.push_back(mesh);
+
+				}
+			}
+
+
+			objects.push_back(obj);
+		}
+
+		
+	}
+
+	// --- Parent GO's ---
+	for (uint i = 0; i < objects.size(); ++i)
+	{
+		std::string parent_uid = file[objects[i]->name]["ParentUUID"];
+		uint p_uid = std::stoi(parent_uid);
+
+		for (uint j = 0; j < objects.size(); ++j)
+		{
+			if (p_uid == objects[j]->UUID)
+			{
+				objects[j]->SetChild(objects[i]);
+				continue;
+			}
+		}
+	}
 }
 
 void ModuleSceneIntro::LoadGameObjects(nlohmann::json & scene, GameObject * Root)
@@ -282,7 +384,6 @@ void ModuleSceneIntro::SaveScene(std::string scene_name)
 	std::string full_path = ASSETS_SCENES_FOLDER + scene_name + ".json";
 
 	SaveGameObjects(scene, root);
-
 	// Create the stream and open the file
 	std::ofstream stream;
 	stream.open(full_path);
