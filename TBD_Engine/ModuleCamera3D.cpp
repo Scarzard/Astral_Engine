@@ -34,7 +34,6 @@ bool ModuleCamera3D::Start()
 	obj_camera->name = "Main Camera";
 	obj_camera->is_static = false;
 	obj_camera->CreateComponent(Component::ComponentType::Camera);
-	obj_camera->CreateComponent(Component::ComponentType::Transform);
 	
 	return ret;
 }
@@ -160,7 +159,7 @@ const Frustum & ModuleCamera3D::GetActiveFrustum() const
 
 bool ModuleCamera3D::Intersects(const AABB & refBox) const
 {
-	return active_camera->ContainsAABB(refBox);
+	return obj_camera->GetComponentCamera()->ContainsAABB(refBox);
 }
 
 void ModuleCamera3D::MoveCamera(float & movSpeed)

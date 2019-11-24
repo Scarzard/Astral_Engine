@@ -49,6 +49,7 @@ public:
 	W_Resources*		resources_window = nullptr;
 	
 	bool save_scene_pop = false;
+	bool load_scene_pop = false;
 private:
 
 	//bool show_demo_window = true;
@@ -58,6 +59,13 @@ private:
 	bool about_window = false;
 	//Store the windows here and iterate them in Start, Draw, Pre/Post Update 
 	std::list<Window*> windows;
+
+	char *convert(const std::string & s)
+	{
+		char *pc = new char[s.size() + 1];
+		std::strcpy(pc, s.c_str());
+		return pc;
+	}
 
 };
 

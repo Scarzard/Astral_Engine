@@ -95,9 +95,12 @@ update_status ModuleSceneIntro::Update(float dt)
 	//Trying to delete GO selected if pressed SUPR
 	if (App->gui->ins_window->selected_GO != nullptr && App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
 	{
-		App->gui->ins_window->selected_GO->DeleteGO(App->gui->ins_window->selected_GO, true);
-		App->gui->ins_window->selected_GO = nullptr;
-		QuadTree->update_tree = true;
+		if (App->gui->ins_window->selected_GO != root)
+		{
+			App->gui->ins_window->selected_GO->DeleteGO(App->gui->ins_window->selected_GO, true);
+			App->gui->ins_window->selected_GO = nullptr;
+			QuadTree->update_tree = true;
+		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) //Test
@@ -158,14 +161,9 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 	//Draw GameObjects Recursively
 	//Toggle Frustum culling 
-	if (App->camera->obj_camera->active && App->camera->obj_camera->GetComponentCamera()->culling)
+	
+	if (App->camera->obj_camera->components.size() > 0 && App->camera->obj_camera->active && App->camera->obj_camera->GetComponentCamera()->culling)
 	{
-		// Dynamic Frustum Culling
-		std::vector<GameObject*> tmp_dynamic_go;
-		for (int i = 0; i < tmp_dynamic_go.size(); i++)
-			if (!tmp_dynamic_go[i]->is_static && tmp_dynamic_go[i]->active && App->camera->Intersects(tmp_dynamic_go[i]->GetComponentMesh()->aabb))
-				DrawRecursively(tmp_dynamic_go[i]);
-
 		// Static Frustum Culling
 		std::vector<GameObject*> tmp_static_go;
 		QuadTree->Intersects(tmp_static_go, App->camera->obj_camera->GetComponentCamera()->frustum);
@@ -175,6 +173,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	}
 	else
 		DrawRecursively(root);
+	
 	
 	//Draw Octree Recursively
 	if(App->gui->conf_window->draw_quadtree)
@@ -222,16 +221,16 @@ GameObject* ModuleSceneIntro::CollectHits()
 		{
 			LineSegment localRay = ray;
 			localRay.Transform(it->second->GetComponentTransform()->GetGlobalTransform().Inverted());
-			for (uint tmp = 0; tmp < mesh->num_index; tmp += 3)
+			for (uint tmp = 0; tmp < mesh->res_mesh->num_index; tmp += 3)
 			{
-				uint indexA = mesh->index[tmp] * 3;
-				float3 a(mesh->vertex[indexA]);
+				uint indexA = mesh->res_mesh->index[tmp] * 3;
+				float3 a(mesh->res_mesh->vertex[indexA]);
 
-				uint indexB = mesh->index[tmp + 1] * 3;
-				float3 b(mesh->vertex[indexB]);
+				uint indexB = mesh->res_mesh->index[tmp + 1] * 3;
+				float3 b(mesh->res_mesh->vertex[indexB]);
 
-				uint indexC = mesh->index[tmp + 2] * 3;
-				float3 c(mesh->vertex[indexC]);
+				uint indexC = mesh->res_mesh->index[tmp + 2] * 3;
+				float3 c(mesh->res_mesh->vertex[indexC]);
 				for (uint j = 0; j < mesh->res_mesh->num_index / 3; j++)
 				{
 					float3 a = mesh->res_mesh->vertex[mesh->res_mesh->index[j * 3]];
@@ -253,25 +252,18 @@ GameObject* ModuleSceneIntro::CollectHits()
 }
 
 
-void ModuleSceneIntro::LoadScene(std::string scene_name, GameObject* root)
+void ModuleSceneIntro::LoadScene(std::string scene_name)
 {
+	
 	// First we delete the current scene
-	CleanUp();
-
-	root = CreateGameObject();
-	root->name = "root";
-
-	json scene_file;
-	std::string full_path = ASSETS_SCENES_FOLDER + scene_name + ".json";
-
-
-	std::ifstream stream;
-	stream.open(full_path);
-	scene_file = json::parse(stream);
-
-	stream.close();
-
-	LoadGameObjects(scene_file, root);
+	
+	for (int i = 0; root->children.size() != 0;)
+	{
+		root->children[i]->DeleteGO(root->children[i], true);
+		App->gui->ins_window->selected_GO = nullptr;
+		QuadTree->update_tree = true;
+	}
+	root->children.clear();
 
 }
 

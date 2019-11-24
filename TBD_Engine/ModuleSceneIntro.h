@@ -22,7 +22,7 @@ public:
 	/*void Load(const nlohmann::json  &config);
 	void Save(nlohmann::json &config);*/
 
-	void LoadScene(std::string scene_name, GameObject* root);
+	void LoadScene(std::string scene_name);
 	void LoadGameObjects(nlohmann::json  &scene, GameObject* Root);
 	void SaveScene(std::string scene_name);
 	void SaveGameObjects(nlohmann::json  &scene, GameObject* Root);

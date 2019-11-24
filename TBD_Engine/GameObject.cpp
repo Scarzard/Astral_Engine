@@ -225,6 +225,7 @@ void GameObject::DeleteGO(GameObject* GO, bool original)
 
 	GO->CleanUp();
 	delete GO;
+	GO = nullptr;
 }
 
 void GameObject::SetChild(GameObject* GO)

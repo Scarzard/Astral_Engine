@@ -183,6 +183,7 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 
 			}
 			ImGui::MenuItem("Save Scene", NULL, &save_scene_pop);
+			ImGui::MenuItem("Load Scene", NULL, &load_scene_pop);
 			if (ImGui::MenuItem("Quit", "(Esc)"))
 			{
 				App->scene_intro->want_to_quit = UPDATE_STOP;
@@ -324,6 +325,31 @@ void ModuleEngineUI::CreateMainMenuToolbar()
 				if (ImGui::Button("Cancel"))
 				{
 					save_scene_pop = false;
+				}
+				ImGui::EndPopup();
+			}
+		}
+		if (load_scene_pop)
+		{
+			ImGui::OpenPopup("Load Scene");
+			if (ImGui::BeginPopupModal("Load Scene"))
+				ImGui::SetWindowSize(ImVec2(400, 200));
+			{
+				ImGui::Separator();
+				std::vector<std::string> file_list, dir_list;
+				App->file_system->DiscoverFiles("Assets/Scenes/", file_list, dir_list);
+
+				for (std::vector<std::string>::iterator iterator = file_list.begin(); iterator != file_list.end(); iterator++)
+				{
+					if (ImGui::Button((*iterator).c_str(), ImVec2(385,20)))
+					{
+						App->scene_intro->LoadScene((*iterator).c_str());
+						load_scene_pop = false;
+					}
+				}
+				if (ImGui::Button("Cancel"))
+				{
+					load_scene_pop = false;
 				}
 				ImGui::EndPopup();
 			}
