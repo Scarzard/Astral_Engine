@@ -19,17 +19,28 @@ public:
 
 	Resource(uint UUID, RES_TYPE type) : res_UUID(UUID), type(type) {}
 	virtual ~Resource() {}
-	RES_TYPE GetType() const;
-
-	bool IsLoadedToMemory() const;
-	bool LoadToMemory();
+	
 	uint CountReferences() const;
 
 	// Getters ----
 	uint GetUUID() const { return res_UUID; }
-	const char* GetFile() const;
-	const char* GetImportedFile() const;
+	const char* GetFile() const { return file.c_str(); }
+	const char* GetExportedFile() const { return exported_file.c_str(); }
+	RES_TYPE GetType() const { return type; };
+	uint GetNumReferences() const { return loaded; }
 	
+	void UpdateNumReference()
+	{
+		if (loaded > 0)
+			loaded++;
+		else
+		{
+			if (LoadInMemory())
+				loaded = 1;
+			else
+				loaded = 0;
+		}
+	}
 
 	//virtual void Load(const nlohmann::json &config);
 	//virtual void Save(nlohmann::json &config) const;
@@ -40,6 +51,7 @@ public:
 	std::string file;
 	std::string exported_file;
 	RES_TYPE type = RES_TYPE::UNKNOWN;
+
 	uint loaded = 0;
 };
 

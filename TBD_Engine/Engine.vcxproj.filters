@@ -411,6 +411,9 @@
     <ClInclude Include="ResourceTexture.h">
       <Filter>Sources\Modules\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceMesh.h">
+      <Filter>Sources\Modules\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">

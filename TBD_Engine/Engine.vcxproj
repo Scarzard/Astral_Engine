@@ -180,6 +180,7 @@
     <ClInclude Include="PCG\pcg_spinlock.h" />
     <ClInclude Include="PCG\pcg_variants.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="ResourceTexture.h" />
     <ClInclude Include="SpacePartition.h" />
     <ClInclude Include="TextureLoader.h" />

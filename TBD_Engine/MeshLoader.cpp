@@ -182,7 +182,7 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 			directory.append(path.C_Str());
 
 			child->GetComponentTexture()->res_texture = (ResourceTexture*)App->resources->Get(App->resources->GetNewFile(directory.c_str()));
-			child->GetComponentTexture()->res_texture->LoadInMemory();
+			child->GetComponentTexture()->res_texture->UpdateNumReference();
 		}
 
 		mesh->num_vertex = new_mesh->mNumVertices;
