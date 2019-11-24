@@ -246,6 +246,37 @@ GameObject* ModuleSceneIntro::CollectHits()
 	return ret;
 }
 
+
+void ModuleSceneIntro::LoadScene(std::string scene_name, GameObject* root)
+{
+	// First we delete the current scene
+	CleanUp();
+
+	root = CreateGameObject();
+	root->name = "root";
+
+	json scene_file;
+	std::string full_path = SCENES_FOLDER + scene_name + ".json";
+
+
+	std::ifstream stream;
+	stream.open(full_path);
+	scene_file = json::parse(stream);
+
+	stream.close();
+
+	LoadGameObjects(scene_file, root);
+
+}
+
+void ModuleSceneIntro::LoadGameObjects(nlohmann::json & scene, GameObject * Root)
+{
+	Root->Load(Root->id, scene);
+
+	for (int i = 0; i < Root->children.size(); ++i)
+		LoadGameObjects(scene, Root->children[i]);
+}
+
 void ModuleSceneIntro::SaveScene(std::string scene_name)
 {
 	// Create auxiliar file

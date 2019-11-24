@@ -24,6 +24,24 @@ GameObject::~GameObject()
 {
 }
 
+void GameObject::Load(uint obj_num, nlohmann::json & scene_file)
+{
+	scene_file["Game Objects"][obj_num]["UUID"] = UUID;
+	scene_file["Game Objects"][obj_num]["Name"] = name;
+
+	if (parent)
+		scene_file["Game Objects"][obj_num]["ParentUUID"] = parent->UUID;
+	else
+		scene_file["Game Objects"][obj_num]["ParentUUID"] = "NONE";
+
+	scene_file["Game Objects"][obj_num]["Active"] = active;
+	scene_file["Game Objects"][obj_num]["Static"] = is_static;
+
+	//save components too
+	for (int i = 0; i < components.size(); i++)
+		components[i]->Load(obj_num, scene_file);
+}
+
 void GameObject::Save(uint obj_num, nlohmann::json &scene)
 {
 	scene["Game Objects"][obj_num]["UUID"] = UUID;

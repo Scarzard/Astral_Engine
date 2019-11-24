@@ -18,7 +18,7 @@ public:
 	void CleanUp();
 
 	// Load & Save 
-	void Load(const nlohmann::json &scene_file);
+	void Load(uint obj_num, nlohmann::json &scene_file);
 	void Save(uint obj_num, nlohmann::json &scene_file);
 
 	void Enable();
