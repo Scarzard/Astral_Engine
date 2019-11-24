@@ -5,6 +5,7 @@
 #include "Resource.h"
 #include "Importer.h"
 
+class ResourceTexture;
 
 class ModuleResources : public Module
 {
@@ -18,24 +19,22 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void DrawExplorer();
 
 	Resource* NewResource(Resource::RES_TYPE type);
 	uint GetNewFile(const char* new_file);
 	uint ImportFile(const char* new_file_in_assets, Resource::RES_TYPE type);
 
-	uint Find(const char* file_in_assets) const;
-
-	//uint GenerateNewUID() {  }
-
 	// Getters ------------
 	Resource* Get(uint uid);
+	uint GetResourceInAssets(const char* file)const;
 
-private:
-	uint ResourceInAssets(const char* file)const;
-	void DrawExplorer();
-
-private:
+public:
 	std::map<uint, Resource*> resources;
+
+	//-------- For the assets window --------------
+	std::map<uint, ResourceTexture*> tex_resources;
+	//---------------------------------------------
 	Importer importer;
 };
 

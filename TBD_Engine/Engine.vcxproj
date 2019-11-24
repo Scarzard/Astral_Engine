@@ -191,6 +191,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="W_Hierarchy.h" />
     <ClInclude Include="W_Inspector.h" />
+    <ClInclude Include="W_Resources.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -267,6 +268,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="W_Hierarchy.cpp" />
     <ClCompile Include="W_Inspector.cpp" />
+    <ClCompile Include="W_Resources.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl" />

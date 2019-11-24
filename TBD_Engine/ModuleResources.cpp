@@ -6,7 +6,9 @@
 
 #include "Resource.h"
 #include "ResourceTexture.h"
+#include "ResourceMesh.h"
 
+#include "ImGui/imgui.h"
 #include "mmgr/mmgr.h"
 
 bool ModuleResources::Init()
@@ -47,6 +49,7 @@ uint ModuleResources::GetNewFile(const char* file)
 		}
 	}
 
+
 	return ret;
 }
 
@@ -54,7 +57,7 @@ uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RES_
 {
 	uint ret = 0; bool import_ok = false; std::string written_file;
 
-	ret = ResourceInAssets(new_file_in_assets);
+	ret = GetResourceInAssets(new_file_in_assets);
 	if (ret == 0)//Resource does not exist
 	{
 		switch (type)
@@ -82,7 +85,11 @@ Resource* ModuleResources::NewResource(Resource::RES_TYPE type)
 
 	switch (type) 
 	{
-	case Resource::RES_TYPE::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
+	case Resource::RES_TYPE::TEXTURE: 
+		ret = (Resource*) new ResourceTexture(uid); 
+		if (ret != nullptr)
+			tex_resources[uid] = (ResourceTexture*)ret;
+		break;
 
 	}
 
@@ -91,7 +98,7 @@ Resource* ModuleResources::NewResource(Resource::RES_TYPE type)
 	return ret;
 }
 
-uint ModuleResources::ResourceInAssets(const char* path)const
+uint ModuleResources::GetResourceInAssets(const char* path)const
 {
 	
 	for (std::map<uint, Resource*>::const_iterator it = resources.begin(); it != resources.end(); ++it)
@@ -111,4 +118,36 @@ Resource* ModuleResources::Get(uint uid)
 		return it->second;
 
 	return nullptr;
+}
+
+void ModuleResources::DrawExplorer()
+{
+	int i = 0;
+
+	for (std::map<uint, Resource*>::const_iterator it = resources.begin(); it != resources.end(); ++it)
+	{
+		if (it->second != nullptr)
+		{
+			i++;
+			if (it->second->type == Resource::RES_TYPE::TEXTURE)
+			{
+				std::map<uint, ResourceTexture*>::const_iterator tex = tex_resources.find(it->first);
+				ImGui::ImageButton((ImTextureID*)tex_resources[it->first]->texture, ImVec2(100, 100), ImVec2(0, 1), ImVec2(1, 0));
+				if (ImGui::IsItemHovered())
+					ImGui::SetTooltip("Name: %s\nUUID: %u\nReferences: %u", App->GetNameFromPath(it->second->file).c_str(), it->second->res_UUID, it->second->GetNumReferences());
+				if (i < 7)
+				{
+					ImGui::SameLine();
+					ImGui::Dummy(ImVec2(20.0f, 0.0f));
+					ImGui::SameLine();
+					
+				}
+				else
+				{
+					i = 0;
+				}
+					
+			}
+		}
+	}
 }

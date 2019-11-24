@@ -235,12 +235,13 @@ void GameObject::CleanUp()
 	if (this->GetComponentMesh() != nullptr)
 	{
 
-		this->GetComponentMesh()->CleanUp();
+		GetComponentMesh()->CleanUp();
 	}
-	else if (this->GetComponentTexture() != nullptr)
+	
+	if (this->GetComponentTexture() != nullptr)
 	{
 
-		this->GetComponentTexture()->CleanUp();
+		GetComponentTexture()->CleanUp();
 	}
 
 	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)

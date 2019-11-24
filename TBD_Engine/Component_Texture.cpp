@@ -24,5 +24,10 @@ void ComponentTexture::Save(uint obj_num, nlohmann::json &scene)
 
 void ComponentTexture::CleanUp()
 {
+	res_texture->loaded -= 1;
+	if (res_texture->loaded == 0)
+	{
+		res_texture->ReleaseMemory();
+	}
 	
 }

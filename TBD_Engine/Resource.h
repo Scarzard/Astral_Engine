@@ -19,8 +19,6 @@ public:
 
 	Resource(uint UUID, RES_TYPE type) : res_UUID(UUID), type(type) {}
 	virtual ~Resource() {}
-	
-	uint CountReferences() const;
 
 	// Getters ----
 	uint GetUUID() const { return res_UUID; }
@@ -45,6 +43,7 @@ public:
 	//virtual void Load(const nlohmann::json &config);
 	//virtual void Save(nlohmann::json &config) const;
 	virtual bool LoadInMemory() = 0;
+	virtual void ReleaseMemory() = 0;
 
 public:
 	uint res_UUID = 0;
