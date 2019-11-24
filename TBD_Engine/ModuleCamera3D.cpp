@@ -25,6 +25,8 @@ ModuleCamera3D::~ModuleCamera3D()
 // -----------------------------------------------------------------
 bool ModuleCamera3D::Start()
 {
+	main_camera->frustum.farPlaneDistance = 300;
+
 	App->LogInConsole("Setting up the camera");
 	bool ret = true;
 

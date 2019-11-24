@@ -19,6 +19,10 @@ bool ModuleResources::Init()
 
 bool ModuleResources::Start()
 {
+
+	mesh_icon = (ResourceTexture*)App->resources->Get(App->resources->GetNewFile("Assets/mesh_icon.jpg"));
+	mesh_icon->UpdateNumReference();
+
 	return true;
 }
 
@@ -158,26 +162,43 @@ void ModuleResources::DrawExplorer()
 	{
 		if (it->second != nullptr)
 		{
-			i++;
+			
 			if (it->second->type == Resource::RES_TYPE::TEXTURE)
 			{
+				i++;
 				std::map<uint, ResourceTexture*>::const_iterator tex = tex_resources.find(it->first);
 				ImGui::ImageButton((ImTextureID*)tex_resources[it->first]->texture, ImVec2(100, 100), ImVec2(0, 1), ImVec2(1, 0));
 				if (ImGui::IsItemHovered())
 					ImGui::SetTooltip("Name: %s\nUUID: %u\nReferences: %u", App->GetNameFromPath(it->second->file).c_str(), it->second->res_UUID, it->second->GetNumReferences());
-				if (i < 7)
-				{
-					ImGui::SameLine();
-					ImGui::Dummy(ImVec2(20.0f, 0.0f));
-					ImGui::SameLine();
-					
-				}
-				else
-				{
-					i = 0;
-				}
+				
 					
 			}
+
+			if (it->second->type == Resource::RES_TYPE::MESH)
+			{
+				i++;
+				ImGui::ImageButton((ImTextureID*)mesh_icon->texture, ImVec2(100, 100), ImVec2(0, 1), ImVec2(1, 0));
+				if (ImGui::IsItemHovered())
+					ImGui::SetTooltip("Name: %s\nUUID: %u\nReferences: %u", App->GetNameFromPath(it->second->exported_file).c_str(), it->second->res_UUID, it->second->GetNumReferences());
+
+
+			}
+
+		}
+
+
+
+		if (i < 7)
+		{
+			ImGui::SameLine();
+			ImGui::Dummy(ImVec2(25.0f, 10.0f));
+			ImGui::SameLine();
+
+		}
+		else
+		{
+			i = 0;
+			ImGui::Dummy(ImVec2(875.0f, 10.0f));
 		}
 	}
 }

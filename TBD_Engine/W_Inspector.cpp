@@ -65,6 +65,10 @@ bool W_Inspector::Draw()
 						App->scene_intro->QuadTree->update_tree = true;
 					}
 				}
+				else
+				{
+					App->scene_intro->QuadTree->update_tree = true;
+				}
 				
 			}
 

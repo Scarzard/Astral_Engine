@@ -35,6 +35,9 @@ public:
 	//-------- For the assets window --------------
 	std::map<uint, ResourceTexture*> tex_resources;
 	//---------------------------------------------
+
+private:
+	ResourceTexture* mesh_icon = nullptr;
 };
 
 #endif //!__ModuleResources_H__

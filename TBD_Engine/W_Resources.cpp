@@ -24,7 +24,7 @@ bool W_Resources::Draw()
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5, 5));
 
 		ImGui::Begin("Resources");
-		ImGui::Separator(); ImGui::Text("Resources Exlorer: Hover a resource to see information about it"); ImGui::Separator();
+		ImGui::Separator(); ImGui::Text("Resources Explorer: Hover a resource to see information about it"); ImGui::Separator();
 
 		App->resources->DrawExplorer();
 

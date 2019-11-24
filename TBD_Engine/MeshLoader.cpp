@@ -263,7 +263,7 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 
 			//Create .mesh
 			Export(child->name.c_str(), resource_mesh->exported_file, num_index, index, num_vertex, vertex, num_normals, face_center, face_normal, num_tex_coords, tex_coords);
-			//resource_mesh->file = full_path;
+			resource_mesh->file = full_path;
 
 			mesh->res_mesh = resource_mesh;
 			if(mesh->res_mesh != nullptr)
@@ -313,8 +313,7 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 			directory.append(path.C_Str());
 
 			child->GetComponentTexture()->res_texture = (ResourceTexture*)App->resources->Get(App->resources->GetNewFile(directory.c_str()));
-			if(child->GetComponentTexture()->res_texture != nullptr)
-				child->GetComponentTexture()->res_texture->UpdateNumReference();
+			child->GetComponentTexture()->res_texture->UpdateNumReference();
 		}
 		
 		//Initiate bounding box when creating our mesh
