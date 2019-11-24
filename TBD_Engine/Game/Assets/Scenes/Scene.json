@@ -12,12 +12,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1532194494"
+                "UUID": "1906124815"
             }
         },
-        "ParentUUID": "369497568",
+        "ParentUUID": "1835696363",
         "Static": "1",
-        "UUID": "50546680"
+        "UUID": "988003725"
     },
     "Camera001.Target": {
         "Active": "1",
@@ -32,12 +32,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "972540594"
+                "UUID": "442066051"
             }
         },
-        "ParentUUID": "369497568",
+        "ParentUUID": "1835696363",
         "Static": "1",
-        "UUID": "957669343"
+        "UUID": "416295103"
     },
     "City_building_001": {
         "Active": "1",
@@ -45,12 +45,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_001",
-                "UUID": "481476917"
+                "UUID": "2134597020"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1123848246",
-                "UUID": "1108135101"
+                "ResourceName": "Assets/Textures/building_v02_c.png",
+                "UUID": "840797305"
             },
             "Transform": {
                 "PositionX": "17.707165",
@@ -62,12 +62,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1878611705"
+                "UUID": "632699497"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "921624151"
+        "UUID": "363274696"
     },
     "City_building_004": {
         "Active": "1",
@@ -75,12 +75,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_004",
-                "UUID": "271958844"
+                "UUID": "1665128785"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1364518690",
-                "UUID": "1449473127"
+                "ResourceName": "Assets/Textures/building03_c.tga",
+                "UUID": "1114398824"
             },
             "Transform": {
                 "PositionX": "-41.475891",
@@ -92,12 +92,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "2140454815"
+                "UUID": "96693223"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1866174015"
+        "UUID": "440256974"
     },
     "City_building_007": {
         "Active": "1",
@@ -105,12 +105,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_007",
-                "UUID": "712116080"
+                "UUID": "1079839600"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1740932019",
-                "UUID": "1910061200"
+                "ResourceName": "Assets/Textures/building_016_c.tga",
+                "UUID": "31898371"
             },
             "Transform": {
                 "PositionX": "16.010492",
@@ -122,12 +122,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "195292097"
+                "UUID": "1461776330"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "2019539968"
+        "UUID": "109614501"
     },
     "City_building_008": {
         "Active": "1",
@@ -135,12 +135,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_008",
-                "UUID": "1328535875"
+                "UUID": "1024894634"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "139545770",
-                "UUID": "1289429891"
+                "ResourceName": "Assets/Textures/building_025_c.tga",
+                "UUID": "1540424445"
             },
             "Transform": {
                 "PositionX": "40.979996",
@@ -152,12 +152,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "44097078"
+                "UUID": "1312021399"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1451058119"
+        "UUID": "2045959622"
     },
     "City_building_010": {
         "Active": "1",
@@ -172,12 +172,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "2002566559"
+                "UUID": "1261663793"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "489791125"
+        "UUID": "1630811423"
     },
     "City_building_010_submesh": {
         "Active": "1",
@@ -185,12 +185,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_010_submesh",
-                "UUID": "126646424"
+                "UUID": "294547237"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "2047879124",
-                "UUID": "932038463"
+                "ResourceName": "Assets/Textures/building 01_c.tga",
+                "UUID": "1391594172"
             },
             "Transform": {
                 "PositionX": "0.000000",
@@ -202,12 +202,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1982432034"
+                "UUID": "817621746"
             }
         },
-        "ParentUUID": "489791125",
+        "ParentUUID": "1630811423",
         "Static": "1",
-        "UUID": "1805684027"
+        "UUID": "1536017305"
     },
     "City_building_010dummy": {
         "Active": "1",
@@ -215,12 +215,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_010dummy",
-                "UUID": "380597396"
+                "UUID": "622800114"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "2047879124",
-                "UUID": "991861429"
+                "ResourceName": "Assets/Textures/building 01_c.tga",
+                "UUID": "1458379406"
             },
             "Transform": {
                 "PositionX": "0.000000",
@@ -232,12 +232,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "651860107"
+                "UUID": "458617510"
             }
         },
-        "ParentUUID": "489791125",
+        "ParentUUID": "1630811423",
         "Static": "1",
-        "UUID": "1753073605"
+        "UUID": "1918802859"
     },
     "City_building_011": {
         "Active": "1",
@@ -245,12 +245,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_011",
-                "UUID": "480787179"
+                "UUID": "1351951544"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1740932019",
-                "UUID": "905794172"
+                "ResourceName": "Assets/Textures/building_016_c.tga",
+                "UUID": "1242783984"
             },
             "Transform": {
                 "PositionX": "30.134541",
@@ -262,12 +262,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1292272564"
+                "UUID": "1890838964"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1083954771"
+        "UUID": "453114407"
     },
     "City_building_013": {
         "Active": "1",
@@ -275,12 +275,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_013",
-                "UUID": "580669431"
+                "UUID": "929592820"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "951576571",
-                "UUID": "869451360"
+                "ResourceName": "Assets/Textures/building 06_ c.tga",
+                "UUID": "1548221574"
             },
             "Transform": {
                 "PositionX": "-42.288055",
@@ -292,12 +292,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "310744329"
+                "UUID": "544279435"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1438754657"
+        "UUID": "1747612434"
     },
     "City_building_014": {
         "Active": "1",
@@ -305,12 +305,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_014",
-                "UUID": "1558377945"
+                "UUID": "1425997015"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1364518690",
-                "UUID": "2134723723"
+                "ResourceName": "Assets/Textures/building03_c.tga",
+                "UUID": "1295782717"
             },
             "Transform": {
                 "PositionX": "-19.439707",
@@ -322,12 +322,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1533436936"
+                "UUID": "1223778633"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1989423288"
+        "UUID": "93571504"
     },
     "City_building_016": {
         "Active": "1",
@@ -342,12 +342,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1358510221"
+                "UUID": "1258733782"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "699561054"
+        "UUID": "48013434"
     },
     "City_building_016_submesh": {
         "Active": "1",
@@ -355,12 +355,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_016_submesh",
-                "UUID": "1899391410"
+                "UUID": "427103182"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "2047879124",
-                "UUID": "228549507"
+                "ResourceName": "Assets/Textures/building 01_c.tga",
+                "UUID": "551341324"
             },
             "Transform": {
                 "PositionX": "0.000000",
@@ -372,12 +372,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1925424457"
+                "UUID": "1021665596"
             }
         },
-        "ParentUUID": "699561054",
+        "ParentUUID": "48013434",
         "Static": "1",
-        "UUID": "1698032960"
+        "UUID": "1276117373"
     },
     "City_building_016dummy": {
         "Active": "1",
@@ -385,12 +385,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_016dummy",
-                "UUID": "1656930568"
+                "UUID": "2054959245"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "2047879124",
-                "UUID": "886828010"
+                "ResourceName": "Assets/Textures/building 01_c.tga",
+                "UUID": "927537803"
             },
             "Transform": {
                 "PositionX": "0.000000",
@@ -402,12 +402,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "531612446"
+                "UUID": "1509847381"
             }
         },
-        "ParentUUID": "699561054",
+        "ParentUUID": "48013434",
         "Static": "1",
-        "UUID": "1365315067"
+        "UUID": "1939453493"
     },
     "City_building_017": {
         "Active": "1",
@@ -422,12 +422,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1006586570"
+                "UUID": "630255982"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1138886224"
+        "UUID": "811611726"
     },
     "City_building_017_submesh": {
         "Active": "1",
@@ -435,12 +435,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_017_submesh",
-                "UUID": "928329485"
+                "UUID": "1605351512"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "2047879124",
-                "UUID": "626497223"
+                "ResourceName": "Assets/Textures/building 01_c.tga",
+                "UUID": "1962829523"
             },
             "Transform": {
                 "PositionX": "0.000000",
@@ -452,12 +452,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1166830981"
+                "UUID": "108876275"
             }
         },
-        "ParentUUID": "1138886224",
+        "ParentUUID": "811611726",
         "Static": "1",
-        "UUID": "75957995"
+        "UUID": "1430084216"
     },
     "City_building_017dummy": {
         "Active": "1",
@@ -465,12 +465,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_017dummy",
-                "UUID": "446660682"
+                "UUID": "1685512877"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "2047879124",
-                "UUID": "79242778"
+                "ResourceName": "Assets/Textures/building 01_c.tga",
+                "UUID": "963073850"
             },
             "Transform": {
                 "PositionX": "0.000000",
@@ -482,12 +482,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "2028211120"
+                "UUID": "954286596"
             }
         },
-        "ParentUUID": "1138886224",
+        "ParentUUID": "811611726",
         "Static": "1",
-        "UUID": "729737419"
+        "UUID": "1665847318"
     },
     "City_building_022": {
         "Active": "1",
@@ -495,12 +495,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_022",
-                "UUID": "742927487"
+                "UUID": "1865296509"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1346494156",
-                "UUID": "553076346"
+                "ResourceName": "Assets/Textures/building05 _c.tga",
+                "UUID": "60433344"
             },
             "Transform": {
                 "PositionX": "-20.831324",
@@ -512,12 +512,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1027839201"
+                "UUID": "1674281182"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1970291913"
+        "UUID": "1179827585"
     },
     "City_building_023": {
         "Active": "1",
@@ -525,12 +525,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_023",
-                "UUID": "1899985625"
+                "UUID": "2060976053"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1740932019",
-                "UUID": "671962628"
+                "ResourceName": "Assets/Textures/building_016_c.tga",
+                "UUID": "20331880"
             },
             "Transform": {
                 "PositionX": "42.130642",
@@ -542,12 +542,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "946331578"
+                "UUID": "1519872204"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "165992385"
+        "UUID": "2018787860"
     },
     "City_building_024": {
         "Active": "1",
@@ -555,12 +555,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_024",
-                "UUID": "470854783"
+                "UUID": "1382398619"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "139545770",
-                "UUID": "572616077"
+                "ResourceName": "Assets/Textures/building_025_c.tga",
+                "UUID": "1026078416"
             },
             "Transform": {
                 "PositionX": "-20.572771",
@@ -572,12 +572,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "303494096"
+                "UUID": "570442790"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1926357740"
+        "UUID": "334094107"
     },
     "City_building_026": {
         "Active": "1",
@@ -585,12 +585,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_026",
-                "UUID": "2112360680"
+                "UUID": "558114039"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1346494156",
-                "UUID": "2075129387"
+                "ResourceName": "Assets/Textures/building05 _c.tga",
+                "UUID": "2067636514"
             },
             "Transform": {
                 "PositionX": "31.511889",
@@ -602,12 +602,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "991307139"
+                "UUID": "285944349"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "217473909"
+        "UUID": "561882881"
     },
     "City_building_028": {
         "Active": "1",
@@ -615,12 +615,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_028",
-                "UUID": "826281940"
+                "UUID": "716705703"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1839864968",
-                "UUID": "410362029"
+                "ResourceName": "Assets/Textures/building_v01_c.png",
+                "UUID": "713788498"
             },
             "Transform": {
                 "PositionX": "13.387990",
@@ -632,12 +632,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "2116742708"
+                "UUID": "567348694"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "620700402"
+        "UUID": "797915490"
     },
     "City_building_030": {
         "Active": "1",
@@ -645,12 +645,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_030",
-                "UUID": "812765600"
+                "UUID": "403318559"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1839864968",
-                "UUID": "1864906576"
+                "ResourceName": "Assets/Textures/building_v01_c.png",
+                "UUID": "1067083319"
             },
             "Transform": {
                 "PositionX": "-42.807240",
@@ -662,12 +662,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1042923577"
+                "UUID": "2062849818"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "711678741"
+        "UUID": "1786900368"
     },
     "City_building_031": {
         "Active": "1",
@@ -675,12 +675,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_031",
-                "UUID": "405720115"
+                "UUID": "2055401830"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1839864968",
-                "UUID": "1384882865"
+                "ResourceName": "Assets/Textures/building_v01_c.png",
+                "UUID": "1471749962"
             },
             "Transform": {
                 "PositionX": "-34.679482",
@@ -692,12 +692,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1207477637"
+                "UUID": "558083474"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1946913723"
+        "UUID": "1358467781"
     },
     "City_building_032": {
         "Active": "1",
@@ -705,12 +705,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_032",
-                "UUID": "1130823700"
+                "UUID": "1668906695"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1364518690",
-                "UUID": "1711130834"
+                "ResourceName": "Assets/Textures/building03_c.tga",
+                "UUID": "411529788"
             },
             "Transform": {
                 "PositionX": "-29.478403",
@@ -722,12 +722,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "342276172"
+                "UUID": "186514917"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1356644806"
+        "UUID": "1816855091"
     },
     "City_building_033": {
         "Active": "1",
@@ -735,12 +735,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_033",
-                "UUID": "651580485"
+                "UUID": "1881608691"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "951576571",
-                "UUID": "640272226"
+                "ResourceName": "Assets/Textures/building 06_ c.tga",
+                "UUID": "252385195"
             },
             "Transform": {
                 "PositionX": "-32.361496",
@@ -752,12 +752,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1996196597"
+                "UUID": "2099762082"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1131960236"
+        "UUID": "1536035721"
     },
     "City_building_034": {
         "Active": "1",
@@ -765,12 +765,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_034",
-                "UUID": "615157696"
+                "UUID": "843103088"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1346494156",
-                "UUID": "121133133"
+                "ResourceName": "Assets/Textures/building05 _c.tga",
+                "UUID": "78352897"
             },
             "Transform": {
                 "PositionX": "16.049517",
@@ -782,12 +782,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1833949568"
+                "UUID": "2146786314"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1074585567"
+        "UUID": "598461341"
     },
     "City_building_035": {
         "Active": "1",
@@ -795,12 +795,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_035",
-                "UUID": "1652838379"
+                "UUID": "949030700"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1839864968",
-                "UUID": "1842439480"
+                "ResourceName": "Assets/Textures/building_v01_c.png",
+                "UUID": "630774726"
             },
             "Transform": {
                 "PositionX": "13.387990",
@@ -812,12 +812,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1457898047"
+                "UUID": "1808476110"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "241570824"
+        "UUID": "398578657"
     },
     "City_building_036": {
         "Active": "1",
@@ -825,12 +825,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_036",
-                "UUID": "2098171457"
+                "UUID": "1031973812"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "951576571",
-                "UUID": "2054235592"
+                "ResourceName": "Assets/Textures/building 06_ c.tga",
+                "UUID": "1678341214"
             },
             "Transform": {
                 "PositionX": "-31.216331",
@@ -842,12 +842,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "2044366956"
+                "UUID": "250078021"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1133318123"
+        "UUID": "1274101343"
     },
     "City_building_037": {
         "Active": "1",
@@ -855,12 +855,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_037",
-                "UUID": "1187860492"
+                "UUID": "405107819"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1346494156",
-                "UUID": "1942025900"
+                "ResourceName": "Assets/Textures/building05 _c.tga",
+                "UUID": "1777274540"
             },
             "Transform": {
                 "PositionX": "-20.317694",
@@ -872,12 +872,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1756690209"
+                "UUID": "1210963152"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1967711373"
+        "UUID": "1060942977"
     },
     "City_building_038": {
         "Active": "1",
@@ -885,12 +885,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_038",
-                "UUID": "982434359"
+                "UUID": "1078385785"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1346494156",
-                "UUID": "1289735461"
+                "ResourceName": "Assets/Textures/building05 _c.tga",
+                "UUID": "705041991"
             },
             "Transform": {
                 "PositionX": "-41.649002",
@@ -902,12 +902,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1636081966"
+                "UUID": "908318314"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "214768780"
+        "UUID": "1917976494"
     },
     "City_building_039": {
         "Active": "1",
@@ -915,12 +915,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_039",
-                "UUID": "1346721989"
+                "UUID": "1258876878"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1839864968",
-                "UUID": "267910957"
+                "ResourceName": "Assets/Textures/building_v01_c.png",
+                "UUID": "1227264563"
             },
             "Transform": {
                 "PositionX": "-42.807240",
@@ -932,12 +932,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1829394965"
+                "UUID": "436140391"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "2086281917"
+        "UUID": "694735932"
     },
     "City_building_040": {
         "Active": "1",
@@ -945,12 +945,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_040",
-                "UUID": "1981989858"
+                "UUID": "2058778279"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1839864968",
-                "UUID": "1615905198"
+                "ResourceName": "Assets/Textures/building_v01_c.png",
+                "UUID": "112723064"
             },
             "Transform": {
                 "PositionX": "-34.679482",
@@ -962,12 +962,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "277266414"
+                "UUID": "837727405"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "1333263102"
+        "UUID": "1454277434"
     },
     "City_building_041": {
         "Active": "1",
@@ -975,12 +975,12 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "city_building_041",
-                "UUID": "226046143"
+                "UUID": "301810896"
             },
             "Texture": {
                 "Checkers": "0",
-                "Resource UUID": "1123848246",
-                "UUID": "1212191873"
+                "ResourceName": "Assets/Textures/building_v02_c.png",
+                "UUID": "1355944638"
             },
             "Transform": {
                 "PositionX": "30.695278",
@@ -992,12 +992,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "508365350"
+                "UUID": "1269783738"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "709974569"
+        "UUID": "987192606"
     },
     "Dummy001": {
         "Active": "1",
@@ -1012,12 +1012,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1468481064"
+                "UUID": "686099295"
             }
         },
-        "ParentUUID": "369497568",
+        "ParentUUID": "1835696363",
         "Static": "1",
-        "UUID": "730778121"
+        "UUID": "541438166"
     },
     "Line002": {
         "Active": "1",
@@ -1025,7 +1025,7 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "line002",
-                "UUID": "1679187668"
+                "UUID": "1562316538"
             },
             "Transform": {
                 "PositionX": "-2.159772",
@@ -1037,12 +1037,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "187532961"
+                "UUID": "590278930"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "100034142"
+        "UUID": "741191233"
     },
     "Main Camera": {
         "Active": "1",
@@ -1065,12 +1065,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1415329956"
+                "UUID": "342897371"
             }
         },
-        "ParentUUID": "1102538889",
+        "ParentUUID": "155811761",
         "Static": "0",
-        "UUID": "562176711"
+        "UUID": "1089092307"
     },
     "Object010": {
         "Active": "1",
@@ -1078,7 +1078,7 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "object010",
-                "UUID": "1960100353"
+                "UUID": "203389396"
             },
             "Transform": {
                 "PositionX": "-2.503353",
@@ -1090,12 +1090,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "2046986827"
+                "UUID": "349017981"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "134360872"
+        "UUID": "503308480"
     },
     "Plane001": {
         "Active": "1",
@@ -1103,7 +1103,7 @@
             "Mesh": {
                 "DrawNormals": "0",
                 "ResourceName": "plane001",
-                "UUID": "381367308"
+                "UUID": "443409823"
             },
             "Transform": {
                 "PositionX": "-0.028603",
@@ -1115,12 +1115,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1406645669"
+                "UUID": "1181660626"
             }
         },
-        "ParentUUID": "730778121",
+        "ParentUUID": "541438166",
         "Static": "1",
-        "UUID": "467635609"
+        "UUID": "298414824"
     },
     "Sky001": {
         "Active": "1",
@@ -1135,12 +1135,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "600939475"
+                "UUID": "1439066424"
             }
         },
-        "ParentUUID": "369497568",
+        "ParentUUID": "1835696363",
         "Static": "1",
-        "UUID": "994184892"
+        "UUID": "1943554907"
     },
     "Spot001": {
         "Active": "1",
@@ -1155,12 +1155,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "955576319"
+                "UUID": "88303393"
             }
         },
-        "ParentUUID": "369497568",
+        "ParentUUID": "1835696363",
         "Static": "1",
-        "UUID": "1236788611"
+        "UUID": "1492391514"
     },
     "Spot001.Target": {
         "Active": "1",
@@ -1175,12 +1175,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "1634430688"
+                "UUID": "1058641767"
             }
         },
-        "ParentUUID": "369497568",
+        "ParentUUID": "1835696363",
         "Static": "1",
-        "UUID": "1283004686"
+        "UUID": "1672326339"
     },
     "Street environment_V01": {
         "Active": "1",
@@ -1195,12 +1195,12 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "83574315"
+                "UUID": "1969688159"
             }
         },
-        "ParentUUID": "1102538889",
+        "ParentUUID": "155811761",
         "Static": "1",
-        "UUID": "369497568"
+        "UUID": "1835696363"
     },
     "root": {
         "Active": "1",
@@ -1215,11 +1215,11 @@
                 "ScaleX": "1.000000",
                 "ScaleY": "1.000000",
                 "ScaleZ": "1.000000",
-                "UUID": "204512701"
+                "UUID": "830711584"
             }
         },
         "ParentUUID": "NONE",
         "Static": "1",
-        "UUID": "1102538889"
+        "UUID": "155811761"
     }
 }

@@ -20,7 +20,7 @@ void ComponentTexture::Save(uint obj_num, nlohmann::json &scene)
 	scene[my_GO->name]["Components"]["Texture"]["UUID"] = std::to_string(UUID);
 	scene[my_GO->name]["Components"]["Texture"]["Checkers"] = std::to_string(Checers_texture);
 	if(res_texture!=nullptr)
-		scene[my_GO->name]["Components"]["Texture"]["Resource UUID"] = std::to_string(res_texture->res_UUID); // temporal - TODO: resourceID
+		scene[my_GO->name]["Components"]["Texture"]["ResourceName"] = res_texture->exported_file; // temporal - TODO: resourceID
 }
 
 void ComponentTexture::CleanUp()

@@ -343,6 +343,21 @@ void ModuleSceneIntro::LoadScene(std::string scene_name)
 					App->scene_intro->meshes.push_back(mesh);
 
 				}
+
+				if (type.compare("Texture") == 0)
+				{
+					obj->CreateComponent(Component::ComponentType::Texture);
+					ComponentTexture* tex = obj->GetComponentTexture();
+
+					std::string comp_id = components[comp.key()]["UUID"];
+					uint mesh_id = std::stoi(comp_id);
+					tex->UUID = mesh_id;
+
+					std::string tex_name = components[comp.key()]["ResourceName"];
+					tex_name = App->GetNameFromPath(tex_name);
+					tex->res_texture = (ResourceTexture*)App->resources->Get(App->resources->IsResourceInLibrary(tex_name.c_str()));
+					tex->res_texture->UpdateNumReference();
+				}
 			}
 
 
