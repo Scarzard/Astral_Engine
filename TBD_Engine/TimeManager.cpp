@@ -18,6 +18,11 @@ update_status TimeManager::PostUpdate(float dt)
 	real_dt = App->GetDT();
 	real_time += real_dt;
 
+	if (!game_paused)
+		time = real_time - started_play_time - time_in_pause;
+	else
+		time_in_pause += real_dt;
+
 	return UPDATE_CONTINUE;
 }
 
@@ -30,6 +35,8 @@ void TimeManager::ResetGameTimer()
 {
 	time = 0.0f;
 	dt = 0.0f;
+	time_in_pause = 0.0f;
+	started_play_time = 0.0f;
 }
 
 uint TimeManager::GetFrameCount() const

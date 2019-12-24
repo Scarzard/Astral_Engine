@@ -237,7 +237,7 @@ bool Application::Play()
 			camera->active_camera = camera->obj_camera->GetComponentCamera();
 			camera->active_camera->has_transformed = true;
 			ForceEngineState(ENGINE_STATE::PLAY);
-
+			time->started_play_time = time->GetRealTimeClock();
 			//We need to save the scene 
 
 			return true;
@@ -257,10 +257,12 @@ void Application::Pause()
 	{
 	case ENGINE_STATE::PLAY:
 		ForceEngineState(ENGINE_STATE::PAUSE);
+		time->game_paused = true;
 		break;
 
 	case ENGINE_STATE::PAUSE:
 		ForceEngineState(ENGINE_STATE::PLAY);
+		time->game_paused = false;
 		break;
 	}
 }
@@ -276,8 +278,7 @@ void Application::Stop()
 
 		ForceEngineState(ENGINE_STATE::IN_EDITOR);
 
-		//Load the scene we saved just before hitting play
-
+		time->game_paused = false;
 		time->ResetGameTimer();
 
 		break;

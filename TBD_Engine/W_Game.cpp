@@ -76,8 +76,12 @@ bool W_Game::Draw()
 		}
 		if (!in_editor)
 		{
-			float showtime =+ App->GetDT();
+			float showtime = App->time->GetGameTime();
 			ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", showtime);
+		}
+		else
+		{
+			App->time->ResetGameTimer();
 		}
 
 		//

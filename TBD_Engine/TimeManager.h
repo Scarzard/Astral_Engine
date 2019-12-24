@@ -23,6 +23,10 @@ public:
 	float GetTimeScale() const;
 	float GetGameDT() const;
 
+	float started_play_time = 0.0f;
+	float time_in_pause = 0.0f;
+	bool game_paused = false;
+
 public:
 
 	float time_scale = 1.0f; 
@@ -34,6 +38,7 @@ private:
 	float real_time = 0.0f;
 	float real_dt = 0.0f; 
 
+	
 	//Game clock
 	float time = 0.0f; 
 	float dt = 0.0f; 
