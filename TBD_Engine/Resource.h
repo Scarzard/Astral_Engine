@@ -14,7 +14,9 @@ public:
 		TEXTURE,
 		MESH,
 		MODEL,
-		SCENE		
+		SCENE,
+		ANIMATION,
+		BONE
 	};
 
 	Resource(uint UUID, RES_TYPE type) : res_UUID(UUID), type(type) {}
