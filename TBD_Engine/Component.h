@@ -16,7 +16,9 @@ public:
 		Transform,
 		Mesh,
 		Texture,
-		Camera
+		Camera,
+		Animation, 
+		Bone
 	};
 
 	Component(Component::ComponentType type, GameObject* GO);
