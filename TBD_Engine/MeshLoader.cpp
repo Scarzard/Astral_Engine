@@ -8,6 +8,7 @@
 #include "ModuleResources.h"
 #include "ResourceMesh.h"
 #include "ResourceAnimation.h"
+#include "ResourceBone.h"
 #include "ModuleFileSystem.h"
 
 #include <fstream>
@@ -74,6 +75,13 @@ void MeshLoader::LoadFile(const char* full_path)
 		//Child of root node
 		App->scene_intro->root->SetChild(Empty);
 
+		if (root_node->mNumChildren > 0)
+			for (int i = 0; i < root_node->mNumChildren; ++i)
+			{
+				LoadNode(scene, root_node->mChildren[i], Empty, full_path, output_file);
+			}
+
+
 		if (scene->HasAnimations() == true)
 		{
 			for (int i = 0; i < scene->mNumAnimations; i++)
@@ -96,16 +104,9 @@ void MeshLoader::LoadFile(const char* full_path)
 
 				Empty->CreateComponent(Component::ComponentType::Animation);
 				Empty->GetComponentAnimation()->res_anim = anim;
-					
+
 			}
 		}
-
-	
-		if (root_node->mNumChildren > 0)
-			for (int i = 0; i < root_node->mNumChildren; ++i)
-			{
-				LoadNode(scene, root_node->mChildren[i], Empty, full_path, output_file);
-			}
 
 		aiReleaseImport(scene);
 		App->LogInConsole("Succesfully loaded mesh with path: %s", full_path);
@@ -238,6 +239,11 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 						memcpy(&index[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
 
+			}
+
+			if (new_mesh->HasBones())
+			{
+								
 			}
 
 			float3* face_center = nullptr;

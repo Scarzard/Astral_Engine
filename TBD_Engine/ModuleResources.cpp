@@ -9,6 +9,7 @@
 #include "ResourceTexture.h"
 #include "ResourceMesh.h"
 #include "ResourceAnimation.h"
+#include "ResourceBone.h"
 
 #include "ImGui/imgui.h"
 #include "mmgr/mmgr.h"
@@ -110,6 +111,9 @@ Resource* ModuleResources::NewResource(Resource::RES_TYPE type)
 		break;
 	case Resource::RES_TYPE::ANIMATION:
 		ret = (Resource*) new ResourceAnimation(uid);
+		break;
+	case Resource::RES_TYPE::BONE:
+		ret = (Resource*) new ResourceBone(uid);
 		break;
 
 	}
