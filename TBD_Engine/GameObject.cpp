@@ -15,6 +15,7 @@
 #include "Component_Texture.h"
 #include "Component_Camera.h"
 #include "Component_Animation.h"
+#include "Component_Bone.h"
 
 #include "mmgr/mmgr.h"
 
@@ -87,6 +88,9 @@ Component* GameObject::CreateComponent(Component::ComponentType type)
 		break;
 	case Component::ComponentType::Animation:
 		component = new ComponentAnimation(this);
+		break;
+	case Component::ComponentType::Bone:
+		component = new ComponentBone(this);
 		break;
 
 	}
@@ -165,6 +169,20 @@ ComponentAnimation * GameObject::GetComponentAnimation()
 	}
 
 	return (ComponentAnimation*)animation;
+}
+
+ComponentBone * GameObject::GetComponentBone()
+{
+	Component* bone = nullptr;
+	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
+	{
+		if ((*iterator)->type == Component::ComponentType::Bone)
+		{
+			return (ComponentBone*)*iterator;
+		}
+	}
+
+	return (ComponentBone*)bone;
 }
 
 void GameObject::Update(float dt)

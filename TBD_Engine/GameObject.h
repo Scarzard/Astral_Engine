@@ -8,6 +8,7 @@
 #include "Component_Texture.h"
 #include "Component_Camera.h"
 #include "Component_Animation.h"
+#include "Component_Bone.h"
 
 class GameObject
 {
@@ -32,6 +33,7 @@ public:
 	ComponentTexture* GetComponentTexture();
 	ComponentCamera* GetComponentCamera();
 	ComponentAnimation* GetComponentAnimation();
+	ComponentBone* GetComponentBone();
 
 	void TransformGlobal(GameObject* GO);
 

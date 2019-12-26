@@ -64,6 +64,9 @@ void MeshLoader::LoadFile(const char* full_path)
 	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr) //Load sucesful
 	{
+
+		std::vector<aiMesh*> mesh_collector;
+		std::vector<GameObject*> go_collector;
 		aiNode* root_node = scene->mRootNode;
 
 		GameObject* Empty = App->scene_intro->CreateGameObject();
@@ -78,10 +81,11 @@ void MeshLoader::LoadFile(const char* full_path)
 		if (root_node->mNumChildren > 0)
 			for (int i = 0; i < root_node->mNumChildren; ++i)
 			{
-				LoadNode(scene, root_node->mChildren[i], Empty, full_path, output_file);
+				LoadNode(scene, root_node->mChildren[i], Empty, full_path, output_file, mesh_collector, go_collector);
 			}
 
 
+		LoadBones(mesh_collector, go_collector, Empty);
 		if (scene->HasAnimations() == true)
 		{
 			for (int i = 0; i < scene->mNumAnimations; i++)
@@ -121,7 +125,7 @@ void MeshLoader::LoadFile(const char* full_path)
 
 }
 
-void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* parent, const char* full_path, std::string output_file)
+void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* parent, const char* full_path, std::string output_file, std::vector<aiMesh*>& mesh_collect, std::vector<GameObject*>& go_collect)
 {
 	aiVector3D translation, scaling;
 	aiQuaternion rotation;
@@ -132,7 +136,6 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 	float3 s2(1, 1, 1);
 	Quat rot2(rotation.x, rotation.y, rotation.z, rotation.w);
 
-	
 	std::string node_name = Node->mName.C_Str();
 
 	bool dummyFound = true;
@@ -171,7 +174,6 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 
 	parent->SetChild(obj);
 	obj->name = node_name;
-
 
 	for (int i = 0; i < Node->mNumMeshes; ++i)
 	{
@@ -243,7 +245,8 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 
 			if (new_mesh->HasBones())
 			{
-								
+				mesh_collect.push_back(new_mesh);
+				go_collect.push_back(child);
 			}
 
 			float3* face_center = nullptr;
@@ -365,8 +368,26 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 	if (Node->mNumChildren > 0)
 		for (int i = 0; i < Node->mNumChildren; ++i)
 		{
-			LoadNode(scene, Node->mChildren[i], obj, full_path, output_file);
+			LoadNode(scene, Node->mChildren[i], obj, full_path, output_file, mesh_collect, go_collect);
 		}
+}
+
+void MeshLoader::LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameObject*> go_collect, GameObject* root)
+{
+	std::map<std::string, GameObject*> go_map;
+	FillMap(go_map, root);
+
+	for (int i = 0; i < mesh_collect.size(); i++)
+	{
+		for (int j = 0; j < mesh_collect[i]->mNumBones; j++)
+		{
+			std::map<std::string, GameObject*>::iterator bone = go_map.find(mesh_collect[i]->mBones[j]->mName.C_Str());
+			if (bone != go_map.end())
+			{
+				ComponentBone* c_bone = (ComponentBone*)bone->second->CreateComponent(Component::ComponentType::Bone);
+			}
+		}
+	}
 }
 
 void MeshLoader::LoadChannel(const aiNodeAnim * AnimNode, Channel & channel)
@@ -493,6 +514,15 @@ bool MeshLoader::Load(ResourceMesh* mesh)
 		ret = true;
 	}
 	return ret;
+}
+
+void MeshLoader::FillMap(std::map<std::string, GameObject*>& map, GameObject* root)
+{
+	map[root->name.c_str()] = root;
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		FillMap(map, root->children[i]);
+	}
 }
 
 

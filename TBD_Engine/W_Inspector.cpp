@@ -183,6 +183,11 @@ bool W_Inspector::Draw()
 					ImGui::Text("Duration: %f", a->res_anim->duration);
 				}
 
+				if (selected_GO->GetComponentBone() != nullptr && ImGui::CollapsingHeader("Bones", ImGuiTreeNodeFlags_Leaf))
+				{
+					ImGui::Text("penis");
+				}
+
 				//Non hardcode inspector for camera
 				if (selected_GO->GetComponentCamera() != nullptr && ImGui::CollapsingHeader("Camera Settings", ImGuiTreeNodeFlags_Leaf) )
 				{
