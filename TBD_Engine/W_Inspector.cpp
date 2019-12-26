@@ -83,7 +83,7 @@ bool W_Inspector::Draw()
 
 			if (selected_GO->active)
 			{
-				if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentTransform() != nullptr)
+				if (selected_GO->GetComponentTransform() != nullptr && ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_Leaf) )
 				{
 					ComponentTransform* transform = selected_GO->GetComponentTransform();
 
@@ -124,7 +124,7 @@ bool W_Inspector::Draw()
 					
 				}
 
-				if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentMesh() != nullptr)
+				if (selected_GO->GetComponentMesh() != nullptr  && ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_Leaf))
 				{
 					ImGui::Text("Vertex:");
 					ImGui::SameLine(); ImGui::Text("%d", selected_GO->GetComponentMesh()->res_mesh->num_vertex);
@@ -133,7 +133,7 @@ bool W_Inspector::Draw()
 					ImGui::Checkbox("Show normals", &selected_GO->GetComponentMesh()->draw_normals);
 				}
 
-				if (ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentTexture() != nullptr)
+				if (selected_GO->GetComponentTexture() != nullptr && ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_Leaf) )
 				{
 					ComponentTexture* comp_tex = selected_GO->GetComponentTexture();
 
@@ -173,11 +173,18 @@ bool W_Inspector::Draw()
 						ImGui::Image((ImTextureID*)App->tex_loader->CheckersTexture.id, ImVec2(200, 200), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 0.5f));
 					}
 				}
-				////Hardcoded camera inspector
-				
+
+				if (selected_GO->GetComponentAnimation() != nullptr && ImGui::CollapsingHeader("Animation", ImGuiTreeNodeFlags_Leaf) )
+				{
+					ComponentAnimation* a = selected_GO->GetComponentAnimation();
+					ImGui::Text("");
+					ImGui::Text("Name: %s", a->res_anim->name.c_str());
+					ImGui::Text("");
+					ImGui::Text("Duration: %f", a->res_anim->duration);
+				}
 
 				//Non hardcode inspector for camera
-				if (ImGui::CollapsingHeader("Camera Settings", ImGuiTreeNodeFlags_Leaf) && selected_GO->GetComponentCamera() != nullptr)
+				if (selected_GO->GetComponentCamera() != nullptr && ImGui::CollapsingHeader("Camera Settings", ImGuiTreeNodeFlags_Leaf) )
 				{
 					if (ImGui::Checkbox("Toggle frustum draw", &selected_GO->GetComponentCamera()->frustum_view));
 					if (ImGui::Checkbox("Toggle frustum culling", &selected_GO->GetComponentCamera()->culling));

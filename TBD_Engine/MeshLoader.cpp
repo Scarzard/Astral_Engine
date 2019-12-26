@@ -334,10 +334,13 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 
 		if (path.C_Str() != nullptr && path.length > 0)
 		{
+			std::string name = App->GetNameFromPath(path.C_Str());
+			std::string ext = App->GetFileExtension(path.C_Str());
+
 			child->CreateComponent(Component::ComponentType::Texture);
 			std::string directory = App->GetDirectoryFromPath(full_path);
 			directory.append("/");
-			directory.append(path.C_Str());
+			directory.append(name + "." + ext);
 
 			child->GetComponentTexture()->res_texture = (ResourceTexture*)App->resources->Get(App->resources->GetNewFile(directory.c_str()));
 			if(child->GetComponentTexture()->res_texture != nullptr) 

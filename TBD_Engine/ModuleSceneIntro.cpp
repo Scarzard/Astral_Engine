@@ -60,7 +60,9 @@ bool ModuleSceneIntro::Start()
 	box.SetNegativeInfinity();
 	QuadTree = new Tree(box);
 
-	App->mesh_loader->LoadFile("Assets/FBX/Street/Street environment_V01.fbx");
+	//App->mesh_loader->LoadFile("Assets/FBX/Street/Street environment_V01.fbx");
+	App->mesh_loader->LoadFile("Assets/FBX/Skeleton/aniTest.fbx");
+
 	//App->mesh_loader->LoadFile("Assets/FBX/BakerHouse/BakerHouse.fbx");
 	return ret;
 }
