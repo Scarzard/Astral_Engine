@@ -4,7 +4,6 @@
 #include "Component.h"
 #include <vector>
 #include <map>
-#include "GameObject.h"
 #include "ResourceAnimation.h"
 
 struct AnimParameters
@@ -41,6 +40,8 @@ public:
 public:
 	std::vector<AnimParameters> animations;
 	bool playing = false;
+
+	ResourceAnimation* res_anim = nullptr;
 };
 
 #endif // __COMPONENT_ANIM_H__

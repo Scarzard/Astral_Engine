@@ -9,6 +9,13 @@
 #include <gl/GLU.h>
 #include "Color.h"
 
+#include "Component.h"
+#include "Component_Mesh.h"
+#include "Component_Transform.h"
+#include "Component_Texture.h"
+#include "Component_Camera.h"
+#include "Component_Animation.h"
+
 #include "mmgr/mmgr.h"
 
 GameObject::GameObject(std::string name)
@@ -78,6 +85,9 @@ Component* GameObject::CreateComponent(Component::ComponentType type)
 	case Component::ComponentType::Camera:
 		component = new ComponentCamera(this);
 		break;
+	case Component::ComponentType::Animation:
+		component = new ComponentAnimation(this);
+		break;
 
 	}
 
@@ -141,6 +151,20 @@ ComponentCamera * GameObject::GetComponentCamera()
 	}
 
 	return (ComponentCamera*)camera;
+}
+
+ComponentAnimation * GameObject::GetComponentAnimation()
+{
+	Component* animation = nullptr;
+	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
+	{
+		if ((*iterator)->type == Component::ComponentType::Animation)
+		{
+			return (ComponentAnimation*)*iterator;
+		}
+	}
+
+	return (ComponentAnimation*)animation;
 }
 
 void GameObject::Update(float dt)

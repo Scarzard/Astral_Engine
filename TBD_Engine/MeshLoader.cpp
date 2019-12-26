@@ -7,6 +7,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleResources.h"
 #include "ResourceMesh.h"
+#include "ResourceAnimation.h"
 #include "ModuleFileSystem.h"
 
 #include <fstream>
@@ -72,6 +73,32 @@ void MeshLoader::LoadFile(const char* full_path)
 
 		//Child of root node
 		App->scene_intro->root->SetChild(Empty);
+
+		if (scene->HasAnimations() == true)
+		{
+			for (int i = 0; i < scene->mNumAnimations; i++)
+			{
+				// Not checking if it is on memory
+
+				ResourceAnimation* anim = (ResourceAnimation*)App->resources->NewResource(Resource::RES_TYPE::ANIMATION);
+
+				anim->name = scene->mAnimations[i]->mName.C_Str();
+				anim->duration = scene->mAnimations[i]->mDuration;
+				anim->ticksPerSecond = scene->mAnimations[i]->mTicksPerSecond;
+				anim->file = full_path;
+
+				anim->numChannels = scene->mAnimations[i]->mNumChannels;
+				anim->channels = new Channel[anim->numChannels];
+				for (int j = 0; j < scene->mAnimations[i]->mNumChannels; j++)
+				{
+					LoadChannel(scene->mAnimations[i]->mChannels[j], anim->channels[j]);
+				}
+
+				Empty->CreateComponent(Component::ComponentType::Animation);
+				Empty->GetComponentAnimation()->res_anim = anim;
+					
+			}
+		}
 
 	
 		if (root_node->mNumChildren > 0)
@@ -313,7 +340,8 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 			directory.append(path.C_Str());
 
 			child->GetComponentTexture()->res_texture = (ResourceTexture*)App->resources->Get(App->resources->GetNewFile(directory.c_str()));
-			child->GetComponentTexture()->res_texture->UpdateNumReference();
+			if(child->GetComponentTexture()->res_texture != nullptr) 
+				child->GetComponentTexture()->res_texture->UpdateNumReference();
 		}
 		
 		//Initiate bounding box when creating our mesh
@@ -330,6 +358,21 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 		{
 			LoadNode(scene, Node->mChildren[i], obj, full_path, output_file);
 		}
+}
+
+void MeshLoader::LoadChannel(const aiNodeAnim * AnimNode, Channel & channel)
+{
+	for (uint i = 0; i < AnimNode->mNumPositionKeys; i++)
+		channel.PositionKeys[AnimNode->mPositionKeys[i].mTime] = float3(AnimNode->mPositionKeys[i].mValue.x, AnimNode->mPositionKeys[i].mValue.y, AnimNode->mPositionKeys[i].mValue.z);
+
+	for (uint i = 0; i < AnimNode->mNumRotationKeys; i++)
+		channel.RotationKeys[AnimNode->mRotationKeys[i].mTime] = Quat(AnimNode->mRotationKeys[i].mValue.x, AnimNode->mRotationKeys[i].mValue.y, AnimNode->mRotationKeys[i].mValue.z, AnimNode->mRotationKeys[i].mValue.w);
+
+	for (uint i = 0; i < AnimNode->mNumScalingKeys; i++)
+		channel.ScaleKeys[AnimNode->mScalingKeys[i].mTime] = float3(AnimNode->mScalingKeys[i].mValue.x, AnimNode->mScalingKeys[i].mValue.y, AnimNode->mScalingKeys[i].mValue.z);
+
+	channel.name = AnimNode->mNodeName.C_Str();
+	App->eraseSubStr(channel.name, "_$AssimpFbx$_");
 }
 
 bool MeshLoader::Export(const char * name, std::string & output_file, uint num_index, uint* index, uint num_vertex, float3* vertex, uint num_normals, float3* face_center, float3* face_normal, uint num_tex_coords, float* tex_coords) // Create .mesh own file format

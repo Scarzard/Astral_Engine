@@ -34,6 +34,9 @@ public:
 	ResourceAnimation(uint uuid) : Resource(uuid, RES_TYPE::ANIMATION) {}
 
 	virtual ~ResourceAnimation() {}
+
+	bool LoadInMemory() { return true; }
+	void ReleaseMemory() {}
 	
 	std::string name;
 
