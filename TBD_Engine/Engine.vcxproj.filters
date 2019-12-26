@@ -429,9 +429,6 @@
     <ClInclude Include="ResourceBone.h">
       <Filter>Sources\Modules\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationLoader.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -670,9 +667,6 @@
     </ClCompile>
     <ClCompile Include="Component_Animation.cpp">
       <Filter>Sources\Modules\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationLoader.cpp">
-      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
