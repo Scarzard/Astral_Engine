@@ -27,6 +27,8 @@ void ComponentAnimation::Update(float dt)
 		UpdateJointsTransform(dt);
 	else
 		time = 0;
+
+	UpdateMesh(my_GO);
 }
 
 void ComponentAnimation::DoLink()
@@ -112,5 +114,20 @@ void ComponentAnimation::UpdateJointsTransform(float dt)
 		
 		
 
+	}
+}
+
+void ComponentAnimation::UpdateMesh(GameObject* go)
+{
+	ComponentMesh* tmp = go->GetComponentMesh();
+
+	if (tmp != nullptr)
+	{
+		tmp->AttachSkeleton(go);
+		tmp->UpdateMesh();
+	}
+	for (int i = 0; i < go->children.size(); i++)
+	{
+		UpdateMesh(go->children[i]);
 	}
 }

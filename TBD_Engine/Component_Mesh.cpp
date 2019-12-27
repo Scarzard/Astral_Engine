@@ -3,6 +3,8 @@
 #include "Color.h"
 #include "Component_Transform.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleResources.h"
+
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
@@ -25,6 +27,66 @@ void ComponentMesh::Save(uint obj_num, nlohmann::json &scene)
 	scene[my_GO->name]["Components"]["Mesh"]["UUID"] = std::to_string(UUID);
 	scene[my_GO->name]["Components"]["Mesh"]["DrawNormals"] = std::to_string(draw_normals);
 	scene[my_GO->name]["Components"]["Mesh"]["ResourceName"] = App->GetNameFromPath(res_mesh->exported_file);
+}
+
+void ComponentMesh::AttachSkeleton(GameObject* go)
+{
+	tmp_id = go->id;
+
+	deformable_mesh = (ResourceMesh*)App->resources->NewResource(Resource::RES_TYPE::MESH);
+	AttachBone(go);
+}
+
+void ComponentMesh::AttachSkeleton()
+{
+	for (int i = 0; i < my_GO->children.size(); i++)
+	{
+		AttachSkeleton(my_GO);
+	}
+}
+
+void ComponentMesh::AttachBone(GameObject* go)
+{
+	ComponentBone* tmp = go->GetComponentBone();
+
+	if (tmp != nullptr)
+		bones.push_back(tmp);
+
+	for(int i = 0; i < my_GO->children.size(); i++)
+	{
+		AttachBone(go);
+	}
+}
+
+void ComponentMesh::UpdateMesh()
+{
+	for (std::vector<ComponentBone*>::iterator it = bones.begin(); it != bones.end(); ++it)
+	{
+		ResourceBone* rBone = (ResourceBone*)(*it)->GetType();
+
+		float4x4 mat = (*it)->my_GO->GetComponentTransform()->GetTransform();
+		mat = my_GO->GetComponentTransform()->GetTransform().Inverted() * mat;
+		mat = mat * rBone->matrix;
+
+		for (uint i = 0; i < rBone->NumWeights; i++)
+		{
+			uint index = rBone->index_weight[i];
+			float3 tmp = res_mesh->vertex[index];
+			float3 extra = mat.TransformPos(tmp);
+
+			deformable_mesh->vertex[index].x += extra.x * rBone->index_weight[i];
+			deformable_mesh->vertex[index].y += extra.y * rBone->index_weight[i];
+			deformable_mesh->vertex[index].z += extra.z * rBone->index_weight[i];
+
+			if (res_mesh->num_normals > 0)
+			{
+				extra = mat.TransformPos(res_mesh->face_normal[index]);
+				deformable_mesh->face_normal[index].x += extra.x * rBone->index_weight[i];
+				deformable_mesh->face_normal[index].y += extra.y * rBone->index_weight[i];
+				deformable_mesh->face_normal[index].z += extra.z * rBone->index_weight[i];
+			}
+		}
+	}
 }
 
 const AABB& ComponentMesh::GetBoundingBox()

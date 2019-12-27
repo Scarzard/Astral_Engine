@@ -8,6 +8,8 @@
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 
+class ComponentBone;
+
 class ComponentMesh : public Component
 {
 public:
@@ -25,7 +27,13 @@ public:
 	// Load & Save 
 	//void Load(uint obj_num, const nlohmann::json &scene_file);
 	void Save(uint obj_num, nlohmann::json &scene_file);
-	
+
+	void AttachSkeleton(GameObject* go);
+	void AttachSkeleton();
+
+	void AttachBone(GameObject* go);
+	void UpdateMesh();
+
 //mesh
 public:
 	//bounding box
@@ -34,6 +42,11 @@ public:
 
 	bool draw_normals = false;
 	ResourceMesh* res_mesh = nullptr;
+	ResourceMesh* deformable_mesh = nullptr;
+
+	std::vector<ComponentBone*> bones;
+
+	uint tmp_id = 0;
 };
 
 #endif

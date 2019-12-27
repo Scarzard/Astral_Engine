@@ -50,6 +50,7 @@ private:
 
 	void DoLink();
 	void UpdateJointsTransform(float dt);
+	void UpdateMesh(GameObject* go);
 
 	std::vector<Link> links;
 	bool linked_channels = false;

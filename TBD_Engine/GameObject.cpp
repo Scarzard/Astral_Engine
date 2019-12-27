@@ -225,6 +225,8 @@ void GameObject::Update(float dt)
 		ComponentMesh* mesh = this->GetComponentMesh();
 		if (mesh != nullptr)
 			mesh->UpdateGlobalAABB();
+		/*if (mesh->deformable_mesh != nullptr)
+			mesh->UpdateMesh();*/
 	}
 
 	//Game Object iterative update
