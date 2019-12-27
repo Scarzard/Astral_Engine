@@ -177,10 +177,16 @@ bool W_Inspector::Draw()
 				if (selected_GO->GetComponentAnimation() != nullptr && ImGui::CollapsingHeader("Animation", ImGuiTreeNodeFlags_Leaf) )
 				{
 					ComponentAnimation* a = selected_GO->GetComponentAnimation();
-					ImGui::Text("");
-					ImGui::Text("Name: %s", a->res_anim->name.c_str());
-					ImGui::Text("");
-					ImGui::Text("Duration: %f", a->res_anim->duration);
+
+					for (int i = 0; i < a->animations.size(); i++)
+					{
+						ImGui::Separator();
+						ImGui::Text("Name: %s", a->animations[i]->name.c_str());
+						ImGui::Text("Duration: %f", (a->animations[i]->end - a->animations[i]->start)/a->res_anim->ticksPerSecond);
+						ImGui::Separator();
+					}
+
+					
 				}
 
 				if (selected_GO->GetComponentBone() != nullptr && ImGui::CollapsingHeader("Bones", ImGuiTreeNodeFlags_Leaf))

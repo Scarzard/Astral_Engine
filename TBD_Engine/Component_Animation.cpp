@@ -3,11 +3,6 @@
 #include "W_Game.h"
 #include "GameObject.h"
 
-float Animation::GetDuration()
-{
-	return ((float)end - (float)start) / ticksPerSecond;
-}
-
 ComponentAnimation::ComponentAnimation(GameObject* gameobj) : Component(Component::ComponentType::Animation, gameobj)
 {
 
@@ -15,13 +10,30 @@ ComponentAnimation::ComponentAnimation(GameObject* gameobj) : Component(Componen
 
 ComponentAnimation::~ComponentAnimation()
 {
+	for (int i = 0; i < animations.size(); i++)
+	{
+		delete animations[i];
+	}
 
+	animations.clear();
+}
+
+void ComponentAnimation::CreateAnimation(std::string name, uint start, uint end, bool loop)
+{
+	Animation* anim = new Animation(name, start, end, loop);
+	animations.push_back(anim);
 }
 
 void ComponentAnimation::Update(float dt)
 {
 	if (linked_channels == false)
+	{
 		DoLink();
+		CreateAnimation("Idle", 0, 49, true);
+		CreateAnimation("Run", 50, 72, true);
+		CreateAnimation("Punch", 73, 138, false);
+	}
+		
 
 	if (!App->gui->game_window->in_editor)
 		UpdateJointsTransform(dt);
@@ -62,7 +74,7 @@ void ComponentAnimation::UpdateJointsTransform(float dt)
 	for (int i = 0; i < links.size(); i++)
 	{
 		ComponentTransform* trans = links[i].gameObject->GetComponentTransform();
-		float duration_sec = res_anim->duration / res_anim->ticksPerSecond;
+		float duration_sec = GetDuration();
 
 		// ----------------------- Frame count managment -----------------------------------
 		if (App->time->GetGameTime() > duration_sec)

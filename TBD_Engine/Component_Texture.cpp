@@ -28,5 +28,7 @@ void ComponentTexture::CleanUp()
 	if (res_texture != nullptr)
 	{
 		res_texture->loaded -= 1;
+		if (res_texture->loaded == 0)
+			res_texture->ReleaseMemory();
 	}
 }
