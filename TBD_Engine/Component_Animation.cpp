@@ -1,5 +1,6 @@
 #include "Component_Animation.h"
 #include "Application.h"
+#include "ModuleInput.h"
 #include "W_Game.h"
 #include "GameObject.h"
 
@@ -18,10 +19,12 @@ ComponentAnimation::~ComponentAnimation()
 	animations.clear();
 }
 
-void ComponentAnimation::CreateAnimation(std::string name, uint start, uint end, bool loop)
+Animation* ComponentAnimation::CreateAnimation(std::string name, uint start, uint end, bool loop)
 {
 	Animation* anim = new Animation(name, start, end, loop);
 	animations.push_back(anim);
+
+	return anim;
 }
 
 void ComponentAnimation::Update(float dt)
@@ -29,14 +32,24 @@ void ComponentAnimation::Update(float dt)
 	if (linked_channels == false)
 	{
 		DoLink();
-		CreateAnimation("Idle", 0, 49, true);
+		playing_animation = CreateAnimation("Idle", 0, 49, true);
 		CreateAnimation("Run", 50, 72, true);
 		CreateAnimation("Punch", 73, 138, false);
 	}
 		
 
-	if (!App->gui->game_window->in_editor)
+	if (!App->gui->game_window->in_editor && !App->time->game_paused)
+	{
+		
+		time += App->GetDT();
 		UpdateJointsTransform(dt);
+
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			playing_animation = animations[2];
+			time = 0;
+		}
+	}
 	else
 		time = 0;
 }
@@ -74,22 +87,15 @@ void ComponentAnimation::UpdateJointsTransform(float dt)
 	for (int i = 0; i < links.size(); i++)
 	{
 		ComponentTransform* trans = links[i].gameObject->GetComponentTransform();
-		float duration_sec = GetDuration();
+		float duration_sec = (playing_animation->end - playing_animation->start)/res_anim->ticksPerSecond;
 
 		// ----------------------- Frame count managment -----------------------------------
-		if (App->time->GetGameTime() > duration_sec)
-		{
-			time = App->time->GetGameTime() - duration_sec * loop_times;
-		}
-		else
-		{
-			time = App->time->GetGameTime();
-		}
-		uint Frame = time * res_anim->ticksPerSecond;
+		
+		uint Frame = playing_animation->start + time * res_anim->ticksPerSecond;
 
-		if (Frame == res_anim->duration)
+		if (playing_animation->loop && Frame == (playing_animation->end - playing_animation->start))
 		{
-			loop_times++;
+			time = 0;
 		}
 		//-------------------------------------------------------------------------------------
 

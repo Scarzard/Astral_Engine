@@ -41,7 +41,7 @@ public:
 
 private:
 
-	void CreateAnimation(std::string name, uint start, uint end, bool loop);
+	Animation* CreateAnimation(std::string name, uint start, uint end, bool loop);
 	void DoLink();
 	void UpdateJointsTransform(float dt);
 
