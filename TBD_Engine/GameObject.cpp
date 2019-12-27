@@ -210,6 +210,10 @@ void GameObject::Update(float dt)
 			if(camera->frustum_view && App->gui->game_window->in_editor && App->gui->ins_window->selected_GO == App->camera->obj_camera)
 				camera->DrawFrustum();
 		}
+		if (this->GetComponentBone() != nullptr)
+		{
+			this->GetComponentBone()->DebugDrawBones();
+		}
 		
 		ComponentMesh* mesh = this->GetComponentMesh();
 		if (mesh != nullptr)

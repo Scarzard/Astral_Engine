@@ -12,14 +12,18 @@ class GameObject;
 class aiMesh;
 class aiNode;
 class aiScene;
+class aiBone;
 class aiNodeAnim;
 class Importer;
 class ResourceMesh;
+class ResourceBone;
 class Channel;
 
 class MeshLoader : public Module
 {
 public:
+	ALIGN_CLASS_TO_16
+
 	MeshLoader(bool start_enabled = true);
 	~MeshLoader();
 
@@ -39,8 +43,9 @@ public:
 	bool Load(ResourceMesh* mesh);
 
 	void FillMap(std::map<std::string, GameObject*>& map, GameObject* root);
+	void LoadBoneData(const aiBone* bone, ResourceBone* res_bone, uint mesh_id);
 
 };
 
 
-#endif //__MESHLOADER_H__ 
+#endif //!__MESHLOADER_H__ 

@@ -381,10 +381,13 @@ void MeshLoader::LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameOb
 	{
 		for (int j = 0; j < mesh_collect[i]->mNumBones; j++)
 		{
+			ResourceBone* rBone = (ResourceBone*)App->resources->NewResource(Resource::BONE);
+			LoadBoneData(mesh_collect[i]->mBones[j], rBone, go_collect[i]->GetComponentMesh()->res_mesh->GetUUID());
 			std::map<std::string, GameObject*>::iterator bone = go_map.find(mesh_collect[i]->mBones[j]->mName.C_Str());
 			if (bone != go_map.end())
 			{
 				ComponentBone* c_bone = (ComponentBone*)bone->second->CreateComponent(Component::ComponentType::Bone);
+				c_bone->res_bone = rBone;
 			}
 		}
 	}
@@ -523,6 +526,25 @@ void MeshLoader::FillMap(std::map<std::string, GameObject*>& map, GameObject* ro
 	{
 		FillMap(map, root->children[i]);
 	}
+}
+
+void MeshLoader::LoadBoneData(const aiBone* bone, ResourceBone* res_bone, uint mesh_id)
+{
+	res_bone->meshID = mesh_id;
+	res_bone->NumWeights = bone->mNumWeights;
+	res_bone->weight = new float[res_bone->NumWeights];
+	res_bone->index_weight = new uint[res_bone->NumWeights];
+	for (int i = 0; i < res_bone->NumWeights; i++)
+	{
+		res_bone->weight[i] = bone->mWeights[i].mWeight;
+		res_bone->index_weight[i] = bone->mWeights[i].mVertexId;
+	}
+
+	res_bone->matrix = float4x4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.a2, bone->mOffsetMatrix.a3, bone->mOffsetMatrix.a4,
+							   bone->mOffsetMatrix.b1, bone->mOffsetMatrix.b2, bone->mOffsetMatrix.b3, bone->mOffsetMatrix.b4,
+							   bone->mOffsetMatrix.c1, bone->mOffsetMatrix.c2, bone->mOffsetMatrix.c3, bone->mOffsetMatrix.c4,
+							   bone->mOffsetMatrix.d1, bone->mOffsetMatrix.d2, bone->mOffsetMatrix.d3, bone->mOffsetMatrix.d4);
+
 }
 
 

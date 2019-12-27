@@ -2,6 +2,7 @@
 #define __COMPONENT_BONE_H__
 
 #include "Component.h"
+#include "ResourceBone.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 
 class GameObject;
@@ -12,9 +13,12 @@ public:
 	ComponentBone(GameObject* gameObject = nullptr);
 	~ComponentBone();
 
+	void DebugDrawBones();
+
 	float4x4 GetBoneTransform();
 	ComponentBone* GetParentBone();
 
+	ResourceBone* res_bone;
 	ComponentType GetType() { return ComponentType::Bone; };
 };
 

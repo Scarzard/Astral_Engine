@@ -185,7 +185,11 @@ bool W_Inspector::Draw()
 
 				if (selected_GO->GetComponentBone() != nullptr && ImGui::CollapsingHeader("Bones", ImGuiTreeNodeFlags_Leaf))
 				{
-					ImGui::Text("penis");
+					ComponentBone* b = selected_GO->GetComponentBone();
+					
+					ImGui::Text("MeshID: %u", b->res_bone->meshID);
+					ImGui::Text("");
+					ImGui::Text("Number of weights: %u", b->res_bone->NumWeights);
 				}
 
 				//Non hardcode inspector for camera

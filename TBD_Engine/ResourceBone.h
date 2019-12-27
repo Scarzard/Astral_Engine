@@ -8,6 +8,8 @@
 class ResourceBone : public Resource
 {
 public:
+	ALIGN_CLASS_TO_16
+
 	ResourceBone(uint uuid) : Resource(uuid, RES_TYPE::BONE) {}
 	~ResourceBone() {}
 
