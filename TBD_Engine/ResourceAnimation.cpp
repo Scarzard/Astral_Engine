@@ -1,6 +1,6 @@
 #include "ResourceAnimation.h"
 
-bool Channel::ActivePK() const
+bool Channel::PosHasKey() const
 {
 	return ((PositionKeys.size() == 1 && PositionKeys.begin()->first == -1) == false);
 }
@@ -19,7 +19,7 @@ std::map<double, float3>::iterator Channel::NextPosition(double current)
 	return PositionKeys.upper_bound(current);
 }
 
-bool Channel::ActiveRK() const
+bool Channel::RotHasKey() const
 {
 	return ((RotationKeys.size() == 1 && RotationKeys.begin()->first == -1) == false);
 }
@@ -37,7 +37,7 @@ std::map<double, Quat>::iterator Channel::NextRotation(double current)
 	return RotationKeys.upper_bound(current);
 }
 
-bool Channel::ActiveSK() const
+bool Channel::ScaleHasKey() const
 {
 	return ((ScaleKeys.size() == 1 && ScaleKeys.begin()->first == -1) == false);
 }

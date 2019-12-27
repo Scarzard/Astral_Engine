@@ -372,41 +372,7 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 		}
 }
 
-void MeshLoader::LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameObject*> go_collect, GameObject* root)
-{
-	std::map<std::string, GameObject*> go_map;
-	FillMap(go_map, root);
 
-	for (int i = 0; i < mesh_collect.size(); i++)
-	{
-		for (int j = 0; j < mesh_collect[i]->mNumBones; j++)
-		{
-			ResourceBone* rBone = (ResourceBone*)App->resources->NewResource(Resource::BONE);
-			LoadBoneData(mesh_collect[i]->mBones[j], rBone, go_collect[i]->GetComponentMesh()->res_mesh->GetUUID());
-			std::map<std::string, GameObject*>::iterator bone = go_map.find(mesh_collect[i]->mBones[j]->mName.C_Str());
-			if (bone != go_map.end())
-			{
-				ComponentBone* c_bone = (ComponentBone*)bone->second->CreateComponent(Component::ComponentType::Bone);
-				c_bone->res_bone = rBone;
-			}
-		}
-	}
-}
-
-void MeshLoader::LoadChannel(const aiNodeAnim * AnimNode, Channel & channel)
-{
-	for (uint i = 0; i < AnimNode->mNumPositionKeys; i++)
-		channel.PositionKeys[AnimNode->mPositionKeys[i].mTime] = float3(AnimNode->mPositionKeys[i].mValue.x, AnimNode->mPositionKeys[i].mValue.y, AnimNode->mPositionKeys[i].mValue.z);
-
-	for (uint i = 0; i < AnimNode->mNumRotationKeys; i++)
-		channel.RotationKeys[AnimNode->mRotationKeys[i].mTime] = Quat(AnimNode->mRotationKeys[i].mValue.x, AnimNode->mRotationKeys[i].mValue.y, AnimNode->mRotationKeys[i].mValue.z, AnimNode->mRotationKeys[i].mValue.w);
-
-	for (uint i = 0; i < AnimNode->mNumScalingKeys; i++)
-		channel.ScaleKeys[AnimNode->mScalingKeys[i].mTime] = float3(AnimNode->mScalingKeys[i].mValue.x, AnimNode->mScalingKeys[i].mValue.y, AnimNode->mScalingKeys[i].mValue.z);
-
-	channel.name = AnimNode->mNodeName.C_Str();
-	App->eraseSubStr(channel.name, "_$AssimpFbx$_");
-}
 
 bool MeshLoader::Export(const char * name, std::string & output_file, uint num_index, uint* index, uint num_vertex, float3* vertex, uint num_normals, float3* face_center, float3* face_normal, uint num_tex_coords, float* tex_coords) // Create .mesh own file format
 {
@@ -545,6 +511,42 @@ void MeshLoader::LoadBoneData(const aiBone* bone, ResourceBone* res_bone, uint m
 							   bone->mOffsetMatrix.c1, bone->mOffsetMatrix.c2, bone->mOffsetMatrix.c3, bone->mOffsetMatrix.c4,
 							   bone->mOffsetMatrix.d1, bone->mOffsetMatrix.d2, bone->mOffsetMatrix.d3, bone->mOffsetMatrix.d4);
 
+}
+
+void MeshLoader::LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameObject*> go_collect, GameObject* root)
+{
+	std::map<std::string, GameObject*> go_map;
+	FillMap(go_map, root);
+
+	for (int i = 0; i < mesh_collect.size(); i++)
+	{
+		for (int j = 0; j < mesh_collect[i]->mNumBones; j++)
+		{
+			ResourceBone* rBone = (ResourceBone*)App->resources->NewResource(Resource::BONE);
+			LoadBoneData(mesh_collect[i]->mBones[j], rBone, go_collect[i]->GetComponentMesh()->res_mesh->GetUUID());
+			std::map<std::string, GameObject*>::iterator bone = go_map.find(mesh_collect[i]->mBones[j]->mName.C_Str());
+			if (bone != go_map.end())
+			{
+				ComponentBone* c_bone = (ComponentBone*)bone->second->CreateComponent(Component::ComponentType::Bone);
+				c_bone->res_bone = rBone;
+			}
+		}
+	}
+}
+
+void MeshLoader::LoadChannel(const aiNodeAnim * AnimNode, Channel & channel)
+{
+	for (uint i = 0; i < AnimNode->mNumPositionKeys; i++)
+		channel.PositionKeys[AnimNode->mPositionKeys[i].mTime] = float3(AnimNode->mPositionKeys[i].mValue.x, AnimNode->mPositionKeys[i].mValue.y, AnimNode->mPositionKeys[i].mValue.z);
+
+	for (uint i = 0; i < AnimNode->mNumRotationKeys; i++)
+		channel.RotationKeys[AnimNode->mRotationKeys[i].mTime] = Quat(AnimNode->mRotationKeys[i].mValue.x, AnimNode->mRotationKeys[i].mValue.y, AnimNode->mRotationKeys[i].mValue.z, AnimNode->mRotationKeys[i].mValue.w);
+
+	for (uint i = 0; i < AnimNode->mNumScalingKeys; i++)
+		channel.ScaleKeys[AnimNode->mScalingKeys[i].mTime] = float3(AnimNode->mScalingKeys[i].mValue.x, AnimNode->mScalingKeys[i].mValue.y, AnimNode->mScalingKeys[i].mValue.z);
+
+	channel.name = AnimNode->mNodeName.C_Str();
+	App->eraseSubStr(channel.name, "_$AssimpFbx$_");
 }
 
 

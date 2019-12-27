@@ -24,7 +24,7 @@ struct AnimParameters
 
 class ComponentAnimation : public Component
 {
-	struct Link
+	struct Link //Stores a bone(gameobject) with his corresponding channel of the animation
 	{
 		Link(GameObject* gameObject, Channel* channel) : gameObject(gameObject), channel(channel) {};
 		GameObject* gameObject;
@@ -38,10 +38,21 @@ public:
 	void Update(float dt);
 
 public:
+
 	std::vector<AnimParameters> animations;
+	
+
 	bool playing = false;
 
 	ResourceAnimation* res_anim = nullptr;
+
+private:
+
+	void DoLink();
+	void UpdateJointsTransform();
+
+	std::vector<Link> links;
+	bool linked_channels = false;
 };
 
 #endif // __COMPONENT_ANIM_H__

@@ -204,15 +204,22 @@ void GameObject::Update(float dt)
 				camera->UpdateTransform();
 			}
 		}
+
 		if (this->GetComponentCamera() != nullptr)
 		{
 			ComponentCamera* camera = this->GetComponentCamera();
 			if(camera->frustum_view && App->gui->game_window->in_editor && App->gui->ins_window->selected_GO == App->camera->obj_camera)
 				camera->DrawFrustum();
 		}
+
 		if (this->GetComponentBone() != nullptr)
 		{
 			this->GetComponentBone()->DebugDrawBones();
+		}
+
+		if (this->GetComponentAnimation() != nullptr)
+		{
+			this->GetComponentAnimation()->Update(dt);
 		}
 		
 		ComponentMesh* mesh = this->GetComponentMesh();
@@ -333,4 +340,11 @@ void GameObject::TransformGlobal(GameObject* GO)
 		TransformGlobal(*tmp);
 	}
 	
+}
+
+void GameObject::GetAllChilds(std::vector<GameObject*>& collector)
+{
+	collector.push_back(this);
+	for (uint i = 0; i < children.size(); i++)
+		children[i]->GetAllChilds(collector);
 }

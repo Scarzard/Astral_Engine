@@ -79,6 +79,13 @@ void ComponentTransform::SetEulerRotation(float3 rot)
 	UpdateLocalTransform();
 }
 
+void ComponentTransform::SetQuatRotation(Quat rotation)
+{
+	rotation_quat = rotation;
+	UpdateEuler();
+	UpdateLocalTransform();
+}
+
 void ComponentTransform::SetScale(float3& scale)
 {
 	if (scale.x > 0.0f && scale.y > 0.0f && scale.z > 0.0f)
@@ -130,5 +137,11 @@ void ComponentTransform::UpdateTRS()
 {
 	local_matrix.Decompose(position, rotation_quat, scale);
 	rotation_euler = rotation_quat.ToEulerXYZ() * RADTODEG;
+}
+
+void ComponentTransform::UpdateEuler()
+{
+	rotation_euler = rotation_quat.ToEulerXYZ();
+	rotation_euler *= RADTODEG;
 }
 

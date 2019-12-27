@@ -40,6 +40,7 @@ public:
 	void DeleteGO(GameObject* GO, bool original);
 	void SetChild(GameObject* GO);
 	void RemoveChild(GameObject* GO);
+	void GetAllChilds(std::vector<GameObject*>& vector);
 
 public:
 

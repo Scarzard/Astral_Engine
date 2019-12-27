@@ -9,19 +9,19 @@ struct Channel
 	std::string name;
 
 	//Position
-	bool ActivePK() const;
+	bool PosHasKey() const;
 	std::map<double, float3> PositionKeys;
 	std::map<double, float3>::iterator PrevPosition(double current);
 	std::map<double, float3>::iterator NextPosition(double current);
 
 	//Rotation
-	bool ActiveRK() const;
+	bool RotHasKey() const;
 	std::map<double, Quat> RotationKeys;
 	std::map<double, Quat>::iterator PrevRotation(double current);
 	std::map<double, Quat>::iterator NextRotation(double current);
 
 	//Scale
-	bool ActiveSK() const;
+	bool ScaleHasKey() const;
 	std::map<double, float3> ScaleKeys;
 	std::map<double, float3>::iterator PrevScale(double current);
 	std::map<double, float3>::iterator NextScale(double current);

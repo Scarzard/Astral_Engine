@@ -31,6 +31,7 @@ public:
 	//Transform setters
 	void SetPosition(float3& position);
 	void SetEulerRotation(float3 rot);
+	void SetQuatRotation(Quat rot);
 	void SetScale(float3& scale);
 	void SetGlobalTransform(float4x4 transform);
 	void TransformGlobalMat(const float4x4& global);
@@ -39,6 +40,7 @@ public:
 
 	void UpdateLocalTransform();
 	void UpdateTRS();
+	void UpdateEuler();
 
 public:
 	float4x4 local_matrix = float4x4::identity;
