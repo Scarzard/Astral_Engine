@@ -6,7 +6,7 @@
 #include <map>
 #include "ResourceAnimation.h"
 
-struct AnimParameters
+struct Animation
 {
 	std::string name;
 
@@ -39,7 +39,7 @@ public:
 
 public:
 
-	std::vector<AnimParameters> animations;
+	std::vector<Animation> animations;
 	
 
 	bool playing = false;

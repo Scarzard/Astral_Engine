@@ -3,7 +3,7 @@
 #include "W_Game.h"
 #include "GameObject.h"
 
-float AnimParameters::GetDuration()
+float Animation::GetDuration()
 {
 	return ((float)end - (float)start) / ticksPerSecond;
 }

@@ -101,6 +101,9 @@ bool Application::Init()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
+	frame_count++;
+	new_sec_FrameCount++;
+
 	dt = (float)frame_time.ReadSec();
 	frame_time.Start();
 
