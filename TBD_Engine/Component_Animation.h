@@ -49,10 +49,13 @@ public:
 private:
 
 	void DoLink();
-	void UpdateJointsTransform();
+	void UpdateJointsTransform(float dt);
 
 	std::vector<Link> links;
 	bool linked_channels = false;
+
+	uint loop_times = 0;
+	float time = 0;
 };
 
 #endif // __COMPONENT_ANIM_H__

@@ -41,8 +41,7 @@ void ComponentBone::DebugDrawBones()
 
 float4x4 ComponentBone::GetBoneTransform()
 {
-	float4x4 tmp = my_GO->GetComponentTransform()->GetGlobalTransform();
-	return GetParentBone()->my_GO->parent->parent->GetComponentTransform()->GetGlobalTransform().Inverted() * tmp;
+	return my_GO->GetComponentTransform()->GetGlobalTransform();
 }
 
 ComponentBone* ComponentBone::GetParentBone()

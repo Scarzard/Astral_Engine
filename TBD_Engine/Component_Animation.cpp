@@ -23,8 +23,10 @@ void ComponentAnimation::Update(float dt)
 	if (linked_channels == false)
 		DoLink();
 
-	if(!App->gui->game_window->in_editor)
-		UpdateJointsTransform();
+	if (!App->gui->game_window->in_editor)
+		UpdateJointsTransform(dt);
+	else
+		time = 0;
 }
 
 void ComponentAnimation::DoLink()
@@ -55,12 +57,27 @@ void ComponentAnimation::DoLink()
 	}
 }
 
-void ComponentAnimation::UpdateJointsTransform()
+void ComponentAnimation::UpdateJointsTransform(float dt)
 {
 	for (int i = 0; i < links.size(); i++)
 	{
 		ComponentTransform* trans = links[i].gameObject->GetComponentTransform();
-		uint Frame = App->time->GetGameTime() * res_anim->ticksPerSecond;
+		float duration_sec = res_anim->duration / res_anim->ticksPerSecond;
+
+		if (App->time->GetGameTime() > duration_sec)
+		{
+			time = App->time->GetGameTime() - duration_sec * loop_times;
+		}
+		else
+		{
+			time = App->time->GetGameTime();
+		}
+		uint Frame = time * res_anim->ticksPerSecond;
+
+		if (Frame == res_anim->duration)
+		{
+			loop_times++;
+		}
 		
 		float3 position = trans->GetPosition();
 		if (links[i].channel->PosHasKey())
@@ -93,5 +110,7 @@ void ComponentAnimation::UpdateJointsTransform()
 		}
 		trans->SetScale(scale);
 		
+		
+
 	}
 }
