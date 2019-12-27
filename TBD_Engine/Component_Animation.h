@@ -6,6 +6,9 @@
 #include <map>
 #include "ResourceAnimation.h"
 
+class ComponentMesh;
+class ComponentBone;
+
 struct Animation
 {
 	std::string name;
@@ -49,11 +52,15 @@ public:
 private:
 
 	void DoLink();
+	void DoBoneLink();
 	void UpdateJointsTransform(float dt);
 	void UpdateMesh(GameObject* go);
 
+	void GetAllBones(GameObject* go, std::map<uint, ComponentMesh*>& meshes, std::vector<ComponentBone*>& bones);
+
 	std::vector<Link> links;
 	bool linked_channels = false;
+	bool linked_bones = false;
 
 	uint loop_times = 0;
 	float time = 0;

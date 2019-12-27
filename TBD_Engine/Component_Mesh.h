@@ -28,11 +28,8 @@ public:
 	//void Load(uint obj_num, const nlohmann::json &scene_file);
 	void Save(uint obj_num, nlohmann::json &scene_file);
 
-	void AttachSkeleton(GameObject* go);
-	void AttachSkeleton();
-
-	void AttachBone(GameObject* go);
-	void UpdateMesh();
+	void AddBone(ComponentBone* bone);
+	void UpdateDefMesh();
 
 //mesh
 public:

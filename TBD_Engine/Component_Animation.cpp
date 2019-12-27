@@ -23,6 +23,9 @@ void ComponentAnimation::Update(float dt)
 	if (linked_channels == false)
 		DoLink();
 
+	if (!linked_bones)
+		DoBoneLink();
+
 	if (!App->gui->game_window->in_editor)
 		UpdateJointsTransform(dt);
 	else
@@ -46,6 +49,7 @@ void ComponentAnimation::DoLink()
 				if (childs[j]->GetComponentBone() != nullptr && childs[j]->name.compare(res_anim->channels[i].name) == 0) 
 				{
 					links.push_back(Link(childs[j], &res_anim->channels[i]));
+
 					break;
 				}
 			}
@@ -58,6 +62,29 @@ void ComponentAnimation::DoLink()
 		App->LogInConsole("ERROR: Can't link channels, Resource_Animation is nullptr");
 	}
 }
+
+
+void ComponentAnimation::DoBoneLink()
+{
+	std::map<uint, ComponentMesh*> meshes;
+	std::vector<ComponentBone*> bones;
+	GetAllBones(my_GO, meshes, bones);
+
+	for (uint i = 0; i < bones.size(); i++)
+	{
+		uint tmp_id = ((ResourceBone*)bones[i])->meshID;
+
+		//They have to have the same ID (Mesh/Bone), that's how they are linked
+		std::map<uint, ComponentMesh*>::iterator it = meshes.find(tmp_id);
+		if (it != meshes.end())
+		{
+			it->second->AddBone(bones[i]);
+		}
+	}
+
+	linked_bones = true;
+}
+
 
 void ComponentAnimation::UpdateJointsTransform(float dt)
 {
@@ -123,11 +150,30 @@ void ComponentAnimation::UpdateMesh(GameObject* go)
 
 	if (tmp != nullptr)
 	{
-		tmp->AttachSkeleton(go);
-		tmp->UpdateMesh();
+		//tmp->AttachSkeleton(go);
+		tmp->UpdateDefMesh();
 	}
 	for (int i = 0; i < go->children.size(); i++)
 	{
 		UpdateMesh(go->children[i]);
+	}
+}
+
+void ComponentAnimation::GetAllBones(GameObject* go, std::map<uint, ComponentMesh*>& meshes, std::vector<ComponentBone*>& bones)
+{
+	ComponentMesh* mesh = go->GetComponentMesh();
+	if (mesh != nullptr)
+	{
+		meshes[mesh->res_mesh->GetUUID()] = mesh;
+	}
+	ComponentBone* bone = go->GetComponentBone();
+	if (bone != nullptr)
+	{
+		bones.push_back(bone);
+	}
+
+	for (uint i = 0; i < go->children.size(); i++)
+	{
+		GetAllBones(go->children[i], meshes, bones);
 	}
 }
