@@ -64,6 +64,7 @@ void ComponentAnimation::UpdateJointsTransform(float dt)
 		ComponentTransform* trans = links[i].gameObject->GetComponentTransform();
 		float duration_sec = res_anim->duration / res_anim->ticksPerSecond;
 
+		// ----------------------- Frame count managment -----------------------------------
 		if (App->time->GetGameTime() > duration_sec)
 		{
 			time = App->time->GetGameTime() - duration_sec * loop_times;
@@ -78,7 +79,9 @@ void ComponentAnimation::UpdateJointsTransform(float dt)
 		{
 			loop_times++;
 		}
-		
+		//-------------------------------------------------------------------------------------
+
+		// POSITION
 		float3 position = trans->GetPosition();
 		if (links[i].channel->PosHasKey())
 		{
@@ -86,26 +89,69 @@ void ComponentAnimation::UpdateJointsTransform(float dt)
 			std::map<double, float3>::iterator pos = links[i].channel->PositionKeys.find(Frame);
 			if (pos != links[i].channel->PositionKeys.end())
 				position = pos->second;
+			else
+			{
+				//Blend prev with next
+				std::map<double, float3>::iterator prev = links[i].channel->PrevPosition(Frame);
+				std::map<double, float3>::iterator next = links[i].channel->NextPosition(Frame);
+
+				if (next == links[i].channel->PositionKeys.end())
+					next = prev;
+				else
+				{
+					float value = (Frame - prev->first) / (next->first - prev->first);
+					position = prev->second.Lerp(next->second, value);
+				}
+			}
 
 		}
 		trans->SetPosition(position);
 
+		//ROTATION
 		Quat rotation = trans->GetQuaternionRotation();
 		if (links[i].channel->RotHasKey())
 		{
 			std::map<double, Quat>::iterator rot = links[i].channel->RotationKeys.find(Frame);
 			if (rot != links[i].channel->RotationKeys.end())
 				rotation = rot->second;
+			else
+			{
+				//Blend prev with next
+				std::map<double, Quat>::iterator prev = links[i].channel->PrevRotation(Frame);
+				std::map<double, Quat>::iterator next = links[i].channel->NextRotation(Frame);
 
+				if (next == links[i].channel->RotationKeys.end())
+					next = prev;
+				else
+				{
+					float value = (Frame - prev->first) / (next->first - prev->first);
+					rotation = prev->second.Lerp(next->second, value);
+				}
+			}
 		}
 		trans->SetQuatRotation(rotation);
 
+		//SCALE
 		float3 scale = trans->GetScale();
 		if (links[i].channel->ScaleHasKey())
 		{
 			std::map<double, float3>::iterator sca = links[i].channel->ScaleKeys.find(Frame);
 			if (sca != links[i].channel->ScaleKeys.end())
 				scale = sca->second;
+			else
+			{
+				//Blend prev with next
+				std::map<double, float3>::iterator prev = links[i].channel->PrevScale(Frame);
+				std::map<double, float3>::iterator next = links[i].channel->NextScale(Frame);
+
+				if (next == links[i].channel->ScaleKeys.end())
+					next = prev;
+				else
+				{
+					float value = (Frame - prev->first) / (next->first - prev->first);
+					scale = prev->second.Lerp(next->second, value);
+				}
+			}
 
 		}
 		trans->SetScale(scale);
