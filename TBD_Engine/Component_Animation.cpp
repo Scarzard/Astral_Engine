@@ -19,12 +19,27 @@ ComponentAnimation::~ComponentAnimation()
 	animations.clear();
 }
 
-Animation* ComponentAnimation::CreateAnimation(std::string name, uint start, uint end, bool loop)
+Animation* ComponentAnimation::CreateAnimation(std::string name, uint start, uint end, bool loop, bool Default)
 {
-	Animation* anim = new Animation(name, start, end, loop);
+	Animation* anim = new Animation(name, start, end, loop, Default);
 	animations.push_back(anim);
 
 	return anim;
+}
+
+Animation* ComponentAnimation::GetDefaultAnimation()
+{
+	for (int i = 0; i < animations.size(); i++)
+	{
+		if (animations[i]->Default)
+		{
+			return animations[i];
+		}
+			
+	}
+
+	//normally first one is idle ?
+	return animations[0];
 }
 
 void ComponentAnimation::Update(float dt)
@@ -32,26 +47,32 @@ void ComponentAnimation::Update(float dt)
 	if (linked_channels == false)
 	{
 		DoLink();
-		playing_animation = CreateAnimation("Idle", 0, 49, true);
+		playing_animation = CreateAnimation("Idle", 0, 49, true, true);
 		CreateAnimation("Run", 50, 72, true);
-		CreateAnimation("Punch", 73, 138, false);
+		CreateAnimation("Punch", 73, 140, false);
 	}
 		
 
-	if (!App->gui->game_window->in_editor && !App->time->game_paused)
+	if (!App->gui->game_window->in_editor )
 	{
-		
-		time += App->GetDT();
-		UpdateJointsTransform(dt);
-
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		if (!App->time->game_paused)
 		{
-			playing_animation = animations[2];
-			time = 0;
+			time += App->GetDT();
+			UpdateJointsTransform(dt);
+
+			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+			{
+				playing_animation = animations[2];
+				time = 0;
+			}
 		}
+		
 	}
 	else
+	{
 		time = 0;
+		playing_animation = GetDefaultAnimation();
+	}
 }
 
 void ComponentAnimation::DoLink()
@@ -87,15 +108,26 @@ void ComponentAnimation::UpdateJointsTransform(float dt)
 	for (int i = 0; i < links.size(); i++)
 	{
 		ComponentTransform* trans = links[i].gameObject->GetComponentTransform();
-		float duration_sec = (playing_animation->end - playing_animation->start)/res_anim->ticksPerSecond;
-
+		float duration = res_anim->duration;
 		// ----------------------- Frame count managment -----------------------------------
 		
-		uint Frame = playing_animation->start + time * res_anim->ticksPerSecond;
+		int Frame = playing_animation->start + (time * res_anim->ticksPerSecond);
 
-		if (playing_animation->loop && Frame == (playing_animation->end - playing_animation->start))
+		if (Frame == playing_animation->end)
 		{
-			time = 0;
+
+			if (!playing_animation->loop)
+			{
+				if (playing_animation->Default == false)
+				{
+					playing_animation = GetDefaultAnimation();
+					time = 0;
+				}
+					
+			}
+			else
+				time = 0;
+			
 		}
 		//-------------------------------------------------------------------------------------
 

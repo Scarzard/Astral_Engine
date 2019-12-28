@@ -8,12 +8,13 @@
 
 struct Animation
 {
-	Animation(std::string name, uint start, uint end, bool loop) : name(name), start(start), end(end), loop(loop) {};
+	Animation(std::string name, uint start, uint end, bool loop, bool Default) : name(name), start(start), end(end), loop(loop), Default(Default) {};
 
 	std::string name;
 	uint start;
 	uint end;
 	bool loop = false;
+	bool Default = false;
 };
 
 class ComponentAnimation : public Component
@@ -32,6 +33,8 @@ public:
 	void Update(float dt);
 	float GetDuration() { return res_anim->duration / res_anim->ticksPerSecond; }
 
+	Animation* GetDefaultAnimation();
+
 public:
 
 	std::vector<Animation*> animations;
@@ -41,7 +44,7 @@ public:
 
 private:
 
-	Animation* CreateAnimation(std::string name, uint start, uint end, bool loop);
+	Animation* CreateAnimation(std::string name, uint start, uint end, bool loop, bool Default = false);
 	void DoLink();
 	void UpdateJointsTransform(float dt);
 
