@@ -173,5 +173,7 @@ void ComponentMesh::CleanUp()
 	if (res_mesh != nullptr)
 	{
 		res_mesh->loaded -= 1;
+		if (res_mesh->loaded == 0)
+			res_mesh->ReleaseMemory();
 	}
 }

@@ -2,7 +2,7 @@
 
 bool Channel::PosHasKey() const
 {
-	return ((PositionKeys.size() == 1 && PositionKeys.begin()->first == -1) == false);
+	return !PositionKeys.empty();
 }
 
 std::map<double, float3>::iterator Channel::PrevPosition(double current)
@@ -21,7 +21,7 @@ std::map<double, float3>::iterator Channel::NextPosition(double current)
 
 bool Channel::RotHasKey() const
 {
-	return ((RotationKeys.size() == 1 && RotationKeys.begin()->first == -1) == false);
+	return !RotationKeys.empty();
 }
 
 std::map<double, Quat>::iterator Channel::PrevRotation(double current )
@@ -39,7 +39,7 @@ std::map<double, Quat>::iterator Channel::NextRotation(double current)
 
 bool Channel::ScaleHasKey() const
 {
-	return ((ScaleKeys.size() == 1 && ScaleKeys.begin()->first == -1) == false);
+	return !ScaleKeys.empty();
 }
 
 std::map<double, float3>::iterator Channel::PrevScale(double current)

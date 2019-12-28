@@ -35,6 +35,12 @@ update_status ModuleResources::Update()
 
 bool ModuleResources::CleanUp()
 {
+	/*for (int i = 0; i < resources.size(); i++)
+	{
+		delete resources[i];
+	}
+	resources.clear();*/
+
 	return true;
 }
 

@@ -11,18 +11,13 @@ class ComponentBone;
 
 struct Animation
 {
-	std::string name;
+	Animation(std::string name, uint start, uint end, bool loop, bool Default) : name(name), start(start), end(end), loop(loop), Default(Default) {};
 
+	std::string name;
 	uint start;
 	uint end;
-
-	float duration;
-	float ticksPerSecond;
-
 	bool loop = false;
-	bool idle = true;
-
-	float GetDuration();
+	bool Default = false;
 };
 
 class ComponentAnimation : public Component
@@ -39,24 +34,27 @@ public:
 	~ComponentAnimation();
 
 	void Update(float dt);
+	float GetDuration() { return res_anim->duration / res_anim->ticksPerSecond; }
+
+	Animation* GetDefaultAnimation();
 
 public:
 
-	std::vector<Animation> animations;
-	
+	std::vector<Animation*> animations;
 
-	bool playing = false;
+	Animation* prev_anim = nullptr;
+	Animation* playing_animation = nullptr;;
 
 	ResourceAnimation* res_anim = nullptr;
 
 private:
 
+	Animation* CreateAnimation(std::string name, uint start, uint end, bool loop, bool Default = false);
 	void DoLink();
 	void DoBoneLink();
-	void UpdateJointsTransform(float dt);
+	void UpdateJointsTransform();
 
 	void UpdateMesh(GameObject* go);
-	//GameObject* GetGOAnimMesh()
 	void GetAllBones(GameObject* go, std::map<uint, ComponentMesh*>& meshes, std::vector<ComponentBone*>& bones);
 
 	std::vector<Link> links;
@@ -64,7 +62,6 @@ private:
 	bool linked_bones = false;
 	bool created_buffer = false;
 
-	uint loop_times = 0;
 	float time = 0;
 };
 

@@ -1,5 +1,6 @@
 #include "Component_Animation.h"
 #include "Application.h"
+#include "ModuleInput.h"
 #include "W_Game.h"
 #include "GameObject.h"
 
@@ -8,11 +9,6 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-float Animation::GetDuration()
-{
-	return ((float)end - (float)start) / ticksPerSecond;
-}
-
 ComponentAnimation::ComponentAnimation(GameObject* gameobj) : Component(Component::ComponentType::Animation, gameobj)
 {
 
@@ -20,22 +16,90 @@ ComponentAnimation::ComponentAnimation(GameObject* gameobj) : Component(Componen
 
 ComponentAnimation::~ComponentAnimation()
 {
+	for (int i = 0; i < animations.size(); i++)
+	{
+		delete animations[i];
+	}
 
+	animations.clear();
+}
+
+Animation* ComponentAnimation::CreateAnimation(std::string name, uint start, uint end, bool loop, bool Default)
+{
+	Animation* anim = new Animation(name, start, end, loop, Default);
+	animations.push_back(anim);
+
+	return anim;
+}
+
+Animation* ComponentAnimation::GetDefaultAnimation()
+{
+	for (int i = 0; i < animations.size(); i++)
+	{
+		if (animations[i]->Default)
+		{
+			return animations[i];
+		}
+			
+	}
+
+	//normally first one is idle ?
+	return animations[0];
 }
 
 void ComponentAnimation::Update(float dt)
 {
 	if (linked_channels == false)
+	{
 		DoLink();
+		playing_animation = CreateAnimation("Idle", 0, 49, true, true);
+		CreateAnimation("Run", 50, 72, true);
+		CreateAnimation("Punch", 73, 140, false);
+	}
+		
+
+	if (!App->gui->game_window->in_editor )
+	{
+		if (!App->time->game_paused)
+		{
+			time += App->GetDT();
+			UpdateJointsTransform();
+
+			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+			{
+				prev_anim = playing_animation;
+				playing_animation = animations[2];
+				time = 0;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN ) // press key
+			{
+				prev_anim = playing_animation;
+				playing_animation = animations[1];
+				time = 0;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_UP) //release key
+			{
+				playing_animation = GetDefaultAnimation();
+				time = 0;
+			}
 
 	if (linked_bones == false)
 		DoBoneLink();
 
 	if (!App->gui->game_window->in_editor)
-		UpdateJointsTransform(dt);
+		UpdateJointsTransform();
+
+		}
+		
+	}
 	else
+	{
 		time = 0;
 
+	
+	playing_animation = GetDefaultAnimation();
+	}
 	UpdateMesh(my_GO);
 }
 
@@ -68,7 +132,6 @@ void ComponentAnimation::DoLink()
 	}
 }
 
-
 void ComponentAnimation::DoBoneLink()
 {
 	std::map<uint, ComponentMesh*> meshes;
@@ -90,29 +153,29 @@ void ComponentAnimation::DoBoneLink()
 	linked_bones = true;
 }
 
-
-void ComponentAnimation::UpdateJointsTransform(float dt)
+void ComponentAnimation::UpdateJointsTransform()
 {
 	for (int i = 0; i < links.size(); i++)
 	{
 		ComponentTransform* trans = links[i].gameObject->GetComponentTransform();
-		float duration_sec = res_anim->duration / res_anim->ticksPerSecond;
 
-		if (App->time->GetGameTime() > duration_sec)
-		{
-			time = App->time->GetGameTime() - duration_sec * loop_times;
-		}
-		else
-		{
-			time = App->time->GetGameTime();
-		}
-		uint Frame = time * res_anim->ticksPerSecond;
-
-		if (Frame == res_anim->duration)
-		{
-			loop_times++;
-		}
+		// ----------------------- Frame count managment -----------------------------------
 		
+		int Frame = playing_animation->start + (time * res_anim->ticksPerSecond);
+
+		if (Frame == playing_animation->end)
+		{
+
+			if (!playing_animation->loop)
+				if (playing_animation->Default == false)
+					playing_animation = GetDefaultAnimation();
+			
+			time = 0;
+			
+		}
+		//-------------------------------------------------------------------------------------
+
+		// POSITION
 		float3 position = trans->GetPosition();
 		if (links[i].channel->PosHasKey())
 		{
@@ -120,26 +183,69 @@ void ComponentAnimation::UpdateJointsTransform(float dt)
 			std::map<double, float3>::iterator pos = links[i].channel->PositionKeys.find(Frame);
 			if (pos != links[i].channel->PositionKeys.end())
 				position = pos->second;
+			else
+			{
+				//Blend prev with next
+				std::map<double, float3>::iterator prev = links[i].channel->PrevPosition(Frame);
+				std::map<double, float3>::iterator next = links[i].channel->NextPosition(Frame);
+
+				if (next == links[i].channel->PositionKeys.end())
+					next = prev;
+				else
+				{
+					float value = (Frame - prev->first) / (next->first - prev->first);
+					position = prev->second.Lerp(next->second, value);
+				}
+			}
 
 		}
 		trans->SetPosition(position);
 
+		//ROTATION
 		Quat rotation = trans->GetQuaternionRotation();
 		if (links[i].channel->RotHasKey())
 		{
 			std::map<double, Quat>::iterator rot = links[i].channel->RotationKeys.find(Frame);
 			if (rot != links[i].channel->RotationKeys.end())
 				rotation = rot->second;
+			else
+			{
+				//Blend prev with next
+				std::map<double, Quat>::iterator prev = links[i].channel->PrevRotation(Frame);
+				std::map<double, Quat>::iterator next = links[i].channel->NextRotation(Frame);
 
+				if (next == links[i].channel->RotationKeys.end())
+					next = prev;
+				else
+				{
+					float value = (Frame - prev->first) / (next->first - prev->first);
+					rotation = prev->second.Lerp(next->second, value);
+				}
+			}
 		}
 		trans->SetQuatRotation(rotation);
 
+		//SCALE
 		float3 scale = trans->GetScale();
 		if (links[i].channel->ScaleHasKey())
 		{
 			std::map<double, float3>::iterator sca = links[i].channel->ScaleKeys.find(Frame);
 			if (sca != links[i].channel->ScaleKeys.end())
 				scale = sca->second;
+			else
+			{
+				//Blend prev with next
+				std::map<double, float3>::iterator prev = links[i].channel->PrevScale(Frame);
+				std::map<double, float3>::iterator next = links[i].channel->NextScale(Frame);
+
+				if (next == links[i].channel->ScaleKeys.end())
+					next = prev;
+				else
+				{
+					float value = (Frame - prev->first) / (next->first - prev->first);
+					scale = prev->second.Lerp(next->second, value);
+				}
+			}
 
 		}
 		trans->SetScale(scale);

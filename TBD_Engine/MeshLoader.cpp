@@ -86,6 +86,7 @@ void MeshLoader::LoadFile(const char* full_path)
 
 
 		LoadBones(mesh_collector, go_collector, Empty);
+
 		if (scene->HasAnimations() == true)
 		{
 			for (int i = 0; i < scene->mNumAnimations; i++)
