@@ -38,7 +38,9 @@ public:
 public:
 
 	std::vector<Animation*> animations;
-	Animation* playing_animation;
+
+	Animation* prev_anim = nullptr;
+	Animation* playing_animation = nullptr;;
 
 	ResourceAnimation* res_anim = nullptr;
 
@@ -46,12 +48,11 @@ private:
 
 	Animation* CreateAnimation(std::string name, uint start, uint end, bool loop, bool Default = false);
 	void DoLink();
-	void UpdateJointsTransform(float dt);
+	void UpdateJointsTransform();
 
 	std::vector<Link> links;
 	bool linked_channels = false;
 
-	uint loop_times = 0;
 	float time = 0;
 };
 

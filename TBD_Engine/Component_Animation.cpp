@@ -58,13 +58,27 @@ void ComponentAnimation::Update(float dt)
 		if (!App->time->game_paused)
 		{
 			time += App->GetDT();
-			UpdateJointsTransform(dt);
+			UpdateJointsTransform();
 
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
+				prev_anim = playing_animation;
 				playing_animation = animations[2];
 				time = 0;
 			}
+
+			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN ) // press key
+			{
+				prev_anim = playing_animation;
+				playing_animation = animations[1];
+				time = 0;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_UP) //release key
+			{
+				playing_animation = GetDefaultAnimation();
+				time = 0;
+			}
+
 		}
 		
 	}
@@ -103,12 +117,12 @@ void ComponentAnimation::DoLink()
 	}
 }
 
-void ComponentAnimation::UpdateJointsTransform(float dt)
+void ComponentAnimation::UpdateJointsTransform()
 {
 	for (int i = 0; i < links.size(); i++)
 	{
 		ComponentTransform* trans = links[i].gameObject->GetComponentTransform();
-		float duration = res_anim->duration;
+
 		// ----------------------- Frame count managment -----------------------------------
 		
 		int Frame = playing_animation->start + (time * res_anim->ticksPerSecond);
@@ -117,16 +131,10 @@ void ComponentAnimation::UpdateJointsTransform(float dt)
 		{
 
 			if (!playing_animation->loop)
-			{
 				if (playing_animation->Default == false)
-				{
 					playing_animation = GetDefaultAnimation();
-					time = 0;
-				}
-					
-			}
-			else
-				time = 0;
+			
+			time = 0;
 			
 		}
 		//-------------------------------------------------------------------------------------
