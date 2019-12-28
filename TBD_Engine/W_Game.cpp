@@ -47,6 +47,8 @@ bool W_Game::Draw()
 		//ImGui::SetCursorPos({ (float)(width / 2 - 35), (float)(height / 3) });
 
 		//Play/Stop
+		ImGui::Text("                                                         ");
+		ImGui::SameLine();
 		if (ImGui::Button(button_name1)) 
 		{
 			if (engine_state == ENGINE_STATE::IN_EDITOR)
@@ -67,6 +69,7 @@ bool W_Game::Draw()
 		ImGui::SameLine();
 		if (ImGui::Button(button_name2)) 
 		{
+			
 			if (engine_state == ENGINE_STATE::PLAY)
 				button_name2 = "Resume";
 			else if (engine_state == ENGINE_STATE::PAUSE)
@@ -74,8 +77,10 @@ bool W_Game::Draw()
 
 			App->Pause();
 		}
+		
 		if (!in_editor)
 		{
+			ImGui::SameLine();
 			float showtime = App->time->GetGameTime();
 			ImGui::TextColored(ImVec4(0.7f, 0.8f, 0.0f, 1.0f), "%f", showtime);
 		}

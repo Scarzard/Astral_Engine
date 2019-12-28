@@ -57,10 +57,14 @@ private:
 	void UpdateMesh(GameObject* go);
 	void GetAllBones(GameObject* go, std::map<uint, ComponentMesh*>& meshes, std::vector<ComponentBone*>& bones);
 
+	bool HasSkeleton(std::vector<GameObject*> GO);
+
+private:
 	std::vector<Link> links;
 	bool linked_channels = false;
 	bool linked_bones = false;
 	bool created_buffer = false;
+	bool has_skeleton = false;
 
 	float time = 0;
 };

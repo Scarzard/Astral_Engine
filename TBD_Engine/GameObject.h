@@ -41,6 +41,8 @@ public:
 	void SetChild(GameObject* GO);
 	void RemoveChild(GameObject* GO);
 	void GetAllChilds(std::vector<GameObject*>& vector);
+
+	//Anim functions
 	GameObject * GetAnimGO(GameObject* go);
 
 public:

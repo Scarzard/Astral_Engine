@@ -51,11 +51,18 @@ void ComponentAnimation::Update(float dt)
 {
 	if (linked_channels == false)
 	{
+		std::vector<GameObject*> childs;
+		my_GO->GetAllChilds(childs);
+		has_skeleton = HasSkeleton(childs);
+
 		DoLink();
-		playing_animation = CreateAnimation("Idle", 0, 49, true, true);
+		playing_animation = CreateAnimation("Idle", 0, 48, true, true);
 		CreateAnimation("Run", 50, 72, true);
 		CreateAnimation("Punch", 73, 140, false);
 	}
+
+	if (linked_bones == false)
+		DoBoneLink();
 		
 
 	if (!App->gui->game_window->in_editor )
@@ -83,24 +90,17 @@ void ComponentAnimation::Update(float dt)
 				playing_animation = GetDefaultAnimation();
 				time = 0;
 			}
-
-	if (linked_bones == false)
-		DoBoneLink();
-
-	if (!App->gui->game_window->in_editor)
-		UpdateJointsTransform();
-
 		}
 		
 	}
 	else
 	{
 		time = 0;
-
-	
-	playing_animation = GetDefaultAnimation();
+		playing_animation = GetDefaultAnimation();
 	}
-	UpdateMesh(my_GO);
+
+	if(has_skeleton)
+		UpdateMesh(my_GO);
 }
 
 void ComponentAnimation::DoLink()
@@ -301,3 +301,13 @@ void ComponentAnimation::GetAllBones(GameObject* go, std::map<uint, ComponentMes
 		GetAllBones(go->children[i], meshes, bones);
 	}
 }
+
+bool ComponentAnimation::HasSkeleton(std::vector<GameObject*> collector)
+{
+	for (int i = 0; i < collector.size(); i++)
+		if (collector[i]->GetComponentBone())return true;
+
+	return false;
+}
+
+

@@ -34,6 +34,10 @@ bool ModuleCamera3D::Start()
 	obj_camera->name = "Main Camera";
 	obj_camera->is_static = false;
 	obj_camera->CreateComponent(Component::ComponentType::Camera);
+
+	//------ Starting position of camera
+	obj_camera->GetComponentTransform()->SetEulerRotation(float3(-180, 0, -180));
+	obj_camera->GetComponentTransform()->SetPosition(float3(0, 14, 30));
 	
 	return ret;
 }
