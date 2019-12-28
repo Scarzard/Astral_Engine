@@ -74,21 +74,36 @@ void ComponentAnimation::Update(float dt)
 
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
-				prev_anim = playing_animation;
+				//prev_anim = playing_animation;
 				playing_animation = animations[2];
 				time = 0;
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN ) // press key
 			{
-				prev_anim = playing_animation;
-				playing_animation = animations[1];
-				time = 0;
+				//prev_anim = playing_animation;
+
+				animations[1]->Default = true;
+				animations[0]->Default = false;
+
+				if (playing_animation->loop)
+				{
+					playing_animation = animations[1];
+					time = 0;
+				}
+				
 			}
 			if (App->input->GetKey(SDL_SCANCODE_2) == KEY_UP) //release key
 			{
-				playing_animation = GetDefaultAnimation();
-				time = 0;
+				animations[1]->Default = false;
+				animations[0]->Default = true;
+
+				if (playing_animation->loop)
+				{
+					playing_animation = GetDefaultAnimation();
+					time = 0;
+				}
+				
 			}
 		}
 		
