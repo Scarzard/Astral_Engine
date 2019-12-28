@@ -54,16 +54,16 @@ void ComponentMesh::UpdateDefMesh()
 			float3 tmp = res_mesh->vertex[index];
 			float3 extra = mat.TransformPos(tmp);
 
-			deformable_mesh->vertex[index].x += extra.x * r_bone->index_weight[i];
-			deformable_mesh->vertex[index].y += extra.y * r_bone->index_weight[i];
-			deformable_mesh->vertex[index].z += extra.z * r_bone->index_weight[i];
+			deformable_mesh->vertex[index * 3].x += extra.x * r_bone->index_weight[i];
+			deformable_mesh->vertex[index * 3 + 1].y += extra.y * r_bone->index_weight[i];
+			deformable_mesh->vertex[index * 3 + 2].z += extra.z * r_bone->index_weight[i];
 
 			if (res_mesh->num_normals > 0)
 			{
-				extra = mat.TransformPos(res_mesh->face_normal[index]);
-				deformable_mesh->face_normal[index].x += extra.x * r_bone->index_weight[i];
-				deformable_mesh->face_normal[index].y += extra.y * r_bone->index_weight[i];
-				deformable_mesh->face_normal[index].z += extra.z * r_bone->index_weight[i];
+				extra = mat.TransformPos(res_mesh->face_normal[index * 3]);
+				deformable_mesh->face_normal[index * 3].x += extra.x * r_bone->index_weight[i];
+				deformable_mesh->face_normal[index * 3 + 1].y += extra.y * r_bone->index_weight[i];
+				deformable_mesh->face_normal[index * 3 + 2].z += extra.z * r_bone->index_weight[i];
 			}
 		}
 	}

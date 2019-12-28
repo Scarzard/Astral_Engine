@@ -3,6 +3,11 @@
 #include "W_Game.h"
 #include "GameObject.h"
 
+#include "glew/include/GL/glew.h"
+#include "SDL/include/SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
 float Animation::GetDuration()
 {
 	return ((float)end - (float)start) / ticksPerSecond;
@@ -23,7 +28,7 @@ void ComponentAnimation::Update(float dt)
 	if (linked_channels == false)
 		DoLink();
 
-	if (!linked_bones)
+	if (linked_bones == false)
 		DoBoneLink();
 
 	if (!App->gui->game_window->in_editor)
@@ -152,6 +157,21 @@ void ComponentAnimation::UpdateMesh(GameObject* go)
 	{
 		//tmp->AttachSkeleton(go);
 		tmp->UpdateDefMesh();
+
+		//Implementing skinning
+		if (tmp->deformable_mesh != nullptr)
+		{
+			App->renderer3D->NewVertexBuffer(tmp->deformable_mesh->vertex, 
+											tmp->deformable_mesh->num_vertex, 
+											tmp->deformable_mesh->id_index);
+
+			/*if (tmp->res_mesh->face_normal != nullptr)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, tmp->deformable_mesh->num_vertex);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * tmp->deformable_mesh->num_vertex * 3, tmp->deformable_mesh->vertex, GL_DYNAMIC_DRAW);
+			}*/
+		}
+
 	}
 	for (int i = 0; i < go->children.size(); i++)
 	{
