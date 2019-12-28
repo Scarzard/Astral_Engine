@@ -4,6 +4,7 @@
 #include "Component_Transform.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleResources.h"
+#include "GameObject.h"
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -42,6 +43,7 @@ void ComponentMesh::UpdateDefMesh()
 {
 	if (deformable_mesh == nullptr)
 	{
+
 		deformable_mesh = new ResourceMesh(App->GetRandomUUID());
 
 		deformable_mesh->num_index = res_mesh->num_index;
@@ -56,23 +58,27 @@ void ComponentMesh::UpdateDefMesh()
 
 		deformable_mesh->num_normals = res_mesh->num_normals;
 		deformable_mesh->face_normal = new float3[deformable_mesh->num_normals];
+
+		App->renderer3D->NewVertexBuffer(deformable_mesh->vertex, deformable_mesh->num_vertex, deformable_mesh->id_vertex);
+		
 	}
 
+	// -------------------- RESET DEFORMABLE MESH --------------------------
 	for (int i = 0; i < deformable_mesh->num_vertex; i++)
 		deformable_mesh->vertex[i] = float3(0, 0, 0);
-	
+
 	for (int i = 0; i < deformable_mesh->num_normals; i++)
 	{
 		deformable_mesh->face_normal[i] = float3(0, 0, 0);
 		deformable_mesh->face_center[i] = float3(0, 0, 0);
 	}
+	//-----------------------------------------------------------------------
 
 	for (std::vector<ComponentBone*>::iterator it = bones.begin(); it != bones.end(); it++)
 	{
-		uint index1 = std::distance(bones.begin(), it);
 		ResourceBone* r_bone = (*it)->res_bone;
 
-		float4x4 mat = (*it)->my_GO->GetComponentTransform()->GetGlobalTransform();
+		float4x4 mat = (*it)->GetSkeletonTransform();
 		mat = my_GO->GetComponentTransform()->GetTransform().Inverted() * mat;
 		mat = mat * r_bone->matrix;
 
@@ -82,21 +88,21 @@ void ComponentMesh::UpdateDefMesh()
 			float3 tmp = res_mesh->vertex[index];
 			float3 _vertex = mat.TransformPos(tmp);
 
-			deformable_mesh->vertex[index].x += _vertex.x * r_bone->index_weight[i];
-			deformable_mesh->vertex[index].y += _vertex.y * r_bone->index_weight[i];
-			deformable_mesh->vertex[index].z += _vertex.z * r_bone->index_weight[i];
+			deformable_mesh->vertex[index].x += _vertex.x * r_bone->weight[i];
+			deformable_mesh->vertex[index].y += _vertex.y * r_bone->weight[i];
+			deformable_mesh->vertex[index].z += _vertex.z * r_bone->weight[i];
 
 			if (res_mesh->num_normals > 0)
 			{
 				_vertex = mat.TransformPos(res_mesh->face_normal[index]);
-				deformable_mesh->face_normal[index].x += _vertex.x * r_bone->index_weight[i];
-				deformable_mesh->face_normal[index].y += _vertex.y * r_bone->index_weight[i];
-				deformable_mesh->face_normal[index].z += _vertex.z * r_bone->index_weight[i];
+				deformable_mesh->face_normal[index].x += _vertex.x * r_bone->weight[i];
+				deformable_mesh->face_normal[index].y += _vertex.y * r_bone->weight[i];
+				deformable_mesh->face_normal[index].z += _vertex.z * r_bone->weight[i];
 
 				_vertex = mat.TransformPos(res_mesh->face_center[index]);
-				deformable_mesh->face_center[index].x += _vertex.x * r_bone->index_weight[i];
-				deformable_mesh->face_center[index].y += _vertex.y * r_bone->index_weight[i];
-				deformable_mesh->face_center[index].z += _vertex.z * r_bone->index_weight[i];
+				deformable_mesh->face_center[index].x += _vertex.x * r_bone->weight[i];
+				deformable_mesh->face_center[index].y += _vertex.y * r_bone->weight[i];
+				deformable_mesh->face_center[index].z += _vertex.z * r_bone->weight[i];
 			}
 		}
 	}

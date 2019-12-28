@@ -350,3 +350,15 @@ void GameObject::GetAllChilds(std::vector<GameObject*>& collector)
 	for (uint i = 0; i < children.size(); i++)
 		children[i]->GetAllChilds(collector);
 }
+
+GameObject* GameObject::GetAnimGO(GameObject* go)
+{
+	ComponentAnimation* anim = go->GetComponentAnimation();
+
+	if (anim != nullptr)
+	{
+		return anim->my_GO;
+	}
+	else
+		return GetAnimGO(go->parent);
+}

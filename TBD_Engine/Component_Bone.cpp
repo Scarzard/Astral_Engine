@@ -44,7 +44,14 @@ float4x4 ComponentBone::GetBoneTransform()
 	return my_GO->GetComponentTransform()->GetGlobalTransform();
 }
 
-ComponentBone* ComponentBone::GetParentBone()
+float4x4 ComponentBone::GetSkeletonTransform()
+{
+	return my_GO->GetAnimGO(GetHipBone()->my_GO)->GetComponentTransform()->GetGlobalTransform().Inverted() * my_GO->GetComponentTransform()->GetGlobalTransform();
+}
+
+
+
+ComponentBone* ComponentBone::GetHipBone()
 {
 	ComponentBone* pBone = my_GO->parent->GetComponentBone();
 
@@ -53,5 +60,5 @@ ComponentBone* ComponentBone::GetParentBone()
 		return this;
 	}
 	else
-		return pBone->GetParentBone();
+		return pBone->GetHipBone();
 }

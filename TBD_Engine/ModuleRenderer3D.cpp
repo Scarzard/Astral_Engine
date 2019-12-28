@@ -272,7 +272,7 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 				glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 			}
 
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->res_mesh->id_index);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,mesh->res_mesh->id_index);
 			glDrawElements(GL_TRIANGLES, mesh->res_mesh->num_index, GL_UNSIGNED_INT, nullptr);
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);

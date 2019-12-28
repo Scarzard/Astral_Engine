@@ -54,13 +54,15 @@ private:
 	void DoLink();
 	void DoBoneLink();
 	void UpdateJointsTransform(float dt);
-	void UpdateMesh(GameObject* go);
 
+	void UpdateMesh(GameObject* go);
+	//GameObject* GetGOAnimMesh()
 	void GetAllBones(GameObject* go, std::map<uint, ComponentMesh*>& meshes, std::vector<ComponentBone*>& bones);
 
 	std::vector<Link> links;
 	bool linked_channels = false;
 	bool linked_bones = false;
+	bool created_buffer = false;
 
 	uint loop_times = 0;
 	float time = 0;

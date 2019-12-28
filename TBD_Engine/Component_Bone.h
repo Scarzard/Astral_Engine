@@ -16,7 +16,8 @@ public:
 	void DebugDrawBones();
 
 	float4x4 GetBoneTransform();
-	ComponentBone* GetParentBone();
+	float4x4 GetSkeletonTransform();
+	ComponentBone* GetHipBone();
 
 	ResourceBone* res_bone;
 	ComponentType GetType() { return ComponentType::Bone; };

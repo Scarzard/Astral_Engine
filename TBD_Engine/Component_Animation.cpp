@@ -159,7 +159,13 @@ void ComponentAnimation::UpdateMesh(GameObject* go)
 		if (tmp->deformable_mesh != nullptr)
 		{
 			//Vertex buffer
-			App->renderer3D->NewVertexBuffer(tmp->deformable_mesh->vertex, tmp->deformable_mesh->num_vertex, tmp->deformable_mesh->id_index);
+			if (!created_buffer)
+			{
+				
+				created_buffer = true;
+			}
+			
+			
 		}
 
 	}
