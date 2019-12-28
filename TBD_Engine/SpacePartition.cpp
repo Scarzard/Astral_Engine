@@ -283,14 +283,10 @@ void TreeNode::Intersects(std::map<float, GameObject*>& collector, const LineSeg
 	}
 }
 
-// ----------------------------------------------------------------- i wanna die
-
 bool TreeNode::isNodeFull()
 {
 	return (meshes.size() == BUCKET);
 }
-
-
 
 void TreeNode::QuadSplit()
 {

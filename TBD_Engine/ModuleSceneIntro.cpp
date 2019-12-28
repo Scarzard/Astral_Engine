@@ -59,9 +59,9 @@ bool ModuleSceneIntro::Start()
 	AABB box(float3(0, 0, 0), float3(0, 0, 0)); 
 	box.SetNegativeInfinity();
 	QuadTree = new Tree(box);
-
+	//App->mesh_loader->LoadFile("Assets/FBX/Bullet/9mm Regular.fbx");
 	App->mesh_loader->LoadFile("Assets/FBX/Street/Street environment_V01.fbx");
-	App->mesh_loader->LoadFile("Assets/FBX/Skeleton/aniTest.fbx");
+	//App->mesh_loader->LoadFile("Assets/FBX/Skeleton/aniTest.fbx");
 	//App->mesh_loader->LoadFile("Assets/FBX/BakerHouse/BakerHouse.fbx");
 	return ret;
 }
@@ -200,6 +200,9 @@ void ModuleSceneIntro::DrawRecursively(GameObject* GO)
 	// Not the root and GO is active
 	if (GO->id != 0 && GO->active == true)
 	{
+		if (GO->GetComponentMesh() != nullptr)
+			App->renderer3D->UpdateBuffer(GO->GetComponentMesh());
+		
 		glPushMatrix();
 		glMultMatrixf((GLfloat*)&GO->GetComponentTransform()->GetGlobalTransform().Transposed());
 		App->renderer3D->Draw(GO);

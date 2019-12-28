@@ -77,7 +77,7 @@ void ComponentAnimation::DoBoneLink()
 
 	for (uint i = 0; i < bones.size(); i++)
 	{
-		uint tmp_id = ((ResourceBone*)bones[i])->meshID;
+		uint tmp_id = bones[i]->res_bone->meshID;
 
 		//They have to have the same ID (Mesh/Bone), that's how they are linked
 		std::map<uint, ComponentMesh*>::iterator it = meshes.find(tmp_id);
@@ -144,8 +144,6 @@ void ComponentAnimation::UpdateJointsTransform(float dt)
 		}
 		trans->SetScale(scale);
 		
-		
-
 	}
 }
 
@@ -158,21 +156,14 @@ void ComponentAnimation::UpdateMesh(GameObject* go)
 		//tmp->AttachSkeleton(go);
 		tmp->UpdateDefMesh();
 
-		//Implementing skinning
 		if (tmp->deformable_mesh != nullptr)
 		{
-			App->renderer3D->NewVertexBuffer(tmp->deformable_mesh->vertex, 
-											tmp->deformable_mesh->num_vertex, 
-											tmp->deformable_mesh->id_index);
-
-			/*if (tmp->res_mesh->face_normal != nullptr)
-			{
-				glBindBuffer(GL_ARRAY_BUFFER, tmp->deformable_mesh->num_vertex);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * tmp->deformable_mesh->num_vertex * 3, tmp->deformable_mesh->vertex, GL_DYNAMIC_DRAW);
-			}*/
+			//Vertex buffer
+			App->renderer3D->NewVertexBuffer(tmp->deformable_mesh->vertex, tmp->deformable_mesh->num_vertex, tmp->deformable_mesh->id_index);
 		}
 
 	}
+
 	for (int i = 0; i < go->children.size(); i++)
 	{
 		UpdateMesh(go->children[i]);
@@ -186,6 +177,7 @@ void ComponentAnimation::GetAllBones(GameObject* go, std::map<uint, ComponentMes
 	{
 		meshes[mesh->res_mesh->GetUUID()] = mesh;
 	}
+
 	ComponentBone* bone = go->GetComponentBone();
 	if (bone != nullptr)
 	{

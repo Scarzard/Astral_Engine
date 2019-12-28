@@ -250,8 +250,6 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 			if(m->GetComponentTexture()->res_texture)
 				glBindTexture(GL_TEXTURE_2D, m->GetComponentTexture()->res_texture->texture);
 		}
-			
-
 
 	}
 
@@ -261,14 +259,21 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 
 		if (m->GetComponentMesh()->res_mesh != nullptr)
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->res_mesh->id_vertex);
+			if(mesh->deformable_mesh)
+				glBindBuffer(GL_ARRAY_BUFFER, mesh->deformable_mesh->id_vertex);
+			else 
+				glBindBuffer(GL_ARRAY_BUFFER, mesh->res_mesh->id_vertex);
+
 			glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-			glBindBuffer(GL_ARRAY_BUFFER, m->GetComponentMesh()->res_mesh->id_tex_coords);
-			glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+			if (mesh->res_mesh->num_tex_coords > 0)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, mesh->res_mesh->id_tex_coords);
+				glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+			}
 
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->GetComponentMesh()->res_mesh->id_index);
-			glDrawElements(GL_TRIANGLES, m->GetComponentMesh()->res_mesh->num_index, GL_UNSIGNED_INT, nullptr);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->res_mesh->id_index);
+			glDrawElements(GL_TRIANGLES, mesh->res_mesh->num_index, GL_UNSIGNED_INT, nullptr);
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -300,4 +305,13 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 		
 	}
 
+}
+
+void ModuleRenderer3D::UpdateBuffer(ComponentMesh* mesh)
+{
+	if (mesh->deformable_mesh != nullptr)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->deformable_mesh->id_vertex);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * mesh->deformable_mesh->num_vertex, mesh->deformable_mesh->vertex, GL_STATIC_DRAW);
+	}
 }

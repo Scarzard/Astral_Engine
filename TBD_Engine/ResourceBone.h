@@ -20,7 +20,7 @@ public:
 
 	uint NumWeights = 0;
 	float* weight = nullptr; //weight value
-	uint* index_weight = nullptr; //vertex id
+	uint* index_weight = nullptr;
 	
 	float4x4 matrix = float4x4::identity;	
 };
