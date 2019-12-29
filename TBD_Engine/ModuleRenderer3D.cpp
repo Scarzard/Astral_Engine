@@ -259,8 +259,13 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 
 		if (m->GetComponentMesh()->res_mesh != nullptr)
 		{
-			if(mesh->deformable_mesh)
+			if (mesh->deformable_mesh)
+			{
 				glBindBuffer(GL_ARRAY_BUFFER, mesh->deformable_mesh->id_vertex);
+
+				if(mesh->my_GO->parent->GetComponentAnimation()->draw_bones)
+					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			}
 			else 
 				glBindBuffer(GL_ARRAY_BUFFER, mesh->res_mesh->id_vertex);
 
@@ -279,6 +284,7 @@ void ModuleRenderer3D::Draw(GameObject* m) const
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glBindTexture(GL_TEXTURE_2D, 0);
 
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			glDisableClientState(GL_VERTEX_ARRAY);
 
 			if (mesh->draw_normals)
