@@ -368,8 +368,6 @@ void ComponentAnimation::BlendAnimations(float blend_time)
 
 	}
 
-	App->LogInConsole("%f", curr_blend_time);
-
 	if (curr_blend_time >= blend_time)
 	{
 		blending = false;
