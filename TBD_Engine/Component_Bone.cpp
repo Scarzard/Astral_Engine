@@ -24,7 +24,7 @@ ComponentBone::~ComponentBone()
 
 void ComponentBone::DebugDrawBones()
 {
-	if (my_GO->parent != nullptr && my_GO->parent->GetComponentBone() != nullptr)
+	if (my_GO->parent != nullptr && my_GO->parent->GetComponentBone() != nullptr && my_GO->GetAnimGO(GetHipBone()->my_GO)->GetComponentAnimation()->draw_bones)
 	{
 		float4x4 child_matrix = GetBoneTransform();
 		float4x4 parent_matrix = my_GO->parent->GetComponentBone()->GetBoneTransform();
