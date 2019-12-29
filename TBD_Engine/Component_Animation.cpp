@@ -9,6 +9,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#include "mmgr/mmgr.h"
+
 ComponentAnimation::ComponentAnimation(GameObject* gameobj) : Component(Component::ComponentType::Animation, gameobj)
 {
 
@@ -22,6 +24,13 @@ ComponentAnimation::~ComponentAnimation()
 	}
 
 	animations.clear();
+
+	if (res_anim)
+	{
+		res_anim->loaded -= 1;
+		if (res_anim->loaded == 0)
+			res_anim->ReleaseMemory();
+	}
 }
 
 Animation* ComponentAnimation::CreateAnimation(std::string name, uint start, uint end, bool loop, bool Default)

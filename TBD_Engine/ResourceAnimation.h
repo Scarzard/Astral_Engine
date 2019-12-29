@@ -36,7 +36,7 @@ public:
 	virtual ~ResourceAnimation() {}
 
 	bool LoadInMemory();
-	void ReleaseMemory() {}
+	void ReleaseMemory();
 	
 	std::string name;
 

@@ -18,7 +18,9 @@ bool ResourceMesh::LoadInMemory()
 void ResourceMesh::ReleaseMemory()
 {
 	std::map<uint, Resource*>::const_iterator it = App->resources->resources.find(this->res_UUID);
-	App->resources->resources.erase(it);
+
+	if(it != App->resources->resources.end())
+		App->resources->resources.erase(it);
 
 	glDeleteBuffers(1, (GLuint*)&id_index);
 	glDeleteBuffers(1, (GLuint*)&id_vertex);

@@ -169,6 +169,8 @@ void ComponentMesh::CleanUp()
 		}
 	}
 
+	if(deformable_mesh)
+		deformable_mesh->ReleaseMemory();
 
 	if (res_mesh != nullptr)
 	{

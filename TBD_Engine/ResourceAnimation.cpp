@@ -1,6 +1,9 @@
 #include "ResourceAnimation.h"
 #include "Application.h"
 #include "MeshLoader.h"
+#include "ModuleResources.h"
+
+#include "mmgr/mmgr.h"
 
 bool Channel::PosHasKey() const
 {
@@ -60,4 +63,18 @@ std::map<double, float3>::iterator Channel::NextScale(double current)
 bool ResourceAnimation::LoadInMemory()
 {
 	return App->mesh_loader->LoadAnim(this);
+}
+
+void ResourceAnimation::ReleaseMemory()
+{
+	std::map<uint, Resource*>::const_iterator it = App->resources->resources.find(this->res_UUID);
+
+	if (it != App->resources->resources.end())
+		App->resources->resources.erase(it);
+
+	delete[] this->channels;
+	this->channels = nullptr;
+
+
+	delete this;
 }
