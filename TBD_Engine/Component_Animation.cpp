@@ -25,6 +25,17 @@ ComponentAnimation::~ComponentAnimation()
 
 	animations.clear();
 
+	if (end_position != nullptr)
+	{
+		delete[] end_position;
+		delete[] end_rotation;
+		delete[] end_scale;
+		delete[] start_position;
+		delete[] start_rotation;
+		delete[] start_scale;
+	}
+	
+
 	if (res_anim)
 	{
 		res_anim->loaded -= 1;
@@ -78,8 +89,16 @@ void ComponentAnimation::Update(float dt)
 	{
 		if (!App->time->game_paused)
 		{
-			time += App->GetDT();
-			UpdateJointsTransform();
+			
+
+
+			if (blending == false)
+			{
+				time += App->GetDT();
+				UpdateJointsTransform();
+			}	
+			else
+				BlendAnimations();
 
 			if (has_skeleton)
 				UpdateMesh(my_GO);
@@ -87,6 +106,7 @@ void ComponentAnimation::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				//prev_anim = playing_animation;
+				StartBlend(animations[2]->start);
 				playing_animation = animations[2];
 				time = 0;
 			}
@@ -100,6 +120,7 @@ void ComponentAnimation::Update(float dt)
 
 				if (playing_animation->loop)
 				{
+					StartBlend(animations[1]->start);
 					playing_animation = animations[1];
 					time = 0;
 				}
@@ -112,6 +133,7 @@ void ComponentAnimation::Update(float dt)
 
 				if (playing_animation->loop)
 				{
+					StartBlend(GetDefaultAnimation()->start);
 					playing_animation = GetDefaultAnimation();
 					time = 0;
 				}
@@ -187,14 +209,18 @@ void ComponentAnimation::UpdateJointsTransform()
 
 		// ----------------------- Frame count managment -----------------------------------
 		
-		int Frame = playing_animation->start + (time * res_anim->ticksPerSecond);
+		Frame = playing_animation->start + (time * res_anim->ticksPerSecond);
 
 		if (Frame == playing_animation->end)
 		{
 
 			if (!playing_animation->loop)
 				if (playing_animation->Default == false)
+				{
+					StartBlend(GetDefaultAnimation()->start);
 					playing_animation = GetDefaultAnimation();
+				}
+					
 			
 			time = 0;
 			
@@ -245,7 +271,7 @@ void ComponentAnimation::UpdateJointsTransform()
 				else
 				{
 					float value = (Frame - prev->first) / (next->first - prev->first);
-					rotation = prev->second.Lerp(next->second, value);
+					rotation = prev->second.Slerp(next->second, value);
 				}
 			}
 		}
@@ -277,6 +303,82 @@ void ComponentAnimation::UpdateJointsTransform()
 		trans->SetScale(scale);
 		
 	}
+}
+
+void ComponentAnimation::StartBlend(uint start)
+{
+	blend_start_Frame = start;
+
+	if (end_position == nullptr)
+	{
+		end_position = new float3[links.size()];
+		end_rotation = new Quat[links.size()];
+		end_scale = new float3[links.size()];
+
+		start_position = new float3[links.size()];
+		start_rotation = new Quat[links.size()];
+		start_scale = new float3[links.size()];
+	}
+
+	for (int i = 0; i < links.size(); i++)
+	{
+		ComponentTransform* trans = links[i].gameObject->GetComponentTransform();
+
+		end_position[i] = trans->GetPosition();
+		end_rotation[i] = trans->GetQuaternionRotation();
+		end_scale[i] = trans->GetScale();
+
+		std::map<double, float3>::iterator next_pos = links[i].channel->PositionKeys.find(blend_start_Frame);
+		if (next_pos != links[i].channel->PositionKeys.end())
+			start_position[i] = next_pos->second;
+		else
+			start_position[i] = float3(1234, 0, 0);
+
+		std::map<double, Quat>::iterator next_rot = links[i].channel->NextRotation(blend_start_Frame);
+		if (next_rot != links[i].channel->RotationKeys.end())
+			start_rotation[i] = next_rot->second;
+		else
+			start_rotation[i] = Quat(1234, 0,0,0);
+
+		std::map<double, float3>::iterator next_sc = links[i].channel->NextScale(blend_start_Frame);
+		if (next_sc != links[i].channel->ScaleKeys.end())
+			start_scale[i] = next_sc->second;
+		else
+			start_scale[i] = float3(1234,0,0);
+	}
+
+	blending = true;
+}
+
+void ComponentAnimation::BlendAnimations(float blend_time)
+{
+	curr_blend_time += App->GetDT();
+	
+	float value = curr_blend_time / blend_time;
+
+	for (int i = 0; i < links.size(); i++)
+	{
+		ComponentTransform* trans = links[i].gameObject->GetComponentTransform();
+
+		if(start_position[i].x != 1234)
+			trans->SetPosition(end_position[i].Lerp(start_position[i], value));
+
+		if (start_rotation[i].x != 1234 )
+			trans->SetQuatRotation(end_rotation[i].Slerp(start_rotation[i], value));
+
+		if (start_scale[i].x != 1234)
+			trans->SetScale(end_scale[i].Lerp(start_scale[i], value));
+
+	}
+
+	App->LogInConsole("%f", curr_blend_time);
+
+	if (curr_blend_time >= blend_time)
+	{
+		blending = false;
+		curr_blend_time = 0;
+	}
+		
 }
 
 void ComponentAnimation::UpdateMesh(GameObject* go)
