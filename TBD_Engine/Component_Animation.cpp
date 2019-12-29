@@ -106,8 +106,7 @@ void ComponentAnimation::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				//prev_anim = playing_animation;
-				StartBlend(animations[2]->start);
-				playing_animation = animations[2];
+				StartBlend(animations[2]->start, animations[2]);
 				time = 0;
 			}
 
@@ -120,8 +119,7 @@ void ComponentAnimation::Update(float dt)
 
 				if (playing_animation->loop)
 				{
-					StartBlend(animations[1]->start);
-					playing_animation = animations[1];
+					StartBlend(animations[1]->start, animations[1]);
 					time = 0;
 				}
 				
@@ -133,8 +131,7 @@ void ComponentAnimation::Update(float dt)
 
 				if (playing_animation->loop)
 				{
-					StartBlend(GetDefaultAnimation()->start);
-					playing_animation = GetDefaultAnimation();
+					StartBlend(GetDefaultAnimation()->start, GetDefaultAnimation());
 					time = 0;
 				}
 				
@@ -217,8 +214,7 @@ void ComponentAnimation::UpdateJointsTransform()
 			if (!playing_animation->loop)
 				if (playing_animation->Default == false)
 				{
-					StartBlend(GetDefaultAnimation()->start);
-					playing_animation = GetDefaultAnimation();
+					StartBlend(GetDefaultAnimation()->start, GetDefaultAnimation());
 				}
 					
 			
@@ -305,9 +301,10 @@ void ComponentAnimation::UpdateJointsTransform()
 	}
 }
 
-void ComponentAnimation::StartBlend(uint start)
+void ComponentAnimation::StartBlend(uint start, Animation* anim)
 {
 	blend_start_Frame = start;
+	next_animation = anim;
 
 	if (end_position == nullptr)
 	{
@@ -377,6 +374,7 @@ void ComponentAnimation::BlendAnimations(float blend_time)
 	{
 		blending = false;
 		curr_blend_time = 0;
+		playing_animation = next_animation;
 	}
 		
 }
