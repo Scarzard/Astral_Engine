@@ -73,7 +73,6 @@ void MeshLoader::LoadFile(const char* full_path)
 		Empty->name = App->GetNameFromPath(full_path);
 
 		std::string output_file;
-		//ex.Export(Empty->name.c_str(), output_file, Empty->GetComponentTransform());
 
 		//Child of root node
 		App->scene_intro->root->SetChild(Empty);
@@ -89,29 +88,30 @@ void MeshLoader::LoadFile(const char* full_path)
 
 		if (scene->HasAnimations() == true)
 		{
+			Empty->CreateComponent(Component::ComponentType::Animation);
+
 			for (int i = 0; i < scene->mNumAnimations; i++)
 			{
-				// Not checking if it is on memory
+				std::string str = App->GetNameFromPath(full_path);
+				if (i > 0)
+					str.append("_%i", i);
 
-				ResourceAnimation* anim = (ResourceAnimation*)App->resources->NewResource(Resource::RES_TYPE::ANIMATION);
-
-				ExportAnim(anim->exported_file, App->GetNameFromPath(full_path), scene->mAnimations[i]->mDuration, scene->mAnimations[i]->mTicksPerSecond, scene->mAnimations[i]->mNumChannels, scene->mAnimations[i]->mChannels);
-
-				anim->name = App->GetNameFromPath(full_path);
-				anim->duration = scene->mAnimations[i]->mDuration;
-				anim->ticksPerSecond = scene->mAnimations[i]->mTicksPerSecond;
-				anim->file = full_path;
-
-				anim->numChannels = scene->mAnimations[i]->mNumChannels;
-				anim->channels = new Channel[anim->numChannels];
-				for (int j = 0; j < scene->mAnimations[i]->mNumChannels; j++)
+				if (App->resources->IsResourceInLibrary(str.c_str(), Resource::RES_TYPE::ANIMATION) != 0)
 				{
-					LoadChannel(scene->mAnimations[i]->mChannels[j], anim->channels[j]);
+					Empty->GetComponentAnimation()->res_anim = (ResourceAnimation*)App->resources->Get(App->resources->IsResourceInLibrary(str.c_str(), Resource::RES_TYPE::ANIMATION));
+				}
+				else
+				{
+					ResourceAnimation* anim = (ResourceAnimation*)App->resources->NewResource(Resource::RES_TYPE::ANIMATION);
+					anim->name = str;
+					ExportAnim(anim->exported_file, str, scene->mAnimations[i]->mDuration, scene->mAnimations[i]->mTicksPerSecond, scene->mAnimations[i]->mNumChannels, scene->mAnimations[i]->mChannels);
+					anim->file = full_path;
+										
+					Empty->GetComponentAnimation()->res_anim = anim;
 				}
 
-				Empty->CreateComponent(Component::ComponentType::Animation);
-				Empty->GetComponentAnimation()->res_anim = anim;
-
+				if (Empty->GetComponentAnimation()->res_anim != nullptr)
+					Empty->GetComponentAnimation()->res_anim->UpdateNumReference();
 			}
 		}
 
@@ -211,9 +211,9 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 		}
 
 		//If this mesh is inmemory 
-		if (App->resources->IsResourceInLibrary(child->name.c_str()) != 0)
+		if (App->resources->IsResourceInLibrary(child->name.c_str(), Resource::RES_TYPE::MESH) != 0)
 		{
-			mesh->res_mesh = (ResourceMesh*)App->resources->Get(App->resources->IsResourceInLibrary(child->name.c_str()));
+			mesh->res_mesh = (ResourceMesh*)App->resources->Get(App->resources->IsResourceInLibrary(child->name.c_str(), Resource::RES_TYPE::MESH));
 			if (mesh->res_mesh != nullptr)
 				mesh->res_mesh->UpdateNumReference();
 		}
@@ -492,6 +492,7 @@ bool MeshLoader::Load(ResourceMesh* mesh)
 //---------------------------------------------------------------- ANIMATION FUNCTIONS ----------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
 void MeshLoader::FillMap(std::map<std::string, GameObject*>& map, GameObject* root)
 {
 	map[root->name.c_str()] = root;
@@ -560,8 +561,10 @@ bool MeshLoader::ExportAnim(std::string & output_file, std::string name, float d
 {
 	bool ret = false;
 
-	//Animation Name, Duration, TicksperSec, numChannels
-	uint size = name.size() + sizeof(float) + sizeof(float) + sizeof(uint);
+	//----------------------------- CALCULATE SIZE ----------------------------------
+
+	//Animation Duration, TicksperSec, numChannels
+	uint size = sizeof(float) + sizeof(float) + sizeof(uint);
 
 	// Size of Channels
 	Channel* channels = new Channel[numChannels];
@@ -569,28 +572,25 @@ bool MeshLoader::ExportAnim(std::string & output_file, std::string name, float d
 	{
 		LoadChannel(mChannels[i], channels[i]);
 
-		//Name
-		size+= channels[i].name.size();
+		//Size name + Name
+		size+= sizeof(uint) + channels[i].name.size() + sizeof(uint) * 3;
 
 		//PositionsKeys size
 		size += sizeof(double) * channels[i].PositionKeys.size();
-		size += sizeof(float3) * channels[i].PositionKeys.size();
+		size += sizeof(float)* 3 * channels[i].PositionKeys.size();
 		//RotationsKeys size
 		size += sizeof(double) * channels[i].RotationKeys.size();
-		size += sizeof(Quat) * channels[i].RotationKeys.size();
+		size += sizeof(float)* 4 * channels[i].RotationKeys.size();
 		//ScalesKeys size
 		size += sizeof(double) * channels[i].ScaleKeys.size();
-		size += sizeof(float3) * channels[i].ScaleKeys.size();
+		size += sizeof(float)* 3 * channels[i].ScaleKeys.size();
 	}
+	//-------------------------------------------------------------------------------
 
-	//-------- Allocate ---------- 
+	//---------------------------------- Allocate -----------------------------------
 	char* data = new char[size]; 
 	char* cursor = data;
 
-	//Name
-	memcpy(cursor, name.c_str(), name.size());
-	cursor += name.size();
-	
 	//Duration
 	memcpy(cursor, &duration, sizeof(float));
 	cursor += sizeof(float);
@@ -606,9 +606,19 @@ bool MeshLoader::ExportAnim(std::string & output_file, std::string name, float d
 	//Channels
 	for (int i = 0; i < numChannels; i++)
 	{
-		//Name
+		//Name size 
+		uint SizeofName = channels[i].name.size();
+		memcpy(cursor, &SizeofName, sizeof(uint));
+		cursor += sizeof(uint);
+
+		//name data
 		memcpy(cursor, channels[i].name.c_str(), channels[i].name.size());
 		cursor += channels[i].name.size();
+
+		//Poskeys, Rotkeys and Scalekeys SIZES
+		uint ranges[3] = { channels[i].PositionKeys.size(), channels[i].RotationKeys.size(), channels[i].ScaleKeys.size() };
+		memcpy(cursor, ranges, sizeof(ranges));
+		cursor += sizeof(ranges);
 
 		//PositionKeys
 		std::map<double, float3>::const_iterator it = channels[i].PositionKeys.begin();
@@ -617,8 +627,8 @@ bool MeshLoader::ExportAnim(std::string & output_file, std::string name, float d
 			memcpy(cursor, &it->first, sizeof(double));
 			cursor += sizeof(double);
 
-			memcpy(cursor, &it->second, sizeof(float3));
-			cursor += sizeof(float3);
+			memcpy(cursor, &it->second, sizeof(float) * 3);
+			cursor += sizeof(float) * 3;
 		}
 
 		//RotationKeys
@@ -628,8 +638,8 @@ bool MeshLoader::ExportAnim(std::string & output_file, std::string name, float d
 			memcpy(cursor, &it2->first, sizeof(double));
 			cursor += sizeof(double);
 
-			memcpy(cursor, &it2->second, sizeof(Quat));
-			cursor += sizeof(Quat);
+			memcpy(cursor, &it2->second, sizeof(float) * 4);
+			cursor += sizeof(float) * 4;
 		}
 
 		//ScaleKeys
@@ -639,8 +649,8 @@ bool MeshLoader::ExportAnim(std::string & output_file, std::string name, float d
 			memcpy(cursor, &it3->first, sizeof(double));
 			cursor += sizeof(double);
 
-			memcpy(cursor, &it3->second, sizeof(float3));
-			cursor += sizeof(float3);
+			memcpy(cursor, &it3->second, sizeof(float) * 3);
+			cursor += sizeof(float) * 3;
 		}
 	}
 
@@ -649,9 +659,9 @@ bool MeshLoader::ExportAnim(std::string & output_file, std::string name, float d
 	if (!ret)
 		App->LogInConsole("Failed exporting %s.anim into Library/animations floder", name.c_str());
 
-	delete[] channels;
-	channels = nullptr;
 
+	RELEASE_ARRAY(channels);
+	
 	if (data)
 	{
 		delete[] data;
@@ -662,7 +672,7 @@ bool MeshLoader::ExportAnim(std::string & output_file, std::string name, float d
 	return ret;
 }
 
-bool Load(ResourceAnimation* anim)
+bool MeshLoader::LoadAnim(ResourceAnimation* anim)
 {
 	bool ret = true;
 
@@ -672,8 +682,93 @@ bool Load(ResourceAnimation* anim)
 	if (buffer)
 	{
 		char* cursor = buffer;
+		uint bytes = 0;
 
-		//TODO: Load all animation data
+		//Duration
+		memcpy(&anim->duration, cursor, sizeof(float));
+		cursor += sizeof(float);
+
+		//TicksperSec
+		memcpy(&anim->ticksPerSecond, cursor, sizeof(float));
+		cursor += sizeof(float);
+
+		//numChannels
+		memcpy(&anim->numChannels, cursor, sizeof(uint));
+		cursor += sizeof(uint);
+
+		anim->channels = new Channel[anim->numChannels];
+		for (uint i = 0; i < anim->numChannels; i++)
+		{
+			bytes = 0;
+			// Load channel name -----------------------
+			uint SizeofName = 0;
+			memcpy(&SizeofName, cursor, sizeof(uint));
+			cursor += sizeof(uint);
+
+			char* string = new char[SizeofName + 1];
+			bytes = sizeof(char) * SizeofName;
+			memcpy(string, cursor, bytes);
+			cursor += bytes;
+
+			string[SizeofName] = '\0';
+			anim->channels[i].name = string;
+			RELEASE_ARRAY(string);
+			//-------------------------------------------
+
+			//Poskeys, Rotkeys and Scalekeys SIZES
+			uint ranges[3];
+			memcpy(&ranges, cursor, sizeof(uint)*3);
+			cursor += sizeof(uint)*3;
+
+			//Load PosKeys
+			for (int j = 0; j < ranges[0]; j++)
+			{
+				double key;
+				memcpy(&key, cursor, sizeof(double));
+				cursor += sizeof(double);
+
+				float pos[3];
+				memcpy(&pos, cursor, sizeof(float) * 3);
+				cursor += sizeof(float) * 3;
+
+				anim->channels[i].PositionKeys[key] = (float3)pos;
+			}
+
+			//Load RotKeys
+			for (int j = 0; j < ranges[1]; j++)
+			{
+				double key;
+				memcpy(&key, cursor, sizeof(double));
+				cursor += sizeof(double);
+
+				float rot[4];
+				memcpy(&rot, cursor, sizeof(float) * 4);
+				cursor += sizeof(float) * 4;
+
+				anim->channels[i].RotationKeys[key] = (Quat)rot;
+			}
+
+			//Load ScaleKeys
+			for (int j = 0; j < ranges[2]; j++)
+			{
+				double key;
+				memcpy(&key, cursor, sizeof(double));
+				cursor += sizeof(double);
+
+				float scale[3];
+				memcpy(&scale, cursor, sizeof(float) * 3);
+				cursor += sizeof(float) * 3;
+
+				anim->channels[i].ScaleKeys[key] = (float3)scale;
+			}
+
+		}
+
+		RELEASE_ARRAY(buffer);
+		cursor = nullptr;
+
+		ret = true;
+
 	}
 
 	return ret;

@@ -142,18 +142,22 @@ uint ModuleResources::GetResourceInAssets(const char* path)const
 	return 0;
 }
 
-uint ModuleResources::IsResourceInLibrary(const char* name) const
+uint ModuleResources::IsResourceInLibrary(const char* name, Resource::RES_TYPE type) const
 {
 	for (std::map<uint, Resource*>::const_iterator it = resources.begin(); it != resources.end(); ++it)
 	{
-		char n[250];
-		sprintf_s(n, 250, "%s", name);
-		App->file_system->NormalizePath(n);
+		if ((*it).second->type == type)
+		{
+			char n[250];
+			sprintf_s(n, 250, "%s", name);
+			App->file_system->NormalizePath(n);
 
-		std::string s = App->GetNameFromPath(it->second->exported_file);
+			std::string s = App->GetNameFromPath(it->second->exported_file);
 
-		if (s.compare(n) == 0)
-			return it->first;
+			if (s.compare(n) == 0)
+				return it->first;
+		}
+		
 	}
 
 	return 0;

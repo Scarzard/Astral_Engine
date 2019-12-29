@@ -45,8 +45,9 @@ public:
 
 	//Export .anim
 	bool ExportAnim(std::string & output_file, std::string name, float duration, float ticksPerSecond, uint numChannels, aiNodeAnim** mChannels);
+
 	//Import .anim
-	bool Load(ResourceAnimation* anim);
+	bool LoadAnim(ResourceAnimation* anim);
 
 	void FillMap(std::map<std::string, GameObject*>& map, GameObject* root);
 	void LoadBoneData(const aiBone* bone, ResourceBone* res_bone, uint mesh_id);

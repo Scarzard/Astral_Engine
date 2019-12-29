@@ -1,4 +1,6 @@
 #include "ResourceAnimation.h"
+#include "Application.h"
+#include "MeshLoader.h"
 
 bool Channel::PosHasKey() const
 {
@@ -53,4 +55,9 @@ std::map<double, float3>::iterator Channel::PrevScale(double current)
 std::map<double, float3>::iterator Channel::NextScale(double current)
 {
 	return ScaleKeys.upper_bound(current);
+}
+
+bool ResourceAnimation::LoadInMemory()
+{
+	return App->mesh_loader->LoadAnim(this);
 }

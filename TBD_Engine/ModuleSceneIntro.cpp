@@ -338,7 +338,7 @@ void ModuleSceneIntro::LoadScene(std::string scene_name)
 					
 					std::string name = components[comp.key()]["ResourceName"];
 
-					mesh->res_mesh = (ResourceMesh*)App->resources->Get(App->resources->IsResourceInLibrary(name.c_str()));
+					mesh->res_mesh = (ResourceMesh*)App->resources->Get(App->resources->IsResourceInLibrary(name.c_str(), Resource::RES_TYPE::MESH));
 					mesh->res_mesh->UpdateNumReference();
 
 					mesh->UpdateAABB();
@@ -359,7 +359,7 @@ void ModuleSceneIntro::LoadScene(std::string scene_name)
 
 					std::string tex_name = components[comp.key()]["ResourceName"];
 					tex_name = App->GetNameFromPath(tex_name);
-					tex->res_texture = (ResourceTexture*)App->resources->Get(App->resources->IsResourceInLibrary(tex_name.c_str()));
+					tex->res_texture = (ResourceTexture*)App->resources->Get(App->resources->IsResourceInLibrary(tex_name.c_str(), Resource::RES_TYPE::TEXTURE));
 					tex->res_texture->UpdateNumReference();
 				}
 			}

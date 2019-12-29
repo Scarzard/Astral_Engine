@@ -27,7 +27,7 @@ public:
 	// Getters ------------
 	Resource* Get(uint uid);
 	uint GetResourceInAssets(const char* file)const;
-	uint IsResourceInLibrary(const char* name) const;
+	uint IsResourceInLibrary(const char* name, Resource::RES_TYPE type) const;
 
 public:
 	std::map<uint, Resource*> resources;
