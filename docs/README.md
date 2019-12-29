@@ -20,15 +20,17 @@ Created by [Josep Lleal](https://github.com/JosepLleal) and [Victor Chen](https:
 
 - Decoupling Desing Pattern for Component creation.
 
+- Engine overall aesthetic.
+
 - Animation importing with Assimp.
 
-- Engine overall aesthetic.
+- Skeleton animation.
 
 ### Josep Lleal
 
 - Hierarchy/Console/Resource window
 
-- Own file format.
+- Every propietary file format.
 
 - Scene serialization.
 
@@ -62,8 +64,6 @@ Created by [Josep Lleal](https://github.com/JosepLleal) and [Victor Chen](https:
 
 - Bone Component.
 
-- Skeleton animation.
-
 - Skinning. 
 
 ###  Main Core Sub-systems
@@ -94,6 +94,26 @@ bones to the affected mesh.
 - When updating it, the engine gets the stored transformations and applies the resulting movement. This movement is achieved by interpolating from Key A to B, using a Linear Interpolation (Lerp) for positions and scales. It will use Spherical Interpolations (Slerp) for rotations.
 
 - The blending of the animations is achieved by storing temporarily the actual position of the current animation and interpolating it to the first frame of the next animation, then the next animation will take over.
+
+
+
+<p align="center">
+  <img  src="https://raw.githubusercontent.com/Scarzard/Astral_Engine/master/docs/inspector.gif">
+</p>
+
+Inspector GIF: we can enable the draw of the skeleton and set the blend time between animations
+
+<p align="center">
+  <img  src="https://github.com/Scarzard/Astral_Engine/blob/master/docs/blend_0.3.gif">
+</p>
+
+Notice how the BlendTime is set to 0.3 and it blends nicely
+
+<p align="center">
+  <img  src="https://github.com/Scarzard/Astral_Engine/blob/master/docs/blend_0.6.gif">
+</p>
+
+Now the BlendTime is set to 0.6 and it has a harder time to blend between animations
 
 ## Github and latest release
 
