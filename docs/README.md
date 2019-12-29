@@ -8,7 +8,9 @@ The main goal is to code our own simple game engine with C++ from scratch using 
 
 Created by [Josep Lleal](https://github.com/JosepLleal) and [Victor Chen](https://github.com/Scarzard)
 
-/photos here
+<p align="center">
+  <img  src="">
+</p>
 
 ## Tasklist
 
@@ -87,11 +89,9 @@ bones to the affected mesh.
 
 - When animating the gameObject, the engine stores the transformations over time (position, rotation and scale) of the bones that we will be moving, thus affecting the geometry of our mesh.
 
-Once we have the mesh and skeleton (made of ComponentBones), they are linked by their ID, we duplicate all the geometry of our mesh by creating a temporal resource that will be used to repose our gameObject.
+- Once we have the mesh and skeleton (made of ComponentBones), they are linked by their ID, we duplicate all the geometry of our mesh by creating a temporal resource that will be used to repose our gameObject.
 
-- When updating it, the engine gets the stored transformations and applies the resulting movement. This movement is achieved by interpolating from Key A to B, using a Linear Interpolation (Lerp) for positions and scales.
-
-It will use Spherical Interpolations (Slerp) for rotations.
+- When updating it, the engine gets the stored transformations and applies the resulting movement. This movement is achieved by interpolating from Key A to B, using a Linear Interpolation (Lerp) for positions and scales. It will use Spherical Interpolations (Slerp) for rotations.
 
 - The blending of the animations is achieved by storing temporarily the actual position of the current animation and interpolating it to the first frame of the next animation, then the next animation will take over.
 
