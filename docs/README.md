@@ -115,6 +115,10 @@ Notice how the BlendTime is set to 0.3 and it blends nicely
 
 Now the BlendTime is set to 0.6 and it has a harder time to blend between animations
 
+## Video Demonstration of the Enigne
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4xXwPWCbQ88" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Github and latest release
 
 As stated on the license, anyone can look at or modify the code of this project. 
