@@ -95,7 +95,9 @@ void MeshLoader::LoadFile(const char* full_path)
 
 				ResourceAnimation* anim = (ResourceAnimation*)App->resources->NewResource(Resource::RES_TYPE::ANIMATION);
 
-				anim->name = scene->mAnimations[i]->mName.C_Str();
+				ExportAnim(anim->exported_file, App->GetNameFromPath(full_path), scene->mAnimations[i]->mDuration, scene->mAnimations[i]->mTicksPerSecond, scene->mAnimations[i]->mNumChannels, scene->mAnimations[i]->mChannels);
+
+				anim->name = App->GetNameFromPath(full_path);
 				anim->duration = scene->mAnimations[i]->mDuration;
 				anim->ticksPerSecond = scene->mAnimations[i]->mTicksPerSecond;
 				anim->file = full_path;
@@ -202,6 +204,12 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 		child->CreateComponent(Component::ComponentType::Mesh);
 		ComponentMesh* mesh = child->GetComponentMesh();
 
+		if (new_mesh->HasBones())
+		{
+			mesh_collect.push_back(new_mesh);
+			go_collect.push_back(child);
+		}
+
 		//If this mesh is inmemory 
 		if (App->resources->IsResourceInLibrary(child->name.c_str()) != 0)
 		{
@@ -242,12 +250,6 @@ void MeshLoader::LoadNode(const aiScene * scene, aiNode * Node, GameObject* pare
 						memcpy(&index[i * 3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
 
-			}
-
-			if (new_mesh->HasBones())
-			{
-				mesh_collect.push_back(new_mesh);
-				go_collect.push_back(child);
 			}
 
 			float3* face_center = nullptr;
@@ -486,6 +488,10 @@ bool MeshLoader::Load(ResourceMesh* mesh)
 	return ret;
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------- ANIMATION FUNCTIONS ----------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 void MeshLoader::FillMap(std::map<std::string, GameObject*>& map, GameObject* root)
 {
 	map[root->name.c_str()] = root;
@@ -548,6 +554,129 @@ void MeshLoader::LoadChannel(const aiNodeAnim * AnimNode, Channel & channel)
 
 	channel.name = AnimNode->mNodeName.C_Str();
 	App->eraseSubStr(channel.name, "_$AssimpFbx$_");
+}
+
+bool MeshLoader::ExportAnim(std::string & output_file, std::string name, float duration, float ticksPerSecond, uint numChannels, aiNodeAnim** mChannels)
+{
+	bool ret = false;
+
+	//Animation Name, Duration, TicksperSec, numChannels
+	uint size = name.size() + sizeof(float) + sizeof(float) + sizeof(uint);
+
+	// Size of Channels
+	Channel* channels = new Channel[numChannels];
+	for (int i = 0; i < numChannels; i++)
+	{
+		LoadChannel(mChannels[i], channels[i]);
+
+		//Name
+		size+= channels[i].name.size();
+
+		//PositionsKeys size
+		size += sizeof(double) * channels[i].PositionKeys.size();
+		size += sizeof(float3) * channels[i].PositionKeys.size();
+		//RotationsKeys size
+		size += sizeof(double) * channels[i].RotationKeys.size();
+		size += sizeof(Quat) * channels[i].RotationKeys.size();
+		//ScalesKeys size
+		size += sizeof(double) * channels[i].ScaleKeys.size();
+		size += sizeof(float3) * channels[i].ScaleKeys.size();
+	}
+
+	//-------- Allocate ---------- 
+	char* data = new char[size]; 
+	char* cursor = data;
+
+	//Name
+	memcpy(cursor, name.c_str(), name.size());
+	cursor += name.size();
+	
+	//Duration
+	memcpy(cursor, &duration, sizeof(float));
+	cursor += sizeof(float);
+
+	//TicksperSec
+	memcpy(cursor, &ticksPerSecond, sizeof(float));
+	cursor += sizeof(float);
+
+	//numChannels
+	memcpy(cursor, &numChannels, sizeof(uint));
+	cursor += sizeof(uint);
+
+	//Channels
+	for (int i = 0; i < numChannels; i++)
+	{
+		//Name
+		memcpy(cursor, channels[i].name.c_str(), channels[i].name.size());
+		cursor += channels[i].name.size();
+
+		//PositionKeys
+		std::map<double, float3>::const_iterator it = channels[i].PositionKeys.begin();
+		for (it = channels[i].PositionKeys.begin(); it != channels[i].PositionKeys.end(); it++)
+		{
+			memcpy(cursor, &it->first, sizeof(double));
+			cursor += sizeof(double);
+
+			memcpy(cursor, &it->second, sizeof(float3));
+			cursor += sizeof(float3);
+		}
+
+		//RotationKeys
+		std::map<double, Quat>::const_iterator it2 = channels[i].RotationKeys.begin();
+		for (it2 = channels[i].RotationKeys.begin(); it2 != channels[i].RotationKeys.end(); it2++)
+		{
+			memcpy(cursor, &it2->first, sizeof(double));
+			cursor += sizeof(double);
+
+			memcpy(cursor, &it2->second, sizeof(Quat));
+			cursor += sizeof(Quat);
+		}
+
+		//ScaleKeys
+		std::map<double, float3>::const_iterator it3 = channels[i].ScaleKeys.begin();
+		for (it3 = channels[i].ScaleKeys.begin(); it3 != channels[i].ScaleKeys.end(); it3++)
+		{
+			memcpy(cursor, &it3->first, sizeof(double));
+			cursor += sizeof(double);
+
+			memcpy(cursor, &it3->second, sizeof(float3));
+			cursor += sizeof(float3);
+		}
+	}
+
+	ret = App->file_system->SaveUnique(output_file, data, size, LIBRARY_ANIMS_FOLDER, name.c_str(), "anim");
+
+	if (!ret)
+		App->LogInConsole("Failed exporting %s.anim into Library/animations floder", name.c_str());
+
+	delete[] channels;
+	channels = nullptr;
+
+	if (data)
+	{
+		delete[] data;
+		data = nullptr;
+		cursor = nullptr;
+	}
+
+	return ret;
+}
+
+bool Load(ResourceAnimation* anim)
+{
+	bool ret = true;
+
+	char* buffer = nullptr;
+	App->file_system->Load(anim->exported_file.c_str(), &buffer); //put data file in buffer
+
+	if (buffer)
+	{
+		char* cursor = buffer;
+
+		//TODO: Load all animation data
+	}
+
+	return ret;
 }
 
 

@@ -42,7 +42,6 @@ public:
 
 	float duration = 0.0f;
 	float ticksPerSecond = 0.0f;
-	bool loop = true;
 
 	uint numChannels = 0;
 	Channel* channels = nullptr;

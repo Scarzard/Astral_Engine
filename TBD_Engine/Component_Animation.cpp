@@ -72,6 +72,9 @@ void ComponentAnimation::Update(float dt)
 			time += App->GetDT();
 			UpdateJointsTransform();
 
+			if (has_skeleton)
+				UpdateMesh(my_GO);
+
 			if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 			{
 				//prev_anim = playing_animation;
@@ -114,8 +117,7 @@ void ComponentAnimation::Update(float dt)
 		playing_animation = GetDefaultAnimation();
 	}
 
-	if(has_skeleton)
-		UpdateMesh(my_GO);
+	
 }
 
 void ComponentAnimation::DoLink()

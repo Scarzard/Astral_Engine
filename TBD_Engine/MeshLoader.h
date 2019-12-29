@@ -17,6 +17,7 @@ class aiNodeAnim;
 class Importer;
 class ResourceMesh;
 class ResourceBone;
+class ResourceAnimation;
 class Channel;
 
 class MeshLoader : public Module
@@ -41,6 +42,11 @@ public:
 	bool Export(const char * name, std::string & output_file, uint num_index, uint* index, uint num_vertex, float3* vertex,uint num_normals, float3* face_center, float3* face_normal, uint num_tex_coords, float* tex_coords);
 	//Import .mesh
 	bool Load(ResourceMesh* mesh);
+
+	//Export .anim
+	bool ExportAnim(std::string & output_file, std::string name, float duration, float ticksPerSecond, uint numChannels, aiNodeAnim** mChannels);
+	//Import .anim
+	bool Load(ResourceAnimation* anim);
 
 	void FillMap(std::map<std::string, GameObject*>& map, GameObject* root);
 	void LoadBoneData(const aiBone* bone, ResourceBone* res_bone, uint mesh_id);

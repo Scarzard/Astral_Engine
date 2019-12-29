@@ -177,6 +177,9 @@ bool W_Inspector::Draw()
 				if (selected_GO->GetComponentAnimation() != nullptr && ImGui::CollapsingHeader("Animation", ImGuiTreeNodeFlags_Leaf) )
 				{
 					ComponentAnimation* a = selected_GO->GetComponentAnimation();
+					ImGui::Separator();
+					ImGui::Text("Resource Animation Name: %s", a->res_anim->name.c_str());
+					ImGui::Separator();
 
 					for (int i = 0; i < a->animations.size(); i++)
 					{
