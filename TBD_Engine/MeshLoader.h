@@ -35,7 +35,7 @@ public:
 
 	void LoadFile(const char* path);
 	void LoadNode(const aiScene* scene, aiNode* node, GameObject* parent, const char* full_path, std::string output_file, std::vector<aiMesh*>& mesh_collect, std::vector<GameObject*>& go_collect);
-	void LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameObject*> go_collect, GameObject* root);
+	void LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameObject*> go_collect, GameObject* root, const char* full_path);
 	void LoadChannel(const aiNodeAnim* AnimNode, Channel& channel);
 
 	//Export .mesh
@@ -45,9 +45,11 @@ public:
 
 	//Export .anim
 	bool ExportAnim(std::string & output_file, std::string name, float duration, float ticksPerSecond, uint numChannels, aiNodeAnim** mChannels);
-
 	//Import .anim
 	bool LoadAnim(ResourceAnimation* anim);
+
+	//Export .bone
+	bool ExportBone(std::string & output_file, ResourceBone* tmp, aiBone* mBones, uint id);
 
 	void FillMap(std::map<std::string, GameObject*>& map, GameObject* root);
 	void LoadBoneData(const aiBone* bone, ResourceBone* res_bone, uint mesh_id);

@@ -84,7 +84,7 @@ void MeshLoader::LoadFile(const char* full_path)
 			}
 
 
-		LoadBones(mesh_collector, go_collector, Empty);
+		LoadBones(mesh_collector, go_collector, Empty, full_path);
 
 		if (scene->HasAnimations() == true)
 		{
@@ -506,22 +506,27 @@ void MeshLoader::LoadBoneData(const aiBone* bone, ResourceBone* res_bone, uint m
 {
 	res_bone->meshID = mesh_id;
 	res_bone->NumWeights = bone->mNumWeights;
+	res_bone->matrix = float4x4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.a2, bone->mOffsetMatrix.a3, bone->mOffsetMatrix.a4,
+		bone->mOffsetMatrix.b1, bone->mOffsetMatrix.b2, bone->mOffsetMatrix.b3, bone->mOffsetMatrix.b4,
+		bone->mOffsetMatrix.c1, bone->mOffsetMatrix.c2, bone->mOffsetMatrix.c3, bone->mOffsetMatrix.c4,
+		bone->mOffsetMatrix.d1, bone->mOffsetMatrix.d2, bone->mOffsetMatrix.d3, bone->mOffsetMatrix.d4);
+
+	//-------
+
 	res_bone->weight = new float[res_bone->NumWeights];
 	res_bone->index_weight = new uint[res_bone->NumWeights];
+
 	for (int i = 0; i < res_bone->NumWeights; i++)
 	{
 		res_bone->weight[i] = bone->mWeights[i].mWeight;
 		res_bone->index_weight[i] = bone->mWeights[i].mVertexId;
 	}
 
-	res_bone->matrix = float4x4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.a2, bone->mOffsetMatrix.a3, bone->mOffsetMatrix.a4,
-					 		    bone->mOffsetMatrix.b1, bone->mOffsetMatrix.b2, bone->mOffsetMatrix.b3, bone->mOffsetMatrix.b4,
-					 		    bone->mOffsetMatrix.c1, bone->mOffsetMatrix.c2, bone->mOffsetMatrix.c3, bone->mOffsetMatrix.c4,
-							    bone->mOffsetMatrix.d1, bone->mOffsetMatrix.d2, bone->mOffsetMatrix.d3, bone->mOffsetMatrix.d4);
+	
 
 }
 
-void MeshLoader::LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameObject*> go_collect, GameObject* root)
+void MeshLoader::LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameObject*> go_collect, GameObject* root, const char* full_path)
 {
 	std::map<std::string, GameObject*> go_map;
 	FillMap(go_map, root);
@@ -530,13 +535,30 @@ void MeshLoader::LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameOb
 	{
 		for (int j = 0; j < mesh_collect[i]->mNumBones; j++)
 		{
-			ResourceBone* rBone = (ResourceBone*)App->resources->NewResource(Resource::BONE);
-			LoadBoneData(mesh_collect[i]->mBones[j], rBone, go_collect[i]->GetComponentMesh()->res_mesh->GetUUID());
+			ResourceBone* rBone = nullptr;
+
+			if (App->resources->IsResourceInLibrary(mesh_collect[i]->mBones[j]->mName.C_Str(), Resource::RES_TYPE::BONE) != 0)
+			{
+				rBone = (ResourceBone*)App->resources->IsResourceInLibrary(mesh_collect[i]->mBones[j]->mName.C_Str(), Resource::RES_TYPE::BONE);
+			}
+			else
+			{
+				rBone = (ResourceBone*)App->resources->NewResource(Resource::BONE);
+
+				ResourceBone* tmp = new ResourceBone(App->GetRandomUUID());
+
+				LoadBoneData(mesh_collect[i]->mBones[j], rBone, go_collect[i]->GetComponentMesh()->res_mesh->GetUUID()); //temporary 
+
+				ExportBone(rBone->exported_file, tmp, mesh_collect[i]->mBones[j], go_collect[i]->GetComponentMesh()->res_mesh->GetUUID());
+				rBone->file = full_path;
+			}
+
 			std::map<std::string, GameObject*>::iterator bone = go_map.find(mesh_collect[i]->mBones[j]->mName.C_Str());
 			if (bone != go_map.end())
 			{
 				ComponentBone* c_bone = (ComponentBone*)bone->second->CreateComponent(Component::ComponentType::Bone);
 				c_bone->res_bone = rBone;
+				// if(rBone)rBone->UpdateNumReference();
 			}
 		}
 	}
@@ -770,6 +792,72 @@ bool MeshLoader::LoadAnim(ResourceAnimation* anim)
 		ret = true;
 
 	}
+
+	return ret;
+}
+
+bool MeshLoader::ExportBone(std::string & output_file, ResourceBone* tmp, aiBone* mBones, uint id)
+{
+	bool ret = false;
+
+	LoadBoneData(mBones, tmp, id);
+
+	//----------------------------- CALCULATE SIZE ------------------------------------------------------------------------------------
+
+	//Bone meshID, numWeights, matrix, weights, index_weigths
+	uint size = sizeof(uint) + sizeof(uint) + sizeof(float) * 16 + tmp->NumWeights * sizeof(float) + tmp->NumWeights * sizeof(uint);
+
+	//---------------------------------------------------------------------------------------------------------------------------------
+	//------------------------------- Allocate ---------------------------------------------------------------------------------------
+	
+	char* data = new char[size];
+	char* cursor = data;
+
+	// meshID
+	memcpy(cursor, &tmp->meshID, sizeof(uint));
+	cursor += sizeof(uint);
+
+	// numWeights
+	memcpy(cursor, &tmp->NumWeights, sizeof(uint));
+	cursor += sizeof(uint);
+
+	// matrix
+	memcpy(cursor, &tmp->matrix, sizeof(float) * 16);
+	cursor += sizeof(float) * 16;
+
+	//Weights
+	memcpy(cursor, tmp->weight, sizeof(float) * tmp->NumWeights);
+	cursor += sizeof(float) * tmp->NumWeights;
+
+	//index_weights
+	memcpy(cursor, tmp->index_weight, sizeof(uint) * tmp->NumWeights);
+	cursor += sizeof(uint) * tmp->NumWeights;
+
+	ret = App->file_system->SaveUnique(output_file, data, size, LIBRARY_BONES_FOLDER, mBones->mName.C_Str(), "bone");
+
+	if (!ret)
+		App->LogInConsole("Failed exporting %s.anim into Library/animations floder", mBones->mName.C_Str());
+
+	if (data)
+	{
+		delete[] data;
+		data = nullptr;
+		cursor = nullptr;
+	}
+
+	if (tmp->weight)
+	{
+		delete[] tmp->weight;
+		tmp->weight = nullptr;
+	}
+	
+	if (tmp->index_weight)
+	{
+		delete[] tmp->index_weight;
+		tmp->index_weight = nullptr;
+	}
+
+	delete tmp;
 
 	return ret;
 }
