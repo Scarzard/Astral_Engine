@@ -98,19 +98,19 @@ bones to the affected mesh.
 
 
 <p align="center">
-  <img  src="https://raw.githubusercontent.com/Scarzard/Astral_Engine/master/docs/inspector.gif">
+  <img  src="https://raw.githubusercontent.com/Scarzard/Astral_Engine/master/docs/inspector.gif" width="480" height="300">
 </p>
 
 Inspector GIF: we can enable the draw of the skeleton and set the blend time between animations
 
 <p align="center">
-  <img  src="https://github.com/Scarzard/Astral_Engine/blob/master/docs/blend_0.3.gif">
+  <img  src="https://raw.githubusercontent.com/Scarzard/Astral_Engine/master/docs/blend03.gif" width="480" height="300">
 </p>
 
 Notice how the BlendTime is set to 0.3 and it blends nicely
 
 <p align="center">
-  <img  src="https://github.com/Scarzard/Astral_Engine/blob/master/docs/blend_0.6.gif">
+  <img  src="https://raw.githubusercontent.com/Scarzard/Astral_Engine/master/docs/blend06.gif" width="480" height="300">
 </p>
 
 Now the BlendTime is set to 0.6 and it has a harder time to blend between animations
