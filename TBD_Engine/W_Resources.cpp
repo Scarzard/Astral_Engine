@@ -19,7 +19,7 @@ bool W_Resources::Start()
 bool W_Resources::Draw()
 {
 	
-	if (App->gui->w_resources)
+	/*if (App->gui->w_resources)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5, 5));
 
@@ -30,7 +30,7 @@ bool W_Resources::Draw()
 
 		ImGui::End();
 		ImGui::PopStyleVar();
-	}
+	}*/
 
 	return true;
 }
