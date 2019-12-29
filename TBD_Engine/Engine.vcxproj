@@ -267,6 +267,7 @@
     <ClCompile Include="par_shapes.cpp" />
     <ClCompile Include="PCG\entropy.c" />
     <ClCompile Include="ResourceAnimation.cpp" />
+    <ClCompile Include="ResourceBone.cpp" />
     <ClCompile Include="ResourceMesh.cpp" />
     <ClCompile Include="ResourceTexture.cpp" />
     <ClCompile Include="SpacePartition.cpp" />

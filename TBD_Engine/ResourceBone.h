@@ -11,10 +11,10 @@ public:
 	ALIGN_CLASS_TO_16
 
 	ResourceBone(uint uuid) : Resource(uuid, RES_TYPE::BONE) {}
-	~ResourceBone() {}
+	virtual ~ResourceBone() {}
 
-	bool LoadInMemory() { return true; }
-	void ReleaseMemory() {}
+	bool LoadInMemory();
+	void ReleaseMemory();
 
 	uint meshID = 0;
 

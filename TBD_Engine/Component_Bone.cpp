@@ -14,6 +14,12 @@ ComponentBone::ComponentBone(GameObject * gameObject) : Component(Component::Com
 
 ComponentBone::~ComponentBone()
 {
+	if (res_bone)
+	{
+		res_bone->loaded -= 1;
+		if (res_bone->loaded == 0)
+			res_bone->ReleaseMemory();
+	}
 }
 
 void ComponentBone::DebugDrawBones()

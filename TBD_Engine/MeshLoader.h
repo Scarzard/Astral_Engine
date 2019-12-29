@@ -50,6 +50,8 @@ public:
 
 	//Export .bone
 	bool ExportBone(std::string & output_file, ResourceBone* tmp, aiBone* mBones, uint id);
+	//Load .bone
+	bool LoadBone(ResourceBone* bone);
 
 	void FillMap(std::map<std::string, GameObject*>& map, GameObject* root);
 	void LoadBoneData(const aiBone* bone, ResourceBone* res_bone, uint mesh_id);

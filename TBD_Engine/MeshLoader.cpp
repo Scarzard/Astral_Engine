@@ -539,16 +539,13 @@ void MeshLoader::LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameOb
 
 			if (App->resources->IsResourceInLibrary(mesh_collect[i]->mBones[j]->mName.C_Str(), Resource::RES_TYPE::BONE) != 0)
 			{
-				rBone = (ResourceBone*)App->resources->IsResourceInLibrary(mesh_collect[i]->mBones[j]->mName.C_Str(), Resource::RES_TYPE::BONE);
+				rBone = (ResourceBone*)App->resources->Get(App->resources->IsResourceInLibrary(mesh_collect[i]->mBones[j]->mName.C_Str(), Resource::RES_TYPE::BONE));
 			}
 			else
 			{
 				rBone = (ResourceBone*)App->resources->NewResource(Resource::BONE);
 
 				ResourceBone* tmp = new ResourceBone(App->GetRandomUUID());
-
-				LoadBoneData(mesh_collect[i]->mBones[j], rBone, go_collect[i]->GetComponentMesh()->res_mesh->GetUUID()); //temporary 
-
 				ExportBone(rBone->exported_file, tmp, mesh_collect[i]->mBones[j], go_collect[i]->GetComponentMesh()->res_mesh->GetUUID());
 				rBone->file = full_path;
 			}
@@ -558,7 +555,9 @@ void MeshLoader::LoadBones(std::vector<aiMesh*> mesh_collect, std::vector<GameOb
 			{
 				ComponentBone* c_bone = (ComponentBone*)bone->second->CreateComponent(Component::ComponentType::Bone);
 				c_bone->res_bone = rBone;
-				// if(rBone)rBone->UpdateNumReference();
+
+				if(c_bone->res_bone != nullptr)
+					c_bone->res_bone->UpdateNumReference();
 			}
 		}
 	}
@@ -858,6 +857,52 @@ bool MeshLoader::ExportBone(std::string & output_file, ResourceBone* tmp, aiBone
 	}
 
 	delete tmp;
+
+	return ret;
+}
+
+bool MeshLoader::LoadBone(ResourceBone* bone)
+{
+	bool ret = true;
+
+	char* buffer = nullptr;
+	App->file_system->Load(bone->exported_file.c_str(), &buffer); //put data file in buffer
+
+	if (buffer)
+	{
+		char* cursor = buffer;
+
+		// meshID
+		memcpy(&bone->meshID, cursor, sizeof(uint));
+		cursor += sizeof(uint);
+
+		// NumWeights
+		memcpy(&bone->NumWeights, cursor, sizeof(uint));
+		cursor += sizeof(uint);
+
+		// matrix
+		float* matrix = new float[16];
+		memcpy(matrix, cursor, sizeof(float) * 16);
+		cursor += sizeof(float) * 16;
+
+		bone->matrix = float4x4(matrix[0], matrix[1], matrix[2], matrix[3],	matrix[4], matrix[5], matrix[6], matrix[7],
+								matrix[8], matrix[9], matrix[10], matrix[11],matrix[12], matrix[13], matrix[14], matrix[15]);
+
+		// Weights
+		bone->weight = new float[bone->NumWeights];
+		memcpy(bone->weight, cursor, sizeof(float) * bone->NumWeights);
+		cursor += sizeof(float) * bone->NumWeights;
+
+		// index_weights
+		bone->index_weight = new uint[bone->NumWeights];
+		memcpy(bone->index_weight, cursor, sizeof(uint) * bone->NumWeights);
+		cursor += sizeof(uint) * bone->NumWeights;
+
+
+		delete[] matrix;
+		RELEASE_ARRAY(buffer);
+		cursor = nullptr;
+	}
 
 	return ret;
 }
