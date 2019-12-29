@@ -9,7 +9,7 @@ The main goal is to code our own simple game engine with C++ from scratch using 
 Created by [Josep Lleal](https://github.com/JosepLleal) and [Victor Chen](https://github.com/Scarzard)
 
 <p align="center">
-  <img  src="">
+  <img  src="https://raw.githubusercontent.com/Scarzard/Astral_Engine/master/docs/Victor%26Josep.png">
 </p>
 
 ## Tasklist
