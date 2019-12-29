@@ -179,13 +179,20 @@ bool W_Inspector::Draw()
 					ComponentAnimation* a = selected_GO->GetComponentAnimation();
 					ImGui::Separator();
 					ImGui::Text("Resource Animation Name: %s", a->res_anim->name.c_str());
+					ImGui::Checkbox("Draw Skeleton", &a->draw_bones);
+					ImGui::Text("BlendTime:");
+					ImGui::SameLine(); ImGui::PushItemWidth(150); ImGui::SliderFloat("##BlendTime", &a->blend_time_value, 0.0f, 1.0f);
 					ImGui::Separator();
+					
 
 					for (int i = 0; i < a->animations.size(); i++)
 					{
+						
 						ImGui::Separator();
 						ImGui::Text("Name: %s", a->animations[i]->name.c_str());
-						ImGui::Text("Duration: %f", (a->animations[i]->end - a->animations[i]->start)/a->res_anim->ticksPerSecond);
+						ImGui::Text("Animation Frames: %f", (a->animations[i]->end - a->animations[i]->start));
+						ImGui::Text("Start Frame: %u", a->animations[i]->start);
+						ImGui::Text("End Frame: %u", a->animations[i]->end);
 						ImGui::Separator();
 					}
 

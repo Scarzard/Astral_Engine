@@ -46,6 +46,9 @@ public:
 	Animation* playing_animation = nullptr;;
 
 	ResourceAnimation* res_anim = nullptr;
+	float blend_time_value = 0.3f;
+
+	bool draw_bones = false;
 
 private:
 
@@ -57,7 +60,7 @@ private:
 	void UpdateMesh(GameObject* go);
 	void GetAllBones(GameObject* go, std::map<uint, ComponentMesh*>& meshes, std::vector<ComponentBone*>& bones);
 
-	void BlendAnimations(float blend_time = 0.3f);
+	void BlendAnimations(float blend_time);
 	void StartBlend(uint start, Animation* anim);
 
 	bool HasSkeleton(std::vector<GameObject*> GO);
@@ -74,6 +77,7 @@ private:
 	int Frame = 0;
 	float time = 0;
 
+	//---- blend vars ------------
 	float curr_blend_time = 0;
 	uint blend_start_Frame = 0;
 

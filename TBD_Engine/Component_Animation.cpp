@@ -98,7 +98,7 @@ void ComponentAnimation::Update(float dt)
 				UpdateJointsTransform();
 			}	
 			else
-				BlendAnimations();
+				BlendAnimations(blend_time_value);
 
 			if (has_skeleton)
 				UpdateMesh(my_GO);
