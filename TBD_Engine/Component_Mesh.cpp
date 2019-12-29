@@ -106,6 +106,8 @@ void ComponentMesh::UpdateDefMesh()
 			}
 		}
 	}
+
+	UpdateAABB();
 }
 
 const AABB& ComponentMesh::GetBoundingBox()
@@ -116,7 +118,11 @@ const AABB& ComponentMesh::GetBoundingBox()
 void ComponentMesh::UpdateAABB()
 {
 	aabb.SetNegativeInfinity();
-	aabb.Enclose(res_mesh->vertex, res_mesh->num_vertex);
+
+	if(deformable_mesh != nullptr)
+		aabb.Enclose(deformable_mesh->vertex, deformable_mesh->num_vertex);
+	else
+		aabb.Enclose(res_mesh->vertex, res_mesh->num_vertex);
 
 }
 
