@@ -11,20 +11,20 @@ struct Channel
 	//Position
 	bool PosHasKey() const;
 	std::map<double, float3> PositionKeys;
-	std::map<double, float3>::iterator PrevPosition(double current);
-	std::map<double, float3>::iterator NextPosition(double current);
+	std::map<double, float3>::iterator PrevPosition(double current, uint, uint);
+	std::map<double, float3>::iterator NextPosition(double current, uint, uint);
 
 	//Rotation
 	bool RotHasKey() const;
 	std::map<double, Quat> RotationKeys;
-	std::map<double, Quat>::iterator PrevRotation(double current);
-	std::map<double, Quat>::iterator NextRotation(double current);
-
-	//Scale
-	bool ScaleHasKey() const;
-	std::map<double, float3> ScaleKeys;
-	std::map<double, float3>::iterator PrevScale(double current);
-	std::map<double, float3>::iterator NextScale(double current);
+	std::map<double, Quat>::iterator PrevRotation(double current, uint, uint);
+	std::map<double, Quat>::iterator NextRotation(double current, uint, uint);
+															
+	//Scale													
+	bool ScaleHasKey() const;								
+	std::map<double, float3> ScaleKeys;						
+	std::map<double, float3>::iterator PrevScale(double current, uint, uint);
+	std::map<double, float3>::iterator NextScale(double current, uint, uint);
 };
 
 class ResourceAnimation : public Resource
