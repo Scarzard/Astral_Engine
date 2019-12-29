@@ -2,33 +2,67 @@
 
 Astral Engine is created by 2 students from UPC-CITM for the Videogame engines subject for educational purposes. 
 
-The main goal is to code our own simple game engine from scratch using various external libraries, and for the last delivery, we must implement a high level system, **skeletal animation**.
+The main goal is to code our own simple game engine with C++ from scratch using various external libraries, and for the last delivery, we must implement a high-level system, **skeletal animation**.
 
-## Installation
+## The team: 
 
-Download the latest release [here](https://github.com/Scarzard/Astral_Engine/releases). Decompress the .zip and execute Astral_Engine v_1.0
-and play around with the engine
+Created by [Josep Lleal](https://github.com/JosepLleal) and [Victor Chen](https://github.com/Scarzard)
+
+/photos here
 
 ## Tasklist
 
 ### Both members:
 
--
+- Game Objects
+
+- Decoupling Desing Pattern for Component creation.
+
+- Animation importing with Assimp.
+
+- Engine overall aesthetic.
 
 ### Josep Lleal
-- 
+
+- Hierarchy/Console/Resource window
+
+- Own file format.
+
+- Scene serialization.
+
+- Resource manager. Refactor for Components to use resources.
+
+- Space partition as Quadtrees.
+
+- Importing
+
+- Animation component
+
+- Bone parenting.
+
+- Animation interpolation.
+
+- Animation blending.
 
 ### Victor Chen
 
-- Interactive component transform through Inspector window.
+- Game/Inspector/Configuration window
 
-- Game Object bounding boxes.
+- Interactive transformations in Inspector.
+
+- AABBs.
 
 - Frustum culling.
 
 - Camera refactor to use frustums.
 
 - Time manager and Play/Stop/Pause buttons
+
+- Bone Component.
+
+- Skeleton animation.
+
+- Skinning. 
 
 ###  Main Core Sub-systems
 
@@ -43,17 +77,32 @@ It can have any number of coded components.
 
 - The camera can cull static objects.
 
-- 
+### High-level system: Skeletal Animation
 
+- First of all, we imported all the animation information using Assimp, primarily using .fbx files.
 
+- When loading a gameObject, the engine will try to find if the imported object has any animations attached to it, if it doesn't, it will load as a normal gameObject.
+If it does, it will load the animations into memory and creating the corresponding ComponentAnimation. It will also create a skeleton using ComponentBones, then linking the
+bones to the affected mesh.
 
-## Authors
-   
-Josep Lleal
-   - [Josep's GitHub Link](https://github.com/JosepLleal)
-   
-Victor Chen Chen
-   - [Victor's GitHub Link](https://github.com/Scarzard)
+- When animating the gameObject, the engine stores the transformations over time (position, rotation and scale) of the bones that we will be moving, thus affecting the geometry of our mesh.
+
+Once we have the mesh and skeleton (made of ComponentBones), they are linked by their ID, we duplicate all the geometry of our mesh by creating a temporal resource that will be used to repose our gameObject.
+
+- When updating it, the engine gets the stored transformations and applies the resulting movement. This movement is achieved by interpolating from Key A to B, using a Linear Interpolation (Lerp) for positions and scales.
+
+It will use Spherical Interpolations (Slerp) for rotations.
+
+- The blending of the animations is achieved by storing temporarily the actual position of the current animation and interpolating it to the first frame of the next animation, then the next animation will take over.
+
+## Github and latest release
+
+As stated on the license, anyone can look at or modify the code of this project. 
+It can be found [here](https://github.com/Scarzard/Astral_Engine)
+
+Download the latest release [here](https://github.com/Scarzard/Astral_Engine/releases). 
+
+Decompress the .zip and execute Astral_Engine v_1.0 and play around with the engine
    
 # License:
 
