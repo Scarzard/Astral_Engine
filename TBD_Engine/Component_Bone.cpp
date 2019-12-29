@@ -31,8 +31,9 @@ void ComponentBone::DebugDrawBones()
 		float3 child_pos = float3(child_matrix.At(0, 3), child_matrix.At(1, 3), child_matrix.At(2, 3));
 		float3 parent_pos = float3(parent_matrix.At(0, 3), parent_matrix.At(1, 3), parent_matrix.At(2, 3));
 
+		glLineWidth(5.0f);
 		glBegin(GL_LINES);
-		glLineWidth(2.0f);
+		
 		glColor4f(Yellow.r, Yellow.g, Yellow.b, Yellow.a);
 
 		glVertex3f(child_pos.x, child_pos.y, child_pos.z);
